@@ -1,5 +1,5 @@
 <script setup lang="ts">
-// Data layer status page: proves each provider works end to end. Replaced by My feed in Phase 5.
+// Data layer status: proves each provider works end to end.
 const { bySport } = await useCompetitions()
 const { data: health } = await useFetch('/api/health')
 const selected = ref('liiga')

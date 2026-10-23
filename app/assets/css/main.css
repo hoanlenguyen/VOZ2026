@@ -16,7 +16,12 @@
   --accent: #F5C518;
   --on-accent: #0E0F11;
   --accent-hover: #FFE27A;
+  /* accent used as text/link colour; differs per theme for contrast */
+  --accent-ink: #F5C518;
   --away: #6EA8FE;
+  --board: #0E0F11;
+  --board-text: #F2F2F0;
+  --board-muted: #A3A6AD;
 
   --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -38,6 +43,30 @@
   color-scheme: dark;
 }
 
+/* Light editorial theme ("paper") for the news front page. Contrast on #FFF: ink 18.7, ink-2 10.3,
+   muted 6.2, control border 5.0, accent-ink 6.3. Gold stays a fill colour only (1.6:1 as text). */
+[data-theme="paper"] {
+  --bg: #FFFFFF;
+  --surface: #F4F5F7;
+  --surface-2: #EBEDF0;
+  --line: #E3E5E8;
+  --line-soft: #EEF0F2;
+  --border: #E3E5E8;
+  --border-control: #6B7079;
+  --text: #111214;
+  --text-2: #3D4148;
+  --text-3: #3D4148;
+  --muted: #5C6168;
+  --dim: #6B7079;
+  --accent-ink: #7A5C00;
+  --accent-hover: #5C4500;
+  /* the scoreboard panels keep the dark VOZ look */
+  --board: #0E0F11;
+  --board-text: #F2F2F0;
+  --board-muted: #A3A6AD;
+  color-scheme: light;
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
 html, body {
@@ -50,7 +79,7 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-a { color: var(--accent); }
+a { color: var(--accent-ink); }
 a:hover { color: var(--accent-hover); }
 button, input, select { font: inherit; color: inherit; }
 input, select, textarea { font-size: 16px; } /* avoids iOS zoom on focus */
@@ -94,4 +123,9 @@ h1, h2, h3 { margin: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }

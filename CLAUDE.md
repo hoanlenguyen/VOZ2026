@@ -5,7 +5,7 @@ Today: ice hockey (Liiga) and football (football-data.org). New sports and leagu
 Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server-side.
 
 ## Commands
-- `npm run dev` — dev server (stop it before restarting; Nuxt refuses a second instance)
+- `npm run dev` — dev server (stop it before restarting; Nuxt refuses a second instance). After adding a new component, restart if SSR logs "Failed to resolve component".
 - `npm run typecheck` — must pass before committing
 - `npm run snapshot -- [--only liiga|football-data] [--details] [--competitions PL,BL1]` — save upstream
   responses to `data/snapshots/<provider>/` for offline demos (football: ~6.5 s per request, free-plan limit)
@@ -21,7 +21,9 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `server/providers/<provider>.ts` — one per data source; implements `SportProvider` (`server/providers/types.ts`) and maps raw JSON → shared types
 - `server/utils/upstream.ts` — the only place that calls external APIs: keys, cache, rate limit, snapshot fallback
 - `server/utils/sports.ts` — provider registry and the `[competition]` route helper
-- API: `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id}`, `/api/health`, dev-only `/api/raw/:provider/*`
+- API: `/api/landing`, `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id}`, `/api/health`, dev-only `/api/raw/:provider/*`
+- `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
+- Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`
 - `shared/utils/` must stay free of Nuxt imports: `scripts/` runs it with plain Node (type stripping)
 
@@ -49,4 +51,5 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 
 ## UI work
 - Use the **ui-ux-pro-max** skill for any UI change.
-- Follow `design-system/voz/MASTER.md` (page overrides in `design-system/voz/pages/`); tokens in `app/assets/css/main.css`, no raw hex in components.
+- Follow `design-system/voz/MASTER.md` (page overrides in `design-system/voz/pages/`, e.g. `landing.md` for the light front page); tokens in `app/assets/css/main.css`, no raw hex in components.
+- Never copy articles or photos from other news sites into the app or mock data; story text comes from our data, images are crests + data visuals.
