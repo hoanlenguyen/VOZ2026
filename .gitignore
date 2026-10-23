@@ -1,0 +1,16 @@
+node_modules
+.nuxt
+.output
+.data
+.nitro
+.cache
+dist
+logs
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Per-game snapshots are large (~28 MB); regenerate with `npm run snapshot -- --details`
+data/snapshots/games_2027_*
