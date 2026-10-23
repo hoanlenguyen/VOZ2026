@@ -1,7 +1,7 @@
-// Static team facts the Liiga API does not provide (home town). Keyed by an ASCII slug
+// Liiga team facts the Liiga API does not provide (home town). Keyed by an ASCII slug
 // so it can be used safely in URLs; `liigaSlug` is the part after ':' in Liiga team ids.
 
-export interface TeamInfo {
+export interface LiigaTeamInfo {
   slug: string
   liigaSlug: string
   name: string
@@ -9,7 +9,7 @@ export interface TeamInfo {
   town: string
 }
 
-export const TEAMS: TeamInfo[] = [
+export const LIIGA_TEAMS: LiigaTeamInfo[] = [
   { slug: 'hifk', liigaSlug: 'hifk', name: 'HIFK', abbr: 'IFK', town: 'Helsinki' },
   { slug: 'hpk', liigaSlug: 'hpk', name: 'HPK', abbr: 'HPK', town: 'Hämeenlinna' },
   { slug: 'ilves', liigaSlug: 'ilves', name: 'Ilves', abbr: 'ILV', town: 'Tampere' },
@@ -30,8 +30,8 @@ export const TEAMS: TeamInfo[] = [
 ]
 
 /** Maps a Liiga team id ("495643563:kärpät") or our slug ("karpat") to the team info. */
-export function findTeam(idOrSlug: string | null | undefined): TeamInfo | undefined {
+export function findLiigaTeam(idOrSlug: string | null | undefined): LiigaTeamInfo | undefined {
   if (!idOrSlug) return undefined
   const key = idOrSlug.includes(':') ? idOrSlug.split(':').pop()! : idOrSlug
-  return TEAMS.find(t => t.slug === key || t.liigaSlug === key)
+  return LIIGA_TEAMS.find(t => t.slug === key || t.liigaSlug === key)
 }

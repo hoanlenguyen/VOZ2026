@@ -13,4 +13,4 @@ logs
 !.env.example
 
 # Per-game snapshots are large (~28 MB); regenerate with `npm run snapshot -- --details`
-data/snapshots/games_2027_*
+data/snapshots/liiga/games_2027_*

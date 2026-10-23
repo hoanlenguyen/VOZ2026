@@ -59,6 +59,13 @@ Team colour is never the only signal: goals also carry the team name or abbrevia
 - Inline SVG, stroke 2 px, round caps/joins (Lucide style), 14/16/20/22 px. No emoji as icons.
 - Icon-only buttons need `aria-label`.
 
+## Multi-sport
+- VOZ covers several sports (ice hockey, football, more later). Layouts are shared; only labels and
+  sport-specific blocks change (periods vs halves, xG/power play vs possession, "SO" vs "pens").
+- Sport is shown as a text eyebrow ("Ice hockey · Liiga"), never by colour alone.
+- Unavailable leagues stay visible but disabled, with the reason as text (e.g. "Needs a paid plan").
+- When a data plan lacks events (football free tier), say so in place of the missing block; never fake it.
+
 ## AI & trust UI (product-specific)
 - Every AI-written block carries the **"AI · verified from Liiga data"** badge, which opens the facts behind it.
 - Text that failed validation is never shown; the block falls back to the deterministic template.

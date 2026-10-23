@@ -1,38 +1,38 @@
-// Helpers shared by the Nitro server and the snapshot script (scripts/snapshot.ts).
-// Keep this file free of Nuxt imports so plain Node can run it.
+// Helpers for calling upstream sports APIs, shared by the Nitro server and the snapshot
+// script (scripts/snapshot.ts). Keep this file free of Nuxt imports so plain Node can run it.
 
-export type LiigaQuery = Record<string, string | number | boolean | undefined | null>
+export type UpstreamQuery = Record<string, string | number | boolean | undefined | null>
 
 /** Normalises an API path such as "/games/2027/123/" to "games/2027/123". */
-export function cleanLiigaPath(path: string): string {
+export function cleanPath(path: string): string {
   return path.replace(/^\/+|\/+$/g, '')
 }
 
-/** Paths we allow through to the Liiga API: letters, digits, '-', '_' and '/'. */
-export function isSafeLiigaPath(path: string): boolean {
+/** Paths we allow through to an upstream API: letters, digits, '-', '_' and '/'. */
+export function isSafePath(path: string): boolean {
   return /^[A-Za-z0-9_\-/]+$/.test(path) && !path.includes('..')
 }
 
 /** Stable, filesystem-safe key for one API request; used for both cache and snapshot files. */
-export function snapshotKey(path: string, query: LiigaQuery = {}): string {
+export function snapshotKey(path: string, query: UpstreamQuery = {}): string {
   const qs = Object.keys(query)
     .filter(k => query[k] !== undefined && query[k] !== null && query[k] !== '')
     .sort()
     .map(k => `${k}=${query[k]}`)
     .join('&')
-  const raw = cleanLiigaPath(path) + (qs ? `__${qs}` : '')
+  const raw = cleanPath(path) + (qs ? `__${qs}` : '')
   return raw.replace(/[^A-Za-z0-9_=&.-]+/g, '_') + '.json'
 }
 
-export function buildLiigaUrl(base: string, path: string, query: LiigaQuery = {}): string {
-  const url = new URL(`${base.replace(/\/+$/, '')}/${cleanLiigaPath(path)}`)
+export function buildUrl(base: string, path: string, query: UpstreamQuery = {}): string {
+  const url = new URL(`${base.replace(/\/+$/, '')}/${cleanPath(path)}`)
   for (const [k, v] of Object.entries(query)) {
     if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, String(v))
   }
   return url.toString()
 }
 
-// Some Liiga fields (player names, team names, award names) arrive as UTF-8 bytes that
+// Liiga only: some fields (player names, team names, award names) arrive as UTF-8 bytes that
 // were decoded as Latin-1, e.g. "KÃ¤rpÃ¤t" instead of "Kärpät". Re-decode those strings.
 const MOJIBAKE = /[ÃÂ][\u0080-¿]/
 

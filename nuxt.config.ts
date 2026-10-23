@@ -26,11 +26,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     liigaApiKey: '',
     liigaBaseUrl: 'https://prod.liiga-backend.liiga.fi/stats/api/v1',
+    /** Liiga season id = the year the season ends (2027 = 2026–27). */
+    liigaSeason: 2027,
+    footballDataToken: '',
+    footballDataBaseUrl: 'https://api.football-data.org/v4',
     dataMode: 'auto',
-    public: {
-      season: 2027,
-      serie: 'runkosarja',
-    },
   },
 
   nitro: {
