@@ -112,3 +112,9 @@ test('Finnish decimals need a comma; clock times and dates are fine', () => {
   assert.doesNotMatch(checkStory(draft('Forest voitti maaliodottaman 2,29–0,46.'), fi).issues.join(' '), /decimals/)
   assert.doesNotMatch(checkStory(draft('Forest had 2.29 xG to 0.46.'), ctx).issues.join(' '), /decimals/)
 })
+
+test('a word range in the context replaces the length range (podcast scripts)', () => {
+  const draft = { headline: 'Forest hallitsi', sentences: [{ text: filler, facts: ['f4'], paragraph: 1 }] }
+  assert.doesNotMatch(checkStory(draft, ctx).issues.join(' '), /words/)
+  assert.match(checkStory(draft, { ...ctx, words: [30, 40] }).issues.join(' '), /has 20 words; it needs 30–40/)
+})

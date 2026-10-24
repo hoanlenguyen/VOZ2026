@@ -469,5 +469,62 @@
       "leagues": "{n} leagues | {n} league | {n} leagues",
       "players": "{n} players | {n} player | {n} players"
     }
+  },
+  "podcast": {
+    "title": "Podcasts",
+    "lead": "Daily 30-second AI audio bulletins on teams and leagues, written from verified match data and checked before they are read aloud.",
+    "matchTitle": "Match podcast",
+    "kinds": {
+      "match": "Match",
+      "team": "Team",
+      "league": "League"
+    },
+    "play": "Play: {title}",
+    "pause": "Pause: {title}",
+    "seek": "Position in {title}",
+    "transcript": "Transcript",
+    "made": "AI-written by {model} from {n} verified facts and read by an AI voice.",
+    "showFacts": "Show the facts behind it",
+    "hideFacts": "Hide the facts",
+    "open": "Open the match",
+    "deskLabel": "Newsroom:",
+    "deskHas": "This match has an AI podcast in English and Finnish. Regenerate makes new versions.",
+    "deskNone": "No podcast for this match yet. Generate writes a 20–30 second summary from the match facts and records it in English and Finnish.",
+    "generate": "Generate podcast",
+    "regenerate": "Regenerate podcast",
+    "generating": "Writing and recording…",
+    "generatingNote": "Writing the script from the facts, checking it and recording it. This takes about 15 seconds.",
+    "failed": "Something went wrong",
+    "failedReason": "The podcast could not be made ({reason}).",
+    "langs": {
+      "en": "English",
+      "fi": "Finnish"
+    },
+    "desk": {
+      "title": "Daily podcasts",
+      "lead": "Every morning at {time} each team and league below gets a new 20–30 second episode in the chosen languages, when its facts changed since the last one. Episodes appear on the front page.",
+      "loading": "Loading the podcast schedule…",
+      "generateNow": "Generate now",
+      "remove": "Remove {label} from the schedule",
+      "empty": "No teams or leagues scheduled.",
+      "addLabel": "Add a team or league",
+      "add": "Add",
+      "langs": "Languages",
+      "save": "Save schedule",
+      "saved": "Schedule saved.",
+      "generated": "{label}: {n} episodes made.",
+      "runNow": "Run now",
+      "ran": "Daily run finished.",
+      "lastRun": "Last run {time}, {by}.",
+      "by": {
+        "schedule": "scheduled",
+        "newsroom": "started by the newsroom"
+      },
+      "status": {
+        "created": "new episode",
+        "unchanged": "no new facts",
+        "failed": "failed"
+      }
+    }
   }
 }

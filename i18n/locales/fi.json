@@ -469,5 +469,62 @@
       "leagues": "{n} sarjaa | {n} sarja | {n} sarjaa",
       "players": "{n} pelaajaa | {n} pelaaja | {n} pelaajaa"
     }
+  },
+  "podcast": {
+    "title": "Podcastit",
+    "lead": "Päivittäiset 30 sekunnin tekoälyn äänikoosteet joukkueista ja sarjoista, kirjoitettu vahvistetusta otteludatasta ja tarkistettu ennen kuin ne luetaan ääneen.",
+    "matchTitle": "Ottelupodcast",
+    "kinds": {
+      "match": "Ottelu",
+      "team": "Joukkue",
+      "league": "Sarja"
+    },
+    "play": "Toista: {title}",
+    "pause": "Tauko: {title}",
+    "seek": "Kohta jaksossa {title}",
+    "transcript": "Teksti",
+    "made": "Tekoälyn ({model}) kirjoittama {n} vahvistetusta faktasta, tekoälyäänen lukema.",
+    "showFacts": "Näytä faktat",
+    "hideFacts": "Piilota faktat",
+    "open": "Avaa ottelu",
+    "deskLabel": "Toimitus:",
+    "deskHas": "Ottelulla on tekoälypodcast englanniksi ja suomeksi. Luo uudelleen tekee uudet versiot.",
+    "deskNone": "Ottelulla ei ole vielä podcastia. Luo kirjoittaa ottelun faktoista 20–30 sekunnin koosteen ja äänittää sen englanniksi ja suomeksi.",
+    "generate": "Luo podcast",
+    "regenerate": "Luo podcast uudelleen",
+    "generating": "Kirjoitetaan ja äänitetään…",
+    "generatingNote": "Käsikirjoitus kirjoitetaan faktoista, tarkistetaan ja äänitetään. Tämä kestää noin 15 sekuntia.",
+    "failed": "Jokin meni pieleen",
+    "failedReason": "Podcastia ei voitu tehdä ({reason}).",
+    "langs": {
+      "en": "Englanti",
+      "fi": "Suomi"
+    },
+    "desk": {
+      "title": "Päivittäiset podcastit",
+      "lead": "Joka aamu klo {time} jokainen alla oleva joukkue ja sarja saa uuden 20–30 sekunnin jakson valituilla kielillä, jos sen faktat ovat muuttuneet edellisestä. Jaksot näkyvät etusivulla.",
+      "loading": "Ladataan podcastien aikataulua…",
+      "generateNow": "Luo nyt",
+      "remove": "Poista {label} aikataulusta",
+      "empty": "Aikataulussa ei ole joukkueita eikä sarjoja.",
+      "addLabel": "Lisää joukkue tai sarja",
+      "add": "Lisää",
+      "langs": "Kielet",
+      "save": "Tallenna aikataulu",
+      "saved": "Aikataulu tallennettu.",
+      "generated": "{label}: {n} jaksoa tehty.",
+      "runNow": "Aja nyt",
+      "ran": "Päivän ajo valmis.",
+      "lastRun": "Edellinen ajo {time}, {by}.",
+      "by": {
+        "schedule": "ajastettu",
+        "newsroom": "toimituksen käynnistämä"
+      },
+      "status": {
+        "created": "uusi jakso",
+        "unchanged": "ei uusia faktoja",
+        "failed": "epäonnistui"
+      }
+    }
   }
 }

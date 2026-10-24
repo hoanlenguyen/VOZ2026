@@ -54,6 +54,9 @@ export default defineNuxtConfig({
     openaiModel: 'gpt-6-luna',
     openaiBaseUrl: 'https://api.openai.com/v1',
     storyReasoningEffort: 'low',
+    /** AI podcasts: text-to-speech model and voice (OpenAI /v1/audio/speech). */
+    openaiTtsModel: 'gpt-4o-mini-tts',
+    podcastVoice: 'marin',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
     dataMode: 'auto',
     /** Signs the session cookie (NUXT_SESSION_SECRET); a demo secret is used when empty. */
@@ -76,7 +79,14 @@ export default defineNuxtConfig({
       { baseName: 'stories', dir: '../data/stories' },
       // Pre-written AI headlines (npm run warm:stories), read via useStorage('assets:headlines').
       { baseName: 'headlines', dir: '../data/headlines' },
+      // Pre-generated demo podcast episodes (npm run warm:podcasts); their MP3s are in public/podcasts/.
+      { baseName: 'podcasts', dir: '../data/podcasts' },
     ],
+    // Daily AI podcasts (server/tasks/podcasts/daily.ts). On Workers the cron trigger in wrangler.jsonc
+    // fires the scheduled handler, which runs the tasks mapped to that cron here; keep both in step
+    // (and PODCAST_CRON in server/utils/podcast-agent.ts).
+    experimental: { tasks: true },
+    scheduledTasks: { '0 5 * * *': ['podcasts:daily'] },
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
     storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },
     devStorage: { kvcache: { driver: 'memory' } },

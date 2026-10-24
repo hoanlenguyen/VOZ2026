@@ -1,8 +1,9 @@
 <script setup lang="ts">
 // Newsroom dashboard (newsroom accounts): today's front-page stories with their status (live,
 // preview = ready for review, draft, hidden), who can read them and who wrote them; hide / show,
-// data-source health and the AI caches. Hiding a story removes it from the front page and its match
-// page for every reader; "Edit" opens the match story editor (/newsroom/stories/:id).
+// data-source health, the AI caches and the daily AI podcasts. Hiding a story removes it from the
+// front page and its match page for every reader; "Edit" opens the match story editor
+// (/newsroom/stories/:id).
 import { PhArrowSquareOut, PhEye, PhEyeSlash, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news', middleware: 'newsroom' })
@@ -64,6 +65,8 @@ async function toggle(id: string, hidden: boolean) {
         </ul>
         <p v-if="data.missing.length" class="meta">{{ t('newsroom.missing', { list: data.missing.join(', ') }) }}</p>
       </section>
+
+      <NewsPodcastDesk />
 
       <section class="block" aria-labelledby="stories-title">
         <NewsSectionTitle id="stories-title">{{ t('newsroom.storiesTitle') }}</NewsSectionTitle>

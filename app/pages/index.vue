@@ -1,6 +1,6 @@
 <script setup lang="ts">
-// Front page: editorial layout (lead story, side stories, card row, latest list + sidebar),
-// filled with stories generated from live league data.
+// Front page: editorial layout (lead story, side stories, card row, AI podcasts, latest list +
+// sidebar), filled with stories generated from live league data.
 import type { Story } from '#shared/types/stories'
 
 definePageMeta({ layout: 'news' })
@@ -69,6 +69,8 @@ const latest = computed(() => {
       <section v-if="cards.length" class="cards" :aria-label="t('home.moreStories')">
         <NewsStoryCard v-for="s in cards" :key="s.id" :story="s" />
       </section>
+
+      <NewsPodcastShelf />
 
       <div v-if="latest.length || data?.tables.length" class="latest-wrap">
         <section class="latest" aria-labelledby="latest-title">

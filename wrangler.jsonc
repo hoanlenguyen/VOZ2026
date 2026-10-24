@@ -10,6 +10,9 @@
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
+  // Daily AI podcasts at 05:00 UTC (08:00 in Helsinki in summer, 07:00 in winter); nuxt.config
+  // nitro.scheduledTasks maps this cron to the podcasts:daily task.
+  "triggers": { "crons": ["0 5 * * *"] },
   // Upstream response cache shared by all Worker instances (football-data and GNews have tight
   // per-token quotas; per-instance memory caches would each spend them). Nitro storage "kvcache".
   "kv_namespaces": [

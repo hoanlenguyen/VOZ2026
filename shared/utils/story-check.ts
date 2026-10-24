@@ -11,6 +11,8 @@ export interface CheckContext {
   length: StoryLength
   /** Language the story is written in (default English); Finnish uses fewer, longer words. */
   lang?: 'en' | 'fi'
+  /** Word range that replaces the length's (podcast scripts are sized by speaking time). */
+  words?: [number, number]
 }
 
 /** Word-count range per length (body text, headline excluded). */
@@ -136,9 +138,9 @@ export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
   })
 
   const words = draft.sentences.reduce((n, s) => n + s.text.trim().split(/\s+/).length, 0)
-  const [min, max] = (ctx.lang === 'fi' ? LENGTH_WORDS_FI : LENGTH_WORDS)[ctx.length]
+  const [min, max] = ctx.words ?? (ctx.lang === 'fi' ? LENGTH_WORDS_FI : LENGTH_WORDS)[ctx.length]
   if (draft.sentences.length && (words < min || words > max)) {
-    issues.push(`The story has ${words} words; the ${ctx.length} length needs ${min}–${max}.`)
+    issues.push(`The story has ${words} words; ${ctx.words ? 'it' : `the ${ctx.length} length`} needs ${min}–${max}.`)
   }
   return { passed: issues.length === 0, issues, factsUsed: cited.size }
 }

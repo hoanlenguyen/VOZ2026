@@ -1,0 +1,108 @@
+{
+ "id": "match-premier-league-2645271.en",
+ "subjectId": "match-premier-league-2645271",
+ "subject": {
+  "kind": "match",
+  "competitionId": "premier-league",
+  "matchId": "2645271"
+ },
+ "label": "Ipswich–Nott'm Forest",
+ "competitionName": "Premier League",
+ "href": "/match/premier-league/2645271",
+ "lang": "en",
+ "title": "Ipswich and Nott'm Forest share points",
+ "sentences": [
+  {
+   "text": "Nott'm Forest led through Neco Williams in the 13th minute, before Julio Enciso equalised for Ipswich in the 41st.",
+   "facts": [
+    "f7",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neither side scored after half-time.",
+   "facts": [
+    "f3",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Nott'm Forest had 17 shots to Ipswich's 7, but both took a point.",
+   "facts": [
+    "f19",
+    "f2"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Ipswich are 9th on 10 points, and Nott'm Forest are 16th on 6.",
+   "facts": [
+    "f32",
+    "f34"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "intro": "This is VOZ.",
+ "outro": "That is all from VOZ for now, thanks for listening.",
+ "evidence": [
+  {
+   "id": "f2",
+   "section": "result",
+   "text": "The match was a draw; Ipswich and Nott'm Forest took a point each."
+  },
+  {
+   "id": "f3",
+   "section": "result",
+   "text": "Half-time score: Ipswich 1–1 Nott'm Forest."
+  },
+  {
+   "id": "f4",
+   "section": "result",
+   "text": "No goals were scored in the second half."
+  },
+  {
+   "id": "f7",
+   "section": "timeline",
+   "text": "13' Nott'm Forest goal: Neco Williams (assist: Daniel Muñoz), making it 0–1."
+  },
+  {
+   "id": "f9",
+   "section": "timeline",
+   "text": "Julio Enciso's goal in the 41' was an equaliser for Ipswich."
+  },
+  {
+   "id": "f19",
+   "section": "stats",
+   "text": "Shots: Ipswich 7, Nott'm Forest 17."
+  },
+  {
+   "id": "f32",
+   "section": "table",
+   "text": "After this match Ipswich are 9th with 10 points from 8 matches (counted from results up to this game)."
+  },
+  {
+   "id": "f34",
+   "section": "table",
+   "text": "After this match Nott'm Forest are 16th with 6 points from 8 matches (counted from results up to this game)."
+  }
+ ],
+ "factsHash": "1eviyiy",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 8
+ },
+ "audio": {
+  "url": "/podcasts/match-premier-league-2645271.en.mp3",
+  "bytes": 370560,
+  "seconds": 23.2,
+  "voice": "marin",
+  "model": "gpt-4o-mini-tts"
+ },
+ "model": "gpt-6-luna",
+ "trigger": "newsroom",
+ "generatedAt": "2026-10-24T12:23:54.816Z"
+}

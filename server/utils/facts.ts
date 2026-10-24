@@ -302,3 +302,18 @@ export function buildEdgeFacts(c: CompetitionDef, m: Match, season: Match[], sta
   if (wxg != null && lxg != null && wxg < lxg) add(`${W} won although ${L} had more expected goals (${round(lxg, 2)} to ${round(wxg, 2)}).`)
   return facts
 }
+
+/**
+ * The facts the AI headline and podcast writers get: buildFacts() plus the edge facts. Upcoming
+ * games keep only the venue of the result facts; hockey drops buildFacts' football form points
+ * (3/1/0), as the edge facts carry Liiga's. `edge` is returned on its own for cache keys.
+ */
+export function matchFacts(c: CompetitionDef, m: Match, extras: MatchDetailExtras | null, season: Match[]): { facts: Fact[], edge: Fact[] } {
+  const base = buildFacts(c, m, extras, season)
+  const edge = buildEdgeFacts(c, m, season, base.length)
+  const facts = [...base, ...edge].filter((f) => {
+    if (m.status !== 'finished' && f.section === 'result') return f.text.startsWith('Venue')
+    return !(c.sport === 'hockey' && f.section === 'form')
+  })
+  return { facts, edge }
+}

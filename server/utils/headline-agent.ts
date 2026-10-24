@@ -57,14 +57,7 @@ function hash(s: string): string {
 
 function prepare(input: HeadlineInput, lang: Lang): Prepared {
   const { competition: c, match: m, extras, season } = input
-  const base = buildFacts(c, m, extras, season)
-  const edge = buildEdgeFacts(c, m, season, base.length)
-  const facts = [...base, ...edge].filter((f) => {
-    // Upcoming games: of the result facts only the venue applies.
-    if (m.status !== 'finished' && f.section === 'result') return f.text.startsWith('Venue')
-    // buildFacts' form points are football's 3/1/0; for hockey the edge facts carry Liiga's points.
-    return !(c.sport === 'hockey' && f.section === 'form')
-  })
+  const { facts, edge } = matchFacts(c, m, extras, season)
   // The final score keys a finished game (the landing list and the match page agree on it even when
   // one has more detail); an upcoming game is keyed by its pre-match facts, which change with form.
   const state = m.status === 'finished' ? `ft-${m.home.score}-${m.away.score}-${m.finishType ?? ''}` : `pre-${hash(edge.map(f => f.text).join('\n'))}`
