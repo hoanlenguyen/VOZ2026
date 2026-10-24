@@ -43,6 +43,8 @@ export interface MatchStory extends StoryDraft {
   matchKey: string
   length: StoryLength
   tone: StoryTone
+  /** Language of the text; missing in stories written before Finnish existed (= English). */
+  lang?: 'en' | 'fi'
   /** "agent" when the AI story passed the check; "template" when the harness fell back. */
   origin: 'agent' | 'template'
   model: string | null

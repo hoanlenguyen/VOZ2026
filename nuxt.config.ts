@@ -65,6 +65,8 @@ export default defineNuxtConfig({
       { baseName: 'mocks', dir: '../data/mock' },
       // Pre-written AI stories (npm run warm:stories), read via useStorage('assets:stories').
       { baseName: 'stories', dir: '../data/stories' },
+      // Pre-written AI headlines (npm run warm:stories), read via useStorage('assets:headlines').
+      { baseName: 'headlines', dir: '../data/headlines' },
     ],
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
     storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },

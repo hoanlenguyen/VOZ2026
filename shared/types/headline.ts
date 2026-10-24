@@ -13,6 +13,8 @@ export interface HeadlineDraft {
 export interface MatchHeadline {
   matchKey: string
   lang: 'en' | 'fi'
+  /** Match state it was written for: "ft-<home>-<away>-<finish>" or "pre-<hash of the pre-match facts>". */
+  state?: string
   headline: string
   subtitle: string
   /** The cited facts, kept with the headline so its evidence travels with it through the cache. */

@@ -24,18 +24,6 @@ const escape = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 const mentions = (text: string, form: string) => new RegExp(`(^|[^a-z])${escape(form)}([^a-z]|$)`).test(text)
 const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length
 
-const FI_NUMBER_WORDS: Record<string, number> = {
-  kaksi: 2, kolme: 3, nelja: 4, viisi: 5, kuusi: 6, seitseman: 7, kahdeksan: 8, yhdeksan: 9, kymmenen: 10,
-}
-
-/** Numbers in a headline: digits and English number words (story checker) plus Finnish ones. */
-function headlineNumbers(text: string): string[] {
-  const out = numbersIn(text)
-  for (const w of fold(text).match(/[a-z]+/g) ?? []) {
-    if (FI_NUMBER_WORDS[w] !== undefined) out.push(String(FI_NUMBER_WORDS[w]))
-  }
-  return out
-}
 
 function supported(n: string, factNumbers: string[]): boolean {
   const decimals = n.includes('.') ? n.split('.')[1]!.length : 0
@@ -96,8 +84,8 @@ export function checkHeadline(draft: HeadlineDraft, ctx: HeadlineContext): Story
 
   const citedText = known.map(id => byId.get(id)!.text).join(' \n ')
   const citedFolded = fold(citedText)
-  const citedNumbers = headlineNumbers(citedText)
-  for (const n of headlineNumbers(both)) {
+  const citedNumbers = numbersIn(citedText)
+  for (const n of numbersIn(both)) {
     if (!supported(n, citedNumbers)) issues.push(`"${n}" is not in the cited facts (${known.join(', ') || 'none'}).`)
   }
 

@@ -81,7 +81,7 @@ useHead(() => ({
       </header>
 
       <section v-if="finished && data.extras" class="block" aria-labelledby="story-title">
-        <NewsSectionTitle id="story-title">Match story</NewsSectionTitle>
+        <NewsSectionTitle id="story-title">{{ t('matchStory.title') }}</NewsSectionTitle>
         <NewsMatchStory :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
       </section>
 

@@ -143,5 +143,40 @@
     "latest": "Viimeisimmät tulokset",
     "standings": "Sarjataulukko",
     "loadError": "Kohdetta {name} ei voitu ladata: {reason}"
+  },
+  "matchStory": {
+    "title": "Otteluraportti",
+    "length": "Pituus",
+    "short": "Lyhyt",
+    "standard": "Normaali",
+    "long": "Pitkä",
+    "writtenFor": "Kenelle",
+    "neutral": "Neutraali",
+    "fans": "{team}-fanit",
+    "analyst": "Analyytikko",
+    "writing": "Kirjoitetaan tätä versiota otteludatasta… ensimmäisellä kerralla se vie noin 10 sekuntia.",
+    "loadError": "Juttua ei voitu ladata.",
+    "loadErrorReason": "Juttua ei voitu ladata ({reason}).",
+    "retry": "Yritä uudelleen",
+    "factN": "Fakta {n}",
+    "byAgent": "Tekoälyn ({model}) kirjoittama virallisesta otteludatasta · tarkistettu {n} faktaa vasten",
+    "byTemplate": "Koottu otteludatasta (tekoälyjuttu ei ollut saatavilla, joten tässä ovat faktat englanniksi)",
+    "showFacts": "Näytä jutun taustalla olevat faktat",
+    "hideFacts": "Piilota faktat",
+    "how": "Näin juttu tehtiin",
+    "howAgent": "Yksi tekoälyagentti ({model}) luki {n} tarkistettua faktaa ottelusta, kirjoitti jutun, tarkisti jokaisen luvun ja nimen lainaamiaan faktoja vasten ja julkaisi sen. Järjestelmämme tarkisti jutun vielä ennen julkaisua.",
+    "fromCache": "Tämä versio tuli välimuistista.",
+    "howTemplate": "Agentti ei saanut aikaan tarkistuksen läpäisevää juttua ({reason}), joten järjestelmä julkaisi faktat sellaisenaan.",
+    "usage": "{turns} kierrosta · {time} · {tokensIn} tokenia sisään, {tokensOut} ulos",
+    "section": {
+      "result": "Tulos",
+      "timeline": "Tapahtumat",
+      "stats": "Tilastot",
+      "form": "Vire",
+      "table": "Sarjataulukko",
+      "h2h": "Keskinäiset",
+      "context": "Tausta",
+      "edge": "Etulyöntiasema"
+    }
   }
 }

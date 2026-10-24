@@ -5,9 +5,10 @@
 // checkHeadline(); one retry with the problems listed, then give up. Only checked headlines are
 // returned and cached, so a failure always leaves the score/template title in place.
 //
-// Cache: memory -> kvcache (Workers KV in production), shared by the landing page and the match
-// page, so whatever is generated is reused everywhere. Key: prompt version, language, model, match
-// and its state (final score, or a hash of the pre-match facts for upcoming games).
+// Cache: memory -> kvcache (Workers KV in production) -> bundled data/headlines/ (pre-written by
+// `npm run warm:stories`, re-checked against today's facts), shared by the landing page and the
+// match page, so whatever is generated is reused everywhere. Key: prompt version, language, model,
+// match and its state (final score, or a hash of the pre-match facts for upcoming games).
 
 import type { H3Event } from 'h3'
 import type { CompetitionDef } from '#shared/utils/competitions'
@@ -37,6 +38,8 @@ export interface HeadlineInput {
 
 interface Prepared extends HeadlineInput {
   key: string
+  state: string
+  lang: Lang
   facts: Fact[]
   names: string[]
   teams: string[]
@@ -66,7 +69,7 @@ function prepare(input: HeadlineInput, lang: Lang): Prepared {
   // one has more detail); an upcoming game is keyed by its pre-match facts, which change with form.
   const state = m.status === 'finished' ? `ft-${m.home.score}-${m.away.score}-${m.finishType ?? ''}` : `pre-${hash(edge.map(f => f.text).join('\n'))}`
   const key = `hl:${HEADLINE_PROMPT_VERSION}:${lang}:${llmConfig().model}:${c.id}:${m.id}:${state}`
-  return { ...input, key, facts, names: factNames(m, extras), teams: [m.home.shortName, m.away.shortName, m.home.name, m.away.name] }
+  return { ...input, key, state, lang, facts, names: factNames(m, extras), teams: [m.home.shortName, m.away.shortName, m.home.name, m.away.name] }
 }
 
 function underRateLimit(): boolean {
@@ -132,6 +135,7 @@ async function write(p: Prepared, lang: Lang): Promise<MatchHeadline | null> {
       return {
         matchKey: p.match.key,
         lang,
+        state: p.state,
         headline: draft.headline,
         subtitle: draft.subtitle,
         evidence: p.facts.filter(f => ids.has(f.id)),
@@ -155,8 +159,21 @@ async function lookup(p: Prepared): Promise<MatchHeadline | null> {
   const mem = memory.get(p.key)
   if (mem) return mem
   const kv = await useStorage('kvcache').getItem<MatchHeadline>(p.key).catch(() => null)
-  if (kv) remember(p.key, kv)
-  return kv
+  if (kv) {
+    remember(p.key, kv)
+    return kv
+  }
+  // Pre-written for the demo: only for the same match state and model (any model without a key),
+  // and only while its cited facts still read the same and it passes the check.
+  const bundled = await useStorage('assets:headlines').getItem<MatchHeadline>(`${p.competition.id}:${p.match.id}.${p.lang}.json`).catch(() => null)
+  const { key, model } = llmConfig()
+  if (!bundled || bundled.state !== p.state || (key && bundled.model !== model)) return null
+  const byId = new Map(p.facts.map(f => [f.id, f.text]))
+  const sameFacts = bundled.evidence.every(e => byId.get(e.id) === e.text)
+  const draft = { headline: bundled.headline, subtitle: bundled.subtitle, facts: bundled.evidence.map(e => e.id) }
+  if (!sameFacts || !checkHeadline(draft, { facts: p.facts, names: p.names, teams: p.teams, lang: p.lang }).passed) return null
+  remember(p.key, bundled)
+  return bundled
 }
 
 /** A cached headline, or null; never calls the model. */

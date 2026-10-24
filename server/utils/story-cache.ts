@@ -1,13 +1,15 @@
 // Story cache for the demo, fastest first:
 //   1. memory   - per server instance, instant
 //   2. kvcache  - Workers KV in production (shared by all instances), memory in dev
-//   3. bundled  - stories pre-written by `npm run warm:stories` into data/stories/, shipped with the
+//   3. bundled  - stories pre-written by `npm run warm:stories` into data/stories/ (<variant>.json in
+//                 English, <variant>.fi.json in Finnish), shipped with the
 //                 app, so the demo is instant from the first click even offline or without a key.
 //                 They are re-checked against today's facts before use.
 //   4. agent    - written now; concurrent requests for the same story share one run.
 // Only stories written by the agent that passed the check are cached; template fallbacks are not.
 
 import type { Fact, MatchStory, StoryLength, StoryTone } from '#shared/types/story'
+import type { Lang } from '#shared/utils/format'
 
 const PROMPT_VERSION = 'v1'
 const memory = new Map<string, MatchStory>()
@@ -28,6 +30,7 @@ export interface StoryRequest {
   matchId: string
   length: StoryLength
   tone: StoryTone
+  lang: Lang
   facts: Fact[]
   names: string[]
   generate: () => Promise<MatchStory>
@@ -36,7 +39,8 @@ export interface StoryRequest {
 }
 
 export async function cachedStory(req: StoryRequest): Promise<{ story: MatchStory, cached: 'memory' | 'kv' | 'bundled' | false }> {
-  const variant = `${req.length}-${req.tone}`
+  // English keys and files keep their original names, so stories written before Finnish stay valid.
+  const variant = `${req.length}-${req.tone}${req.lang === 'fi' ? '.fi' : ''}`
   const key = `story:${PROMPT_VERSION}:${req.competitionId}:${req.matchId}:${variant}:${hash(JSON.stringify(req.facts) + llmConfig().model)}`
 
   if (!req.fresh) {
@@ -53,7 +57,7 @@ export async function cachedStory(req: StoryRequest): Promise<{ story: MatchStor
     // model writes its own (without an API key, any checked pre-written story beats none).
     const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${variant}.json`).catch(() => null)
     const sameModel = bundled?.model === llmConfig().model || !llmConfig().key
-    if (bundled?.origin === 'agent' && sameModel && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length }).passed) {
+    if (bundled?.origin === 'agent' && sameModel && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length, lang: req.lang }).passed) {
       memory.set(key, bundled)
       return { story: bundled, cached: 'bundled' }
     }
