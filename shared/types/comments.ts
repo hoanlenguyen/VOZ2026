@@ -24,6 +24,21 @@ export interface Engagement {
   likes: number
 }
 
+/** Where a (mock) social post came from. */
+export type SocialPlatform = 'instagram' | 'tiktok' | 'facebook' | 'threads' | 'x'
+
+/** A mock social-media post about the match, shown in the discussion with its platform (demo only). */
+export interface SocialComment {
+  id: string
+  platform: SocialPlatform
+  /** Invented handle, never a real account. */
+  handle: string
+  name: string
+  text: string
+  at: string
+  likes: number
+}
+
 export interface Discussion {
   comments: PublicComment[]
   storyLikedByMe: boolean

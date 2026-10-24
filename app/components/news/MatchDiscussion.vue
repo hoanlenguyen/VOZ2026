@@ -4,7 +4,7 @@
 // newsroom also hides, shows and deletes any comment and posts with a "VOZ newsroom" badge. Free
 // and signed-out readers get the totals, a read-only preview of the newest comments and an invitation.
 import { PhChatCircle, PhHeart, PhLockSimple } from '@phosphor-icons/vue'
-import type { Discussion, Engagement, PublicComment } from '#shared/types/comments'
+import type { Discussion, Engagement, PublicComment, SocialComment } from '#shared/types/comments'
 
 const props = defineProps<{ competitionId: string, matchId: string, engagement: Engagement }>()
 const emit = defineEmits<{ engagement: [Engagement] }>()
@@ -77,6 +77,10 @@ async function likeComment(c: PublicComment) {
 }
 const remove = (c: PublicComment) => act(`/comments/${c.id}`, {}, 'DELETE')
 const hide = (c: PublicComment) => act(`/comments/${c.id}/hide`, { hidden: !c.hidden })
+// Mock social-media posts about the match (demo), shown to everyone with their platform.
+const { data: social } = useLazyFetch<{ posts: SocialComment[] }>(() => `${base.value}/social`, { server: false })
+const PLATFORM: Record<SocialComment['platform'], string> = { instagram: 'Instagram', tiktok: 'TikTok', facebook: 'Facebook', threads: 'Threads', x: 'X' }
+const { stamp, number } = useFormat()
 const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.fullPath}#discussion` } }))
 </script>
 
@@ -96,7 +100,34 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
       </button>
       <span v-else class="total"><PhHeart :size="20" weight="bold" aria-hidden="true" /> {{ t('discussion.likes', { n: totals.likes }, totals.likes) }}</span>
       <span class="total"><PhChatCircle :size="20" weight="bold" aria-hidden="true" /> {{ t('discussion.comments', { n: totals.comments }, totals.comments) }}</span>
+      <span class="share-slot"><NewsShareMenu :text="t('share.discussionText')" :label="t('share.discussionLabel')" /></span>
     </div>
+
+    <!-- Mock social-media posts (demo): everyone sees them, each with the platform it "came from". -->
+    <section v-if="social?.posts.length" class="social" aria-labelledby="social-title">
+      <h3 id="social-title" class="social-title">{{ t('social.title') }}</h3>
+      <p class="social-note">{{ t('social.mockNote') }}</p>
+      <ol class="social-list">
+        <li v-for="p in social.posts" :key="p.id" class="social-post">
+          <NewsSocialIcon :platform="p.platform" :size="36" />
+          <div class="social-body">
+            <p class="social-meta">
+              <strong class="social-name">{{ p.name }}</strong>
+              <span>{{ p.handle }}</span>
+              <span aria-hidden="true">·</span>
+              <span>{{ t('social.via', { platform: PLATFORM[p.platform] }) }}</span>
+              <span aria-hidden="true">·</span>
+              <time class="num" :datetime="p.at">{{ stamp(p.at) }}</time>
+            </p>
+            <p class="social-text">{{ p.text }}</p>
+            <div class="social-actions">
+              <span class="social-likes num"><PhHeart :size="14" weight="bold" aria-hidden="true" />{{ number(p.likes) }}</span>
+              <NewsShareMenu compact align="start" :text="`${p.handle}: ${p.text}`" :label="t('share.postLabel', { name: p.name })" />
+            </div>
+          </div>
+        </li>
+      </ol>
+    </section>
 
     <template v-if="can.premium">
       <form class="composer" @submit.prevent="post">
@@ -168,6 +199,19 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
 .like:hover { background: var(--surface); }
 .like[aria-pressed="true"] { color: var(--loss); border-color: var(--loss); }
 
+.share-slot { margin-left: auto; }
+.social { margin: 0 0 24px; padding: 16px; border: 1px solid var(--line-strong); border-radius: 8px; }
+.social-title { margin: 0; font-size: 16px; font-weight: 700; color: var(--headline); }
+.social-note { margin: 2px 0 8px; font-size: 12px; color: var(--meta); }
+.social-list { list-style: none; margin: 0; padding: 0; }
+.social-post { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+.social-post:first-child { border-top: 0; }
+.social-body { flex: 1 1 auto; min-width: 0; }
+.social-meta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 13px; color: var(--meta); }
+.social-name { font-size: 14px; color: var(--headline); }
+.social-text { margin: 4px 0 0; font-size: 15px; line-height: 1.55; color: var(--text-2); overflow-wrap: anywhere; }
+.social-actions { margin-top: 2px; display: flex; align-items: center; gap: 8px; }
+.social-likes { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: var(--summary); }
 .composer { display: flex; flex-direction: column; gap: 8px; }
 .composer textarea {
   width: 100%; padding: 12px 14px; border: 1px solid var(--border-control); border-radius: 4px; resize: vertical;

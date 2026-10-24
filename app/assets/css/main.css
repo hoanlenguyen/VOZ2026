@@ -58,6 +58,14 @@
   --win: #1E7B3A;
   --draw: #6B7079;
   --loss: #C62828;
+  /* social platforms (mock social posts, share menu): white icon on each, all >= 4.5:1 */
+  --brand-instagram: #C13584;
+  --brand-tiktok: #111111;
+  --brand-facebook: #1463D1;
+  --brand-threads: #111111;
+  --brand-x: #111111;
+  --brand-whatsapp: #128C4A;
+  --on-brand: #FFFFFF;
 
   --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;

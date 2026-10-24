@@ -149,7 +149,6 @@
     "after": "After the match",
     "opens": "(opens {source} in a new tab)",
     "unavailable": "News is unavailable right now.",
-    "sourceNote": "News covers pre-match and post-match reporting; live updates stay on the match page. Team summaries are cached for up to 24 hours and refreshed sooner if the source changes.",
     "translated": "Translated automatically",
     "original": "Original headline",
     "intro": "Match reports and updates on each team. Open a team headline for its AI summary.",
@@ -159,7 +158,6 @@
     "liveNote": "Pre-match sources retained during play. Follow this match page for live updates.",
     "preMatchTeam": "Pre-match coverage · Form, players & injuries",
     "postMatchTeam": "Post-match coverage · Form, players & injuries",
-    "teamGap": "{count} of 3 recent, verified team updates available.",
     "empty": "No verified news is available for this match yet.",
     "retry": "Try again",
     "topics": {
@@ -783,5 +781,23 @@
     "facts": "Match facts ({n})",
     "pressNote": "Attached as links only; the story uses none of their text.",
     "howMade": "How this was made ({turns} turns, {s} s)"
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share to",
+    "copyLink": "Copy link",
+    "copyLinkShort": "copies link",
+    "more": "More…",
+    "copied": "Link copied.",
+    "copiedFor": "Link copied. Paste it in {app}.",
+    "copyFailed": "Could not copy the link.",
+    "discussionText": "Join the match discussion on VOZ",
+    "discussionLabel": "Share this discussion",
+    "postLabel": "Share {name}'s post"
+  },
+  "social": {
+    "title": "On social media",
+    "mockNote": "Mock posts for the demo: invented fans and handles, not real accounts.",
+    "via": "via {platform}"
   }
 }

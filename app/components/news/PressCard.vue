@@ -53,7 +53,6 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
           <h3 :id="`news-${matchId}-${group.key}`" class="group-title">{{ group.title }}</h3>
           <p class="group-subtitle">{{ t(data.newsPhase === 'post-match' ? 'press.postMatchTeam' : 'press.preMatchTeam') }}</p>
           <NewsArticleSummary v-for="article in group.articles" :key="`${matchId}-${group.key}-${article.id}-${article.contentHash ?? ''}-${data.match.status}-${locale}`" :article="article" :panel-id="`summary-${matchId}-${group.key}-${article.id}`" :summary-available="data.summaryAvailable" :paused="data.match.status === 'live'" />
-          <p v-if="group.articles.length < 3" class="empty">{{ t('press.teamGap', { count: group.articles.length }) }}</p>
         </section>
       </div>
       <p v-if="!matchArticles.length && !teamGroups.length" class="empty">{{ t('press.empty') }}</p>
@@ -62,7 +61,6 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
       {{ t('press.unavailable') }}
       <button type="button" class="retry" @click="refresh()">{{ t('press.retry') }}</button>
     </div>
-    <p class="source-note">{{ t('press.sourceNote') }}</p>
   </section>
 </template>
 
@@ -88,7 +86,6 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
 .item:first-child { padding-top: 0; }
 .item:last-child { border-bottom: 0; }
 .empty { margin: 0; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--summary); font-size: 14px; }
-.source-note { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
 
 .skeleton { display: flex; flex-direction: column; gap: 8px; }
 .sk { display: block; height: 14px; border-radius: 4px; background: var(--surface); }

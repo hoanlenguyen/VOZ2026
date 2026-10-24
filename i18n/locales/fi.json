@@ -149,7 +149,6 @@
     "after": "Ottelun jälkeen",
     "opens": "(avaa lähteen {source} uudessa välilehdessä)",
     "unavailable": "Uutiset eivät ole juuri nyt saatavilla.",
-    "sourceNote": "Uutiset käsittelevät ottelun ennakkoa ja jälkitunnelmia. Live-tilannetta seurataan ottelusivulla. Joukkueuutisten tiivistelmät säilytetään välimuistissa enintään 24 tuntia ja päivitetään aiemmin, jos lähde muuttuu.",
     "translated": "Konekäännös",
     "original": "Alkuperäinen otsikko",
     "intro": "Otteluraportit ja joukkueiden uutiset. Avaa joukkueen uutisotsikko lukeaksesi tekoälytiivistelmän.",
@@ -159,7 +158,6 @@
     "liveNote": "Ennen ottelua julkaistut lähteet säilyvät ottelun aikana. Seuraa live-tilannetta tällä ottelusivulla.",
     "preMatchTeam": "Ennen ottelua · Vire, pelaajat ja loukkaantumiset",
     "postMatchTeam": "Ottelun jälkeen · Vire, pelaajat ja loukkaantumiset",
-    "teamGap": "Saatavilla {count}/3 tuoretta, tarkistettua joukkueuutista.",
     "empty": "Tälle ottelulle ei ole vielä tarkistettuja uutisia.",
     "retry": "Yritä uudelleen",
     "topics": {
@@ -783,5 +781,23 @@
     "facts": "Ottelun faktat ({n})",
     "pressNote": "Liitetty vain linkkeinä; juttu ei käytä niiden tekstiä.",
     "howMade": "Näin tämä tehtiin ({turns} kierrosta, {s} s)"
+  },
+  "share": {
+    "button": "Jaa",
+    "title": "Jaa palveluun",
+    "copyLink": "Kopioi linkki",
+    "copyLinkShort": "kopioi linkin",
+    "more": "Lisää…",
+    "copied": "Linkki kopioitu.",
+    "copiedFor": "Linkki kopioitu. Liitä se palveluun {app}.",
+    "copyFailed": "Linkin kopiointi epäonnistui.",
+    "discussionText": "Tule mukaan ottelukeskusteluun VOZissa",
+    "discussionLabel": "Jaa tämä keskustelu",
+    "postLabel": "Jaa käyttäjän {name} julkaisu"
+  },
+  "social": {
+    "title": "Sosiaalisessa mediassa",
+    "mockNote": "Demon testijulkaisuja: keksittyjä faneja ja tunnuksia, ei oikeita tilejä.",
+    "via": "{platform}"
   }
 }
