@@ -10,19 +10,29 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `npm run snapshot -- [--only liiga|football-data] [--details] [--competitions PL,BL1]` — save upstream
   responses to `data/snapshots/<provider>/` for offline demos (football: ~6.5 s per request, free-plan limit)
 
+## Deployment
+- Cloudflare Workers, auto-deployed by `.github/workflows/deploy.yml` on push to `main` (typecheck → build → `wrangler deploy`).
+- Nitro preset `cloudflare_module` (nuxt.config); Worker config in `wrangler.jsonc` (`deployConfig: false`, so this file is the only config).
+- Workers has no filesystem: snapshots are Nitro server assets (`useStorage('assets:snapshots')`); per-game Liiga files are excluded from the bundle.
+- API keys are Worker secrets uploaded by the workflow from GitHub secrets; new secrets must be added to the workflow's `secrets:` list and `env:` block.
+- Read env only inside request handlers (Workers provides it per request). Local Workers test: `npm run preview` with `.dev.vars`.
+- Keep `compatibility_date` within what the pinned wrangler's runtime supports (wrangler 4.152.0 ⇒ 2026-10-01 works).
+
 ## Environment (`.env`, see `.env.example`)
 - `NUXT_LIIGA_API_KEY` — Liiga stats API, sent as `x-api-key`
 - `NUXT_FOOTBALL_DATA_TOKEN` — football-data.org, sent as `X-Auth-Token`; free plan = TIER_ONE competitions, 10 requests/minute
+- `NUXT_GNEWS_API_KEY` — GNews headline search (sent as `apikey` query param, redacted from errors); free plan 100 requests/day, ~1 request/s
 - `NUXT_DATA_MODE=live|auto|snapshot` — upstream only / upstream with snapshot fallback / offline only
 
 ## Architecture
 - `shared/types/sports.ts` — sport-agnostic types (Competition, TeamListItem, Match, ScoringEvent, StandingRow). The app and AI work only with these.
 - `shared/utils/competitions.ts` — every competition we cover; adding a league of an existing provider is one entry
 - `server/providers/<provider>.ts` — one per data source; implements `SportProvider` (`server/providers/types.ts`) and maps raw JSON → shared types
-- `server/utils/upstream.ts` — the only place that calls external APIs: keys, cache, rate limit, snapshot fallback
+- `server/utils/upstream.ts` — the only place that calls external APIs (`UpstreamId` = sports providers + `gnews`): keys, cache, rate limit, snapshot fallback. Query-string keys go in `authQuery` so they never reach cache keys, snapshot names or logs.
 - `server/utils/sports.ts` — provider registry and the `[competition]` route helper
 - API: `/api/landing`, `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id}`, `/api/health`, dev-only `/api/raw/:provider/*`
 - `server/utils/compare.ts` — match-page comparison: goals by period, `MatchTeam.stats` (Liiga: shots, puck control, faceoffs, passes, PIM, … from `games/{season}/{id}/stats`), and both teams' season record before kick-off counted from results (points/goals reconcile with the official tables); returned as `compare` by `/api/competitions/:competition/matches/:id`
+- `server/utils/press.ts` — "What the press says": GNews search by both team names (ASCII-folded; GNews rejects non-ASCII) in a window around kick-off, kept only if headline/description names both teams; returns headline, source, link only (never description/content/images). Endpoint `/api/competitions/:competition/matches/:id/press`, loaded client-side by `NewsPressCard`.
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
 - Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`

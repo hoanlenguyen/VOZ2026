@@ -81,6 +81,8 @@ useHead(() => ({
         </ol>
       </section>
       <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">Goal scorers are not included in this data plan.</p>
+
+      <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
     </template>
   </main>
 </template>

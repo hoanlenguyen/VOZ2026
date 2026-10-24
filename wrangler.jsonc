@@ -1,0 +1,18 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "voz",
+  // Built by `nuxt build` (Nitro preset cloudflare_module, see nuxt.config.ts)
+  "main": "./.output/server/index.mjs",
+  "assets": {
+    "directory": "./.output/public",
+    "binding": "ASSETS"
+  },
+  "compatibility_date": "2026-10-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": { "enabled": true },
+  // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY),
+  // set by the deploy workflow from GitHub secrets; locally they come from .dev.vars.
+  "vars": {
+    "NUXT_DATA_MODE": "auto"
+  }
+}

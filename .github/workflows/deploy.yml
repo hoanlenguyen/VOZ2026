@@ -1,0 +1,57 @@
+# Builds and deploys VOZ to Cloudflare Workers on every push to main (and on demand).
+# Required GitHub repository secrets:
+#   CLOUDFLARE_API_TOKEN      API token with "Edit Cloudflare Workers" permissions
+#   CLOUDFLARE_ACCOUNT_ID     Cloudflare account id
+#   NUXT_LIIGA_API_KEY        Liiga stats API key           -> Worker secret
+#   NUXT_FOOTBALL_DATA_TOKEN  football-data.org token       -> Worker secret
+#   NUXT_GNEWS_API_KEY        GNews API key (press headlines) -> Worker secret
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build (Nitro preset cloudflare_module)
+        run: npm run build
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # Use the wrangler version pinned in package.json
+          wranglerVersion: '4.152.0'
+          command: deploy
+          # Uploaded as Worker secrets; values come from the env block below
+          secrets: |
+            NUXT_LIIGA_API_KEY
+            NUXT_FOOTBALL_DATA_TOKEN
+            NUXT_GNEWS_API_KEY
+        env:
+          NUXT_LIIGA_API_KEY: ${{ secrets.NUXT_LIIGA_API_KEY }}
+          NUXT_FOOTBALL_DATA_TOKEN: ${{ secrets.NUXT_FOOTBALL_DATA_TOKEN }}
+          NUXT_GNEWS_API_KEY: ${{ secrets.NUXT_GNEWS_API_KEY }}
