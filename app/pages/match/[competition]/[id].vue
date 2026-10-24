@@ -161,6 +161,10 @@ useHead(() => ({
         <NewsAdCard v-for="kind in (['shop', 'event', 'league'] as const)" :key="kind" :kind="kind" />
       </div>
     </aside>
+    <!-- The big advertiser's post: left of the article on wide screens, after the other ads otherwise. -->
+    <aside v-if="can.ads" class="left-ad" :aria-label="t('ads.label')">
+      <NewsAdTall />
+    </aside>
     </div>
   </main>
 </template>
@@ -168,17 +172,20 @@ useHead(() => ({
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
-/* The article stays centred on the screen; the league table hangs to its right when there is room
-   (columns: space | article | table), and sits below the article otherwise. */
+/* The article stays centred on the screen; the big ad sits to its left and the league table (with
+   the smaller ads) to its right when there is room (columns: ad | article | table); below the
+   article otherwise. */
 .layout { display: grid; gap: 48px; }
 .article { min-width: 0; }
 .sidebar { min-width: 0; }
+.left-ad { min-width: 0; }
 .ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 1400px) {
   .wrap { max-width: none; }
   .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }
-  .article { grid-column: 2; }
-  .sidebar { grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
+  .article { grid-column: 2; grid-row: 1; }
+  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: calc(100% - 32px); max-width: 300px; margin-right: 32px; padding-top: 16px; }
+  .sidebar { grid-row: 1; grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
   .wrap > .back, .wrap > .notice, .wrap > .preview-banner { margin-left: calc(50% - 380px); }
   .wrap > .notice, .wrap > .preview-banner { max-width: 760px; }
 }

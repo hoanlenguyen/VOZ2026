@@ -494,6 +494,17 @@
       "title": "Ilmoita joukkueesi",
       "text": "Viikoittainen vitosfutisliiga tiistai-iltaisin. Kaikki tasot, uusi kausi alkaa marraskuussa.",
       "cta": "Liity liigaan"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Kävele tunnelista",
+      "text": "Kurkista stadionin kulisseihin: viikonloppukierrokset oppaan kanssa, joka on nähnyt kaiken.",
+      "points": {
+        "tunnel": "Kävele ulos pelaajatunnelista",
+        "dugout": "Istu vaihtopenkillä ja lehdistötilassa",
+        "museum": "Pokaalit ja pelipaidat seuran museossa"
+      },
+      "cta": "Varaa kierros"
     }
   }
 }

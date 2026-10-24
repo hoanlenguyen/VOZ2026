@@ -494,6 +494,17 @@
       "title": "Sign up your team",
       "text": "Weekly five-a-side league on Tuesday evenings. All levels, new season starts in November.",
       "cta": "Join the league"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Walk the tunnel",
+      "text": "Go behind the scenes at the stadium: weekend tours with a guide who has seen it all.",
+      "points": {
+        "tunnel": "Walk out through the players' tunnel",
+        "dugout": "Sit in the dugout and the press room",
+        "museum": "Trophies and shirts in the club museum"
+      },
+      "cta": "Book a tour"
     }
   }
 }
