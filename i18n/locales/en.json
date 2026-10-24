@@ -45,7 +45,9 @@
   "story": {
     "result": "Result",
     "preview": "Preview",
-    "auto": "Written automatically from official match data"
+    "auto": "Written automatically from official match data",
+    "edited": "Edited by the VOZ newsroom",
+    "plus": "Plus"
   },
   "table": {
     "title": "{league} table",
@@ -94,7 +96,10 @@
       "penalty": "penalty shot",
       "own-goal": "own goal",
       "game-winner": "game-winner"
-    }
+    },
+    "article": "From the newsroom",
+    "articleBy": "By {name} · {time}",
+    "articlePlus": "For subscribers"
   },
   "timeline": {
     "shown": "Events shown",
@@ -222,13 +227,54 @@
     "ok": "OK",
     "down": "Down",
     "storiesTitle": "Front-page stories",
-    "storiesLead": "Hidden stories disappear from the front page for every reader. Showing them again puts them back.",
+    "storiesLead": "Edit rewrites a story and its match-page article, for everyone or for subscribers only. Hidden stories disappear from the front page for every reader; Show puts them back.",
     "hide": "Hide",
     "show": "Show",
     "hiddenBadge": "Hidden",
     "liveBadge": "Live",
     "open": "Open",
     "missing": "Unavailable leagues: {list}",
-    "loadError": "The newsroom data could not be loaded ({reason})."
+    "loadError": "The newsroom data could not be loaded ({reason}).",
+    "edit": "Edit",
+    "editedBadge": "Edited",
+    "plusBadge": "Subscribers"
+  },
+  "editor": {
+    "pageTitle": "Edit story – VOZ Newsroom",
+    "back": "Newsroom",
+    "title": "Edit story",
+    "langName": {
+      "en": "English",
+      "fi": "Finnish"
+    },
+    "language": "You are editing the {lang} version.",
+    "lastSaved": "Last published by {name}, {time}.",
+    "automatic": "Currently the automatic story from match data.",
+    "headline": "Headline",
+    "summary": "Front-page summary",
+    "summaryHint": "Shown under the headline on the front page. Plain text.",
+    "body": "Article",
+    "bodyHint": "Shown on the match page under the scoreboard. Leave empty for no article.",
+    "audience": "Who can read the article",
+    "audiences": {
+      "everyone": {
+        "label": "Everyone",
+        "text": "Free and signed-out readers included."
+      },
+      "subscribers": {
+        "label": "Subscribers only",
+        "text": "Others see the opening lines and the subscription offer."
+      }
+    },
+    "publish": "Publish",
+    "revert": "Revert to automatic",
+    "view": "View match page",
+    "saved": {
+      "everyone": "Published for everyone.",
+      "subscribers": "Published for subscribers."
+    },
+    "reverted": "Reverted: readers see the automatic story again.",
+    "saveError": "Could not publish ({reason}).",
+    "loadError": "The story could not be loaded ({reason})."
   }
 }

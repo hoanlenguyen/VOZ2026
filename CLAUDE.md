@@ -53,7 +53,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
   - Stories show only on match pages with full data (`data.extras`), i.e. mock matches today. Cost per version ≈ $0.001 (3 turns, ~5k tokens in / 700 out).
   - Before reading the OpenAI API shape from memory, check the docs: Responses API `/v1/responses`, `tool_choice: required`, function outputs as `function_call_output` items, reasoning/call items passed back verbatim, `store: false`.
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
-- Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/login`, `/account`, `/newsroom`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
+- Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/login`, `/account`, `/newsroom`, `/newsroom/stories/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`
 - `shared/utils/` must stay free of Nuxt imports: `scripts/` runs it with plain Node (type stripping)
 
@@ -85,6 +85,9 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - The paywall is enforced on the server: for free and signed-out readers the match API sends `compare: null`, `extras: null`, `locked: [...]` and a `teaser` (headline + two sentences of an already cached or pre-written AI story via `peekStory()`, never a new agent run; translated for fi). The story endpoint answers 401/403.
   `NewsPaywall` shows the teaser fading into the subscription offer.
 - Readers see only the match story text; the length/perspective switches, AI label, facts and "How this was made" in `MatchStory.vue` are newsroom tools.
+- Newsroom story editor: `/newsroom/stories/:id` (TinyMCE 8, self-hosted and bundled in `NewsRichEditor` (`.client`), `license_key: 'gpl'`) edits a front-page story's headline, summary and a match-page article, per language, with audience `everyone` (free and signed-out included) or `subscribers`.
+  `server/utils/story-edits.ts` stores edits in `kvcache` (`newsroom:story-edits:<lang>`) and sanitises the body with an allowlist (`xss`) on save; the match page renders it with `v-html`, so keep the TinyMCE toolbar, `valid_elements` and the allowlist in step.
+  API `GET/PUT/DELETE /api/newsroom/stories/:id`; `/api/landing` applies edits (`Story.edited`), `?edits=off` (newsroom) returns the generated text. The match API sends `article`, or for a locked subscriber article `locked: ['article', …]` and a teaser with `source: 'newsroom'`.
 - Newsroom: `/newsroom` (middleware `newsroom`) shows front-page stories with hide/show (`server/utils/moderation.ts`, stored in `kvcache`; `/api/landing` drops hidden stories, `?moderation=all` for newsroom), data-source health and AI cache counts.
 
 ## Score semantics (important for the fact ledger)

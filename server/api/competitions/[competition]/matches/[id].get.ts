@@ -25,8 +25,17 @@ export default defineEventHandler(async (event) => {
   setResponseHeader(event, 'cache-control', 'private, no-store')
   // Locked readers see the AI story's headline and opening two sentences, fading into the offer.
   // Only from stories that already exist (cache / pre-written), so a free reader never starts the agent.
-  let teaser: { headline: string, text: string, translated: boolean } | null = null
-  if (!entitlements.premium && extras && match.status === 'finished') {
+  let teaser: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null = null
+  // The newsroom's article: open to everyone or to subscribers only, as the editor chose.
+  const article = await articleForMatch(match.key, lang)
+  const articleLocked = article?.audience === 'subscribers' && !entitlements.premium
+  if (articleLocked) {
+    // Opening two sentences of the article's paragraphs (headings and list items left out).
+    const text = [...article.body.matchAll(/<p>(.*?)<\/p>/gs)].map(m => plainText(m[1]!)).join(' ')
+    const sentences = text.match(/[^.!?]+[.!?]+/g)
+    teaser = { headline: article.headline, text: sentences ? sentences.slice(0, 2).join('').trim() : text.slice(0, 240), translated: false, source: 'newsroom' }
+  }
+  if (!teaser && !entitlements.premium && extras && match.status === 'finished') {
     const hit = await peekStory({
       competitionId: def.id, matchId: match.id, length: 'standard', tone: 'neutral',
       facts: buildFacts(def, match, extras, season ?? []), names: factNames(match, extras),
@@ -35,11 +44,12 @@ export default defineEventHandler(async (event) => {
       const parts = [hit.story.headline, hit.story.sentences.slice(0, 2).map(s => s.text).join(' ')]
       // Stories are written in English; other languages go through the cached translation agent.
       const [headline, text] = lang === 'en' ? parts.map(p => ({ text: p, translated: false })) : await translateTexts(parts, lang)
-      teaser = { headline: headline!.text, text: text!.text, translated: headline!.translated || text!.translated }
+      teaser = { headline: headline!.text, text: text!.text, translated: headline!.translated || text!.translated, source: 'ai' }
     }
   }
   return {
     teaser,
+    article: articleLocked ? null : article,
     competition: describeCompetition(def, lang),
     match,
     compare: entitlements.premium ? compare : null,
@@ -48,6 +58,7 @@ export default defineEventHandler(async (event) => {
     locked: entitlements.premium
       ? []
       : [
+          ...(articleLocked ? ['article' as const] : []),
           ...(extras && match.status === 'finished' ? ['story' as const] : []),
           ...(compare ? ['compare' as const] : []),
           ...(extras?.timeline.length ? ['timeline' as const] : []),

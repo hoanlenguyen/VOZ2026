@@ -16,6 +16,31 @@ export interface Story {
   match: Pick<Match, 'sport' | 'home' | 'away' | 'shootout' | 'finishType' | 'status' | 'start'>
   /** Ordering weight: higher is more prominent. */
   weight: number
+  /** Set when a newsroom editor rewrote the story (headline / summary come from the edit). */
+  edited?: { by: string, at: string, audience: ArticleAudience }
+}
+
+/** Who may read a newsroom article on the match page: everyone, or subscribers (premium) only. */
+export type ArticleAudience = 'everyone' | 'subscribers'
+
+/** A newsroom editor's version of a front-page story, per language. `body` is sanitised HTML. */
+export interface StoryEdit {
+  headline: string
+  summary: string
+  body: string
+  audience: ArticleAudience
+  /** Editor's display name. */
+  by: string
+  at: string
+}
+
+/** The editor's article as the match page shows it. */
+export interface NewsroomArticle {
+  headline: string
+  body: string
+  audience: ArticleAudience
+  by: string
+  at: string
 }
 
 export interface TickerFixture {

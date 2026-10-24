@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Newsroom dashboard (newsroom accounts): today's front-page stories with hide / show, data-source
-// health and the AI caches. Hiding a story removes it from the front page for every reader.
-import { PhArrowSquareOut, PhEye, PhEyeSlash } from '@phosphor-icons/vue'
+// health and the AI caches. Hiding a story removes it from the front page for every reader;
+// "Edit" opens the story editor (/newsroom/stories/:id).
+import { PhArrowSquareOut, PhEye, PhEyeSlash, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news', middleware: 'newsroom' })
 const { t, locale } = useI18n()
@@ -65,10 +66,16 @@ async function toggle(id: string, hidden: boolean) {
                 <span>{{ t(`story.${s.kind}`) }}</span><span aria-hidden="true">·</span>
                 <span class="num">{{ stamp(s.time) }}</span>
                 <span class="badge-s" :class="s.hidden ? 'badge-s--hidden' : 'badge-s--live'">{{ s.hidden ? t('newsroom.hiddenBadge') : t('newsroom.liveBadge') }}</span>
+                <span v-if="s.edited" class="badge-s badge-s--edited">{{ t('newsroom.editedBadge') }}</span>
+                <span v-if="s.edited?.audience === 'subscribers'" class="badge-s badge-s--plus">{{ t('newsroom.plusBadge') }}</span>
               </p>
               <p class="headline">{{ s.headline }}</p>
             </div>
             <div class="actions">
+              <NuxtLink :to="`/newsroom/stories/${encodeURIComponent(s.id)}`" class="edit">
+                <PhPencilSimple :size="16" weight="bold" aria-hidden="true" />
+                {{ t('newsroom.edit') }}<span class="sr-only">: {{ s.headline }}</span>
+              </NuxtLink>
               <NuxtLink :to="s.href" class="icon-btn" :aria-label="`${t('newsroom.open')}: ${s.headline}`"><PhArrowSquareOut :size="18" weight="bold" aria-hidden="true" /></NuxtLink>
               <button
                 type="button" class="toggle" :disabled="busy === s.id" :aria-pressed="s.hidden"
@@ -113,6 +120,14 @@ async function toggle(id: string, hidden: boolean) {
 .badge-s { margin-left: 4px; padding: 1px 8px; border-radius: 999px; font-size: 10px; }
 .badge-s--live { background: var(--win); color: var(--board-text); }
 .badge-s--hidden { background: var(--loss); color: var(--board-text); }
+.badge-s--edited { margin-left: 0; background: var(--surface-2); color: var(--headline); }
+.badge-s--plus { margin-left: 0; background: var(--accent); color: var(--on-accent); }
+.edit {
+  min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  font-size: 13px; font-weight: 700; color: var(--headline); text-decoration: none;
+}
+.edit:hover { background: var(--surface); color: var(--link-hover); }
+.edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .actions { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; }
 .icon-btn { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 4px; color: var(--summary); }
 .icon-btn:hover { background: var(--surface); color: var(--link-hover); }

@@ -56,6 +56,19 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <!-- The newsroom's article (sanitised on save, server/utils/story-edits.ts); subscriber-only
+           articles reach other readers only as the paywall teaser. -->
+      <article v-if="data.article" class="block article" aria-labelledby="article-title">
+        <NewsSectionTitle id="article-title">{{ t('match.article') }}</NewsSectionTitle>
+        <p class="article-kicker">
+          <span v-if="data.article.audience === 'subscribers'" class="plus">{{ t('match.articlePlus') }} · </span>
+          {{ t('match.articleBy', { name: data.article.by, time: fmt.stamp(data.article.at) }) }}
+        </p>
+        <h2 class="article-headline">{{ data.article.headline }}</h2>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div class="article-body" v-html="data.article.body" />
+      </article>
+
       <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" />
 
       <section v-if="finished && data.extras" class="block" aria-labelledby="story-title">
@@ -145,6 +158,17 @@ useHead(() => ({
 
 .block { margin-top: 50px; }
 .source { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
+
+.article-kicker { margin: 0; font-size: 13px; color: var(--meta); }
+.plus { font-weight: 700; color: var(--accent-ink); }
+.article-headline { margin: 6px 0 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.29; font-weight: 700; color: var(--headline); }
+.article-body { margin-top: 14px; font-size: 17px; line-height: 1.65; color: var(--text-2); }
+.article-body :deep(p), .article-body :deep(ul), .article-body :deep(ol) { margin: 0 0 16px; }
+.article-body :deep(h2) { margin: 28px 0 10px; font-size: 22px; line-height: 1.3; color: var(--headline); }
+.article-body :deep(h3) { margin: 24px 0 8px; font-size: 18px; line-height: 1.35; color: var(--headline); }
+.article-body :deep(blockquote) { margin: 0 0 16px; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent); color: var(--headline); font-style: italic; }
+.article-body :deep(a) { color: var(--link-hover); }
+.article-body :deep(li) { margin-bottom: 6px; }
 
 .goals { list-style: none; margin: 0; padding: 0; }
 .goal {

@@ -45,7 +45,9 @@
   "story": {
     "result": "Tulos",
     "preview": "Ennakko",
-    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta"
+    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
+    "edited": "VOZ:n toimituksen muokkaama",
+    "plus": "Plus"
   },
   "table": {
     "title": "{league} – sarjataulukko",
@@ -94,7 +96,10 @@
       "penalty": "rangaistuslaukaus",
       "own-goal": "oma maali",
       "game-winner": "voittomaali"
-    }
+    },
+    "article": "Toimitukselta",
+    "articleBy": "{name} · {time}",
+    "articlePlus": "Tilaajille"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -222,13 +227,54 @@
     "ok": "OK",
     "down": "Poissa",
     "storiesTitle": "Etusivun jutut",
-    "storiesLead": "Piilotettu juttu katoaa etusivulta kaikilta lukijoilta. Näytä palauttaa sen.",
+    "storiesLead": "Muokkaa-painikkeella kirjoitat jutun ja sen ottelusivun artikkelin kaikille tai vain tilaajille. Piilotettu juttu katoaa etusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
     "hide": "Piilota",
     "show": "Näytä",
     "hiddenBadge": "Piilotettu",
     "liveBadge": "Näkyvissä",
     "open": "Avaa",
     "missing": "Ei saatavilla: {list}",
-    "loadError": "Toimituksen tietoja ei voitu ladata ({reason})."
+    "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
+    "edit": "Muokkaa",
+    "editedBadge": "Muokattu",
+    "plusBadge": "Tilaajat"
+  },
+  "editor": {
+    "pageTitle": "Muokkaa juttua – VOZ-toimitus",
+    "back": "Toimitus",
+    "title": "Muokkaa juttua",
+    "langName": {
+      "en": "englanninkielistä",
+      "fi": "suomenkielistä"
+    },
+    "language": "Muokkaat {lang} versiota.",
+    "lastSaved": "Viimeksi julkaissut {name}, {time}.",
+    "automatic": "Nyt näkyvissä otteludatasta kirjoitettu automaattinen juttu.",
+    "headline": "Otsikko",
+    "summary": "Etusivun tiivistelmä",
+    "summaryHint": "Näkyy otsikon alla etusivulla. Pelkkää tekstiä.",
+    "body": "Artikkeli",
+    "bodyHint": "Näkyy ottelusivulla tulostaulun alla. Jätä tyhjäksi, jos artikkelia ei tarvita.",
+    "audience": "Kuka voi lukea artikkelin",
+    "audiences": {
+      "everyone": {
+        "label": "Kaikki",
+        "text": "Myös maksuttomat ja kirjautumattomat lukijat."
+      },
+      "subscribers": {
+        "label": "Vain tilaajat",
+        "text": "Muut näkevät alun ja tilaustarjouksen."
+      }
+    },
+    "publish": "Julkaise",
+    "revert": "Palauta automaattinen",
+    "view": "Näytä ottelusivu",
+    "saved": {
+      "everyone": "Julkaistu kaikille.",
+      "subscribers": "Julkaistu tilaajille."
+    },
+    "reverted": "Palautettu: lukijat näkevät taas automaattisen jutun.",
+    "saveError": "Julkaisu epäonnistui ({reason}).",
+    "loadError": "Juttua ei voitu ladata ({reason})."
   }
 }

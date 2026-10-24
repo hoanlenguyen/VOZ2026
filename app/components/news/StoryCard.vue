@@ -16,13 +16,17 @@ const { stamp } = useFormat()
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
+        <template v-if="story.edited?.audience === 'subscribers'">
+          <span aria-hidden="true">·</span><span class="plus">{{ t('story.plus') }}</span>
+        </template>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ story.headline }}</NuxtLink>
       </h3>
       <p v-if="variant === 'row'" class="stamp num">{{ stamp(story.time) }}</p>
       <p v-if="(variant === 'lead' || variant === 'row') && story.summary" class="summary">{{ story.summary }}</p>
-      <p v-if="variant === 'lead'" class="auto">
+      <p v-if="variant === 'lead' && story.edited" class="auto">{{ t('story.edited') }}</p>
+      <p v-else-if="variant === 'lead'" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
         {{ t('story.auto') }}
       </p>
@@ -44,6 +48,7 @@ const { stamp } = useFormat()
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }
 .stamp { margin: 0; font-size: 12px; color: var(--meta); }
 .summary { margin: 0; font-size: 14px; line-height: 1.5; color: var(--summary); }
+.plus { color: var(--accent-ink); }
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
 
 .story--lead { gap: 15px; }
