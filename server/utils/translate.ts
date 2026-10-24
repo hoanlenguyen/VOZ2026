@@ -1,5 +1,5 @@
-// Translation agent for text VOZ does not write itself (other outlets' headlines), via Hugging Face
-// Inference Providers (OpenAI-compatible router, model from NUXT_HF_MODEL).
+// Translation agent for text VOZ does not write itself (other outlets' headlines), via the OpenAI
+// Responses API client shared with the story agent (server/utils/llm.ts; NUXT_OPENAI_API_KEY / NUXT_OPENAI_MODEL).
 // - Every result is cached in "kvcache" (Workers KV in production, memory in dev) for 30 days, and
 //   concurrent requests for the same text share one call: a text is sent to the model only once.
 // - All uncached texts of a request go in one chat call.
@@ -16,7 +16,6 @@ export interface Translation {
 }
 
 const TTL_SECONDS = 30 * 86_400
-const TIMEOUT_MS = 8_000
 const MAX_CALLS_PER_MINUTE = 20
 const LANGUAGE: Record<Lang, string> = { en: 'English', fi: 'Finnish' }
 
@@ -44,8 +43,7 @@ function underRateLimit(): boolean {
 
 /** One chat call for a batch of texts; null when the call fails or the answer does not fit. */
 async function callModel(texts: string[], target: Lang): Promise<string[] | null> {
-  const { hfToken, hfModel, hfBaseUrl } = useRuntimeConfig()
-  if (!hfToken || !underRateLimit()) return null
+  if (!llmConfig().key || !underRateLimit()) return null
   const system = [
     `Translate each sports news headline into ${LANGUAGE[target]}.`,
     'Keep team, player, club and competition names unchanged. Keep every number and score exactly as written.',
@@ -54,18 +52,10 @@ async function callModel(texts: string[], target: Lang): Promise<string[] | null
   ].join(' ')
   console.info(`[translate] model call: ${texts.length} text(s) -> ${target}`)
   try {
-    const res = await $fetch<{ choices?: Array<{ message?: { content?: string } }> }>(`${hfBaseUrl}/chat/completions`, {
-      method: 'POST',
-      headers: { Authorization: `Bearer ${hfToken}` },
-      body: {
-        model: hfModel,
-        temperature: 0,
-        reasoning_effort: 'low',
-        messages: [{ role: 'system', content: system }, { role: 'user', content: JSON.stringify(texts) }],
-      },
-      timeout: TIMEOUT_MS,
-    })
-    const content = res.choices?.[0]?.message?.content ?? ''
+    const res = await respond({ instructions: system, input: [{ role: 'user', content: JSON.stringify(texts) }], tools: [] })
+    // The answer is the output_text of the "message" item (a "reasoning" item comes before it).
+    const message = res.output.find(o => 'type' in o && o.type === 'message') as { content?: Array<{ type: string, text?: string }> } | undefined
+    const content = message?.content?.find(c => c.type === 'output_text')?.text ?? ''
     const json = JSON.parse(content.slice(content.indexOf('{'), content.lastIndexOf('}') + 1)) as { translations?: unknown }
     const out = json.translations
     return Array.isArray(out) && out.length === texts.length && out.every(t => typeof t === 'string') ? out as string[] : null
@@ -79,9 +69,9 @@ async function callModel(texts: string[], target: Lang): Promise<string[] | null
 /** Translates texts into `target`, from cache where possible. Order and length match `texts`. */
 export async function translateTexts(texts: string[], target: Lang): Promise<Translation[]> {
   if (!texts.length) return []
-  const { hfModel } = useRuntimeConfig()
+  const { model } = llmConfig()
   const storage = useStorage('kvcache')
-  const keys = await Promise.all(texts.map(async t => `tr:v1:${target}:${hfModel}:${await sha256(t)}`))
+  const keys = await Promise.all(texts.map(async t => `tr:v1:${target}:${model}:${await sha256(t)}`))
   const results = new Map<string, Promise<string | null>>()
 
   // 1. Cache hits and calls already in flight.
