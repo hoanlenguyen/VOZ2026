@@ -38,14 +38,13 @@ function load() {
 }
 watch(data, load, { immediate: true })
 
-// The AI story readers would get (standard, neutral): previewed here, and the starting point for an edit.
+// The AI story readers would get (standard, neutral): the starting point for an edit.
 const matchPath = computed(() => data.value?.story.href.replace('/match/', '/api/competitions/').replace(/\/(\d+)$/, '/matches/$1'))
+const matchId = computed(() => data.value?.story.href.split('/').pop() ?? '')
 const ai = ref<StoryResponse | null>(null)
-const aiStatus = ref<'idle' | 'pending' | 'error'>('idle')
+// Same request as the preview below, so it comes from the story cache.
 async function loadAiStory() {
-  aiStatus.value = 'pending'
   ai.value = await $fetch<StoryResponse>(`${matchPath.value}/story`, { query: { lang: locale.value } }).catch(() => null)
-  aiStatus.value = ai.value ? 'idle' : 'error'
 }
 onMounted(() => { if (data.value?.matchStory.available) void loadAiStory() })
 const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -156,13 +155,10 @@ async function revert() {
 
           <div v-if="storyForm.mode === 'ai'" class="preview" aria-live="polite">
             <p class="preview-label">{{ t('editor.aiPreview') }}</p>
-            <p v-if="aiStatus === 'pending'" class="hint">{{ t('editor.aiLoading') }}</p>
-            <p v-else-if="aiStatus === 'error'" class="hint">{{ t('editor.aiError') }}</p>
-            <template v-else-if="ai">
-              <p class="preview-headline">{{ ai.story.headline }}</p>
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <div class="preview-body" v-html="aiHtml" />
-            </template>
+            <NewsMatchStory
+              :competition-id="data.story.competitionId" :match-id="matchId"
+              :home="data.story.match.home.shortName" :away="data.story.match.away.shortName" preview
+            />
           </div>
 
           <template v-if="storyForm.mode === 'edited'">
@@ -238,9 +234,7 @@ async function revert() {
 .link-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .preview { margin-top: 16px; padding: 16px 18px; border-radius: 4px; background: var(--surface); }
 .preview-label { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
-.preview-headline { margin: 0 0 8px; font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--headline); }
-.preview-body { font-size: 15px; line-height: 1.6; color: var(--text-2); }
-.preview-body :deep(p) { margin: 0 0 10px; }
+.preview :deep(.headline) { font-size: 20px; }
 .bar { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .primary, .secondary {
   min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px;

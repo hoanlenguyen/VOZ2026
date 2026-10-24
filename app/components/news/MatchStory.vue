@@ -4,7 +4,9 @@
 import { PhArrowClockwise, PhCheckCircle, PhListChecks, PhSparkle } from '@phosphor-icons/vue'
 import type { Fact, StoryLength, StoryResponse, StoryTone } from '#shared/types/story'
 
-const props = defineProps<{ competitionId: string, matchId: string, home: string, away: string }>()
+// `preview`: the newsroom editor's view of what readers get (standard, neutral): no format
+// switches, facts and references open.
+const props = defineProps<{ competitionId: string, matchId: string, home: string, away: string, preview?: boolean }>()
 
 // Readers get the story itself (standard, neutral). The format switches and the evidence
 // (AI label, facts behind each sentence, "How this was made") are newsroom tools.
@@ -13,7 +15,7 @@ const { locale } = useI18n()
 const editor = computed(() => can.value.newsroom)
 const length = ref<StoryLength>('standard')
 const tone = ref<StoryTone>('neutral')
-const showFacts = ref(false)
+const showFacts = ref(props.preview)
 const activeSentence = ref<number | null>(null)
 
 const LENGTHS: Array<{ id: StoryLength, label: string }> = [
@@ -56,7 +58,7 @@ function toggleSentence(i: number) {
 
 <template>
   <div class="story-block">
-    <div v-if="editor" class="controls">
+    <div v-if="editor && !preview" class="controls">
       <fieldset class="seg">
         <legend class="seg-label">Length</legend>
         <label v-for="l in LENGTHS" :key="l.id" class="seg-option">

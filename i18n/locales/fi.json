@@ -300,8 +300,6 @@
       }
     },
     "aiPreview": "Lukijoiden näkemä tekoälyn raportti",
-    "aiLoading": "Ladataan tekoälyn raporttia… ensimmäinen kerta kestää noin 10 sekuntia.",
-    "aiError": "Tekoälyn raporttia ei voitu ladata.",
     "storyHeadline": "Raportin otsikko",
     "startFromAi": "Aloita tekoälyn raportista",
     "storyBody": "Raportin teksti",

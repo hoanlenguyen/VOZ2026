@@ -300,8 +300,6 @@
       }
     },
     "aiPreview": "AI story readers get",
-    "aiLoading": "Loading the AI story… the first time takes about 10 seconds.",
-    "aiError": "The AI story could not be loaded.",
     "storyHeadline": "Story headline",
     "startFromAi": "Start from the AI story",
     "storyBody": "Story text",
