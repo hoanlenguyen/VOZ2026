@@ -87,3 +87,10 @@ test('Finnish: number words and claims are checked too', () => {
   assert.match(checkHeadline({ ...ok, subtitle: "Nott'm Forest voitti viisi peliä peräkkäin ja nousi kärkeen Ipswichiä vastaan.", facts: ['f1'] }, fi).issues.join(' '), /"5"/)
   assert.match(checkHeadline({ ...ok, headline: "Nott'm Forest teki ennätyksen Ipswichissä" }, fi).issues.join(' '), /a record/)
 })
+
+test('Finnish: decimals need a comma', () => {
+  const fi = { ...ctx, facts: [...facts, { id: 'f7', section: 'stats', text: "Expected goals (xG): Ipswich 0.46, Nott'm Forest 2.29." }], lang: 'fi' as const }
+  const draft = (xg: string) => ({ headline: 'Ipswich ja Nott\'m Forest jakavat pisteet', subtitle: `Nott'm Forest vei maaliodottaman ${xg}, mutta ottelu päättyi Ipswichissä tasan.`, facts: ['f1', 'f7'] })
+  assert.match(checkHeadline(draft('2.29–0.46'), fi).issues.join(' '), /decimals use a comma \("2,29"\)/)
+  assert.equal(checkHeadline(draft('2,29–0,46'), fi).passed, true, checkHeadline(draft('2,29–0,46'), fi).issues.join('\n'))
+})

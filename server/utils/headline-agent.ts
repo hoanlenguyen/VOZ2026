@@ -19,7 +19,7 @@ import type { Lang } from '#shared/utils/format'
 import type { ResponseItem } from './llm'
 
 /** Bump after changing the instructions or the facts the writer gets: it invalidates cached headlines. */
-const HEADLINE_PROMPT_VERSION = 'v1'
+const HEADLINE_PROMPT_VERSION = 'v2'
 const TTL_FINISHED = 30 * 86_400
 const TTL_UPCOMING = 2 * 86_400
 const MAX_CALLS_PER_MINUTE = 30
@@ -96,7 +96,7 @@ Style:
 - Name teams exactly as written in the facts${lang === 'fi' ? ' and keep them in the basic form, without case endings (write "HIFK kaatoi Kärpät", not "HIFK:n" or "Kärppien")' : ''}.
 
 Accuracy (a checker rejects anything else):
-- Every number and every person you mention must appear in a fact you cite. Write numbers as digits. Never compute new numbers.
+- Every number and every person you mention must appear in a fact you cite. Write numbers as digits${lang === 'fi' ? ', with a decimal comma (2,29, not 2.29)' : ''}. Never compute new numbers.
 - No quotes, speech, injuries, emotions, crowd reactions, or anything about earlier seasons ("history", "record") unless a cited fact says it.
 - Words like comeback, streak, unbeaten, upset, revenge, late winner, top of the table need a cited fact that states exactly that.
 

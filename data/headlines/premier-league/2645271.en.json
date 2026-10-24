@@ -1,0 +1,31 @@
+{
+ "matchKey": "premier-league:2645271",
+ "lang": "en",
+ "state": "ft-1-1-regulation",
+ "headline": "Ipswich and Nott'm Forest share points after Enciso equaliser",
+ "subtitle": "Julio Enciso levelled in the 41st minute, and no goals followed; Nott'm Forest led the expected-goals count 2.29 to 0.46.",
+ "evidence": [
+  {
+   "id": "f4",
+   "section": "result",
+   "text": "No goals were scored in the second half."
+  },
+  {
+   "id": "f8",
+   "section": "timeline",
+   "text": "41' Ipswich goal: Julio Enciso, making it 1–1."
+  },
+  {
+   "id": "f9",
+   "section": "timeline",
+   "text": "Julio Enciso's goal in the 41' was an equaliser for Ipswich."
+  },
+  {
+   "id": "f17",
+   "section": "stats",
+   "text": "Expected goals (xG): Ipswich 0.46, Nott'm Forest 2.29."
+  }
+ ],
+ "model": "gpt-6-luna",
+ "generatedAt": "2026-10-24T11:30:13.125Z"
+}

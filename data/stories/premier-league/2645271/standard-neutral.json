@@ -2,85 +2,82 @@
  "matchKey": "premier-league:2645271",
  "length": "standard",
  "tone": "neutral",
- "generatedAt": "2026-10-24T09:37:44.200Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:30:48.014Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
    "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
-   "ms": 1124
+   "ms": 973
   },
   {
    "turn": 2,
    "tool": "check_story",
    "summary": "Draft checked: passed (13 facts cited)",
-   "ms": 3668
+   "ms": 5339
   },
   {
    "turn": 3,
    "tool": "submit_story",
    "summary": "Submitted: passed the final check (13 facts cited)",
-   "ms": 3069
+   "ms": 3000
   }
  ],
  "usage": {
-  "inputTokens": 5247,
-  "outputTokens": 666,
+  "inputTokens": 5315,
+  "outputTokens": 738,
   "turns": 3,
-  "ms": 7861
+  "ms": 9313
  },
- "headline": "Ipswich and Nottingham Forest share points after 1–1 draw",
+ "headline": "Ipswich and Nottingham Forest share points after first-half goals",
  "sentences": [
   {
-   "text": "Ipswich Town and Nottingham Forest shared the points after a 1–1 draw in their Premier League matchweek 8 meeting at Portman Road.",
+   "text": "Ipswich Town and Nott'm Forest drew 1–1 in their Premier League matchweek 8 meeting, with both goals arriving before half-time.",
    "facts": [
     "f1",
-    "f2",
-    "f6"
+    "f3",
+    "f4"
    ],
    "paragraph": 1
   },
   {
-   "text": "Neco Williams put Nottingham Forest ahead in the 13th minute, with Daniel Muñoz providing the assist.",
+   "text": "Neco Williams put Nott'm Forest ahead in the 13th minute, assisted by Daniel Muñoz, before Julio Enciso equalised for Ipswich in the 41st.",
    "facts": [
-    "f7"
-   ],
-   "paragraph": 1
-  },
-  {
-   "text": "Ipswich levelled before half-time when Julio Enciso scored in the 41st minute.",
-   "facts": [
+    "f7",
     "f8",
     "f9"
    ],
    "paragraph": 1
   },
   {
-   "text": "The score remained unchanged after the break, with neither side finding a second-half goal.",
+   "text": "The sides went in level at 1–1, and neither found a second-half goal.",
    "facts": [
+    "f3",
     "f4"
    ],
    "paragraph": 1
   },
   {
-   "text": "Nottingham Forest had the greater attacking output, recording 17 shots to Ipswich's 7 and 2.29 expected goals to 0.46.",
+   "text": "Nott'm Forest had the greater attacking volume, recording 17 shots to Ipswich's 7 and 5 shots on target to 3.",
    "facts": [
-    "f17",
-    "f19"
+    "f19",
+    "f20"
    ],
    "paragraph": 2
   },
   {
-   "text": "Forest also had 5 corners to Ipswich's 0, while possession was nearly even at 50.6% to 49.4%.",
+   "text": "The visitors also registered 2.29 expected goals against Ipswich's 0.46, despite possession being almost even at 50.6% to 49.4%.",
    "facts": [
     "f16",
-    "f22"
+    "f17"
    ],
    "paragraph": 2
   },
   {
-   "text": "The draw lifted Ipswich to 9th with 10 points, while Nottingham Forest moved to 16th with 6 points.",
+   "text": "The draw gave Ipswich a point and left them 9th on 10 points, while Nott'm Forest moved to 16th on 6 points.",
    "facts": [
+    "f2",
     "f32",
     "f34"
    ],

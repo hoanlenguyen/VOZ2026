@@ -2,41 +2,49 @@
  "matchKey": "premier-league:2645271",
  "length": "standard",
  "tone": "home-fan",
- "generatedAt": "2026-10-24T09:37:53.487Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:30:57.002Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
    "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
-   "ms": 1058
+   "ms": 1213
   },
   {
    "turn": 2,
    "tool": "check_story",
    "summary": "Draft checked: passed (14 facts cited)",
-   "ms": 4947
+   "ms": 4419
   },
   {
    "turn": 3,
    "tool": "submit_story",
    "summary": "Submitted: passed the final check (14 facts cited)",
-   "ms": 3257
+   "ms": 3337
   }
  ],
  "usage": {
-  "inputTokens": 5284,
-  "outputTokens": 699,
+  "inputTokens": 5268,
+  "outputTokens": 666,
   "turns": 3,
-  "ms": 9262
+  "ms": 8970
  },
- "headline": "Enciso earns Ipswich a point, but Forest pressure tells",
+ "headline": "Enciso rescues a point as Ipswich hold on at Portman Road",
  "sentences": [
   {
-   "text": "Ipswich Town had to settle for a point at Portman Road, but Julio Enciso’s 41st-minute equaliser ensured a deserved share of the spoils after Nott'm Forest struck first.",
+   "text": "Ipswich Town earned a 1–1 draw with Nottingham Forest at Portman Road, taking a point after a match that was level by half-time.",
    "facts": [
     "f1",
     "f2",
-    "f6",
+    "f3",
+    "f6"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, but Julio Enciso struck in the 41st to restore parity.",
+   "facts": [
     "f7",
     "f8",
     "f9"
@@ -44,24 +52,15 @@
    "paragraph": 1
   },
   {
-   "text": "Neco Williams put the visitors ahead in the 13th minute, and Ipswich showed resilience to reach half-time level.",
+   "text": "The second half brought no further goals, and Ipswich had to settle for a share of the points.",
    "facts": [
-    "f3",
-    "f7",
-    "f8"
+    "f4",
+    "f2"
    ],
    "paragraph": 1
   },
   {
-   "text": "The second half brought no further goals, leaving the teams with a 1–1 draw.",
-   "facts": [
-    "f1",
-    "f4"
-   ],
-   "paragraph": 1
-  },
-  {
-   "text": "There is plenty to value in the point, though Forest had the clearer attacking threat: they led 17–7 on shots and 2.29–0.46 on expected goals.",
+   "text": "There is reason to value the result, but Forest created the clearer danger: they had 17 shots to Ipswich’s 7 and an xG of 2.29 against 0.46.",
    "facts": [
     "f17",
     "f19"
@@ -69,19 +68,18 @@
    "paragraph": 2
   },
   {
-   "text": "Ipswich had 49% possession and goalkeeper saves were 3–2 in their favour, but Forest also had 5 corners to Ipswich’s 0.",
+   "text": "Ipswich’s goalkeeper made 3 saves, while the visitors had 5 corners and 2 big chances to Ipswich’s 1.",
    "facts": [
-    "f16",
+    "f21",
     "f22",
     "f26"
    ],
    "paragraph": 2
   },
   {
-   "text": "The result moves Ipswich up to 9th with 10 points from 8 matches, a useful reward for an afternoon that demanded a strong response after conceding.",
+   "text": "The point lifts Ipswich to 9th with 10 points from 8 matches, a solid return for supporters to take from a hard-fought evening.",
    "facts": [
-    "f32",
-    "f7"
+    "f32"
    ],
    "paragraph": 2
   }

@@ -2,46 +2,48 @@
  "matchKey": "premier-league:2645271",
  "length": "short",
  "tone": "away-fan",
- "generatedAt": "2026-10-24T09:37:29.939Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:30:32.616Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
-   "summary": "Read 39 facts (result, timeline, stats, form, table, context)",
-   "ms": 965
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1909
   },
   {
    "turn": 2,
    "tool": "check_story",
-   "summary": "Draft checked: passed (6 facts cited)",
-   "ms": 3693
+   "summary": "Draft checked: passed (7 facts cited)",
+   "ms": 2573
   },
   {
    "turn": 3,
    "tool": "submit_story",
-   "summary": "Submitted: passed the final check (6 facts cited)",
-   "ms": 2071
+   "summary": "Submitted: passed the final check (7 facts cited)",
+   "ms": 2324
   }
  ],
  "usage": {
-  "inputTokens": 5089,
-  "outputTokens": 459,
+  "inputTokens": 5164,
+  "outputTokens": 404,
   "turns": 3,
-  "ms": 6730
+  "ms": 6806
  },
- "headline": "Forest leave Ipswich with a point after dominant attacking display",
+ "headline": "Forest leave Ipswich with a point after dominant display",
  "sentences": [
   {
-   "text": "Nott'm Forest had to settle for a 1–1 draw at Ipswich, but their attacking numbers offered plenty of encouragement.",
+   "text": "Nott'm Forest took a point from Ipswich in a 1–1 draw, but will rue not turning their attacking edge into a win.",
    "facts": [
     "f1",
+    "f2",
     "f17",
     "f19"
    ],
    "paragraph": 1
   },
   {
-   "text": "Neco Williams put Forest ahead in the 13th minute, only for Julio Enciso to equalise before half-time; neither side scored after the break.",
+   "text": "Neco Williams put Forest ahead in the 13th minute, only for Julio Enciso to level in the 41st; neither side scored after the break.",
    "facts": [
     "f7",
     "f8",
@@ -50,10 +52,11 @@
    "paragraph": 1
   },
   {
-   "text": "Forest registered 17 shots and 2.29 expected goals to Ipswich's 7 and 0.46, but could not turn that edge into a winner.",
+   "text": "Forest finished with 17 shots and 2.29 xG to Ipswich's 7 and 0.46, yet had to settle for a draw.",
    "facts": [
     "f17",
-    "f19"
+    "f19",
+    "f2"
    ],
    "paragraph": 1
   }
@@ -63,7 +66,7 @@
  "check": {
   "passed": true,
   "issues": [],
-  "factsUsed": 6
+  "factsUsed": 7
  },
  "fallbackReason": null
 }
