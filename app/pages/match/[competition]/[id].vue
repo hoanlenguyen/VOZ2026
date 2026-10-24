@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Match page: scoreboard, then a side-by-side comparison counted from the season's results.
 // The AI match story is built in Phase 2.
-import { PhCaretLeft } from '@phosphor-icons/vue'
+import { PhCaretLeft, PhSparkle } from '@phosphor-icons/vue'
+import type { HeadlineResponse } from '#shared/types/headline'
 
 definePageMeta({ layout: 'news' })
 
@@ -18,6 +19,13 @@ const periodLine = computed(() => {
   if (m.sport === 'football') return t('match.halfTime', { score: `${m.periods[0]!.home}–${m.periods[0]!.away}` })
   return t('match.periods', { list: m.periods.map(p => `${p.home}–${p.away}`).join(', ') })
 })
+// AI title + subtitle, loaded in the browser (a first-time write takes a few seconds); until then,
+// and whenever there is none, the score is the title.
+const { data: aiData } = useLazyFetch<HeadlineResponse>(
+  () => `/api/competitions/${route.params.competition}/matches/${route.params.id}/headline`,
+  { query: { lang: locale }, server: false },
+)
+const ai = computed(() => aiData.value?.headline ?? null)
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -45,7 +53,14 @@ useHead(() => ({
           </template>
           <span aria-hidden="true">·</span><span class="num">{{ fmt.stamp(match.start) }}</span>
         </p>
-        <h1 class="title num">
+        <template v-if="ai">
+          <h1 class="title">{{ keepScoresTogether(ai.headline) }}</h1>
+          <p class="dek">{{ keepScoresTogether(ai.subtitle) }}</p>
+          <p class="scoreline num">
+            {{ match.home.shortName }} {{ finished ? fmt.score(match) : t('visual.vs') }} {{ match.away.shortName }}
+          </p>
+        </template>
+        <h1 v-else class="title num">
           {{ match.home.shortName }} {{ finished ? fmt.score(match) : t('visual.vs') }} {{ match.away.shortName }}
         </h1>
         <p class="meta num">
@@ -53,6 +68,15 @@ useHead(() => ({
           <template v-if="match.venue"><span v-if="periodLine" aria-hidden="true"> · </span>{{ match.venue }}</template>
           <template v-if="match.attendance"> · {{ t('match.spectators', { n: fmt.number(match.attendance) }) }}</template>
         </p>
+        <details v-if="ai" class="ai-note">
+          <summary>
+            <PhSparkle :size="13" weight="fill" aria-hidden="true" />
+            {{ t('match.aiHeadline', { n: ai.evidence.length }, ai.evidence.length) }}
+          </summary>
+          <ul class="evidence" :aria-label="t('match.aiEvidence')">
+            <li v-for="f in ai.evidence" :key="f.id">{{ f.text }}</li>
+          </ul>
+        </details>
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
@@ -138,6 +162,18 @@ useHead(() => ({
 }
 .title { margin: 10px 0 0; font-size: clamp(26px, 4vw, 36px); line-height: 1.22; font-weight: 700; color: var(--headline); }
 .meta { margin: 10px 0 0; font-size: 14px; color: var(--summary); }
+.dek { margin: 12px auto 0; max-width: 640px; font-size: 18px; line-height: 1.5; font-weight: 500; color: var(--text-2); }
+.scoreline { margin: 14px 0 0; font-size: 20px; font-weight: 700; color: var(--headline); }
+.ai-note { margin: 12px auto 0; max-width: 640px; font-size: 12px; color: var(--meta); }
+.ai-note summary {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; list-style: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.ai-note summary::-webkit-details-marker { display: none; }
+.ai-note summary:hover { color: var(--link-hover); }
+.ai-note summary:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 2px; border-radius: 4px; }
+.evidence { margin: 0; padding: 0 0 0 18px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--summary); }
+.evidence li + li { margin-top: 4px; }
 .visual { margin-top: 20px; }
 @media (min-width: 640px) { .visual { aspect-ratio: 21 / 9; } }
 
