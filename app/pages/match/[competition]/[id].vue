@@ -164,14 +164,18 @@ useHead(() => ({
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
-/* Article plus the league table: side by side when there is room, the table below otherwise. */
+/* The article stays centred on the screen; the league table hangs to its right when there is room
+   (columns: space | article | table), and sits below the article otherwise. */
 .layout { display: grid; gap: 48px; }
 .article { min-width: 0; }
 .sidebar { min-width: 0; }
-@media (min-width: 1140px) {
-  .wrap { max-width: calc(760px + 340px + 48px + 2 * 30px); }
-  .layout { grid-template-columns: minmax(0, 760px) 340px; align-items: start; }
-  .sidebar { padding-top: 16px; }
+@media (min-width: 1400px) {
+  .wrap { max-width: none; }
+  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }
+  .article { grid-column: 2; }
+  .sidebar { grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
+  .wrap > .back, .wrap > .notice, .wrap > .preview-banner { margin-left: calc(50% - 380px); }
+  .wrap > .notice, .wrap > .preview-banner { max-width: 760px; }
 }
 
 .back {

@@ -53,7 +53,12 @@
     "played": "Ottelut",
     "playedShort": "O",
     "points": "Pisteet",
-    "pointsShort": "P"
+    "pointsShort": "P",
+    "movement": "Muutos edellisestä ottelusta",
+    "up": "Noussut {n} sijaa | Noussut {n} sijan | Noussut {n} sijaa",
+    "down": "Laskenut {n} sijaa | Laskenut {n} sijan | Laskenut {n} sijaa",
+    "same": "Ei muutosta",
+    "movementMock": "Demodata: edellisen ottelun tulos puuttuu"
   },
   "ticker": {
     "label": "Tulevat ottelut",

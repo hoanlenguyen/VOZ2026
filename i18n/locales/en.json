@@ -53,7 +53,12 @@
     "played": "Played",
     "playedShort": "P",
     "points": "Points",
-    "pointsShort": "Pts"
+    "pointsShort": "Pts",
+    "movement": "Change since last game",
+    "up": "Up {n} places | Up {n} place | Up {n} places",
+    "down": "Down {n} places | Down {n} place | Down {n} places",
+    "same": "No change",
+    "movementMock": "Demo data: no result for the last game"
   },
   "ticker": {
     "label": "Upcoming fixtures",
