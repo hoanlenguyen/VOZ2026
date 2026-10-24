@@ -92,7 +92,9 @@ export default defineNuxtConfig({
     // fires the scheduled handler, which runs the tasks mapped to that cron here; keep both in step
     // (and PODCAST_CRON in server/utils/podcast-agent.ts).
     experimental: { tasks: true },
-    scheduledTasks: { '0 5 * * *': ['podcasts:daily'] },
+    // The newsroom agent ticks every 5 minutes and runs when its Newsroom interval has passed
+    // (AGENT_CRON in shared/utils/newsroom-agent.ts).
+    scheduledTasks: { '0 5 * * *': ['podcasts:daily'], '*/5 * * * *': ['newsroom:agent'] },
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
     storage: {
       kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' },

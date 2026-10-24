@@ -609,5 +609,43 @@
       "limit": "Enintään 100",
       "id": "Ottelun tunnus (football-datan ottelutunnus)"
     }
+  },
+  "agent": {
+    "title": "Tekoälyn otteluartikkelit",
+    "lead": "Toimituksen tekoälyagentti tekee uusista SportWorld-otteluista otteluartikkeleita: tarkistettu juttu ottelun faktoista sekä luotettujen julkaisijoiden juttulinkit lähteineen. Artikkelit odottavat tässä tarkistusta; lukijat eivät näe mitään ennen kuin toimitus hyväksyy. Ajastus tarkistaa viiden minuutin välein ja käynnistää agentin, kun alla valittu väli on kulunut.",
+    "loading": "Ladataan agenttia…",
+    "noKey": "Palvelimella ei ole OpenAI-avainta: artikkelit käyttävät faktoja sellaisenaan (malli) tekoälyn kirjoittaman jutun sijaan.",
+    "enabled": "Aja ajastetusti",
+    "interval": "Ajoväli",
+    "minutes": "{n} minuutti | {n} minuuttia",
+    "hours": "{n} tunti | {n} tuntia",
+    "langs": "Kielet",
+    "save": "Tallenna asetukset",
+    "saved": "Asetukset tallennettu.",
+    "runNow": "Aja nyt",
+    "running": "Kirjoitetaan…",
+    "ran": "{n} uusi artikkeli | {n} uutta artikkelia",
+    "nothing": "Ei uusia SportWorld-otteluita.",
+    "failed": "Agentin virhe: {reason}",
+    "waiting": "SportWorld-ottelu odottaa artikkelia | SportWorld-ottelua odottaa artikkelia",
+    "next": "Seuraava ajastettu ajo: {time}",
+    "off": "Ajastetut ajot ovat pois päältä.",
+    "lastRun": "Edellinen ajo {time} ({by})",
+    "by": {
+      "schedule": "ajastus",
+      "manual": "Aja nyt"
+    },
+    "postsTitle": "Uusimmat artikkelit",
+    "empty": "Ei vielä artikkeleita. Luo otteluita SportWorldissa ja paina Aja nyt.",
+    "simulated": "Simuloitu data",
+    "template": "Vain faktat",
+    "press": "{n} julkaisijan linkki | {n} julkaisijan linkkiä",
+    "status": {
+      "writing": "Kirjoitetaan",
+      "pending": "Odottaa tarkistusta",
+      "approved": "Hyväksytty",
+      "rejected": "Hylätty",
+      "failed": "Epäonnistui"
+    }
   }
 }

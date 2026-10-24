@@ -11,8 +11,10 @@
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
   // Crons: "* * * * *" drives the news monitor (server/plugins/news-monitor.ts); "0 5 * * *" runs the
-  // daily AI podcasts at 05:00 UTC (nuxt.config nitro.scheduledTasks maps it to podcasts:daily).
-  "triggers": { "crons": ["* * * * *", "0 5 * * *"] },
+  // daily AI podcasts at 05:00 UTC (nuxt.config nitro.scheduledTasks maps it to podcasts:daily);
+  // "*/5 * * * *" ticks the newsroom agent (task newsroom:agent), which runs when the interval set in
+  // the Newsroom has passed, so changing the interval needs no redeploy.
+  "triggers": { "crons": ["* * * * *", "0 5 * * *", "*/5 * * * *"] },
   // Wrangler automatically provisions this D1 binding on the first deployment.
   "d1_databases": [{ "binding": "VOZ_NEWS_DB", "database_name": "voz-news" }],
   "queues": {

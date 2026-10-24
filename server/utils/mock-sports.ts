@@ -16,7 +16,8 @@ CREATE INDEX IF NOT EXISTS mock_sports_matches_created ON mock_sports_matches(cr
 export const MOCK_SPORTS_COMPETITIONS = COMPETITIONS.filter(c => c.provider === 'football-data' && c.tier === 'TIER_ONE')
 
 let ready: Promise<Awaited<ReturnType<typeof newsDatabase>>> | undefined
-async function db() {
+/** The news database with the SportWorld table in place (the newsroom agent joins on it). */
+export async function sportWorldDb() {
   if (!ready) ready = newsDatabase().then(async (d) => { await d.exec(SCHEMA); return d }).catch((e) => { ready = undefined; throw e })
   return ready
 }
@@ -53,7 +54,7 @@ export async function generateMockMatches(c: CompetitionDef, count: number): Pro
     upstream<{ matches: FdFixture[] }>('football-data', `competitions/${c.providerCode}/matches`),
     upstream<{ teams: FdTeam[] }>('football-data', `competitions/${c.providerCode}/teams`),
   ])
-  const d = await db()
+  const d = await sportWorldDb()
   const taken = new Set((await d.prepare('SELECT id FROM mock_sports_matches WHERE competition=?').bind(c.id).all<{ id: string }>()).results.map(r => r.id))
   const bundled = await bundledGames(c)
   const fixtures = m.matches
@@ -80,18 +81,18 @@ export async function generateMockMatches(c: CompetitionDef, count: number): Pro
 export async function listMockMatches(opts: { competition?: string, since?: string, limit?: number } = {}): Promise<MockSportsMatchSummary[]> {
   const since = opts.since ? Date.parse(opts.since) : 0
   const limit = Math.max(1, Math.min(100, opts.limit ?? 50))
-  const { results } = await (await db())
+  const { results } = await (await sportWorldDb())
     .prepare('SELECT summary FROM mock_sports_matches WHERE (?1 IS NULL OR competition=?1) AND created_at>?2 ORDER BY created_at DESC, id LIMIT ?3')
     .bind(opts.competition ?? null, Number.isFinite(since) ? since : 0, limit).all<{ summary: string }>()
   return results.map(r => JSON.parse(r.summary) as MockSportsMatchSummary)
 }
 
 export async function getMockMatch(id: string): Promise<{ competition: string, file: MatchFile } | null> {
-  const row = await (await db()).prepare('SELECT competition, body FROM mock_sports_matches WHERE id=?').bind(id).first<{ competition: string, body: string }>()
+  const row = await (await sportWorldDb()).prepare('SELECT competition, body FROM mock_sports_matches WHERE id=?').bind(id).first<{ competition: string, body: string }>()
   return row ? { competition: row.competition, file: JSON.parse(row.body) as MatchFile } : null
 }
 
 export async function deleteMockMatch(id: string): Promise<boolean> {
-  const { meta } = await (await db()).prepare('DELETE FROM mock_sports_matches WHERE id=?').bind(id).run()
+  const { meta } = await (await sportWorldDb()).prepare('DELETE FROM mock_sports_matches WHERE id=?').bind(id).run()
   return meta.changes > 0
 }

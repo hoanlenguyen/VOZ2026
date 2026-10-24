@@ -215,7 +215,8 @@ function timeline(f: MockFile, homeName: string, lang: Lang): TimelineEvent[] {
   return out.sort((x, y) => x.order - y.order || Number(x.id.slice(1)) - Number(y.id.slice(1)))
 }
 
-function toMock(c: CompetitionDef, f: MockFile, season: Match[], lang: Lang): MockMatch {
+/** A match file (bundled mock or SportWorld) as a Match with its full-data extras. */
+export function toMock(c: CompetitionDef, f: MockFile, season: Match[], lang: Lang): MockMatch {
   const { matchInfo: mi } = f
   const start = kickoffIso(f)
   const home = resolveTeam(c, mi.homeTeam, season)

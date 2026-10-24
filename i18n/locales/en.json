@@ -609,5 +609,43 @@
       "limit": "At most 100",
       "id": "Match id (football-data fixture id)"
     }
+  },
+  "agent": {
+    "title": "AI match posts",
+    "lead": "The newsroom agent turns new SportWorld matches into AI match posts: a checked story from the match facts, plus trusted publishers' coverage of the fixture as attributed links. Posts wait here for review; readers see nothing until the newsroom approves. The cron checks every 5 minutes and runs the agent when the interval below has passed.",
+    "loading": "Loading the agent…",
+    "noKey": "No OpenAI key on this server: posts use the facts as they are (template) instead of an AI-written story.",
+    "enabled": "Run on schedule",
+    "interval": "Run every",
+    "minutes": "{n} minute | {n} minutes",
+    "hours": "{n} hour | {n} hours",
+    "langs": "Languages",
+    "save": "Save settings",
+    "saved": "Settings saved.",
+    "runNow": "Run now",
+    "running": "Writing posts…",
+    "ran": "{n} new post | {n} new posts",
+    "nothing": "No new SportWorld matches to write about.",
+    "failed": "Agent error: {reason}",
+    "waiting": "SportWorld match waiting for a post | SportWorld matches waiting for a post",
+    "next": "Next scheduled run: {time}",
+    "off": "Scheduled runs are off.",
+    "lastRun": "Last run {time} ({by})",
+    "by": {
+      "schedule": "schedule",
+      "manual": "Run now"
+    },
+    "postsTitle": "Latest posts",
+    "empty": "No posts yet. Generate matches in SportWorld, then press Run now.",
+    "simulated": "Simulated data",
+    "template": "Facts only",
+    "press": "{n} publisher link | {n} publisher links",
+    "status": {
+      "writing": "Writing",
+      "pending": "Pending review",
+      "approved": "Approved",
+      "rejected": "Rejected",
+      "failed": "Failed"
+    }
   }
 }

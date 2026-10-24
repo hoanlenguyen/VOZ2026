@@ -41,6 +41,12 @@ and nothing is published that the data does not support.
   generated keep their real final and half-time score from football-data.org; line-ups, scorers, events
   and stats are simulated from the clubs' squads, in the same JSON structure as the full-data demo match.
   Stored in D1.
+- **AI match posts** (`/newsroom`, "AI match posts"): a cron-driven agent turns new SportWorld matches
+  into posts: a story written by the GPT-6 Luna story agent from the match facts and checked sentence by
+  sentence (English and Finnish), plus trusted publishers' coverage of the fixture and both teams as
+  attributed links. Posts are tagged "AI content" and "Simulated data" and wait for the newsroom's review;
+  readers see nothing until a post is approved. The Workers cron ticks every 5 minutes and runs the agent
+  when the interval set in the Newsroom (5 minutes to 24 hours) has passed; "Run now" runs it at once.
 - **Onboarding** (`/onboarding`): pick a league and see its teams (first version).
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.
