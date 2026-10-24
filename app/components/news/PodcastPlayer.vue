@@ -112,7 +112,7 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
         <li v-for="f in episode.evidence" :key="f.id">{{ f.text }}</li>
       </ol>
     </details>
-    <NuxtLink v-if="showLink" :to="episode.href" class="open">{{ t('podcast.open') }}</NuxtLink>
+    <NuxtLink v-if="showLink && episode.subject.kind === 'match'" :to="episode.href" class="open">{{ t('podcast.open') }}</NuxtLink>
   </article>
 </template>
 
