@@ -95,18 +95,25 @@ const latest = computed(() => {
   margin: 32px 0 16px; text-align: center; font-family: var(--font-display); font-weight: 700;
   font-size: clamp(44px, 8vw, 72px); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase;
 }
+/* Phones: one swipeable row, no scrollbar; the faded right edge hints at more tabs.
+   Wider screens: tabs wrap and centre, so there is never a horizontal scroll. */
 .sections {
-  display: flex; gap: 4px; overflow-x: auto; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
-  scrollbar-width: thin; margin-bottom: 30px;
+  display: flex; gap: 4px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
+  margin-bottom: 30px; padding-right: 32px; overflow-x: auto; scrollbar-width: none; overscroll-behavior-x: contain;
+  mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent);
 }
-.section-tab {
+.sections::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .sections { flex-wrap: wrap; justify-content: center; padding-right: 0; overflow: visible; mask-image: none; }
+}.section-tab {
   flex: 0 0 auto; min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: var(--meta);
   font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
   box-shadow: inset 0 0 0 transparent; transition: box-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
 .section-tab:hover { color: var(--link-hover); }
 .section-tab[aria-pressed="true"] { color: var(--headline); box-shadow: inset 0 -3px 0 var(--accent); }
-@media (min-width: 1024px) { .sections { justify-content: center; } }
+/* Tighter tabs on mid widths so all fit on one row from ~1000 px. */
+@media (min-width: 768px) and (max-width: 1199px) { .section-tab { padding: 0 8px; } }
 
 .notice { margin: 0 0 24px; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--text-2); }
 .notice--soft { background: transparent; border: 1px dashed var(--border); color: var(--meta); font-size: 14px; }

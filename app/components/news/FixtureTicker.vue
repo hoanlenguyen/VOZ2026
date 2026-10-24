@@ -1,6 +1,12 @@
 <script setup lang="ts">
+// Upcoming fixtures: league picker + a strip of match cards that advances one card every 5 s.
+// Auto-advance stops for good once the reader takes over (arrows, drag, swipe, wheel, keys),
+// pauses while hovered/focused or when the tab is hidden, and never runs with
+// prefers-reduced-motion. No visible pause button or progress line, by design choice.
 import { PhCaretLeft, PhCaretRight } from '@phosphor-icons/vue'
 import type { LandingData } from '#shared/types/stories'
+
+const INTERVAL_MS = 5000
 
 const props = defineProps<{ leagues: LandingData['ticker'] }>()
 const selected = ref(props.leagues[0]?.competitionId ?? '')
@@ -10,6 +16,17 @@ const strip = ref<HTMLOListElement>()
 const atStart = ref(true)
 const atEnd = ref(true)
 
+// --- auto-advance state ---
+const userTookOver = ref(false) // reader scrolled the strip themselves: stop until the league changes
+const hovered = ref(false)
+const focused = ref(false)
+const pageVisible = ref(true)
+const reducedMotion = ref(false)
+
+const canScroll = computed(() => !(atStart.value && atEnd.value))
+const autoEnabled = computed(() => !reducedMotion.value && !userTookOver.value && canScroll.value)
+const running = computed(() => autoEnabled.value && !hovered.value && !focused.value && pageVisible.value)
+
 function updateEdges() {
   const el = strip.value
   if (!el) return
@@ -17,51 +34,138 @@ function updateEdges() {
   atEnd.value = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1
 }
 
-// Page by the visible width, keeping one card of overlap for context
+const cardWidth = () => strip.value?.querySelector<HTMLElement>('.fixture')?.offsetWidth ?? 0
+
+// Arrow buttons: page by the visible width, keeping one card of overlap for context.
 function page(dir: 1 | -1) {
+  takeOver()
   const el = strip.value
   if (!el) return
-  const card = el.querySelector<HTMLElement>('.fixture')?.offsetWidth ?? 0
-  el.scrollBy({ left: dir * Math.max(el.clientWidth - card, card), behavior: 'smooth' })
+  el.scrollBy({ left: dir * Math.max(el.clientWidth - cardWidth(), cardWidth()), behavior: 'smooth' })
+}
+
+// One automatic step: next card, or back to the first one at the end.
+function advance() {
+  const el = strip.value
+  if (!el || !running.value) return
+  if (atEnd.value) el.scrollTo({ left: 0, behavior: 'smooth' })
+  else el.scrollBy({ left: cardWidth(), behavior: 'smooth' })
+  restart()
+}
+
+// Step timer. Pausing keeps the time left, so hovering mid-way does not reset the countdown.
+let timer: ReturnType<typeof setTimeout> | undefined
+let startedAt = 0
+let remaining = INTERVAL_MS
+
+function startTimer() {
+  if (timer || !running.value) return
+  startedAt = Date.now()
+  timer = setTimeout(() => {
+    timer = undefined
+    advance()
+  }, remaining)
+}
+function stopTimer() {
+  if (!timer) return
+  clearTimeout(timer)
+  timer = undefined
+  remaining = Math.max(0, remaining - (Date.now() - startedAt))
+}
+function restart() {
+  if (timer) clearTimeout(timer)
+  timer = undefined
+  remaining = INTERVAL_MS
+  startTimer()
+}
+watch(running, r => (r ? startTimer() : stopTimer()))
+
+function takeOver() {
+  userTookOver.value = true
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (['ArrowLeft', 'ArrowRight', 'Home', 'End', 'PageUp', 'PageDown'].includes(e.key)) takeOver()
 }
 
 watch(selected, async () => {
+  userTookOver.value = false
   await nextTick()
   strip.value?.scrollTo({ left: 0 })
   updateEdges()
+  restart()
 })
 
+let motionQuery: MediaQueryList | undefined
+const onMotionChange = () => (reducedMotion.value = !!motionQuery?.matches)
+const onVisibility = () => (pageVisible.value = document.visibilityState === 'visible')
+
 onMounted(() => {
-  updateEdges()
+  motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  onMotionChange()
+  motionQuery.addEventListener('change', onMotionChange)
+  document.addEventListener('visibilitychange', onVisibility)
   window.addEventListener('resize', updateEdges, { passive: true })
+  updateEdges()
+  startTimer()
 })
-onBeforeUnmount(() => window.removeEventListener('resize', updateEdges))
+onBeforeUnmount(() => {
+  if (timer) clearTimeout(timer)
+  motionQuery?.removeEventListener('change', onMotionChange)
+  document.removeEventListener('visibilitychange', onVisibility)
+  window.removeEventListener('resize', updateEdges)
+})
+
+const timeParts = (iso: string) => {
+  const [time, day] = fixtureTime(iso).split(', ')
+  return { time, day }
+}
 </script>
 
 <template>
-  <section v-if="league" class="ticker" aria-label="Upcoming fixtures">
+  <section
+    v-if="league" class="ticker" aria-roledescription="carousel" aria-label="Upcoming fixtures"
+    @pointerenter="hovered = true" @pointerleave="hovered = false"
+    @focusin="focused = true" @focusout="focused = false"
+  >
     <div class="league">
-      <img v-if="league.emblem" :src="league.emblem" alt="" width="40" height="40" class="emblem">
-      <label class="sr-only" for="ticker-league">League</label>
-      <select id="ticker-league" v-model="selected" class="league-select">
-        <option v-for="l in leagues" :key="l.competitionId" :value="l.competitionId">{{ l.competitionName }}</option>
-      </select>
+      <NewsLeaguePicker v-model="selected" :leagues="leagues" />
+      <p class="count num">{{ league.fixtures.length }} upcoming</p>
     </div>
+
     <div class="strip">
-      <button v-show="!atStart" type="button" class="nav-btn prev" aria-label="Previous fixtures" aria-controls="ticker-fixtures" @click="page(-1)">
+      <button
+        v-show="!atStart" type="button" class="nav-btn prev" aria-label="Previous fixtures"
+        aria-controls="ticker-fixtures" @click="page(-1)"
+      >
         <PhCaretLeft :size="16" weight="bold" aria-hidden="true" />
       </button>
-      <ol id="ticker-fixtures" ref="strip" class="fixtures" @scroll.passive="updateEdges">
-        <li v-for="f in league.fixtures" :key="f.key" class="fixture">
-          <p class="when num">{{ fixtureTime(f.start) }}</p>
-          <p v-for="t in [f.home, f.away]" :key="t.name" class="team">
-            <img v-if="t.logo" :src="t.logo" alt="" width="22" height="22" loading="lazy">
-            <span>{{ t.name }}</span>
-          </p>
+
+      <ol
+        id="ticker-fixtures" ref="strip" class="fixtures" :aria-live="running ? 'off' : 'polite'"
+        @scroll.passive="updateEdges" @pointerdown="takeOver" @wheel.passive="takeOver" @touchstart.passive="takeOver"
+        @keydown="onKeydown"
+      >
+        <li v-for="(f, i) in league.fixtures" :key="f.key" class="fixture" aria-roledescription="slide" :aria-label="`${i + 1} of ${league.fixtures.length}`">
+          <NuxtLink :to="f.href" class="fixture-card">
+            <span class="when num">
+              <strong>{{ timeParts(f.start).time }}</strong>
+              <span class="day" :class="{ 'day--soon': ['Today', 'Tomorrow'].includes(timeParts(f.start).day ?? '') }">{{ timeParts(f.start).day }}</span>
+            </span>
+            <span v-for="(t, side) in { home: f.home, away: f.away }" :key="side" class="team">
+              <img v-if="t.logo" :src="t.logo" alt="" width="24" height="24" loading="lazy">
+              <span v-else class="crest-fallback" aria-hidden="true">{{ t.name.slice(0, 1) }}</span>
+              <span class="team-name">{{ t.name }}</span>
+            </span>
+          </NuxtLink>
         </li>
         <li v-if="!league.fixtures.length" class="fixture empty">No upcoming fixtures</li>
       </ol>
-      <button v-show="!atEnd" type="button" class="nav-btn next" aria-label="Next fixtures" aria-controls="ticker-fixtures" @click="page(1)">
+
+      <button
+        v-show="!atEnd" type="button" class="nav-btn next" aria-label="Next fixtures"
+        aria-controls="ticker-fixtures" @click="page(1)"
+      >
         <PhCaretRight :size="16" weight="bold" aria-hidden="true" />
       </button>
     </div>
@@ -71,23 +175,41 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateEdges))
 <style scoped>
 .ticker {
   max-width: var(--page-max); margin: 16px auto 0; display: flex; border: 1px solid var(--line-strong);
-  border-radius: 4px; overflow: hidden; background: var(--bg);
+  border-radius: 12px; background: var(--bg);
 }
 .league {
-  flex: 0 0 auto; width: 150px; padding: 12px; background: var(--surface);
+  flex: 0 0 236px; padding: 12px; background: var(--surface); border-radius: 12px 0 0 12px;
   display: flex; flex-direction: column; justify-content: center; gap: 8px; border-right: 1px solid var(--line);
 }
-.emblem { object-fit: contain; }
-.league-select {
-  width: 100%; min-height: 44px; border: 1px solid var(--border-control); border-radius: 8px;
-  background: var(--bg); color: var(--text); font-weight: 600; padding: 0 6px;
-}
+.count { margin: 0; padding: 0 4px; font-size: 12px; color: var(--meta); }
+
+.strip { position: relative; flex: 1 1 auto; min-width: 0; display: flex; overflow: hidden; border-radius: 0 12px 12px 0; }
 .fixtures {
   flex: 1 1 auto; min-width: 0; list-style: none; margin: 0; padding: 0; display: flex;
-  overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain;
 }
 .fixtures::-webkit-scrollbar { display: none; }
-.strip { position: relative; flex: 1 1 auto; min-width: 0; display: flex; }
+.fixture { flex: 0 0 184px; border-right: 1px solid var(--line); scroll-snap-align: start; }
+.fixture.empty { flex-basis: auto; padding: 16px; color: var(--meta); display: flex; align-items: center; }
+.fixture-card {
+  height: 100%; padding: 14px 16px; display: flex; flex-direction: column; gap: 8px;
+  color: var(--headline); text-decoration: none; transition: background-color var(--dur-fast) var(--ease-out);
+}
+.fixture-card:hover { background: var(--surface); }
+.fixture-card:hover .team-name { color: var(--link-hover); }
+.fixture-card:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.when { display: flex; align-items: baseline; gap: 6px; font-size: 13px; margin-bottom: 2px; }
+.when strong { font-size: 15px; font-weight: 700; color: var(--headline); }
+.day { color: var(--meta); }
+.day--soon { color: var(--accent-ink); font-weight: 600; }
+.team { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: 15px; font-weight: 600; }
+.team img { object-fit: contain; flex-shrink: 0; }
+.crest-fallback {
+  width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center;
+  background: var(--surface-2); color: var(--meta); font-size: 12px; font-weight: 700;
+}
+.team-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; transition: color var(--dur-fast) var(--ease-out); }
+
 /* 44px hit area around a 32px circle */
 .nav-btn {
   position: absolute; top: 50%; transform: translateY(-50%); z-index: 1;
@@ -104,16 +226,17 @@ onBeforeUnmount(() => window.removeEventListener('resize', updateEdges))
 .nav-btn:focus-visible::before { outline: 2px solid var(--accent); outline-offset: 2px; }
 .nav-btn.prev { left: 2px; }
 .nav-btn.next { right: 2px; }
-.fixture {
-  flex: 0 0 168px; padding: 12px 14px; border-right: 1px solid var(--line); scroll-snap-align: start;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.fixture.empty { flex-basis: auto; color: var(--muted); justify-content: center; }
-.when { margin: 0 0 2px; font-size: 13px; color: var(--muted); }
-.team { margin: 0; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; min-width: 0; }
-.team img { object-fit: contain; flex-shrink: 0; }
-.team span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+
 @media (max-width: 1199px) { .ticker { margin-left: 16px; margin-right: 16px; } }
 @media (min-width: 768px) and (max-width: 1199px) { .ticker { margin-left: 30px; margin-right: 30px; } }
-@media (max-width: 480px) { .league { width: 116px; } .fixture { flex-basis: 150px; } }
+/* Phones: picker row on top, strip below */
+@media (max-width: 639px) {
+  .ticker { flex-direction: column; }
+  .league { flex: none; flex-direction: row; align-items: center; border-right: 0; border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; }
+  .league :deep(.picker) { flex: 1 1 auto; min-width: 0; }
+    .count { display: none; }
+  .strip { border-radius: 0 0 12px 12px; }
+  .fixture { flex-basis: 164px; }
+}
 </style>

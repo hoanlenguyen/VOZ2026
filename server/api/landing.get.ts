@@ -22,9 +22,12 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       ticker.push({
         competitionId: def.id,
         competitionName: def.name,
-        emblem: provider.emblem(def) ?? standings.data[0]?.logo ?? null,
-        fixtures: matches.data.filter(m => m.status === 'scheduled').slice(0, 10).map(m => ({
+        sport: def.sport,
+        country: def.country,
+        emblem: provider.emblem(def),
+        fixtures: matches.data.filter(m => m.status === 'scheduled').slice(0, 12).map(m => ({
           key: m.key,
+          href: `/match/${def.id}/${m.id}`,
           start: m.start,
           home: { name: m.home.shortName, logo: m.home.logo },
           away: { name: m.away.shortName, logo: m.away.logo },

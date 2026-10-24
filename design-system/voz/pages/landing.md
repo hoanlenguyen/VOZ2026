@@ -16,6 +16,23 @@ big section title, category tabs, lead + side stories, card row, "Latest" list w
 - Spacing: featured block 66 / 34 with 1 px divider, side items 20 px apart; 4-up card row below a 20 px rule;
   50 px between blocks; Latest + 300 px sidebar, 30 px gap; sidebar boxes 24 px padding, 4 px radius.
 
+## Fixture strip (`NewsFixtureTicker`)
+- League picker (`NewsLeaguePicker`): button with emblem, "Sport · Country" eyebrow and full league name; opens a
+  WAI-ARIA listbox grouped by sport (arrows/Home/End/Enter/Esc, click outside closes). Leagues without an
+  official emblem get a gold-on-board monogram (`NewsLeagueBadge`); never borrow a team crest as a league logo.
+- Fixture cards link to the match page; kick-off time bold, "Today"/"Tomorrow" in `--accent-ink`.
+- Auto-advance one card every 5 s (JS timer). Stops for good when the reader takes over (arrows, drag, swipe,
+  wheel, keys); pauses on hover, focus inside and hidden tab; off under `prefers-reduced-motion`.
+  No visible pause button or progress line (product decision; hover/focus pause and take-over are the controls).
+- Picker labels join only the fields present, so a partial API response never shows "undefined".
+- Phones (<640 px): picker row on top, strip below.
+
+## Section tabs
+- Never a visible scrollbar. ≥768 px: tabs wrap and centre (8 px side padding up to 1199 px so all fit on one
+  row from ~1000 px). Phones: one swipeable row, scrollbar hidden, 32 px fade on the right edge as the hint,
+  with matching end padding so the last tab scrolls clear of the fade.
+- Never combine `justify-content: center` with an overflowing row: the first items become unreachable.
+
 ## Imagery
 - No photos. Each story's picture is `NewsMatchVisual`: team crests + score/kick-off on the dark scoreboard
   (`--board`). It is built from the same data as the text, so it cannot show something that did not happen.

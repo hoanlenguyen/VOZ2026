@@ -20,6 +20,8 @@ export interface Story {
 
 export interface TickerFixture {
   key: string
+  /** Match page link. */
+  href: string
   start: string
   home: { name: string, logo: string | null }
   away: { name: string, logo: string | null }
@@ -28,7 +30,15 @@ export interface TickerFixture {
 export interface LandingData {
   generatedAt: string
   stories: Story[]
-  ticker: Array<{ competitionId: string, competitionName: string, emblem: string | null, fixtures: TickerFixture[] }>
+  ticker: Array<{
+    competitionId: string
+    competitionName: string
+    sport: SportId
+    country: string
+    /** Official competition emblem; null when the provider has none (the UI shows a monogram). */
+    emblem: string | null
+    fixtures: TickerFixture[]
+  }>
   tables: Array<{ competitionId: string, competitionName: string, rows: StandingRow[] }>
   /** Competitions that failed to load (rate limit, offline without snapshot). */
   missing: string[]
