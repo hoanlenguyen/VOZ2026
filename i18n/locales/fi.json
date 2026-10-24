@@ -142,14 +142,45 @@
     }
   },
   "press": {
-    "title": "Mitä media kirjoittaa",
+    "title": "Uutiset",
     "before": "Ennen ottelua",
     "after": "Ottelun jälkeen",
     "opens": "(avaa lähteen {source} uudessa välilehdessä)",
-    "unavailable": "Mediaotsikot eivät ole juuri nyt saatavilla.",
-    "sourceNote": "Muiden medioiden otsikot ja linkit. GNews löytää ne, ja ne yhdistetään otteluun päivämäärän ja molempien joukkueiden nimien perusteella. VOZ linkittää alkuperäisiin juttuihin eikä julkaise niitä uudelleen.",
+    "unavailable": "Uutiset eivät ole juuri nyt saatavilla.",
+    "sourceNote": "Uutiset käsittelevät ottelun ennakkoa ja jälkitunnelmia. Live-tilannetta seurataan ottelusivulla. Joukkueuutisten tiivistelmät säilytetään välimuistissa enintään 24 tuntia ja päivitetään aiemmin, jos lähde muuttuu.",
     "translated": "Konekäännös",
-    "original": "Alkuperäinen otsikko"
+    "original": "Alkuperäinen otsikko",
+    "intro": "Otteluraportit ja joukkueiden uutiset. Avaa joukkueen uutisotsikko lukeaksesi tekoälytiivistelmän.",
+    "preMatchNews": "Uutiset ennen ottelua",
+    "postMatchNews": "Uutiset ottelun jälkeen",
+    "sources": "Ottelun uutislähteet",
+    "liveNote": "Ennen ottelua julkaistut lähteet säilyvät ottelun aikana. Seuraa live-tilannetta tällä ottelusivulla.",
+    "preMatchTeam": "Ennen ottelua · Vire, pelaajat ja loukkaantumiset",
+    "postMatchTeam": "Ottelun jälkeen · Vire, pelaajat ja loukkaantumiset",
+    "teamGap": "Saatavilla {count}/3 tuoretta, tarkistettua joukkueuutista.",
+    "empty": "Tälle ottelulle ei ole vielä tarkistettuja uutisia.",
+    "retry": "Yritä uudelleen",
+    "topics": {
+      "form": "Nykyinen vire",
+      "players": "Pelaajauutiset",
+      "injuries": "Loukkaantumiset ja kunto"
+    },
+    "aiSummary": "Tekoälytiivistelmä",
+    "summaryLanguage": "Tekoälytiivistelmä (englanniksi)",
+    "preparing": "Tekoälytiivistelmää valmistellaan…",
+    "summaryError": "Tiivistelmä ei ole juuri nyt saatavilla. Yritä uudelleen tai lue alkuperäinen juttu.",
+    "summarized": "Tiivistetty {date} lähteen {source} raportista.",
+    "paused": "Ennen ottelua julkaistu lähde on säilytetty. Uutistiivistelmät jatkuvat ottelun päätyttyä. Live-tilanne on ottelusivulla.",
+    "summaryUnavailable": "Tekoälytiivistelmät eivät ole juuri nyt saatavilla. Voit lukea alkuperäisen jutun alta.",
+    "retrySummary": "Yritä tiivistelmää uudelleen",
+    "close": "Sulje valitsemalla otsikko",
+    "select": "Avaa tekoälytiivistelmä valitsemalla otsikko",
+    "pausedHint": "Ennakon lähde · tiivistelmät jatkuvat ottelun päätyttyä",
+    "originalLink": "Lue alkuperäinen",
+    "matchStatus": {
+      "postponed": "Ottelu siirretty",
+      "cancelled": "Ottelu peruttu"
+    }
   },
   "onboarding": {
     "title": "Tee siitä oma urheilumaailmasi",

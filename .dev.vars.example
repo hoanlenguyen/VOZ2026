@@ -1,6 +1,11 @@
-# Copy to .dev.vars for `npm run preview` (wrangler dev). Same keys as .env.
-NUXT_LIIGA_API_KEY=VMxwympiLaf8g5qWJ8sU7ItC36pnfqF9XVqpbRh5
-NUXT_FOOTBALL_DATA_TOKEN=9c3419d0fdb842f1becaa518af850634
-NUXT_GNEWS_API_KEY=941ef2b7ddb219606a997a4716dbba11NUXT_GNEWS_API_KEY=
+# Copy to .dev.vars for npm run preview. Keep real credentials in ignored local files.
+NUXT_LIIGA_API_KEY=
+NUXT_FOOTBALL_DATA_TOKEN=
+NUXT_GNEWS_API_KEY=
+NUXT_NEWS_AI_PROVIDER=openai
 NUXT_OPENAI_API_KEY=
-NUXT_OPENAI_MODEL=GPT-6 Luna
+NUXT_OPENAI_MODEL=gpt-6-luna
+NUXT_HF_TOKEN=
+NUXT_HF_MODEL=openai/gpt-oss-120b
+NUXT_NEWS_MONITOR_ENABLED=true
+NUXT_NEWS_ASSESSMENT_DAILY_LIMIT=100

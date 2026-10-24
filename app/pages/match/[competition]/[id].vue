@@ -13,7 +13,7 @@ const route = useRoute()
 const preview = computed(() => (typeof route.query.draft === 'string'
   ? { draft: route.query.draft, as: route.query.as === 'free' ? 'free' : 'subscriber' }
   : null))
-const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
+const { data, error, refresh: refreshMatch } = await useFetch(() => `/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
   query: computed(() => ({ lang: locale.value, ...preview.value })),
 })
 const match = computed(() => data.value?.match)
@@ -179,7 +179,7 @@ useHead(() => ({
       </section>
       <p v-else-if="!data.competition.hasScoringEvents && finished && !data.extras" class="source">{{ t('match.noScorers') }}</p>
 
-      <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
+      <NewsPressCard :key="match.key" :competition-id="data.competition.id" :match-id="match.id" :match-status="match.status" :home-score="match.home.score" :away-score="match.away.score" @match-change="refreshMatch()" />
     </div>
     <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
       <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
