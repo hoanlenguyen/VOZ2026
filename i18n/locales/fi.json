@@ -559,7 +559,12 @@
         "unchanged": "ei uusia faktoja",
         "failed": "epäonnistui"
       }
-    }
+    },
+    "lockedPlay": "{title}: VOZ Plus -tilaajille",
+    "lockedTitle": "Podcastit kuuluvat VOZ Plus -tilaukseen",
+    "lockedFree": "Tilaa ja kuuntele päivittäiset ottelu-, joukkue- ja sarjapodcastit sekä lue niiden tekstit.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä kuunnellaksesi podcasteja.",
+    "lockedNote": "VOZ Plus"
   },
   "discussion": {
     "title": "Keskustelu",
@@ -582,13 +587,14 @@
     "loading": "Ladataan kommentteja…",
     "empty": "Ei vielä kommentteja. Aloita keskustelu.",
     "lockedTitle": "Liity keskusteluun VOZ Plus -tilauksella",
-    "lockedFree": "Tilaajat lukevat kommentit, kertovat näkemyksensä ja tykkäävät jutuista ja kommenteista.",
-    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi kommentit ja osallistuaksesi keskusteluun.",
+    "lockedFree": "Tilaajat lukevat kaikki kommentit, kertovat näkemyksensä ja tykkäävät jutuista ja kommenteista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi kaikki kommentit ja osallistuaksesi keskusteluun.",
     "subscribe": "Katso VOZ Plus",
     "errors": {
       "wait": "Odota hetki ennen seuraavaa kommenttia.",
       "length": "Kommentin pituus on 2–1000 merkkiä.",
       "failed": "Jokin meni vikaan. Yritä uudelleen."
-    }
+    },
+    "preview": "Uusimmat kommentit (esikatselu)"
   }
 }

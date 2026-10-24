@@ -28,4 +28,6 @@ export interface Discussion {
   comments: PublicComment[]
   storyLikedByMe: boolean
   engagement: Engagement
+  /** Free and signed-out readers: a preview (the newest top-level comments, read-only). */
+  locked?: boolean
 }

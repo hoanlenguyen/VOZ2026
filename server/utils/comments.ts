@@ -1,6 +1,7 @@
 // Discussion under a match story: comments (one level of replies) and likes, per match key, in
 // "kvcache" (Workers KV in production, memory in dev). Subscribers and the newsroom read, post and
-// like; the newsroom also hides and deletes. Totals (visible comments, story likes) are public and
+// like; the newsroom also hides and deletes. Free and signed-out readers get a preview (the newest
+// top-level comments, read-only). Totals (visible comments, story likes) are public and
 // kept in one "engagement" map so the front page reads them all at once.
 // Demo: a match without a stored thread starts from data/comments/<competition>-<id>.json.
 import type { H3Event } from 'h3'
@@ -121,4 +122,13 @@ export function setLike(list: string[], accountId: string, liked: boolean): stri
 export async function commenter(event: H3Event) {
   const { account, entitlements } = await requireEntitlement(event, 'premium')
   return { id: account!.id, name: account!.name, role: (entitlements.newsroom ? 'newsroom' : 'reader') as CommentRole, newsroom: entitlements.newsroom }
+}
+
+export const PREVIEW_COMMENTS = 3
+
+/** For free and signed-out readers: the newest top-level visible comments, read-only, no replies. */
+export function discussionPreview(thread: Thread): Discussion {
+  const full = discussionFor(thread, '', false)
+  const top = full.comments.filter(c => !c.parentId).sort((a, b) => b.at.localeCompare(a.at)).slice(0, PREVIEW_COMMENTS)
+  return { comments: top, storyLikedByMe: false, engagement: full.engagement, locked: true }
 }

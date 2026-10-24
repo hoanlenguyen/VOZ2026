@@ -1,7 +1,9 @@
-// The match discussion. Subscribers and the newsroom only (signed out 401, free 403); hidden comments
-// only for the newsroom.
+// The match discussion: subscribers and the newsroom get it all (hidden comments only for the
+// newsroom); free and signed-out readers a preview of the newest top-level comments.
 export default defineEventHandler(async (event) => {
-  const me = await commenter(event)
   setResponseHeader(event, 'cache-control', 'private, no-store')
-  return discussionFor(await loadThread(await routeMatchKey(event)), me.id, me.newsroom)
+  const { account, entitlements } = await sessionInfo(event)
+  const thread = await loadThread(await routeMatchKey(event))
+  if (!account || !entitlements.premium) return discussionPreview(thread)
+  return discussionFor(thread, account.id, entitlements.newsroom)
 })

@@ -4,7 +4,8 @@
 import { PhArrowBendUpLeft, PhEye, PhEyeSlash, PhHeart, PhTrash } from '@phosphor-icons/vue'
 import type { PublicComment } from '#shared/types/comments'
 
-defineProps<{ comment: PublicComment, newsroom: boolean, busy: boolean, canReply?: boolean }>()
+// `readonly`: the preview for free and signed-out readers (no actions).
+defineProps<{ comment: PublicComment, newsroom: boolean, busy: boolean, canReply?: boolean, readonly?: boolean }>()
 defineEmits<{ like: [], reply: [], remove: [], hide: [] }>()
 const { t } = useI18n()
 const { stamp } = useFormat()
@@ -22,7 +23,7 @@ const initials = (name: string) => name.split(/\s+/).map(p => p[0]).join('').sli
         <span v-if="comment.hidden" class="hidden-tag">{{ t('discussion.hiddenTag') }}</span>
       </p>
       <p class="text">{{ comment.text }}</p>
-      <div class="actions">
+      <div v-if="!readonly" class="actions">
         <button
           type="button" class="act" :class="{ 'act--liked': comment.likedByMe }" :aria-pressed="comment.likedByMe" :disabled="busy"
           :aria-label="t('discussion.likeComment', { name: comment.author.name })" @click="$emit('like')"

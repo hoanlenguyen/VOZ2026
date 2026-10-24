@@ -115,7 +115,7 @@ useHead(() => ({
         :engagement="engagement" @engagement="liveEngagement = $event"
       />
 
-      <!-- AI podcast of this match (free for every reader); the newsroom makes it here. -->
+      <!-- AI podcast of this match (subscribers listen; others see it locked); the newsroom makes it here. -->
       <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
 
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">

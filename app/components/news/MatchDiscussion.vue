@@ -2,7 +2,7 @@
 // Discussion under the match story (server/utils/comments.ts). Totals (comments, story likes) are
 // shown to everyone. Subscribers and the newsroom read, post, reply (one level) and like; the
 // newsroom also hides, shows and deletes any comment and posts with a "VOZ newsroom" badge. Free
-// and signed-out readers get the totals and an invitation instead; no comment text reaches them.
+// and signed-out readers get the totals, a read-only preview of the newest comments and an invitation.
 import { PhChatCircle, PhHeart, PhLockSimple } from '@phosphor-icons/vue'
 import type { Discussion, Engagement, PublicComment } from '#shared/types/comments'
 
@@ -14,7 +14,7 @@ const route = useRoute()
 
 const base = computed(() => `/api/competitions/${props.competitionId}/matches/${props.matchId}`)
 const totals = ref<Engagement>({ ...props.engagement })
-const { data, status } = useLazyFetch<Discussion>(() => `${base.value}/comments`, { server: false, immediate: can.value.premium })
+const { data, status } = useLazyFetch<Discussion>(() => `${base.value}/comments`, { server: false })
 watch(data, (d) => { if (d) setTotals(d.engagement) })
 function setTotals(e: Engagement) {
   totals.value = e
@@ -139,11 +139,13 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
       </ol>
     </template>
 
-    <!-- Free and signed-out readers: totals above, an invitation here; no comment text is loaded. -->
+    <!-- Free and signed-out readers: the newest comments (read-only) fading into an invitation. -->
     <div v-else class="locked">
-      <div class="ghost" aria-hidden="true">
-        <span v-for="i in 3" :key="i" class="ghost-row"><span class="ghost-dot" /><span class="ghost-lines"><span /><span /></span></span>
-      </div>
+      <ol v-if="data?.comments.length" class="comments preview" :aria-label="t('discussion.preview')">
+        <li v-for="c in data.comments" :key="c.id" class="thread">
+          <NewsDiscussionComment :comment="c" :newsroom="false" :busy="false" readonly />
+        </li>
+      </ol>
       <div class="invite">
         <PhLockSimple :size="28" weight="bold" class="invite-icon" aria-hidden="true" />
         <p class="invite-title">{{ t('discussion.lockedTitle') }}</p>
@@ -189,19 +191,12 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
 .replies { margin: 12px 0 0 22px; padding-left: 18px; border-left: 2px solid var(--line); display: flex; flex-direction: column; gap: 12px; }
 .composer--reply textarea { font-size: 15px; }
 
-.locked { display: grid; border-radius: 4px; overflow: hidden; }
-/* Placeholder and invitation share one grid cell, so the panel is as tall as the taller of them. */
-.ghost, .invite { grid-area: 1 / 1; }
-.ghost { display: flex; flex-direction: column; gap: 18px; padding: 8px 0 24px; filter: blur(3px); opacity: 0.6; }
-.ghost-row { display: flex; gap: 12px; }
-.ghost-dot { width: 36px; height: 36px; border-radius: 50%; background: var(--surface-2); flex: 0 0 auto; }
-.ghost-lines { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-.ghost-lines span { height: 12px; border-radius: 4px; background: var(--surface-2); }
-.ghost-lines span:last-child { width: 60%; }
+.locked { display: flex; flex-direction: column; }
+/* The preview fades out towards the invitation. */
+.preview { -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%); mask-image: linear-gradient(to bottom, black 55%, transparent 100%); }
 .invite {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
-  padding: 24px 16px; text-align: center; background: color-mix(in srgb, var(--offer-bg) 94%, transparent); color: var(--offer-text);
-  position: relative; z-index: 1;
+  margin-top: -8px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+  padding: 24px 16px; border-radius: 4px; text-align: center; background: var(--offer-bg); color: var(--offer-text);
 }
 .invite-icon { color: var(--offer-ink); }
 .invite-title { margin: 0; font-size: 18px; font-weight: 700; }

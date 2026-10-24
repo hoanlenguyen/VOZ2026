@@ -37,6 +37,9 @@ export interface PodcastEpisode {
   model: string
   trigger: PodcastTrigger
   generatedAt: string
+  /** Podcasts are for subscribers: free and signed-out readers get the episode without its script,
+   *  facts or audio URL (title, labels and length only). */
+  locked?: boolean
 }
 
 export interface PodcastListResponse {
