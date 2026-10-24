@@ -6,7 +6,7 @@ import { PhCaretLeft } from '@phosphor-icons/vue'
 definePageMeta({ layout: 'news' })
 
 const route = useRoute()
-const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`)
+const { data, error, refresh: refreshMatch } = await useFetch(() => `/api/competitions/${route.params.competition}/matches/${route.params.id}`)
 const match = computed(() => data.value?.match)
 const finished = computed(() => match.value?.status === 'finished')
 // Football: "Half-time 1–0"; hockey: "Periods 0–1, 0–1, 0–1".
@@ -106,7 +106,7 @@ useHead(() => ({
       </section>
       <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">Goal scorers are not included in this data plan.</p>
 
-      <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
+      <NewsPressCard :key="match.key" :competition-id="data.competition.id" :match-id="match.id" :match-status="match.status" :home-score="match.home.score" :away-score="match.away.score" @match-change="refreshMatch()" />
     </template>
   </main>
 </template>

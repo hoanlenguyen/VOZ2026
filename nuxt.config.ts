@@ -33,6 +33,13 @@ export default defineNuxtConfig({
     /** GNews headline search for "What the press says" (free plan: 100 requests/day). */
     gnewsApiKey: '',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
+    newsAiProvider: 'openai',
+    openaiApiKey: '',
+    openaiModel: 'gpt-6-luna',
+    hfToken: '',
+    hfModel: 'openai/gpt-oss-120b',
+    newsMonitorEnabled: true,
+    newsAssessmentDailyLimit: 100,
     dataMode: 'auto',
   },
 
@@ -48,7 +55,14 @@ export default defineNuxtConfig({
       { baseName: 'mocks', dir: '../data/mock' },
     ],
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
-    storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },
-    devStorage: { kvcache: { driver: 'memory' } },
+    storage: {
+      kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' },
+      newscache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' },
+    },
+    devStorage: {
+      kvcache: { driver: 'memory' },
+      // Keep generated summaries through local server restarts; expiry is also checked explicitly.
+      newscache: { driver: 'fs', base: '.data/news' },
+    },
   },
 })

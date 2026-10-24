@@ -9,11 +9,17 @@
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "snapshot": "node --env-file-if-exists=.env scripts/snapshot.ts",
-    "deploy": "nuxt build && wrangler deploy"
+    "match-news": "node scripts/match-news.ts",
+    "news:provision": "node scripts/provision-news.ts",
+    "test": "node --test tests/*.test.ts",
+    "deploy": "nuxt build && node scripts/provision-news.ts && wrangler deploy"
   },
   "dependencies": {
+    "@js-temporal/polyfill": "^0.5.1",
     "@phosphor-icons/vue": "^2.2.1",
+    "cheerio": "^1.2.0",
     "nuxt": "^4.6.2",
+    "robots-parser": "^3.0.1",
     "vue": "^3.5.0",
     "vue-router": "^4.5.0"
   },
@@ -24,6 +30,6 @@
     "wrangler": "^4.152.0"
   },
   "engines": {
-    "node": ">=22.18"
+    "node": "^22.22.3 || ^24.15.0 || >=26.0.0"
   }
 }
