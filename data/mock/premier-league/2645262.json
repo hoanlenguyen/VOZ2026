@@ -1,0 +1,688 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645262",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-17 15:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Craven Cottage, London",
+    "attendance": 28838,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "54",
+      "name": "Fulham",
+      "shortName": "Fulham",
+      "abbr": "FUL",
+      "score": 1,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "88",
+      "name": "Hull City",
+      "shortName": "Hull City",
+      "abbr": "HUL",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Anthony Taylor"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Darren England"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Fulham",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "8",
+          "timestamp": "20261017T150800+0100",
+          "player": "Harry Wilson",
+          "assist": "Antonee Robinson"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "10",
+          "type": "Yellow",
+          "player": "Sander Berge"
+        },
+        {
+          "period": "FirstHalf",
+          "time": "43",
+          "type": "Yellow",
+          "player": "Harry Wilson"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "57",
+          "playerOn": "Jorge Cuenca",
+          "playerOff": "Kenny Tete"
+        },
+        {
+          "time": "58",
+          "playerOn": "Timothy Castagne",
+          "playerOff": "Harry Wilson"
+        },
+        {
+          "time": "62",
+          "playerOn": "Adama Traoré",
+          "playerOff": "Saša Lukić"
+        },
+        {
+          "time": "69",
+          "playerOn": "Rodrigo Muniz",
+          "playerOff": "Joachim Andersen"
+        }
+      ]
+    },
+    "away": {
+      "team": "Hull City",
+      "goals": [],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "52",
+          "type": "Yellow",
+          "player": "Mohamed Belloumi"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "64",
+          "playerOn": "Amir Hadžiahmetović",
+          "playerOff": "Mohamed Belloumi"
+        },
+        {
+          "time": "76",
+          "playerOn": "Semi Ajayi",
+          "playerOff": "Abu Kamara"
+        },
+        {
+          "time": "81",
+          "playerOn": "Kyle Joseph",
+          "playerOff": "Oli McBurnie"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Fulham",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Bernd Leno"
+        ],
+        [
+          "Kenny Tete",
+          "Joachim Andersen",
+          "Calvin Bassey",
+          "Antonee Robinson"
+        ],
+        [
+          "Sander Berge",
+          "Saša Lukić"
+        ],
+        [
+          "Alex Iwobi",
+          "Emile Smith Rowe",
+          "Harry Wilson"
+        ],
+        [
+          "Raúl Jiménez"
+        ]
+      ],
+      "manager": "Marco Silva",
+      "startingXI": [
+        {
+          "name": "Bernd Leno",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Kenny Tete",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Joachim Andersen",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Calvin Bassey",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Antonee Robinson",
+          "shirtNumber": 33,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Sander Berge",
+          "shirtNumber": 16,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Saša Lukić",
+          "shirtNumber": 20,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Alex Iwobi",
+          "shirtNumber": 17,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Emile Smith Rowe",
+          "shirtNumber": 32,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Harry Wilson",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Raúl Jiménez",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Benjamin Lecomte",
+          "shirtNumber": 23,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Timothy Castagne",
+          "shirtNumber": 21,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jorge Cuenca",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Tom Cairney",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Harrison Reed",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Adama Traoré",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Rodrigo Muniz",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Hull City",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Ivor Pandur"
+        ],
+        [
+          "Lewie Coyle",
+          "Charlie Hughes",
+          "John Egan",
+          "Ryan Giles"
+        ],
+        [
+          "Regan Slater",
+          "Matt Crooks"
+        ],
+        [
+          "Abu Kamara",
+          "Joe Gelhardt",
+          "Mohamed Belloumi"
+        ],
+        [
+          "Oli McBurnie"
+        ]
+      ],
+      "manager": "Sergej Jakirović",
+      "startingXI": [
+        {
+          "name": "Ivor Pandur",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Lewie Coyle",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Charlie Hughes",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "John Egan",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ryan Giles",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Regan Slater",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Matt Crooks",
+          "shirtNumber": 25,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Abu Kamara",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Joe Gelhardt",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Mohamed Belloumi",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Oli McBurnie",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Thimothée Lo-Tutala",
+          "shirtNumber": 30,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Cody Drameh",
+          "shirtNumber": 22,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Semi Ajayi",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Amir Hadžiahmetović",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Kasey Palmer",
+          "shirtNumber": 45,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Liam Millar",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Kyle Joseph",
+          "shirtNumber": 14,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 59.7,
+        "away": 40.3
+      },
+      "xG": {
+        "home": 1.25,
+        "away": 0.93
+      },
+      "shots": {
+        "home": 9,
+        "away": 9
+      },
+      "shots_on_target": {
+        "home": 5,
+        "away": 2
+      },
+      "shots_off_target": {
+        "home": 3,
+        "away": 7
+      },
+      "shots_blocked": {
+        "home": 1,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 4,
+        "away": 0
+      },
+      "passes": {
+        "home": 527,
+        "away": 407
+      },
+      "accurate_passes": {
+        "home": 406,
+        "away": 332
+      },
+      "tackles": {
+        "home": 18,
+        "away": 23
+      },
+      "saves": {
+        "home": 2,
+        "away": 4
+      },
+      "fouls": {
+        "home": 11,
+        "away": 6
+      },
+      "offsides": {
+        "home": 3,
+        "away": 0
+      },
+      "yellow_cards": {
+        "home": 2,
+        "away": 1
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 1,
+        "lostCorners": 6
+      },
+      "away": {
+        "wonCorners": 6,
+        "lostCorners": 1
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "5'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Lewie Coyle",
+      "player2": null
+    },
+    {
+      "minute": "5'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Calvin Bassey",
+      "player2": null
+    },
+    {
+      "minute": "6'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Mohamed Belloumi",
+      "player2": null
+    },
+    {
+      "minute": "9'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Mohamed Belloumi",
+      "player2": null
+    },
+    {
+      "minute": "9'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Oli McBurnie",
+      "player2": "Matt Crooks"
+    },
+    {
+      "minute": "13'",
+      "type": "attempt saved",
+      "team": "Fulham",
+      "player1": "Harry Wilson",
+      "player2": null
+    },
+    {
+      "minute": "14'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Antonee Robinson",
+      "player2": null
+    },
+    {
+      "minute": "16'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Oli McBurnie",
+      "player2": "Mohamed Belloumi"
+    },
+    {
+      "minute": "22'",
+      "type": "attempt saved",
+      "team": "Fulham",
+      "player1": "Emile Smith Rowe",
+      "player2": null
+    },
+    {
+      "minute": "30'",
+      "type": "miss",
+      "team": "Fulham",
+      "player1": "Raúl Jiménez",
+      "player2": null
+    },
+    {
+      "minute": "32'",
+      "type": "attempt blocked",
+      "team": "Fulham",
+      "player1": "Emile Smith Rowe",
+      "player2": null
+    },
+    {
+      "minute": "32'",
+      "type": "offside",
+      "team": "Fulham",
+      "player1": "Antonee Robinson",
+      "player2": "Raúl Jiménez"
+    },
+    {
+      "minute": "37'",
+      "type": "attempt saved",
+      "team": "Fulham",
+      "player1": "Calvin Bassey",
+      "player2": null
+    },
+    {
+      "minute": "38'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Bernd Leno",
+      "player2": null
+    },
+    {
+      "minute": "45'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Joe Gelhardt",
+      "player2": "Mohamed Belloumi"
+    },
+    {
+      "minute": "54'",
+      "type": "attempt saved",
+      "team": "Hull City",
+      "player1": "Abu Kamara",
+      "player2": "Joe Gelhardt"
+    },
+    {
+      "minute": "62'",
+      "type": "miss",
+      "team": "Fulham",
+      "player1": "Emile Smith Rowe",
+      "player2": null
+    },
+    {
+      "minute": "62'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Calvin Bassey",
+      "player2": null
+    },
+    {
+      "minute": "63'",
+      "type": "attempt saved",
+      "team": "Hull City",
+      "player1": "Matt Crooks",
+      "player2": null
+    },
+    {
+      "minute": "68'",
+      "type": "offside",
+      "team": "Fulham",
+      "player1": "Jorge Cuenca",
+      "player2": "Raúl Jiménez"
+    },
+    {
+      "minute": "69'",
+      "type": "miss",
+      "team": "Hull City",
+      "player1": "Oli McBurnie",
+      "player2": null
+    },
+    {
+      "minute": "70'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Calvin Bassey",
+      "player2": null
+    },
+    {
+      "minute": "75'",
+      "type": "miss",
+      "team": "Fulham",
+      "player1": "Rodrigo Muniz",
+      "player2": "Timothy Castagne"
+    },
+    {
+      "minute": "76'",
+      "type": "corner",
+      "team": "Hull City",
+      "player1": "Semi Ajayi",
+      "player2": null
+    },
+    {
+      "minute": "78'",
+      "type": "offside",
+      "team": "Fulham",
+      "player1": "Sander Berge",
+      "player2": "Antonee Robinson"
+    },
+    {
+      "minute": "80'",
+      "type": "attempt saved",
+      "team": "Fulham",
+      "player1": "Alex Iwobi",
+      "player2": null
+    },
+    {
+      "minute": "81'",
+      "type": "corner",
+      "team": "Fulham",
+      "player1": "Calvin Bassey",
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

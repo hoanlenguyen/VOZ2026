@@ -148,10 +148,11 @@ const latest = computed(() => {
 @media (max-width: 379px) { .cards { grid-template-columns: 1fr; } }
 
 .latest-wrap { display: grid; gap: 30px; margin-top: 50px; }
-@media (min-width: 1024px) { .latest-wrap { grid-template-columns: minmax(0, 1fr) 300px; } }
+/* The sidebar (tables, ads) stays beside the list down to tablet width, also when zoomed in. */
+@media (min-width: 768px) { .latest-wrap { grid-template-columns: minmax(0, 1fr) clamp(230px, 30vw, 300px); } }
 .sidebar { display: flex; flex-direction: column; gap: 24px; }
 .tables { display: flex; flex-direction: column; gap: 24px; }
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .sidebar { align-self: stretch; justify-content: space-between; }
 }
 </style>

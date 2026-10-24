@@ -1,0 +1,755 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645261",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-17 12:30:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Hill Dickinson Stadium, Liverpool",
+    "attendance": 52081,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "11",
+      "name": "Everton",
+      "shortName": "Everton",
+      "abbr": "EVE",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "8",
+      "name": "Chelsea",
+      "shortName": "Chelsea",
+      "abbr": "CHE",
+      "score": 2,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Michael Oliver"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Tony Harrington"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Everton",
+      "goals": [],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "27",
+          "type": "Yellow",
+          "player": "James Garner"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "75",
+          "type": "Yellow",
+          "player": "Jack Grealish"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "64",
+          "playerOn": "Michael Keane",
+          "playerOff": "Vitalii Mykolenko"
+        },
+        {
+          "time": "78",
+          "playerOn": "Carlos Alcaraz",
+          "playerOff": "Iliman Ndiaye"
+        },
+        {
+          "time": "84",
+          "playerOn": "Tim Iroegbunam",
+          "playerOff": "Thierno Barry"
+        },
+        {
+          "time": "87",
+          "playerOn": "Seamus Coleman",
+          "playerOff": "James Garner"
+        }
+      ]
+    },
+    "away": {
+      "team": "Chelsea",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "57",
+          "timestamp": "20261017T134200+0100",
+          "player": "Pedro Neto",
+          "assist": "Wesley Fofana"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "68",
+          "timestamp": "20261017T135300+0100",
+          "player": "Alejandro Garnacho"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "24",
+          "type": "Yellow",
+          "player": "Wesley Fofana"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "87",
+          "type": "Yellow",
+          "player": "João Pedro"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "63",
+          "playerOn": "Trevoh Chalobah",
+          "playerOff": "Pedro Neto"
+        },
+        {
+          "time": "65",
+          "playerOn": "Alejandro Garnacho",
+          "playerOff": "Moisés Caicedo"
+        },
+        {
+          "time": "76",
+          "playerOn": "Malo Gusto",
+          "playerOff": "Cole Palmer"
+        },
+        {
+          "time": "78",
+          "playerOn": "Estêvão",
+          "playerOff": "Wesley Fofana"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Everton",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Jordan Pickford"
+        ],
+        [
+          "Jake O'Brien",
+          "James Tarkowski",
+          "Jarrad Branthwaite",
+          "Vitalii Mykolenko"
+        ],
+        [
+          "James Garner",
+          "Idrissa Gueye"
+        ],
+        [
+          "Iliman Ndiaye",
+          "Kiernan Dewsbury-Hall",
+          "Jack Grealish"
+        ],
+        [
+          "Thierno Barry"
+        ]
+      ],
+      "manager": "David Moyes",
+      "startingXI": [
+        {
+          "name": "Jordan Pickford",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jake O'Brien",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "James Tarkowski",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Jarrad Branthwaite",
+          "shirtNumber": 32,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Vitalii Mykolenko",
+          "shirtNumber": 16,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "James Garner",
+          "shirtNumber": 37,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Idrissa Gueye",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Iliman Ndiaye",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Kiernan Dewsbury-Hall",
+          "shirtNumber": 22,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jack Grealish",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Thierno Barry",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Mark Travers",
+          "shirtNumber": 12,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Seamus Coleman",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Michael Keane",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Tim Iroegbunam",
+          "shirtNumber": 42,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Carlos Alcaraz",
+          "shirtNumber": 24,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Dwight McNeil",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Beto",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Chelsea",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Robert Sánchez"
+        ],
+        [
+          "Reece James",
+          "Wesley Fofana",
+          "Levi Colwill",
+          "Marc Cucurella"
+        ],
+        [
+          "Moisés Caicedo",
+          "Enzo Fernández"
+        ],
+        [
+          "Pedro Neto",
+          "Cole Palmer",
+          "Jamie Gittens"
+        ],
+        [
+          "João Pedro"
+        ]
+      ],
+      "manager": "Enzo Maresca",
+      "startingXI": [
+        {
+          "name": "Robert Sánchez",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Reece James",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Wesley Fofana",
+          "shirtNumber": 29,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Levi Colwill",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Marc Cucurella",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Moisés Caicedo",
+          "shirtNumber": 25,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Enzo Fernández",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Pedro Neto",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Cole Palmer",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jamie Gittens",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "João Pedro",
+          "shirtNumber": 20,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Filip Jörgensen",
+          "shirtNumber": 12,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Trevoh Chalobah",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Malo Gusto",
+          "shirtNumber": 27,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Andrey Santos",
+          "shirtNumber": 17,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Estêvão",
+          "shirtNumber": 41,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Alejandro Garnacho",
+          "shirtNumber": 49,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Marc Guiu",
+          "shirtNumber": 38,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 38.9,
+        "away": 61.1
+      },
+      "xG": {
+        "home": 0.72,
+        "away": 2.34
+      },
+      "shots": {
+        "home": 9,
+        "away": 12
+      },
+      "shots_on_target": {
+        "home": 3,
+        "away": 3
+      },
+      "shots_off_target": {
+        "home": 6,
+        "away": 9
+      },
+      "shots_blocked": {
+        "home": 0,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 3,
+        "away": 4
+      },
+      "passes": {
+        "home": 383,
+        "away": 573
+      },
+      "accurate_passes": {
+        "home": 312,
+        "away": 480
+      },
+      "tackles": {
+        "home": 23,
+        "away": 16
+      },
+      "saves": {
+        "home": 1,
+        "away": 3
+      },
+      "fouls": {
+        "home": 14,
+        "away": 9
+      },
+      "offsides": {
+        "home": 2,
+        "away": 4
+      },
+      "yellow_cards": {
+        "home": 2,
+        "away": 2
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 4,
+        "lostCorners": 5
+      },
+      "away": {
+        "wonCorners": 5,
+        "lostCorners": 4
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "8'",
+      "type": "corner",
+      "team": "Everton",
+      "player1": "Vitalii Mykolenko",
+      "player2": null
+    },
+    {
+      "minute": "8'",
+      "type": "corner",
+      "team": "Everton",
+      "player1": "Jake O'Brien",
+      "player2": null
+    },
+    {
+      "minute": "11'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Pedro Neto",
+      "player2": "Wesley Fofana"
+    },
+    {
+      "minute": "15'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "Iliman Ndiaye",
+      "player2": "Vitalii Mykolenko"
+    },
+    {
+      "minute": "16'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Pedro Neto",
+      "player2": null
+    },
+    {
+      "minute": "20'",
+      "type": "offside",
+      "team": "Chelsea",
+      "player1": "Levi Colwill",
+      "player2": null
+    },
+    {
+      "minute": "21'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "James Garner",
+      "player2": "Idrissa Gueye"
+    },
+    {
+      "minute": "22'",
+      "type": "attempt saved",
+      "team": "Everton",
+      "player1": "Jake O'Brien",
+      "player2": "James Garner"
+    },
+    {
+      "minute": "35'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "João Pedro",
+      "player2": "Jamie Gittens"
+    },
+    {
+      "minute": "38'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "Thierno Barry",
+      "player2": "Jake O'Brien"
+    },
+    {
+      "minute": "41'",
+      "type": "corner",
+      "team": "Chelsea",
+      "player1": "Wesley Fofana",
+      "player2": null
+    },
+    {
+      "minute": "41'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Jamie Gittens",
+      "player2": "Wesley Fofana"
+    },
+    {
+      "minute": "42'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Jamie Gittens",
+      "player2": null
+    },
+    {
+      "minute": "43'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Reece James",
+      "player2": "Pedro Neto"
+    },
+    {
+      "minute": "45'",
+      "type": "corner",
+      "team": "Chelsea",
+      "player1": "Marc Cucurella",
+      "player2": null
+    },
+    {
+      "minute": "48'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "Iliman Ndiaye",
+      "player2": null
+    },
+    {
+      "minute": "48'",
+      "type": "corner",
+      "team": "Everton",
+      "player1": "Vitalii Mykolenko",
+      "player2": null
+    },
+    {
+      "minute": "50'",
+      "type": "corner",
+      "team": "Everton",
+      "player1": "James Tarkowski",
+      "player2": null
+    },
+    {
+      "minute": "52'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Marc Cucurella",
+      "player2": null
+    },
+    {
+      "minute": "55'",
+      "type": "offside",
+      "team": "Everton",
+      "player1": "Idrissa Gueye",
+      "player2": "Iliman Ndiaye"
+    },
+    {
+      "minute": "57'",
+      "type": "corner",
+      "team": "Chelsea",
+      "player1": "Levi Colwill",
+      "player2": null
+    },
+    {
+      "minute": "58'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Jamie Gittens",
+      "player2": null
+    },
+    {
+      "minute": "59'",
+      "type": "offside",
+      "team": "Chelsea",
+      "player1": "Pedro Neto",
+      "player2": "Levi Colwill"
+    },
+    {
+      "minute": "61'",
+      "type": "attempt saved",
+      "team": "Everton",
+      "player1": "Thierno Barry",
+      "player2": "James Tarkowski"
+    },
+    {
+      "minute": "62'",
+      "type": "attempt saved",
+      "team": "Chelsea",
+      "player1": "Pedro Neto",
+      "player2": null
+    },
+    {
+      "minute": "64'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "Jarrad Branthwaite",
+      "player2": null
+    },
+    {
+      "minute": "64'",
+      "type": "corner",
+      "team": "Chelsea",
+      "player1": "Wesley Fofana",
+      "player2": null
+    },
+    {
+      "minute": "66'",
+      "type": "miss",
+      "team": "Chelsea",
+      "player1": "Jamie Gittens",
+      "player2": "João Pedro"
+    },
+    {
+      "minute": "67'",
+      "type": "miss",
+      "team": "Everton",
+      "player1": "Kiernan Dewsbury-Hall",
+      "player2": null
+    },
+    {
+      "minute": "68'",
+      "type": "offside",
+      "team": "Chelsea",
+      "player1": "Alejandro Garnacho",
+      "player2": "Levi Colwill"
+    },
+    {
+      "minute": "70'",
+      "type": "offside",
+      "team": "Chelsea",
+      "player1": "Cole Palmer",
+      "player2": "Reece James"
+    },
+    {
+      "minute": "73'",
+      "type": "offside",
+      "team": "Everton",
+      "player1": "Iliman Ndiaye",
+      "player2": null
+    },
+    {
+      "minute": "81'",
+      "type": "corner",
+      "team": "Everton",
+      "player1": "Michael Keane",
+      "player2": null
+    },
+    {
+      "minute": "90'",
+      "type": "attempt saved",
+      "team": "Everton",
+      "player1": "Tim Iroegbunam",
+      "player2": "Michael Keane"
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

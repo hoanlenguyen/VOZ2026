@@ -53,16 +53,22 @@ useHead(() => ({
 
 <template>
   <main id="main" class="wrap">
-    <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
-    <NuxtLink to="/" class="back">
-      <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
-      {{ t('match.back') }}
-    </NuxtLink>
-
-    <p v-if="error" class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
+    <template v-if="error">
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
+      <p class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
+    </template>
 
     <div v-else-if="match && data" class="layout">
     <div class="article">
+      <!-- In the article column, so they line up with it at every width. -->
+      <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
       <header class="hero">
         <!-- The newsroom's cover image replaces the match graphic when one is set. -->
         <figure v-if="data.cover" class="visual cover">
@@ -168,7 +174,7 @@ useHead(() => ({
           </li>
         </ol>
       </section>
-      <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">{{ t('match.noScorers') }}</p>
+      <p v-else-if="!data.competition.hasScoringEvents && finished && !data.extras" class="source">{{ t('match.noScorers') }}</p>
 
       <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
     </div>
@@ -190,23 +196,30 @@ useHead(() => ({
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
-/* The article stays centred on the screen; the big ad sits to its left and the league table (with
-   the smaller ads) to its right when there is room (columns: ad | article | table); below the
-   article otherwise. */
+/* Side columns stay beside the article down to tablet width (also when the page is zoomed in):
+   - from 1024px: big ad | article | table and ads (the article is centred when both sides have room);
+   - 768–1023px: article | table, ads and the big ad;
+   - below 768px: one column, the table and ads after the article. */
 .layout { display: grid; gap: 48px; }
 .article { min-width: 0; }
 .sidebar { min-width: 0; }
 .left-ad { min-width: 0; }
 .ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
-@media (min-width: 1400px) {
+.preview-banner { margin-top: 12px; }
+@media (min-width: 768px) {
   .wrap { max-width: none; }
-  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }
-  .article { grid-column: 2; grid-row: 1; }
-  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: calc(100% - 32px); max-width: 300px; margin-right: 32px; padding-top: 16px; }
-  .sidebar { grid-row: 1; grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
-  .wrap > .back, .wrap > .notice, .wrap > .preview-banner { margin-left: calc(50% - 380px); }
-  .wrap > .notice, .wrap > .preview-banner { max-width: 760px; }
+  .layout { grid-template-columns: minmax(0, 1fr) clamp(220px, 30vw, 300px); gap: 0 24px; align-items: start; }
+  .article { grid-column: 1; grid-row: 1 / span 2; }
+  .sidebar { grid-column: 2; grid-row: 1; padding-top: 60px; }
+  .left-ad { grid-column: 2; grid-row: 2; margin-top: 16px; }
 }
+@media (min-width: 1024px) {
+  .layout { grid-template-columns: minmax(170px, 1fr) minmax(0, 760px) minmax(230px, 1fr); }
+  .article { grid-column: 2; grid-row: 1; }
+  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: 100%; max-width: 300px; margin-top: 0; padding-top: 60px; }
+  .sidebar { grid-column: 3; grid-row: 1; width: 100%; max-width: 340px; }
+}
+@media (min-width: 1280px) { .layout { gap: 0 32px; } }
 
 .back {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 8px;
