@@ -799,5 +799,26 @@
     "title": "Sosiaalisessa mediassa",
     "mockNote": "Demon testijulkaisuja: keksittyjä faneja ja tunnuksia, ei oikeita tilejä.",
     "via": "{platform}"
+  },
+  "notify": {
+    "label": "Ilmoitukset",
+    "labelUnread": "Ilmoitukset, {n} lukematonta",
+    "title": "Ilmoitukset",
+    "markAll": "Merkitse kaikki luetuiksi",
+    "unread": "Lukematon",
+    "kinds": {
+      "result": "Tulos",
+      "story": "Otteluraportti",
+      "podcast": "Podcast",
+      "fixture": "Seuraava ottelu"
+    },
+    "items": {
+      "fixture-hull": "Ipswich Town pelaa vieraissa Hull Cityä vastaan lauantaina 31. lokakuuta klo 15.00.",
+      "podcast-ipswich": "Uusi podcast Ipswichistä: \"Ipswich nousi tasapeliin\".",
+      "story-ipswich": "Otteluraportti: Ipswich ja Nottingham Forest jakoivat pisteet ensimmäisen puoliajan maalien jälkeen.",
+      "result-ipswich": "Lopputulos: Ipswich 1–1 Nott'm Forest."
+    },
+    "invite": "Saat ilmoitukset omista joukkueistasi VOZ Plussalla.",
+    "inviteCta": "Tilaa tai kirjaudu"
   }
 }
