@@ -3,11 +3,12 @@ import { PhArrowUpRight, PhCaretDown } from '@phosphor-icons/vue'
 import type { NewsItem, NewsSummary } from '#shared/types/news-coverage'
 
 const props = defineProps<{ article: NewsItem, panelId: string, summaryAvailable: boolean, paused?: boolean }>()
+const { t, locale } = useI18n()
+const { stamp } = useFormat()
 const open = ref(false)
 const pending = ref(false)
 const result = ref<NewsSummary | null>(null)
 const error = ref<string | null>(null)
-const topicLabel = { form: 'Current form', players: 'Player news', injuries: 'Injuries & fitness' } as const
 
 async function toggle() {
   open.value = !open.value
@@ -22,7 +23,7 @@ async function toggle() {
   }
   catch (failure) {
     const message = failure as { data?: { statusMessage?: string } }
-    error.value = message.data?.statusMessage ?? 'This summary is unavailable right now. Please try again or read the original.'
+    error.value = locale.value === 'en' && message.data?.statusMessage ? message.data.statusMessage : t('press.summaryError')
   }
   finally { pending.value = false }
 }
@@ -30,9 +31,9 @@ async function toggle() {
 
 <template>
   <article class="news-item">
-    <p v-if="article.topic" class="news-topic">{{ topicLabel[article.topic] }}</p>
+    <p v-if="article.topic" class="news-topic">{{ t(`press.topics.${article.topic}`) }}</p>
     <h4 class="news-heading">
-      <button class="news-trigger" type="button" :aria-expanded="open" :aria-controls="panelId" @click="toggle">
+      <button class="news-trigger" :title="article.originalTitle" type="button" :aria-expanded="open" :aria-controls="panelId" @click="toggle">
         <span>{{ article.title }}</span>
         <PhCaretDown :size="18" weight="bold" class="news-caret" :class="{ 'news-caret--open': open }" aria-hidden="true" />
       </button>
@@ -40,25 +41,26 @@ async function toggle() {
     <div class="news-meta">
       <span class="news-publisher">{{ article.source }}</span>
       <span aria-hidden="true">·</span>
-      <time :datetime="article.publishedAt">{{ storyStamp(article.publishedAt) }}</time>
+      <time :datetime="article.publishedAt">{{ stamp(article.publishedAt) }}</time>
+      <template v-if="article.translated"><span aria-hidden="true">·</span><span>{{ t('press.translated') }}</span><span class="sr-only">{{ t('press.original') }}: {{ article.originalTitle }}</span></template>
     </div>
     <div v-if="open" :id="panelId" class="news-summary" :aria-busy="pending" aria-live="polite">
-      <p v-if="pending" class="news-progress">Preparing your AI summary…</p>
+      <p v-if="pending" class="news-progress">{{ t('press.preparing') }}</p>
       <template v-else-if="result">
-        <span class="news-ai-label">AI summary</span>
+        <span class="news-ai-label">{{ t(locale === 'en' ? 'press.aiSummary' : 'press.summaryLanguage') }}</span>
         <p class="news-summary-text">{{ result.summary }}</p>
-        <p class="news-summary-date">Summarized {{ storyStamp(result.generatedAt) }} from {{ result.source.name }}’s report.</p>
+        <p class="news-summary-date">{{ t('press.summarized', { date: stamp(result.generatedAt), source: result.source.name }) }}</p>
       </template>
       <p v-else-if="error" class="news-error" role="alert">{{ error }}</p>
-      <p v-else-if="paused" class="news-error">Pre-match source retained. News summaries resume after full time; live updates are on the match page.</p>
-      <p v-else-if="!summaryAvailable" class="news-error">AI summaries are temporarily unavailable. You can read the original below.</p>
-      <button v-if="error && !pending" class="news-retry" type="button" @click="open = false; toggle()">Try summary again</button>
+      <p v-else-if="paused" class="news-error">{{ t('press.paused') }}</p>
+      <p v-else-if="!summaryAvailable" class="news-error">{{ t('press.summaryUnavailable') }}</p>
+      <button v-if="error && !pending" class="news-retry" type="button" @click="open = false; toggle()">{{ t('press.retrySummary') }}</button>
     </div>
     <div class="news-actions">
-      <span class="news-hint">{{ open ? 'Select headline to close' : paused ? 'Pre-match source · summaries resume after full time' : 'Select headline for AI summary' }}</span>
+      <span class="news-hint">{{ t(open ? 'press.close' : paused ? 'press.pausedHint' : 'press.select') }}</span>
       <a :href="article.link" target="_blank" rel="noopener noreferrer nofollow" class="news-original">
-        Read original <PhArrowUpRight :size="14" aria-hidden="true" />
-        <span class="sr-only">at {{ article.source }} (opens in a new tab)</span>
+        {{ t('press.originalLink') }} <PhArrowUpRight :size="14" aria-hidden="true" />
+        <span class="sr-only">{{ t('press.opens', { source: article.source }) }}</span>
       </a>
     </div>
   </article>

@@ -3,6 +3,7 @@ import { articleUrl, readPublisherArticle } from '../lib/news/lookup'
 import { sourceForUrl } from '../lib/news/sources'
 import { createSummaryService, generateNewsSummary, SummaryError, type SummaryArticle, type SummaryConfig } from '../lib/news/summary'
 import { collectedArticleHash, recentlyVerifiedNews } from './news-monitor'
+import { modelId } from '../../shared/utils/model-name'
 
 export async function readNewsSummaryEvidence(article: SummaryArticle) {
     const source = sourceForUrl(article.link)
@@ -40,7 +41,7 @@ export function newsSummaryConfig(): SummaryConfig {
   const provider = config.newsAiProvider === 'huggingface' ? 'huggingface' : 'openai'
   const settings: SummaryConfig = {
     provider,
-    model: provider === 'huggingface' ? config.hfModel : config.openaiModel,
+    model: provider === 'huggingface' ? config.hfModel : modelId(config.openaiModel),
     apiKey: provider === 'huggingface' ? config.hfToken : config.openaiApiKey,
   }
   if (!settings.apiKey) throw new SummaryError('AI summaries are not configured yet.', 503)

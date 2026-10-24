@@ -1,0 +1,64 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "short",
+ "tone": "home-fan",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:32:46.867Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1221
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (8 facts cited)",
+   "ms": 2750
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (8 facts cited)",
+   "ms": 2067
+  }
+ ],
+ "usage": {
+  "inputTokens": 5347,
+  "outputTokens": 410,
+  "turns": 3,
+  "ms": 6038
+ },
+ "headline": "Enciso pelasti Ipswichille pisteen, Forest hallitsi paikkoja",
+ "sentences": [
+  {
+   "text": "Julio Encison 41. minuutin tasoitus toi Ipswich Townille pisteen Nottingham Forestin vieraillessa Portman Roadilla: ottelu päättyi 1–1, kun Forest oli mennyt johtoon 13. minuutilla.",
+   "facts": [
+    "f1",
+    "f7",
+    "f8",
+    "f9",
+    "f6"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Tasapeliä voi pitää arvokkaana, sillä Forest vei laukaukset 17–7 ja xG-lukemat 2,29–0,46; Ipswich nousi samalla sarjataulukossa 9:nneksi 10 pisteeseen.",
+   "facts": [
+    "f19",
+    "f17",
+    "f32"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 8
+ },
+ "fallbackReason": null
+}

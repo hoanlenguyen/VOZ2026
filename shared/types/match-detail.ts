@@ -14,11 +14,15 @@ export interface TimelineEvent {
   order: number
   side: 'home' | 'away' | null
   kind: TimelineKind
-  /** Short label written by VOZ, e.g. "Goal", "Shot saved". */
+  /** Short label written by VOZ in the reader's language, e.g. "Goal" / "Maali". Display only. */
   label: string
   player: string | null
-  /** Assist, player substituted off, etc., with its own label. */
+  /** Assist, player substituted off, etc., with its own label, in the reader's language. Display only. */
   detail: string | null
+  /** Structured facts behind the label and detail; code reads these, never the text. */
+  goalType: 'regular' | 'own' | 'penalty' | null
+  assist: string | null
+  playerOff: string | null
   /** Running score after a goal, or the score at a period marker. */
   score: string | null
   /** Key events (goals, cards, subs, VAR, period ends) vs. chances and set pieces. */

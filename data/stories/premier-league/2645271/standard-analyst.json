@@ -1,0 +1,104 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "standard",
+ "tone": "analyst",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:31:20.792Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1033
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (18 facts cited)",
+   "ms": 5712
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (18 facts cited)",
+   "ms": 3685
+  }
+ ],
+ "usage": {
+  "inputTokens": 5393,
+  "outputTokens": 866,
+  "turns": 3,
+  "ms": 10430
+ },
+ "headline": "Forest’s chance volume goes unrewarded in Ipswich draw",
+ "sentences": [
+  {
+   "text": "Ipswich Town and Nottingham Forest shared a 1–1 draw, with both goals arriving before half-time and neither side scoring after the break.",
+   "facts": [
+    "f1",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Nottingham Forest ahead in the 13th minute, and Julio Enciso equalised for Ipswich in the 41st.",
+   "facts": [
+    "f7",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The underlying numbers strongly favoured Forest: they recorded 2.29 expected goals to Ipswich’s 0.46 and outshot the hosts 17–7.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest also had 5 shots on target to Ipswich’s 3, created 2 big chances to 1 and won 5 corners while Ipswich had none.",
+   "facts": [
+    "f20",
+    "f21",
+    "f22"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Possession was nearly even, at 50.6% for Forest and 49.4% for Ipswich, while pass totals were similarly close at 480 and 486 respectively.",
+   "facts": [
+    "f16",
+    "f23"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich’s 4-2-3-1 faced Forest’s 3-4-2-1, and the point moved Ipswich to 9th on 10 points while Forest rose to 16th on 6.",
+   "facts": [
+    "f37",
+    "f39",
+    "f32",
+    "f34"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "The result extends a mixed five-game run for both: Ipswich had taken 6 points from their preceding 5 league matches, and Forest 4.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 2
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 18
+ },
+ "fallbackReason": null
+}

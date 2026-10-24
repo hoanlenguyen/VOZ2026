@@ -1,0 +1,647 @@
+{
+  "site": {
+    "tagline": "Oma urheilumaailmani",
+    "logoLabel": "VOZ – Oma urheilumaailmani, etusivu",
+    "menu": "Valikko",
+    "language": "Kieli",
+    "footer": "VOZ – Oma urheilumaailmani · Tämän sivun jutut kirjoitetaan automaattisesti virallisesta sarjadatasta (Liiga, football-data.org)."
+  },
+  "nav": {
+    "myTeams": "Omat joukkueet",
+    "personalise": "Personoi",
+    "signIn": "Kirjaudu",
+    "account": "Oma tili",
+    "newsroom": "Toimitus",
+    "signOut": "Kirjaudu ulos",
+    "accountMenu": "Tilivalikko",
+    "news": "Uutiset",
+    "favourites": "Omat suosikit",
+    "lockedHint": "VOZ Plus -tilaajille"
+  },
+  "sport": {
+    "all": "Kaikki lajit",
+    "hockey": "Jääkiekko",
+    "football": "Jalkapallo"
+  },
+  "time": {
+    "today": "Tänään",
+    "tomorrow": "Huomenna"
+  },
+  "home": {
+    "title": "Urheilu",
+    "pageTitle": "Urheilu – VOZ",
+    "sections": "Osiot",
+    "loadError": "Juttuja ei voitu ladata ({reason}). Yritä hetken päästä uudelleen.",
+    "empty": "Tässä osiossa ei ole tuoreita juttuja.",
+    "missing": "Tilapäisesti poissa käytöstä: {list}.",
+    "topStories": "Pääuutiset",
+    "moreStories": "Lisää juttuja",
+    "latest": "Uusimmat",
+    "allAbove": "Kaikki päivän jutut ovat yllä.",
+    "sidebar": "Sarjataulukot ja kumppanit"
+  },
+  "story": {
+    "result": "Tulos",
+    "preview": "Ennakko",
+    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
+    "aiTag": "Tekoälysisältö"
+  },
+  "table": {
+    "title": "{league} – sarjataulukko",
+    "team": "Joukkue",
+    "played": "Ottelut",
+    "playedShort": "O",
+    "points": "Pisteet",
+    "pointsShort": "P",
+    "movement": "Muutos edellisestä ottelusta",
+    "up": "Noussut {n} sijaa | Noussut {n} sijan | Noussut {n} sijaa",
+    "down": "Laskenut {n} sijaa | Laskenut {n} sijan | Laskenut {n} sijaa",
+    "same": "Ei muutosta",
+    "movementMock": "Demodata: edellisen ottelun tulos puuttuu"
+  },
+  "ticker": {
+    "label": "Tulevat ottelut",
+    "upcoming": "{n} tulossa",
+    "prev": "Edelliset ottelut",
+    "next": "Seuraavat ottelut",
+    "slide": "{i}/{n}",
+    "empty": "Ei tulevia otteluita",
+    "league": "Sarja: {name}. Vaihda sarjaa",
+    "choose": "Valitse sarja"
+  },
+  "visual": {
+    "final": "Päättynyt",
+    "vs": "vs."
+  },
+  "match": {
+    "back": "Uutiset",
+    "pageTitle": "Ottelu – VOZ",
+    "loadError": "Ottelua ei voitu ladata ({reason}). Yritä hetken päästä uudelleen.",
+    "matchday": "{n}. kierros",
+    "halfTime": "Puoliaika {score}",
+    "periods": "Erät {list}",
+    "spectators": "{n} katsojaa",
+    "timeline": "Ottelun tapahtumat",
+    "compare": "Vertailu",
+    "lineups": "Kokoonpanot",
+    "goals": "Maalit",
+    "sourceExtras": "Ottelutilastot: {source}. Kauden luvut on laskettu virallisista tuloksista ({league}).",
+    "sourceOfficial": "Ottelutilastot virallisesta otteludatasta ({league}). Kauden luvut on laskettu virallisista tuloksista.",
+    "sourceResults": "Laskettu virallisista tuloksista ({league}). Laukaukset, pallonhallinta ja kortit eivät vielä sisälly datapakettiimme.",
+    "referee": "Erotuomari: {name}",
+    "matchData": "Otteludata: {source}. VOZ on nimennyt tapahtumat datan pohjalta.",
+    "noScorers": "Maalintekijät eivät sisälly tähän datapakettiin.",
+    "tags": {
+      "power-play": "ylivoima",
+      "short-handed": "alivoima",
+      "empty-net": "tyhjään maaliin",
+      "penalty": "rangaistuslaukaus",
+      "own-goal": "oma maali",
+      "game-winner": "voittomaali"
+    },
+    "story": "Otteluraportti",
+    "storyHidden": "Toimitus on piilottanut tämän lukijoilta. Vain toimituksen tunnukset näkevät osion.",
+    "storyEdited": "Muokannut {name} · {time}",
+    "deskLabel": "Toimitus",
+    "deskState": "Otteluraportti: {story}",
+    "deskNone": "ei",
+    "deskEdit": "Muokkaa sisältöä",
+    "storyPlus": "Tilaajille",
+    "coverCredit": "Kuva: {credit}",
+    "previewBanner": "Esikatselu, ei julkaistu · lukijana: {as}",
+    "aiEvidence": "Otsikon taustalla olevat faktat",
+    "by": "Teksti: {name}",
+    "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta",
+    "standings": "Sarjataulukko",
+    "statsTitle": "Ottelutilastot"
+  },
+  "timeline": {
+    "shown": "Näytettävät tapahtumat",
+    "key": "Tärkeimmät",
+    "all": "Kaikki tapahtumat",
+    "score": "tilanne {score}"
+  },
+  "lineups": {
+    "starting": "{team}, avauskokoonpano {formation}: {players}",
+    "subs": "Vaihtopelaajat",
+    "cameOn": "Tuli kentälle",
+    "manager": "Päävalmentaja",
+    "captain": "kapteeni"
+  },
+  "compare": {
+    "formLabel": "{team}, viisi viimeisintä tulosta, vanhin ensin",
+    "form": {
+      "W": "Voitto",
+      "D": "Tasapeli",
+      "L": "Tappio"
+    },
+    "formLetter": {
+      "W": "V",
+      "D": "T",
+      "L": "H"
+    }
+  },
+  "press": {
+    "title": "Uutiset",
+    "before": "Ennen ottelua",
+    "after": "Ottelun jälkeen",
+    "opens": "(avaa lähteen {source} uudessa välilehdessä)",
+    "unavailable": "Uutiset eivät ole juuri nyt saatavilla.",
+    "sourceNote": "Uutiset käsittelevät ottelun ennakkoa ja jälkitunnelmia. Live-tilannetta seurataan ottelusivulla. Joukkueuutisten tiivistelmät säilytetään välimuistissa enintään 24 tuntia ja päivitetään aiemmin, jos lähde muuttuu.",
+    "translated": "Konekäännös",
+    "original": "Alkuperäinen otsikko",
+    "intro": "Otteluraportit ja joukkueiden uutiset. Avaa joukkueen uutisotsikko lukeaksesi tekoälytiivistelmän.",
+    "preMatchNews": "Uutiset ennen ottelua",
+    "postMatchNews": "Uutiset ottelun jälkeen",
+    "sources": "Ottelun uutislähteet",
+    "liveNote": "Ennen ottelua julkaistut lähteet säilyvät ottelun aikana. Seuraa live-tilannetta tällä ottelusivulla.",
+    "preMatchTeam": "Ennen ottelua · Vire, pelaajat ja loukkaantumiset",
+    "postMatchTeam": "Ottelun jälkeen · Vire, pelaajat ja loukkaantumiset",
+    "teamGap": "Saatavilla {count}/3 tuoretta, tarkistettua joukkueuutista.",
+    "empty": "Tälle ottelulle ei ole vielä tarkistettuja uutisia.",
+    "retry": "Yritä uudelleen",
+    "topics": {
+      "form": "Nykyinen vire",
+      "players": "Pelaajauutiset",
+      "injuries": "Loukkaantumiset ja kunto"
+    },
+    "aiSummary": "Tekoälytiivistelmä",
+    "summaryLanguage": "Tekoälytiivistelmä (englanniksi)",
+    "preparing": "Tekoälytiivistelmää valmistellaan…",
+    "summaryError": "Tiivistelmä ei ole juuri nyt saatavilla. Yritä uudelleen tai lue alkuperäinen juttu.",
+    "summarized": "Tiivistetty {date} lähteen {source} raportista.",
+    "paused": "Ennen ottelua julkaistu lähde on säilytetty. Uutistiivistelmät jatkuvat ottelun päätyttyä. Live-tilanne on ottelusivulla.",
+    "summaryUnavailable": "Tekoälytiivistelmät eivät ole juuri nyt saatavilla. Voit lukea alkuperäisen jutun alta.",
+    "retrySummary": "Yritä tiivistelmää uudelleen",
+    "close": "Sulje valitsemalla otsikko",
+    "select": "Avaa tekoälytiivistelmä valitsemalla otsikko",
+    "pausedHint": "Ennakon lähde · tiivistelmät jatkuvat ottelun päätyttyä",
+    "originalLink": "Lue alkuperäinen",
+    "matchStatus": {
+      "postponed": "Ottelu siirretty",
+      "cancelled": "Ottelu peruttu"
+    }
+  },
+  "onboarding": {
+    "title": "Tee siitä oma urheilumaailmasi",
+    "note": "Käyttöönotto tulee vaiheessa 4. Valitse sarja nähdäksesi sen joukkueet.",
+    "league": "Sarja",
+    "loadError": "Joukkueita ei voitu ladata: {reason}"
+  },
+  "status": {
+    "subtitle": "Oma urheilumaailmani · datakerroksen tila",
+    "sources": "Datalähteet · tila {mode}",
+    "off": "pois",
+    "onboarding": "Käyttöönotto →",
+    "latest": "Viimeisimmät tulokset",
+    "standings": "Sarjataulukko",
+    "loadError": "Kohdetta {name} ei voitu ladata: {reason}"
+  },
+  "plan": {
+    "free": "Maksuton",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Toimitus"
+  },
+  "login": {
+    "pageTitle": "Kirjaudu – VOZ",
+    "title": "Kirjaudu sisään",
+    "lead": "Kirjaudu lukeaksesi otteluiden koko sisällön.",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "submit": "Kirjaudu",
+    "busy": "Kirjaudutaan…",
+    "error": "Väärä sähköposti tai salasana.",
+    "failed": "Kirjautuminen epäonnistui. Yritä hetken päästä uudelleen.",
+    "demoTitle": "Demotilit",
+    "demoHint": "Kaikkien demotilien salasana on \"demo\". Valitse tili kirjautuaksesi.",
+    "demo": {
+      "subscriber": "Tilaajatili: kaikki sisältö",
+      "free": "Maksuton tili: tulokset, sarjataulukot ja jutut, lisäsisältö lukittu",
+      "newsroom": "Toimitus: kaikki sisältö ja toimituksen näkymä"
+    }
+  },
+  "paywall": {
+    "title": "Syystarjous, sinulle!",
+    "subBefore": "VOZ Plus kaksi ensimmäistä kuukautta",
+    "subPrice": "vain 9,90 €",
+    "benefits": {
+      "unlimited": "Otteluiden koko sisältö sovelluksessa ja verkossa",
+      "stories": "Tekoälyn otteluraportit, jokainen lause tarkistettu",
+      "stats": "Tilastovertailu, tapahtumat ja kokoonpanot",
+      "languages": "Kaikki suomeksi ja englanniksi"
+    },
+    "cta": "Tutustu tästä",
+    "manage": "Hallitset tilaustasi helposti omalla tililläsi.",
+    "already": "Oletko jo tilaaja?",
+    "logIn": "Kirjaudu.",
+    "teaserKicker": "Tekoälyn otteluraportti"
+  },
+  "account": {
+    "pageTitle": "Oma tili – VOZ",
+    "title": "Oma tili",
+    "plan": "Tilaus",
+    "subscriber": {
+      "since": "Tilaaja {date} alkaen",
+      "renews": "Uusiutuu {date}",
+      "price": "{price} € / kk",
+      "perks": "Otteluiden koko sisältö ja tekoälyn otteluraportit."
+    },
+    "free": {
+      "perks": "Etusivu, tulokset, sarjataulukot ja automaattiset jutut. Ottelutilastot, tapahtumat, kokoonpanot ja tekoälyn raportit ovat VOZ Plus -tilaajille.",
+      "upgradeDemo": "Päivitys ei kuulu demoon: kirjaudu tilillä subscription{'@'}demo.com nähdäksesi VOZ Plussan."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Koko sisältö ja toimituksen näkymä.",
+      "open": "Avaa toimituksen näkymä"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Toimitus – VOZ",
+    "title": "Toimitus",
+    "editor": "Kirjautuneena: {name}, {role}",
+    "stats": {
+      "stories": "Juttuja tänään",
+      "hidden": "Toimituksen piilottamat",
+      "translations": "Tallennetut käännökset",
+      "aiStories": "Valmiit tekoälyraportit"
+    },
+    "sources": "Datalähteet",
+    "mode": "Tila: {mode}",
+    "ok": "OK",
+    "down": "Poissa",
+    "storiesTitle": "Etusivun jutut",
+    "storiesLead": "Julkaistu: lukijoiden nähtävillä. Esikatselu: valmis tarkistettavaksi. Luonnos: tallennettu, ei julkaistu (lukijat näkevät julkaistun version). Piilotettu: poissa etusivulta ja ottelusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "open": "Avaa",
+    "missing": "Ei saatavilla: {list}",
+    "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
+    "edit": "Muokkaa",
+    "status": {
+      "live": "Julkaistu",
+      "preview": "Esikatselu",
+      "draft": "Luonnos",
+      "hidden": "Piilotettu"
+    },
+    "filter": "Näytä jutut",
+    "all": "Kaikki",
+    "noneWithStatus": "Ei juttuja tällä tilalla.",
+    "author": "Tekijä: {name}",
+    "noStory": "Ei otteluraporttia",
+    "pendingBy": "Julkaisemattomia muutoksia: {name}, {time}"
+  },
+  "editor": {
+    "pageTitle": "Muokkaa otteluraporttia – VOZ-toimitus",
+    "back": "Toimitus",
+    "title": "Otteluraportti",
+    "langName": {
+      "en": "englanninkielistä",
+      "fi": "suomenkielistä"
+    },
+    "language": "Muokkaat {lang} versiota.",
+    "lastSaved": "Viimeksi julkaissut {name}, {time}.",
+    "automatic": "Tilaajat näkevät nyt tekoälyn raportin.",
+    "audiences": {
+      "everyone": {
+        "label": "Kaikki",
+        "text": "Koko ottelusivu on maksuton: raportti, tapahtumat, vertailu ja kokoonpanot myös maksuttomille ja kirjautumattomille lukijoille."
+      },
+      "subscribers": {
+        "label": "Vain tilaajat",
+        "text": "Muut näkevät raportin alun ja tilaustarjouksen; tapahtumat, vertailu ja kokoonpanot vain tilaajille."
+      }
+    },
+    "publish": "Julkaise",
+    "revert": "Palauta automaattinen",
+    "view": "Näytä ottelusivu",
+    "saved": "Julkaistu.",
+    "reverted": "Palautettu: tilaajat näkevät taas normaalin tekoälyn raportin ja ottelugrafiikan.",
+    "saveError": "Julkaisu epäonnistui ({reason}).",
+    "loadError": "Juttua ei voitu ladata ({reason}).",
+    "partStory": "Otteluraportti",
+    "storyLead": "Ottelusivun raporttiosio. Oletuksena tilaajat näkevät tekoälyn raportin, joka on tarkistettu ottelun faktoja vasten.",
+    "storyMode": "Mitä lukijat näkevät",
+    "modes": {
+      "ai": {
+        "label": "Tekoälyn raportti",
+        "text": "Agentin kirjoittama ja faktoja vasten tarkistettu."
+      },
+      "edited": {
+        "label": "Muokattu versio",
+        "text": "Toimituksen teksti korvaa tekoälyn raportin."
+      },
+      "hidden": {
+        "label": "Piilotettu",
+        "text": "Ei otteluraporttia lukijoille."
+      }
+    },
+    "aiPreview": "Lukijoiden näkemä tekoälyn raportti",
+    "storyHeadline": "Raportin otsikko",
+    "startFromAi": "Aloita tekoälyn raportista",
+    "storyBody": "Raportin teksti",
+    "storyBodyHint": "Muokkauksesi ei viittaa faktoihin: editorin vieressä oleva tarkistus näyttää luvut ja nimet, joita faktoissa ei ole.",
+    "storyAudience": "Kuka voi lukea tämän ottelusivun",
+    "factsTitle": "Ottelun faktat",
+    "factsSearch": "Hae faktoista",
+    "factsUsed": "Korostettu: tekstisi käyttää {n}/{total} faktaa.",
+    "sections": {
+      "result": "Tulos",
+      "timeline": "Tapahtumat",
+      "stats": "Tilastot",
+      "form": "Vire",
+      "table": "Sarjataulukko",
+      "h2h": "Keskinäiset",
+      "context": "Tausta"
+    },
+    "check": {
+      "ok": "Jokainen luku ja nimi löytyy faktoista.",
+      "issues": "{n} tarkistettava kohta | {n} tarkistettavaa kohtaa",
+      "headline": "Otsikko",
+      "sentence": "Lause {n}",
+      "number": "”{value}” ei löydy faktoista.",
+      "name": "{value} ei löydy faktoista.",
+      "quote": "sisältää lainauksen; lainauksia ei ole.",
+      "speech": "esittää jonkun puhetta; lainauksia ei ole.",
+      "injury": "mainitsee loukkaantumisen; niitä ei ole faktoissa."
+    },
+    "noStory": "Tällä ottelulla ei ole otteluraporttia: raportit kirjoitetaan päättyneistä otteluista, joista on täysi otteludata.",
+    "cover": {
+      "title": "Kansikuva",
+      "hint": "Kuva ottelusivun yläosassa ja etusivun kortissa. Käytä vain kuvia, jotka VOZ omistaa tai joihin sillä on oikeudet.",
+      "formats": "JPEG, PNG tai WebP, enintään 2 Mt.",
+      "uploading": "Ladataan…",
+      "replace": "Vaihda kuva",
+      "alt": "Vaihtoehtoinen teksti",
+      "altHint": "Kuvaile kuva lukijoille, jotka eivät näe sitä.",
+      "credit": "Kuvaaja",
+      "creditPlaceholder": "Kuvaaja / toimisto",
+      "tooLarge": "Kuva on yli 2 Mt.",
+      "uploadError": "Kuvaa ei voitu ladata ({reason}).",
+      "graphic": "Nyt: otteludatasta piirretty ottelugrafiikka.",
+      "custom": "Nyt: oma kansikuvasi.",
+      "useGraphic": "Käytä ottelugrafiikkaa"
+    },
+    "format": {
+      "title": "Lukijoiden näkemä versio",
+      "titleEdited": "Tekoälyn versio pohjaksi",
+      "length": "Pituus",
+      "tone": "Kenelle",
+      "lengths": {
+        "short": "Lyhyt",
+        "standard": "Normaali",
+        "long": "Pitkä"
+      },
+      "tones": {
+        "neutral": "Neutraali",
+        "fans": "{team}-fanit",
+        "analyst": "Analyytikko"
+      }
+    },
+    "preview": {
+      "open": "Esikatsele",
+      "title": "Esikatselu: mitä lukijat näkevät",
+      "as": "Esikatsele",
+      "subscriber": "Tilaaja",
+      "free": "Maksuton lukija",
+      "note": "Ei vielä julkaistu: koko ottelusivu nykyisillä asetuksillasi, niin kuin tämä lukija sen näkee.",
+      "close": "Sulje esikatselu",
+      "back": "Jatka muokkausta",
+      "loading": "Valmistellaan esikatselua…",
+      "error": "Esikatselua ei voitu valmistella ({reason}).",
+      "frameTitle": "Ottelusivun esikatselu: {as}"
+    },
+    "saveDraft": "Tallenna luonnos",
+    "readyForReview": "Valmis tarkistettavaksi",
+    "discardDraft": "Hylkää luonnos",
+    "copyPreview": "Kopioi esikatselulinkki",
+    "draftSaved": "Luonnos tallennettu. Lukijat näkevät yhä julkaistun version.",
+    "reviewSaved": "Valmis tarkistettavaksi: muut toimittajat voivat avata esikatselulinkin.",
+    "draftDiscarded": "Luonnos hylätty.",
+    "previewCopied": "Esikatselulinkki kopioitu (vain toimituksen tileille).",
+    "hiddenNote": "Piilotettu lukijoilta toimituksen näkymässä.",
+    "pendingNote": {
+      "draft": "Luonnos: {name}, {time}; ei julkaistu.",
+      "review": "Valmis tarkistettavaksi: {name}, {time}; ei julkaistu."
+    },
+    "cancelChanges": "Peru muutokset",
+    "changesCancelled": "Muutokset peruttu: palattu viimeksi tallennettuun versioon.",
+    "unsaved": "Sinulla on tallentamattomia muutoksia."
+  },
+  "matchStory": {
+    "title": "Otteluraportti",
+    "length": "Pituus",
+    "short": "Lyhyt",
+    "standard": "Normaali",
+    "long": "Pitkä",
+    "writtenFor": "Kenelle",
+    "neutral": "Neutraali",
+    "fans": "{team}-fanit",
+    "analyst": "Analyytikko",
+    "writing": "Kirjoitetaan tätä versiota otteludatasta… ensimmäisellä kerralla se vie noin 10 sekuntia.",
+    "loadError": "Juttua ei voitu ladata.",
+    "loadErrorReason": "Juttua ei voitu ladata ({reason}).",
+    "retry": "Yritä uudelleen",
+    "factN": "Fakta {n}",
+    "byAgent": "Tekoälyn ({model}) kirjoittama virallisesta otteludatasta · tarkistettu {n} faktaa vasten",
+    "byTemplate": "Koottu otteludatasta (tekoälyjuttu ei ollut saatavilla, joten tässä ovat faktat englanniksi)",
+    "showFacts": "Näytä jutun taustalla olevat faktat",
+    "hideFacts": "Piilota faktat",
+    "how": "Näin juttu tehtiin",
+    "howAgent": "Yksi tekoälyagentti ({model}) luki {n} tarkistettua faktaa ottelusta, kirjoitti jutun, tarkisti jokaisen luvun ja nimen lainaamiaan faktoja vasten ja julkaisi sen. Järjestelmämme tarkisti jutun vielä ennen julkaisua.",
+    "fromCache": "Tämä versio tuli välimuistista.",
+    "howTemplate": "Agentti ei saanut aikaan tarkistuksen läpäisevää juttua ({reason}), joten järjestelmä julkaisi faktat sellaisenaan.",
+    "usage": "{turns} kierrosta · {time} · {tokensIn} tokenia sisään, {tokensOut} ulos",
+    "section": {
+      "result": "Tulos",
+      "timeline": "Tapahtumat",
+      "stats": "Tilastot",
+      "form": "Vire",
+      "table": "Sarjataulukko",
+      "h2h": "Keskinäiset",
+      "context": "Tausta",
+      "edge": "Etulyöntiasema"
+    }
+  },
+  "prefs": {
+    "pageTitle": "Omat joukkueet – VOZ",
+    "title": "Omat joukkueet",
+    "lead": "Valitse suosikkijoukkueesi, -sarjasi ja -pelaajasi.",
+    "signIn": "Kirjaudu sisään valitaksesi suosikkijoukkueesi, -sarjasi ja -pelaajasi.",
+    "newsroom": "Suosikit ovat lukijatileille. Toimituksen tileillä on toimituksen näkymä.",
+    "loadError": "Suosikkejasi ei voitu ladata ({reason}).",
+    "saving": "Tallennetaan…",
+    "saved": "Tallennettu",
+    "saveError": "Tallennus epäonnistui. Yritä uudelleen.",
+    "teams": "Suosikkijoukkueet",
+    "leagues": "Suosikkisarjat",
+    "players": "Suosikkipelaajat",
+    "follow": "Seuraa",
+    "following": "Seurataan",
+    "unavailable": "(ei vielä saatavilla)",
+    "searchPlayers": "Hae pelaajia",
+    "filterTeam": "Näytä pelaajat",
+    "allTeams": "Kaikki",
+    "favouritePlayer": "Suosikki: {name}",
+    "noPlayers": "Ei osuvia pelaajia.",
+    "positions": {
+      "goalkeeper": "Maalivahti",
+      "defender": "Puolustaja",
+      "midfielder": "Keskikenttä",
+      "forward": "Hyökkääjä"
+    },
+    "demoNote": "Demo: joukkueet ja pelaajat tulevat Ipswich – Nott'm Forest -ottelun datasta.",
+    "freeNote": "Valitse suosikkisi ja tallenna ne VOZ Plus -tilauksella.",
+    "unsaved": "Sinulla on tallentamattomia muutoksia.",
+    "save": "Tallenna suosikit",
+    "offerTitle": "Tilaa ja tallenna suosikkisi",
+    "offerText": "VOZ Plus tallentaa joukkueesi, sarjasi ja pelaajasi tilillesi, ja saat täydet ottelusivut ja tekoälyn otteluraportit.",
+    "subscribe": "Katso VOZ Plus",
+    "notNow": "Ei nyt",
+    "close": "Sulje",
+    "count": {
+      "teamsLabel": "Seurattua joukkuetta | Seurattu joukkue | Seurattua joukkuetta",
+      "leaguesLabel": "Seurattua sarjaa | Seurattu sarja | Seurattua sarjaa",
+      "playersLabel": "Suosikkipelaajaa | Suosikkipelaaja | Suosikkipelaajaa"
+    },
+    "statsLabel": "Mitä seuraat"
+  },
+  "ads": {
+    "label": "Mainos",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Varusteet kauteen",
+      "text": "Nappulakengät ja peliasut -20 % tänä viikonloppuna, myymälässä ja verkossa.",
+      "cta": "Katso tarjoukset"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Katso isot pelit yhdessä",
+      "text": "Iso näyttö torilla ottelupäivinä. Vapaa pääsy, ruokaa ja juomaa klo 17 alkaen.",
+      "cta": "Katso ohjelma"
+    },
+    "league": {
+      "sponsor": "Iltavitoset",
+      "title": "Ilmoita joukkueesi",
+      "text": "Viikoittainen vitosfutisliiga tiistai-iltaisin. Kaikki tasot, uusi kausi alkaa marraskuussa.",
+      "cta": "Liity liigaan"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Kävele tunnelista",
+      "text": "Kurkista stadionin kulisseihin: viikonloppukierrokset oppaan kanssa, joka on nähnyt kaiken.",
+      "points": {
+        "tunnel": "Kävele ulos pelaajatunnelista",
+        "dugout": "Istu vaihtopenkillä ja lehdistötilassa",
+        "museum": "Pokaalit ja pelipaidat seuran museossa"
+      },
+      "cta": "Varaa kierros"
+    }
+  },
+  "podcast": {
+    "title": "Podcastit",
+    "matchTitle": "Ottelupodcast",
+    "kinds": {
+      "match": "Ottelu",
+      "team": "Joukkue",
+      "league": "Sarja"
+    },
+    "play": "Toista: {title}",
+    "pause": "Tauko: {title}",
+    "seek": "Kohta jaksossa {title}",
+    "transcript": "Teksti",
+    "made": "Tekoälyn ({model}) kirjoittama {n} vahvistetusta faktasta, tekoälyäänen lukema.",
+    "showFacts": "Näytä faktat",
+    "hideFacts": "Piilota faktat",
+    "open": "Avaa ottelu",
+    "deskLabel": "Toimitus:",
+    "deskHas": "Ottelulla on tekoälypodcast englanniksi ja suomeksi. Luo uudelleen tekee uudet versiot.",
+    "deskNone": "Ottelulla ei ole vielä podcastia. Luo kirjoittaa ottelun faktoista 20–30 sekunnin koosteen ja äänittää sen englanniksi ja suomeksi.",
+    "generate": "Luo podcast",
+    "regenerate": "Luo podcast uudelleen",
+    "generating": "Kirjoitetaan ja äänitetään…",
+    "generatingNote": "Käsikirjoitus kirjoitetaan faktoista, tarkistetaan ja äänitetään. Tämä kestää noin 15 sekuntia.",
+    "failed": "Jokin meni pieleen",
+    "failedReason": "Podcastia ei voitu tehdä ({reason}).",
+    "langs": {
+      "en": "Englanti",
+      "fi": "Suomi"
+    },
+    "desk": {
+      "title": "Päivittäiset podcastit",
+      "lead": "Joka aamu klo {time} jokainen alla oleva joukkue ja sarja saa uuden 20–30 sekunnin jakson valituilla kielillä, jos sen faktat ovat muuttuneet edellisestä. Jaksot näkyvät etusivulla.",
+      "loading": "Ladataan podcastien aikataulua…",
+      "generateNow": "Luo nyt",
+      "remove": "Poista {label} aikataulusta",
+      "empty": "Aikataulussa ei ole joukkueita eikä sarjoja.",
+      "addLabel": "Lisää joukkue tai sarja",
+      "add": "Lisää",
+      "langs": "Kielet",
+      "save": "Tallenna aikataulu",
+      "saved": "Aikataulu tallennettu.",
+      "generated": "{label}: {n} jaksoa tehty.",
+      "runNow": "Aja nyt",
+      "ran": "Päivän ajo valmis.",
+      "lastRun": "Edellinen ajo {time}, {by}.",
+      "by": {
+        "schedule": "ajastettu",
+        "newsroom": "toimituksen käynnistämä"
+      },
+      "status": {
+        "created": "uusi jakso",
+        "unchanged": "ei uusia faktoja",
+        "failed": "epäonnistui"
+      }
+    },
+    "lockedPlay": "{title}: VOZ Plus -tilaajille",
+    "lockedTitle": "Podcastit kuuluvat VOZ Plus -tilaukseen",
+    "lockedFree": "Tilaa ja kuuntele päivittäiset ottelu-, joukkue- ja sarjapodcastit sekä lue niiden tekstit.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä kuunnellaksesi podcasteja.",
+    "lockedNote": "VOZ Plus"
+  },
+  "discussion": {
+    "title": "Keskustelu",
+    "comments": "{n} kommenttia | {n} kommentti | {n} kommenttia",
+    "likes": "{n} tykkäystä | {n} tykkäys | {n} tykkäystä",
+    "likeStory": "Tykkää jutusta",
+    "likeComment": "Tykkää käyttäjän {name} kommentista",
+    "write": "Kirjoita kommentti",
+    "placeholder": "Kerro näkemyksesi ottelusta, {name}",
+    "post": "Lähetä",
+    "posted": "Lähetetty.",
+    "reply": "Vastaa",
+    "replyTo": "Vastaa: {name}",
+    "cancel": "Peruuta",
+    "delete": "Poista",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "newsroomBadge": "VOZ-toimitus",
+    "hiddenTag": "Piilotettu lukijoilta",
+    "loading": "Ladataan kommentteja…",
+    "empty": "Ei vielä kommentteja. Aloita keskustelu.",
+    "lockedTitle": "Liity keskusteluun VOZ Plus -tilauksella",
+    "lockedFree": "Tilaajat lukevat kaikki kommentit, kertovat näkemyksensä ja tykkäävät jutuista ja kommenteista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi kaikki kommentit ja osallistuaksesi keskusteluun.",
+    "subscribe": "Katso VOZ Plus",
+    "errors": {
+      "wait": "Odota hetki ennen seuraavaa kommenttia.",
+      "length": "Kommentin pituus on 2–1000 merkkiä.",
+      "failed": "Jokin meni vikaan. Yritä uudelleen."
+    },
+    "preview": "Uusimmat kommentit (esikatselu)"
+  },
+  "favourites": {
+    "pageTitle": "Omat suosikit – VOZ",
+    "title": "Omat suosikit",
+    "lead": "Uutiset seuraamistasi joukkueista, sarjoista ja pelaajista.",
+    "edit": "Muokkaa: Omat joukkueet",
+    "all": "Kaikki suosikit",
+    "newsroom": "Suosikit ovat lukijatileille.",
+    "none": "Et seuraa vielä mitään.",
+    "choose": "Valitse suosikit",
+    "empty": "Ei tuoreita juttuja suosikeistasi.",
+    "lockedTitle": "Omat suosikit kuuluvat VOZ Plus -tilaukseen",
+    "lockedText": "Tilaa ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista."
+  }
+}

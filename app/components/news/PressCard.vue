@@ -4,9 +4,11 @@ import type { NewsCoverage } from '#shared/types/news-coverage'
 
 const props = defineProps<{ competitionId: string, matchId: string, matchStatus?: string, homeScore?: number | null, awayScore?: number | null }>()
 const emit = defineEmits<{ matchChange: [] }>()
+const { t, locale } = useI18n()
+const { stamp } = useFormat()
 const { data, status, error, refresh } = useLazyFetch<NewsCoverage>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press`,
-  { server: false, retry: 0 },
+  { server: false, retry: 0, query: { lang: locale } },
 )
 const matchArticles = computed(() => data.value?.groups.find(group => group.key === 'match')?.articles ?? [])
 const teamGroups = computed(() => data.value?.groups.filter(group => group.key !== 'match' && group.articles.length > 0) ?? [])
@@ -29,9 +31,9 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
 
 <template>
   <section class="block" aria-labelledby="press-title" :aria-busy="status === 'pending'">
-    <NewsSectionTitle id="press-title">News</NewsSectionTitle>
-    <p class="intro">Match reports and updates on each team. Open a team headline for its AI summary.</p>
-    <p v-if="data" class="coverage-status" role="status">{{ data.newsPhase === 'post-match' ? 'Post-match news' : 'Pre-match news' }}<span v-if="data.match.status === 'live'"> · Pre-match sources retained during play. Follow this match page for live updates.</span><span v-else-if="['cancelled', 'postponed'].includes(data.match.status)"> · Match {{ data.match.status }}</span></p>
+    <NewsSectionTitle id="press-title">{{ t('press.title') }}</NewsSectionTitle>
+    <p class="intro">{{ t('press.intro') }}</p>
+    <p v-if="data" class="coverage-status" role="status">{{ t(data.newsPhase === 'post-match' ? 'press.postMatchNews' : 'press.preMatchNews') }}<span v-if="data.match.status === 'live'"> · {{ t('press.liveNote') }}</span><span v-else-if="['cancelled', 'postponed'].includes(data.match.status)"> · {{ t(`press.matchStatus.${data.match.status}`) }}</span></p>
 
     <ul v-if="!data && (status === 'pending' || status === 'idle')" class="list" aria-hidden="true">
       <li v-for="i in 3" :key="i" class="item skeleton">
@@ -40,27 +42,27 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
     </ul>
 
     <div v-else-if="data" class="news-content">
-      <ul v-if="matchArticles.length" class="match-reports" aria-label="Match news sources">
+      <ul v-if="matchArticles.length" class="match-reports" :aria-label="t('press.sources')">
         <li v-for="article in matchArticles" :key="article.id" class="match-report">
-          <a :href="article.link" target="_blank" rel="noopener noreferrer nofollow">{{ article.title }} <PhArrowUpRight :size="14" aria-hidden="true" /><span class="sr-only">(opens original in a new tab)</span></a>
-          <p class="report-meta">{{ article.source }} · <time :datetime="article.publishedAt">{{ storyStamp(article.publishedAt) }}</time></p>
+          <a :href="article.link" :title="article.originalTitle" target="_blank" rel="noopener noreferrer nofollow">{{ article.title }} <PhArrowUpRight :size="14" aria-hidden="true" /><span class="sr-only">{{ t('press.opens', { source: article.source }) }}</span></a>
+          <p class="report-meta">{{ article.source }} · <time :datetime="article.publishedAt">{{ stamp(article.publishedAt) }}</time><span v-if="article.translated"> · {{ t('press.translated') }}<span class="sr-only"> · {{ t('press.original') }}: {{ article.originalTitle }}</span></span></p>
         </li>
       </ul>
       <div v-if="teamGroups.length" class="coverage-grid" :class="{ 'coverage-grid--single': teamGroups.length === 1 }">
         <section v-for="group in teamGroups" :key="group.key" class="coverage-group" :aria-labelledby="`news-${matchId}-${group.key}`">
           <h3 :id="`news-${matchId}-${group.key}`" class="group-title">{{ group.title }}</h3>
-          <p class="group-subtitle">{{ data.newsPhase === 'post-match' ? 'Post-match' : 'Pre-match' }} coverage · Form, players &amp; injuries</p>
-          <NewsArticleSummary v-for="article in group.articles" :key="`${matchId}-${group.key}-${article.id}-${article.contentHash ?? ''}-${data.match.status}`" :article="article" :panel-id="`summary-${matchId}-${group.key}-${article.id}`" :summary-available="data.summaryAvailable" :paused="data.match.status === 'live'" />
-          <p v-if="group.note" class="empty">{{ group.note }}</p>
+          <p class="group-subtitle">{{ t(data.newsPhase === 'post-match' ? 'press.postMatchTeam' : 'press.preMatchTeam') }}</p>
+          <NewsArticleSummary v-for="article in group.articles" :key="`${matchId}-${group.key}-${article.id}-${article.contentHash ?? ''}-${data.match.status}-${locale}`" :article="article" :panel-id="`summary-${matchId}-${group.key}-${article.id}`" :summary-available="data.summaryAvailable" :paused="data.match.status === 'live'" />
+          <p v-if="group.articles.length < 3" class="empty">{{ t('press.teamGap', { count: group.articles.length }) }}</p>
         </section>
       </div>
-      <p v-if="!matchArticles.length && !teamGroups.length" class="empty">No verified news is available for this match yet.</p>
+      <p v-if="!matchArticles.length && !teamGroups.length" class="empty">{{ t('press.empty') }}</p>
     </div>
     <div v-else-if="error" class="empty" role="alert">
-      News is unavailable right now.
-      <button type="button" class="retry" @click="refresh()">Try again</button>
+      {{ t('press.unavailable') }}
+      <button type="button" class="retry" @click="refresh()">{{ t('press.retry') }}</button>
     </div>
-    <p class="source-note">News covers pre-match and post-match reporting; live updates stay on the match page. Team summaries are cached for up to 24 hours and refreshed sooner if the source changes.</p>
+    <p class="source-note">{{ t('press.sourceNote') }}</p>
   </section>
 </template>
 

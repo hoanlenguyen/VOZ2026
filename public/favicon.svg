@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- VOZ mark: "voz" is voice. A gold speech bubble with the V cut out, on the dark scoreboard square.
+       Colours = app tokens (board, accent). Same drawing as app/components/news/LogoMark.vue. -->
+  <rect width="64" height="64" rx="14" fill="#0E0F11"/>
+  <path d="M15 8h34a8 8 0 0 1 8 8v24a8 8 0 0 1-8 8H28l-11 8.5V48h-2a8 8 0 0 1-8-8V16a8 8 0 0 1 8-8z" fill="#F5C518"/>
+  <path d="M18.5 15.5h9.2L32 30l4.3-14.5h9.2L36.6 40h-9.2z" fill="#0E0F11"/>
+</svg>

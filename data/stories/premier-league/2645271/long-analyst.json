@@ -1,0 +1,156 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "long",
+ "tone": "analyst",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:32:30.440Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1081
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: 2 problems",
+   "ms": 7944
+  },
+  {
+   "turn": 3,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (22 facts cited)",
+   "ms": 6795
+  },
+  {
+   "turn": 4,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (22 facts cited)",
+   "ms": 5319
+  }
+ ],
+ "usage": {
+  "inputTokens": 9503,
+  "outputTokens": 2128,
+  "turns": 4,
+  "ms": 21139
+ },
+ "headline": "Ipswich and Nott'm Forest share points despite a decisive xG gap",
+ "sentences": [
+  {
+   "text": "Ipswich Town and Nott'm Forest drew 1–1 in Premier League matchweek 8, but the scoreline concealed a substantial difference in chance production.",
+   "facts": [
+    "f1",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Nott'm Forest registered 17 shots to Ipswich's 7 and led expected goals 2.29 to 0.46, a gap of 1.83.",
+   "facts": [
+    "f17",
+    "f18",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The visitors also had 5 shots on target against 3, created 2 big chances to Ipswich's 1 and won 5 corners while Ipswich had none.",
+   "facts": [
+    "f20",
+    "f21",
+    "f22"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Possession was almost even, with Nott'm Forest at 50.6% and Ipswich at 49.4%, so control of the ball did not reflect the difference in threat.",
+   "facts": [
+    "f16",
+    "f17"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Nott'm Forest took the lead in the 13th minute through Neco Williams, assisted by Daniel Muñoz.",
+   "facts": [
+    "f7"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich levelled in the 41st minute when Julio Enciso scored, leaving the teams 1–1 at half-time.",
+   "facts": [
+    "f8",
+    "f3"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Neither side scored after the break, despite Nott'm Forest's overall advantage in attempts and expected goals.",
+   "facts": [
+    "f4",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "The recorded attempts excluding goals showed 2 saved and 4 off target for Ipswich, compared with 3 saved, 11 off target and 2 blocked for Nott'm Forest.",
+   "facts": [
+    "f15"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich came in with 6 points from their previous 5 league matches, while Nott'm Forest had taken 4 from their last 5.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Before kick-off Ipswich were 10th on 9 points and Nott'm Forest 19th on 5; afterwards Ipswich moved to 9th with 10 points and Nott'm Forest to 16th with 6.",
+   "facts": [
+    "f31",
+    "f32",
+    "f33",
+    "f34"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "The point therefore lifted both teams in the standings, although the table return was modest relative to the contrast in their attacking numbers.",
+   "facts": [
+    "f2",
+    "f17",
+    "f19",
+    "f32",
+    "f34"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich used a 4-2-3-1 and Nott'm Forest a 3-4-2-1, but the final score stayed level after the early exchange of goals.",
+   "facts": [
+    "f37",
+    "f39",
+    "f7",
+    "f8",
+    "f4"
+   ],
+   "paragraph": 3
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 22
+ },
+ "fallbackReason": null
+}

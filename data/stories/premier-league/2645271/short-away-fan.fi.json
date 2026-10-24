@@ -1,0 +1,62 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "short",
+ "tone": "away-fan",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:32:52.264Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1181
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (6 facts cited)",
+   "ms": 2440
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (6 facts cited)",
+   "ms": 1760
+  }
+ ],
+ "usage": {
+  "inputTokens": 5318,
+  "outputTokens": 340,
+  "turns": 3,
+  "ms": 5381
+ },
+ "headline": "Forest jäi pisteeseen, vaikka loi paremmat paikat",
+ "sentences": [
+  {
+   "text": "Nottingham Forestin vahva alku toi Neco Williamsin 13. minuutilla johtomaalin, mutta Julio Enciso tasoitti Ipswich Townille ennen taukoa.",
+   "facts": [
+    "f7",
+    "f8"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Toisella puoliajalla ei nähty maaleja, vaikka Nottingham Forest vei laukaukset 17–7 ja xG:n 2,29–0,46; tasapeli jätti Forestille yhden pisteen.",
+   "facts": [
+    "f4",
+    "f17",
+    "f19",
+    "f2"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 6
+ },
+ "fallbackReason": null
+}

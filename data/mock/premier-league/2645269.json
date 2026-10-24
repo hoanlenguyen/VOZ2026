@@ -1,0 +1,796 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645269",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-18 16:30:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "City Ground, Nottingham",
+    "attendance": 29464,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "17",
+      "name": "Nottingham Forest",
+      "shortName": "Nott'm Forest",
+      "abbr": "NFO",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "3",
+      "name": "Arsenal",
+      "shortName": "Arsenal",
+      "abbr": "ARS",
+      "score": 1,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Craig Pawson"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Sam Allison"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Nottingham Forest",
+      "goals": [],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "72",
+          "type": "Yellow",
+          "player": "Nikola Milenkovic"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "62",
+          "playerOn": "Ryan Yates",
+          "playerOff": "Murillo Santiago Costa dos Santos"
+        },
+        {
+          "time": "66",
+          "playerOn": "Ibrahim Sangaré",
+          "playerOff": "Dan Ndoye"
+        },
+        {
+          "time": "67",
+          "playerOn": "Chris Wood",
+          "playerOff": "Daniel Muñoz"
+        },
+        {
+          "time": "77",
+          "playerOn": "Ousmane Diomande",
+          "playerOff": "Xaver Schlager"
+        }
+      ]
+    },
+    "away": {
+      "team": "Arsenal",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "86",
+          "timestamp": "20261018T181100+0100",
+          "player": "Martín Zubimendi",
+          "assist": "Martin Ødegaard"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "26",
+          "type": "Yellow",
+          "player": "Eberechi Eze"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "48",
+          "type": "Yellow",
+          "player": "Eberechi Eze"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "61",
+          "playerOn": "Mikel Merino",
+          "playerOff": "Viktor Gyökeres"
+        },
+        {
+          "time": "65",
+          "playerOn": "Myles Lewis-Skelly",
+          "playerOff": "Eberechi Eze"
+        },
+        {
+          "time": "69",
+          "playerOn": "Gabriel Martinelli",
+          "playerOff": "Jurriën Timber"
+        },
+        {
+          "time": "86",
+          "playerOn": "Noni Madueke",
+          "playerOff": "Riccardo Calafiori"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Nottingham Forest",
+      "formation": "3-4-2-1",
+      "formationRows": [
+        [
+          "Matz Sels"
+        ],
+        [
+          "Jair Paula da Cunha Filho",
+          "Nikola Milenkovic",
+          "Murillo Santiago Costa dos Santos"
+        ],
+        [
+          "Daniel Muñoz",
+          "James McAtee",
+          "Xaver Schlager",
+          "Neco Williams"
+        ],
+        [
+          "Morgan Gibbs-White",
+          "Dan Ndoye"
+        ],
+        [
+          "Liam Delap"
+        ]
+      ],
+      "manager": "Oliver Glasner",
+      "startingXI": [
+        {
+          "name": "Matz Sels",
+          "shirtNumber": 26,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jair Paula da Cunha Filho",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Nikola Milenkovic",
+          "shirtNumber": 31,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Murillo Santiago Costa dos Santos",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Daniel Muñoz",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "James McAtee",
+          "shirtNumber": 24,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Xaver Schlager",
+          "shirtNumber": 21,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Neco Williams",
+          "shirtNumber": 3,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Morgan Gibbs-White",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": true
+        },
+        {
+          "name": "Dan Ndoye",
+          "shirtNumber": 14,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Liam Delap",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "John Victor Maciel Furtado",
+          "shirtNumber": 12,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Ousmane Diomande",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ibrahim Sangaré",
+          "shirtNumber": 6,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Callum Hudson-Odoi",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Chris Wood",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Arnaud Kalimuendo",
+          "shirtNumber": 15,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Ryan Yates",
+          "shirtNumber": 22,
+          "position": "Midfielder",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Arsenal",
+      "formation": "4-3-3",
+      "formationRows": [
+        [
+          "David Raya"
+        ],
+        [
+          "Jurriën Timber",
+          "William Saliba",
+          "Gabriel Magalhães",
+          "Riccardo Calafiori"
+        ],
+        [
+          "Martin Ødegaard",
+          "Declan Rice",
+          "Martín Zubimendi"
+        ],
+        [
+          "Bukayo Saka",
+          "Viktor Gyökeres",
+          "Eberechi Eze"
+        ]
+      ],
+      "manager": "Mikel Arteta",
+      "startingXI": [
+        {
+          "name": "David Raya",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jurriën Timber",
+          "shirtNumber": 12,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "William Saliba",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Gabriel Magalhães",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Riccardo Calafiori",
+          "shirtNumber": 33,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Martin Ødegaard",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Declan Rice",
+          "shirtNumber": 41,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Martín Zubimendi",
+          "shirtNumber": 36,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Bukayo Saka",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Viktor Gyökeres",
+          "shirtNumber": 14,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Eberechi Eze",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Kepa Arrizabalaga",
+          "shirtNumber": 13,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Ben White",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Myles Lewis-Skelly",
+          "shirtNumber": 49,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Mikel Merino",
+          "shirtNumber": 23,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Noni Madueke",
+          "shirtNumber": 20,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Gabriel Martinelli",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Leandro Trossard",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 46.8,
+        "away": 53.2
+      },
+      "xG": {
+        "home": 1.21,
+        "away": 2.26
+      },
+      "shots": {
+        "home": 8,
+        "away": 14
+      },
+      "shots_on_target": {
+        "home": 4,
+        "away": 3
+      },
+      "shots_off_target": {
+        "home": 4,
+        "away": 10
+      },
+      "shots_blocked": {
+        "home": 0,
+        "away": 1
+      },
+      "big_chances_created": {
+        "home": 3,
+        "away": 4
+      },
+      "passes": {
+        "home": 478,
+        "away": 496
+      },
+      "accurate_passes": {
+        "home": 372,
+        "away": 401
+      },
+      "tackles": {
+        "home": 24,
+        "away": 12
+      },
+      "saves": {
+        "home": 2,
+        "away": 4
+      },
+      "fouls": {
+        "home": 11,
+        "away": 10
+      },
+      "offsides": {
+        "home": 4,
+        "away": 4
+      },
+      "yellow_cards": {
+        "home": 1,
+        "away": 2
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 7,
+        "lostCorners": 6
+      },
+      "away": {
+        "wonCorners": 6,
+        "lostCorners": 7
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "3'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Martín Zubimendi",
+      "player2": "Bukayo Saka"
+    },
+    {
+      "minute": "5'",
+      "type": "miss",
+      "team": "Nottingham Forest",
+      "player1": "Morgan Gibbs-White",
+      "player2": "Nikola Milenkovic"
+    },
+    {
+      "minute": "6'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Bukayo Saka",
+      "player2": null
+    },
+    {
+      "minute": "9'",
+      "type": "offside",
+      "team": "Arsenal",
+      "player1": "Viktor Gyökeres",
+      "player2": null
+    },
+    {
+      "minute": "16'",
+      "type": "attempt blocked",
+      "team": "Arsenal",
+      "player1": "Martin Ødegaard",
+      "player2": null
+    },
+    {
+      "minute": "17'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "David Raya",
+      "player2": null
+    },
+    {
+      "minute": "18'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "Riccardo Calafiori",
+      "player2": null
+    },
+    {
+      "minute": "18'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Murillo Santiago Costa dos Santos",
+      "player2": null
+    },
+    {
+      "minute": "23'",
+      "type": "attempt saved",
+      "team": "Nottingham Forest",
+      "player1": "Murillo Santiago Costa dos Santos",
+      "player2": null
+    },
+    {
+      "minute": "25'",
+      "type": "attempt saved",
+      "team": "Arsenal",
+      "player1": "Viktor Gyökeres",
+      "player2": "Jurriën Timber"
+    },
+    {
+      "minute": "29'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "William Saliba",
+      "player2": null
+    },
+    {
+      "minute": "31'",
+      "type": "miss",
+      "team": "Nottingham Forest",
+      "player1": "Xaver Schlager",
+      "player2": "Liam Delap"
+    },
+    {
+      "minute": "31'",
+      "type": "offside",
+      "team": "Nottingham Forest",
+      "player1": "Morgan Gibbs-White",
+      "player2": null
+    },
+    {
+      "minute": "33'",
+      "type": "offside",
+      "team": "Arsenal",
+      "player1": "Bukayo Saka",
+      "player2": "Jurriën Timber"
+    },
+    {
+      "minute": "36'",
+      "type": "offside",
+      "team": "Arsenal",
+      "player1": "Bukayo Saka",
+      "player2": "Viktor Gyökeres"
+    },
+    {
+      "minute": "43'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Nikola Milenkovic",
+      "player2": null
+    },
+    {
+      "minute": "48'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Eberechi Eze",
+      "player2": null
+    },
+    {
+      "minute": "53'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Martín Zubimendi",
+      "player2": "Gabriel Magalhães"
+    },
+    {
+      "minute": "55'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Nikola Milenkovic",
+      "player2": null
+    },
+    {
+      "minute": "59'",
+      "type": "attempt saved",
+      "team": "Nottingham Forest",
+      "player1": "Daniel Muñoz",
+      "player2": null
+    },
+    {
+      "minute": "59'",
+      "type": "attempt saved",
+      "team": "Nottingham Forest",
+      "player1": "Morgan Gibbs-White",
+      "player2": null
+    },
+    {
+      "minute": "59'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Matz Sels",
+      "player2": null
+    },
+    {
+      "minute": "62'",
+      "type": "offside",
+      "team": "Arsenal",
+      "player1": "Eberechi Eze",
+      "player2": "Bukayo Saka"
+    },
+    {
+      "minute": "69'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "William Saliba",
+      "player2": null
+    },
+    {
+      "minute": "69'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Nikola Milenkovic",
+      "player2": null
+    },
+    {
+      "minute": "71'",
+      "type": "offside",
+      "team": "Nottingham Forest",
+      "player1": "Morgan Gibbs-White",
+      "player2": null
+    },
+    {
+      "minute": "71'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Martin Ødegaard",
+      "player2": null
+    },
+    {
+      "minute": "72'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "William Saliba",
+      "player2": null
+    },
+    {
+      "minute": "73'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Bukayo Saka",
+      "player2": null
+    },
+    {
+      "minute": "75'",
+      "type": "attempt saved",
+      "team": "Nottingham Forest",
+      "player1": "Neco Williams",
+      "player2": "Chris Wood"
+    },
+    {
+      "minute": "76'",
+      "type": "miss",
+      "team": "Nottingham Forest",
+      "player1": "Xaver Schlager",
+      "player2": "Jair Paula da Cunha Filho"
+    },
+    {
+      "minute": "78'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Martin Ødegaard",
+      "player2": "Myles Lewis-Skelly"
+    },
+    {
+      "minute": "79'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "William Saliba",
+      "player2": null
+    },
+    {
+      "minute": "79'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Bukayo Saka",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Gabriel Martinelli",
+      "player2": "Gabriel Magalhães"
+    },
+    {
+      "minute": "81'",
+      "type": "corner",
+      "team": "Arsenal",
+      "player1": "David Raya",
+      "player2": null
+    },
+    {
+      "minute": "82'",
+      "type": "corner",
+      "team": "Nottingham Forest",
+      "player1": "Jair Paula da Cunha Filho",
+      "player2": null
+    },
+    {
+      "minute": "83'",
+      "type": "miss",
+      "team": "Nottingham Forest",
+      "player1": "James McAtee",
+      "player2": "Ibrahim Sangaré"
+    },
+    {
+      "minute": "83'",
+      "type": "offside",
+      "team": "Nottingham Forest",
+      "player1": "Neco Williams",
+      "player2": "Ibrahim Sangaré"
+    },
+    {
+      "minute": "85'",
+      "type": "attempt saved",
+      "team": "Arsenal",
+      "player1": "Riccardo Calafiori",
+      "player2": "Martin Ødegaard"
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Arsenal",
+      "player1": "Gabriel Martinelli",
+      "player2": "Declan Rice"
+    },
+    {
+      "minute": "90'",
+      "type": "offside",
+      "team": "Nottingham Forest",
+      "player1": "Ibrahim Sangaré",
+      "player2": "Ryan Yates"
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+ "id": "league-premier-league.2026-10-24.fi",
+ "subjectId": "league-premier-league",
+ "subject": {
+  "kind": "league",
+  "competitionId": "premier-league"
+ },
+ "label": "Premier League",
+ "competitionName": "Premier League",
+ "href": "/match/premier-league/2645271",
+ "lang": "fi",
+ "title": "Premier Leaguen viikonlopun asetelmat",
+ "sentences": [
+  {
+   "text": "Ipswich ja Nott'm Forest pelasivat 1–1.",
+   "facts": [
+    "f1"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Tottenham voitti, Coventry City hävisi 3–1.",
+   "facts": [
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Man City johtaa, Arsenal on 2. sijalla ja Brighton Hove 3. sijalla.",
+   "facts": [
+    "f5"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Arsenal ja Everton kohtaavat lauantaina 24. lokakuuta kello 15.00.",
+   "facts": [
+    "f7"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "intro": "Huomenta, tässä VOZ.",
+ "outro": "Siinä tällä kertaa, kuulemisiin!",
+ "evidence": [
+  {
+   "id": "f1",
+   "section": "result",
+   "text": "Premier League matchweek 8, Friday 23 October: Ipswich 1–1 Nott'm Forest (full time)."
+  },
+  {
+   "id": "f4",
+   "section": "result",
+   "text": "Premier League matchweek 7, Monday 19 October: Tottenham 3–1 Coventry City (full time)."
+  },
+  {
+   "id": "f5",
+   "section": "table",
+   "text": "Top of the current Premier League table: 1st Man City, 21 points from 7 games; 2nd Arsenal, 18 points from 7 games; 3rd Brighton Hove, 16 points from 7 games."
+  },
+  {
+   "id": "f7",
+   "section": "context",
+   "text": "Coming up in the Premier League: Arsenal v Everton on Saturday 24 October, kick-off 15:00 local time."
+  }
+ ],
+ "factsHash": "piwb11",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 4
+ },
+ "audio": {
+  "url": "/podcasts/league-premier-league.2026-10-24.fi.mp3",
+  "bytes": 401664,
+  "seconds": 25.1,
+  "voice": "marin",
+  "model": "gpt-4o-mini-tts"
+ },
+ "model": "gpt-6-luna",
+ "trigger": "newsroom",
+ "generatedAt": "2026-10-24T13:04:25.548Z"
+}

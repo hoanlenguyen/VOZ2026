@@ -1,0 +1,647 @@
+{
+  "site": {
+    "tagline": "My Sports World",
+    "logoLabel": "VOZ – My Sports World, front page",
+    "menu": "Menu",
+    "language": "Language",
+    "footer": "VOZ – My Sports World · Stories on this page are written automatically from official league data (Liiga, football-data.org)."
+  },
+  "nav": {
+    "myTeams": "My teams",
+    "personalise": "Personalise",
+    "signIn": "Sign in",
+    "account": "My account",
+    "newsroom": "Newsroom",
+    "signOut": "Sign out",
+    "accountMenu": "Account menu",
+    "news": "News",
+    "favourites": "My favourites",
+    "lockedHint": "For VOZ Plus subscribers"
+  },
+  "sport": {
+    "all": "All sports",
+    "hockey": "Ice hockey",
+    "football": "Football"
+  },
+  "time": {
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
+  "home": {
+    "title": "Sports",
+    "pageTitle": "Sports – VOZ",
+    "sections": "Sections",
+    "loadError": "Stories could not be loaded ({reason}). Try again in a minute.",
+    "empty": "No recent stories in this section.",
+    "missing": "Temporarily unavailable: {list}.",
+    "topStories": "Top stories",
+    "moreStories": "More stories",
+    "latest": "Latest",
+    "allAbove": "All of today's stories are above.",
+    "sidebar": "Tables and partners"
+  },
+  "story": {
+    "result": "Result",
+    "preview": "Preview",
+    "auto": "Written automatically from official match data",
+    "aiTag": "AI content"
+  },
+  "table": {
+    "title": "{league} table",
+    "team": "Team",
+    "played": "Played",
+    "playedShort": "P",
+    "points": "Points",
+    "pointsShort": "Pts",
+    "movement": "Change since last game",
+    "up": "Up {n} places | Up {n} place | Up {n} places",
+    "down": "Down {n} places | Down {n} place | Down {n} places",
+    "same": "No change",
+    "movementMock": "Demo data: no result for the last game"
+  },
+  "ticker": {
+    "label": "Upcoming fixtures",
+    "upcoming": "{n} upcoming",
+    "prev": "Previous fixtures",
+    "next": "Next fixtures",
+    "slide": "{i} of {n}",
+    "empty": "No upcoming fixtures",
+    "league": "League: {name}. Change league",
+    "choose": "Choose a league"
+  },
+  "visual": {
+    "final": "Final",
+    "vs": "vs"
+  },
+  "match": {
+    "back": "News",
+    "pageTitle": "Match – VOZ",
+    "loadError": "Could not load the match ({reason}). Try again in a minute.",
+    "matchday": "Matchday {n}",
+    "halfTime": "Half-time {score}",
+    "periods": "Periods {list}",
+    "spectators": "{n} spectators",
+    "timeline": "Match timeline",
+    "compare": "Compare",
+    "lineups": "Line-ups",
+    "goals": "Goals",
+    "sourceExtras": "Match stats from {source}; season numbers counted from official {league} results.",
+    "sourceOfficial": "Match stats from official {league} game data; season numbers counted from official results.",
+    "sourceResults": "Counted from official {league} results. Shots, possession and cards are not in our data plan yet.",
+    "referee": "Referee: {name}",
+    "matchData": "Match data: {source}. Event labels written by VOZ from the data.",
+    "noScorers": "Goal scorers are not included in this data plan.",
+    "tags": {
+      "power-play": "power play",
+      "short-handed": "short-handed",
+      "empty-net": "empty net",
+      "penalty": "penalty shot",
+      "own-goal": "own goal",
+      "game-winner": "game-winner"
+    },
+    "story": "Match story",
+    "storyHidden": "Hidden from readers by the newsroom. Only newsroom accounts see this section.",
+    "storyEdited": "Edited by {name} · {time}",
+    "deskLabel": "Newsroom",
+    "deskState": "Match story: {story}",
+    "deskNone": "none",
+    "deskEdit": "Edit coverage",
+    "storyPlus": "For subscribers",
+    "coverCredit": "Photo: {credit}",
+    "previewBanner": "Preview, not published · seen as: {as}",
+    "aiEvidence": "Facts behind the headline",
+    "by": "By {name}",
+    "authorAi": "VOZ AI, from official match data",
+    "standings": "League table",
+    "statsTitle": "Match stats"
+  },
+  "timeline": {
+    "shown": "Events shown",
+    "key": "Key events",
+    "all": "All events",
+    "score": "score {score}"
+  },
+  "lineups": {
+    "starting": "{team} starting line-up, {formation}: {players}",
+    "subs": "Substitutes",
+    "cameOn": "Came on in the",
+    "manager": "Manager",
+    "captain": "captain"
+  },
+  "compare": {
+    "formLabel": "{team}, last five results, oldest first",
+    "form": {
+      "W": "Win",
+      "D": "Draw",
+      "L": "Defeat"
+    },
+    "formLetter": {
+      "W": "W",
+      "D": "D",
+      "L": "L"
+    }
+  },
+  "press": {
+    "title": "News",
+    "before": "Before the match",
+    "after": "After the match",
+    "opens": "(opens {source} in a new tab)",
+    "unavailable": "News is unavailable right now.",
+    "sourceNote": "News covers pre-match and post-match reporting; live updates stay on the match page. Team summaries are cached for up to 24 hours and refreshed sooner if the source changes.",
+    "translated": "Translated automatically",
+    "original": "Original headline",
+    "intro": "Match reports and updates on each team. Open a team headline for its AI summary.",
+    "preMatchNews": "Pre-match news",
+    "postMatchNews": "Post-match news",
+    "sources": "Match news sources",
+    "liveNote": "Pre-match sources retained during play. Follow this match page for live updates.",
+    "preMatchTeam": "Pre-match coverage · Form, players & injuries",
+    "postMatchTeam": "Post-match coverage · Form, players & injuries",
+    "teamGap": "{count} of 3 recent, verified team updates available.",
+    "empty": "No verified news is available for this match yet.",
+    "retry": "Try again",
+    "topics": {
+      "form": "Current form",
+      "players": "Player news",
+      "injuries": "Injuries & fitness"
+    },
+    "aiSummary": "AI summary",
+    "summaryLanguage": "AI summary (English)",
+    "preparing": "Preparing your AI summary…",
+    "summaryError": "This summary is unavailable right now. Please try again or read the original.",
+    "summarized": "Summarized {date} from {source}’s report.",
+    "paused": "Pre-match source retained. News summaries resume after full time; live updates are on the match page.",
+    "summaryUnavailable": "AI summaries are temporarily unavailable. You can read the original below.",
+    "retrySummary": "Try summary again",
+    "close": "Select headline to close",
+    "select": "Select headline for AI summary",
+    "pausedHint": "Pre-match source · summaries resume after full time",
+    "originalLink": "Read original",
+    "matchStatus": {
+      "postponed": "Match postponed",
+      "cancelled": "Match cancelled"
+    }
+  },
+  "onboarding": {
+    "title": "Make it your sports world",
+    "note": "Onboarding comes in Phase 4. Pick a league to see its teams.",
+    "league": "League",
+    "loadError": "Could not load teams: {reason}"
+  },
+  "status": {
+    "subtitle": "My Sports World · data layer status",
+    "sources": "Data sources · mode {mode}",
+    "off": "off",
+    "onboarding": "Onboarding →",
+    "latest": "Latest results",
+    "standings": "Standings",
+    "loadError": "Could not load {name}: {reason}"
+  },
+  "plan": {
+    "free": "Free",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Newsroom"
+  },
+  "login": {
+    "pageTitle": "Sign in – VOZ",
+    "title": "Sign in",
+    "lead": "Sign in to read the full match coverage.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "busy": "Signing in…",
+    "error": "Wrong email or password.",
+    "failed": "Signing in failed. Try again in a minute.",
+    "demoTitle": "Demo accounts",
+    "demoHint": "All demo passwords are \"demo\". Choose an account to sign in.",
+    "demo": {
+      "subscriber": "Subscription account: everything",
+      "free": "Free account: scores, tables and stories, premium parts locked",
+      "newsroom": "Newsroom: everything plus the editor dashboard"
+    }
+  },
+  "paywall": {
+    "title": "Autumn offer, for you!",
+    "subBefore": "The first 2 months of VOZ Plus",
+    "subPrice": "only €9.90",
+    "benefits": {
+      "unlimited": "Full match pages in the app and on the web",
+      "stories": "AI match stories, fact-checked sentence by sentence",
+      "stats": "Stats comparison, timelines and line-ups",
+      "languages": "Everything in English and Finnish"
+    },
+    "cta": "Discover here",
+    "manage": "You can conveniently manage your subscription in your account.",
+    "already": "Already a subscriber?",
+    "logIn": "Log in.",
+    "teaserKicker": "AI match story"
+  },
+  "account": {
+    "pageTitle": "My account – VOZ",
+    "title": "My account",
+    "plan": "Plan",
+    "subscriber": {
+      "since": "Subscriber since {date}",
+      "renews": "Renews on {date}",
+      "price": "{price} € / month",
+      "perks": "Full match coverage and AI match stories."
+    },
+    "free": {
+      "perks": "Front page, scores, tables and automatic stories. Match stats, timelines, line-ups and AI stories are for VOZ Plus subscribers.",
+      "upgradeDemo": "Upgrading is not part of the demo: sign in as subscription{'@'}demo.com to see VOZ Plus."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Full coverage plus the editor dashboard.",
+      "open": "Open the newsroom dashboard"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Newsroom – VOZ",
+    "title": "Newsroom",
+    "editor": "Signed in as {name}, {role}",
+    "stats": {
+      "stories": "Stories today",
+      "hidden": "Hidden by editors",
+      "translations": "Cached translations",
+      "aiStories": "Pre-written AI stories"
+    },
+    "sources": "Data sources",
+    "mode": "Mode: {mode}",
+    "ok": "OK",
+    "down": "Down",
+    "storiesTitle": "Front-page stories",
+    "storiesLead": "Live: published. Preview: ready for review. Draft: changes saved, not published (readers see the live version). Hidden: off the front page and the match page for every reader; Show puts it back.",
+    "hide": "Hide",
+    "show": "Show",
+    "open": "Open",
+    "missing": "Unavailable leagues: {list}",
+    "loadError": "The newsroom data could not be loaded ({reason}).",
+    "edit": "Edit",
+    "status": {
+      "live": "Live",
+      "preview": "Preview",
+      "draft": "Draft",
+      "hidden": "Hidden"
+    },
+    "filter": "Show stories",
+    "all": "All",
+    "noneWithStatus": "No stories with this status.",
+    "author": "Author: {name}",
+    "noStory": "No match story",
+    "pendingBy": "Unpublished changes by {name}, {time}"
+  },
+  "editor": {
+    "pageTitle": "Edit match story – VOZ Newsroom",
+    "back": "Newsroom",
+    "title": "Match story",
+    "langName": {
+      "en": "English",
+      "fi": "Finnish"
+    },
+    "language": "You are editing the {lang} version.",
+    "lastSaved": "Last published by {name}, {time}.",
+    "automatic": "Readers with a subscription currently get the AI story.",
+    "audiences": {
+      "everyone": {
+        "label": "Everyone",
+        "text": "The whole match page is free: story, timeline, comparison and line-ups, for free and signed-out readers too."
+      },
+      "subscribers": {
+        "label": "Subscribers only",
+        "text": "Others see the story's opening lines and the subscription offer; timeline, comparison and line-ups stay for subscribers."
+      }
+    },
+    "publish": "Publish",
+    "revert": "Revert to automatic",
+    "view": "View match page",
+    "saved": "Published.",
+    "reverted": "Reverted: subscribers get the standard AI story and the match graphic again.",
+    "saveError": "Could not publish ({reason}).",
+    "loadError": "The story could not be loaded ({reason}).",
+    "partStory": "Match story",
+    "storyLead": "The story section on the match page. By default readers with a subscription get the AI story, checked against the match facts.",
+    "storyMode": "What readers get",
+    "modes": {
+      "ai": {
+        "label": "AI story",
+        "text": "Written by the agent and checked against the facts."
+      },
+      "edited": {
+        "label": "Edited version",
+        "text": "The newsroom's text replaces the AI story."
+      },
+      "hidden": {
+        "label": "Hidden",
+        "text": "No match story for readers."
+      }
+    },
+    "aiPreview": "AI story readers get",
+    "storyHeadline": "Story headline",
+    "startFromAi": "Start from the AI story",
+    "storyBody": "Story text",
+    "storyBodyHint": "Your edit cites no facts: the check next to the editor flags numbers and names that are not in them.",
+    "storyAudience": "Who can read this match page",
+    "factsTitle": "Match facts",
+    "factsSearch": "Search the facts",
+    "factsUsed": "Highlighted: {n} of {total} facts your text uses.",
+    "sections": {
+      "result": "Result",
+      "timeline": "Timeline",
+      "stats": "Stats",
+      "form": "Form",
+      "table": "Table",
+      "h2h": "Head to head",
+      "context": "Context"
+    },
+    "check": {
+      "ok": "Every number and name is in the facts.",
+      "issues": "{n} thing to check | {n} things to check",
+      "headline": "Headline",
+      "sentence": "Sentence {n}",
+      "number": "“{value}” is not in any fact.",
+      "name": "{value} is not in the facts.",
+      "quote": "contains a quotation; we have no quotes.",
+      "speech": "attributes speech to someone; we have no quotes.",
+      "injury": "mentions an injury; injuries are not in the facts."
+    },
+    "noStory": "This match has no match story: stories are written for finished matches with full match data.",
+    "cover": {
+      "title": "Cover image",
+      "hint": "The image at the top of the match page and on the front-page card. Use only photos VOZ owns or has the rights to.",
+      "formats": "JPEG, PNG or WebP, up to 2 MB.",
+      "uploading": "Uploading…",
+      "replace": "Replace image",
+      "alt": "Alt text",
+      "altHint": "Describe the image for readers who cannot see it.",
+      "credit": "Credit",
+      "creditPlaceholder": "Photographer / agency",
+      "tooLarge": "The image is larger than 2 MB.",
+      "uploadError": "The image could not be uploaded ({reason}).",
+      "graphic": "Now: the match graphic, drawn from match data.",
+      "custom": "Now: your cover image.",
+      "useGraphic": "Use the match graphic"
+    },
+    "format": {
+      "title": "Version readers get",
+      "titleEdited": "AI version to start from",
+      "length": "Length",
+      "tone": "Written for",
+      "lengths": {
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long read"
+      },
+      "tones": {
+        "neutral": "Neutral",
+        "fans": "{team} fans",
+        "analyst": "Analyst"
+      }
+    },
+    "preview": {
+      "open": "Preview",
+      "title": "Preview: what readers see",
+      "as": "Preview as",
+      "subscriber": "Subscriber",
+      "free": "Free reader",
+      "note": "Not published yet: the whole match page with your current settings, as this reader sees it.",
+      "close": "Close preview",
+      "back": "Keep editing",
+      "loading": "Preparing the preview…",
+      "error": "The preview could not be prepared ({reason}).",
+      "frameTitle": "Match page preview as {as}"
+    },
+    "saveDraft": "Save draft",
+    "readyForReview": "Ready for review",
+    "discardDraft": "Discard draft",
+    "copyPreview": "Copy preview link",
+    "draftSaved": "Draft saved. Readers still see the live version.",
+    "reviewSaved": "Ready for review: other editors can open the preview link.",
+    "draftDiscarded": "Draft discarded.",
+    "previewCopied": "Preview link copied (newsroom accounts only).",
+    "hiddenNote": "Hidden from readers in the newsroom dashboard.",
+    "pendingNote": {
+      "draft": "Draft by {name}, {time}; not published.",
+      "review": "Ready for review, by {name}, {time}; not published."
+    },
+    "cancelChanges": "Cancel changes",
+    "changesCancelled": "Changes cancelled: back to the last saved version.",
+    "unsaved": "You have unsaved changes."
+  },
+  "matchStory": {
+    "title": "Match story",
+    "length": "Length",
+    "short": "Short",
+    "standard": "Standard",
+    "long": "Long read",
+    "writtenFor": "Written for",
+    "neutral": "Neutral",
+    "fans": "{team} fans",
+    "analyst": "Analyst",
+    "writing": "Writing this version from the match facts… the first time takes about 10 seconds.",
+    "loadError": "The story could not be loaded.",
+    "loadErrorReason": "The story could not be loaded ({reason}).",
+    "retry": "Try again",
+    "factN": "Fact {n}",
+    "byAgent": "AI-written by {model} from official match data · checked against {n} facts",
+    "byTemplate": "Written from match data (the AI story was not available, so this is our template)",
+    "showFacts": "Show the facts behind this story",
+    "hideFacts": "Hide the facts",
+    "how": "How this was made",
+    "howAgent": "A single AI agent ({model}) read {n} verified facts about this match, wrote the story, checked every number and name against the facts it cites, and submitted it. Our harness checked it again before publishing.",
+    "fromCache": "This copy was served from the cache.",
+    "howTemplate": "The agent could not produce a story that passed the check ({reason}), so the harness published the facts as a template instead.",
+    "usage": "{turns} turns · {time} · {tokensIn} tokens in, {tokensOut} out",
+    "section": {
+      "result": "Result",
+      "timeline": "Timeline",
+      "stats": "Stats",
+      "form": "Form",
+      "table": "Table",
+      "h2h": "Head-to-head",
+      "context": "Context",
+      "edge": "Edge"
+    }
+  },
+  "prefs": {
+    "pageTitle": "My teams – VOZ",
+    "title": "My teams",
+    "lead": "Choose your favourite teams, leagues and players.",
+    "signIn": "Sign in to choose your favourite teams, leagues and players.",
+    "newsroom": "Favourites are for reader accounts. Newsroom accounts have the newsroom dashboard.",
+    "loadError": "Your favourites could not be loaded ({reason}).",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "Could not save. Try again.",
+    "teams": "Favourite teams",
+    "leagues": "Favourite leagues",
+    "players": "Favourite players",
+    "follow": "Follow",
+    "following": "Following",
+    "unavailable": "(not available yet)",
+    "searchPlayers": "Search players",
+    "filterTeam": "Show players of",
+    "allTeams": "All",
+    "favouritePlayer": "Favourite: {name}",
+    "noPlayers": "No players match.",
+    "positions": {
+      "goalkeeper": "Goalkeeper",
+      "defender": "Defender",
+      "midfielder": "Midfielder",
+      "forward": "Forward"
+    },
+    "demoNote": "Demo: teams and players come from the Ipswich – Nott'm Forest match data.",
+    "freeNote": "Pick your favourites, then save them with VOZ Plus.",
+    "unsaved": "You have unsaved changes.",
+    "save": "Save favourites",
+    "offerTitle": "Subscribe to save your favourites",
+    "offerText": "With VOZ Plus your teams, leagues and players are saved to your account, with full match pages and AI match stories.",
+    "subscribe": "See VOZ Plus",
+    "notNow": "Not now",
+    "close": "Close",
+    "count": {
+      "teamsLabel": "Teams followed | Team followed | Teams followed",
+      "leaguesLabel": "Leagues followed | League followed | Leagues followed",
+      "playersLabel": "Favourite players | Favourite player | Favourite players"
+    },
+    "statsLabel": "What you follow"
+  },
+  "ads": {
+    "label": "Ad",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Kit up for the season",
+      "text": "20 % off boots and team shirts this weekend, in store and online.",
+      "cta": "Shop the sale"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Watch the big games together",
+      "text": "Big screen at the market square on matchday. Free entry, food and drinks from 17:00.",
+      "cta": "See the programme"
+    },
+    "league": {
+      "sponsor": "Evening Five-a-side",
+      "title": "Sign up your team",
+      "text": "Weekly five-a-side league on Tuesday evenings. All levels, new season starts in November.",
+      "cta": "Join the league"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Walk the tunnel",
+      "text": "Go behind the scenes at the stadium: weekend tours with a guide who has seen it all.",
+      "points": {
+        "tunnel": "Walk out through the players' tunnel",
+        "dugout": "Sit in the dugout and the press room",
+        "museum": "Trophies and shirts in the club museum"
+      },
+      "cta": "Book a tour"
+    }
+  },
+  "podcast": {
+    "title": "Podcasts",
+    "matchTitle": "Match podcast",
+    "kinds": {
+      "match": "Match",
+      "team": "Team",
+      "league": "League"
+    },
+    "play": "Play: {title}",
+    "pause": "Pause: {title}",
+    "seek": "Position in {title}",
+    "transcript": "Transcript",
+    "made": "AI-written by {model} from {n} verified facts and read by an AI voice.",
+    "showFacts": "Show the facts behind it",
+    "hideFacts": "Hide the facts",
+    "open": "Open the match",
+    "deskLabel": "Newsroom:",
+    "deskHas": "This match has an AI podcast in English and Finnish. Regenerate makes new versions.",
+    "deskNone": "No podcast for this match yet. Generate writes a 20–30 second summary from the match facts and records it in English and Finnish.",
+    "generate": "Generate podcast",
+    "regenerate": "Regenerate podcast",
+    "generating": "Writing and recording…",
+    "generatingNote": "Writing the script from the facts, checking it and recording it. This takes about 15 seconds.",
+    "failed": "Something went wrong",
+    "failedReason": "The podcast could not be made ({reason}).",
+    "langs": {
+      "en": "English",
+      "fi": "Finnish"
+    },
+    "desk": {
+      "title": "Daily podcasts",
+      "lead": "Every morning at {time} each team and league below gets a new 20–30 second episode in the chosen languages, when its facts changed since the last one. Episodes appear on the front page.",
+      "loading": "Loading the podcast schedule…",
+      "generateNow": "Generate now",
+      "remove": "Remove {label} from the schedule",
+      "empty": "No teams or leagues scheduled.",
+      "addLabel": "Add a team or league",
+      "add": "Add",
+      "langs": "Languages",
+      "save": "Save schedule",
+      "saved": "Schedule saved.",
+      "generated": "{label}: {n} episodes made.",
+      "runNow": "Run now",
+      "ran": "Daily run finished.",
+      "lastRun": "Last run {time}, {by}.",
+      "by": {
+        "schedule": "scheduled",
+        "newsroom": "started by the newsroom"
+      },
+      "status": {
+        "created": "new episode",
+        "unchanged": "no new facts",
+        "failed": "failed"
+      }
+    },
+    "lockedPlay": "{title}: for VOZ Plus subscribers",
+    "lockedTitle": "Podcasts are part of VOZ Plus",
+    "lockedFree": "Subscribe to listen to the daily match, team and league podcasts and read their transcripts.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to listen to the podcasts.",
+    "lockedNote": "VOZ Plus"
+  },
+  "discussion": {
+    "title": "Discussion",
+    "comments": "{n} comments | {n} comment | {n} comments",
+    "likes": "{n} likes | {n} like | {n} likes",
+    "likeStory": "Like this story",
+    "likeComment": "Like the comment by {name}",
+    "write": "Write a comment",
+    "placeholder": "Share your view on the match, {name}",
+    "post": "Post",
+    "posted": "Posted.",
+    "reply": "Reply",
+    "replyTo": "Reply to {name}",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "hide": "Hide",
+    "show": "Show",
+    "newsroomBadge": "VOZ newsroom",
+    "hiddenTag": "Hidden from readers",
+    "loading": "Loading comments…",
+    "empty": "No comments yet. Start the discussion.",
+    "lockedTitle": "Join the discussion with VOZ Plus",
+    "lockedFree": "Subscribers read every comment, share their view and like stories and comments.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to read every comment and join the discussion.",
+    "subscribe": "See VOZ Plus",
+    "errors": {
+      "wait": "Wait a moment before posting again.",
+      "length": "Comments are 2–1000 characters.",
+      "failed": "Something went wrong. Try again."
+    },
+    "preview": "Latest comments (preview)"
+  },
+  "favourites": {
+    "pageTitle": "My favourites – VOZ",
+    "title": "My favourites",
+    "lead": "News from the teams, leagues and players you follow.",
+    "edit": "Edit in My teams",
+    "all": "All favourites",
+    "newsroom": "Favourites are for reader accounts.",
+    "none": "You are not following anything yet.",
+    "choose": "Choose favourites",
+    "empty": "No recent stories from your favourites.",
+    "lockedTitle": "My favourites is part of VOZ Plus",
+    "lockedText": "Subscribe to get one page with the news of the teams, leagues and players you follow.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to get the news of the teams, leagues and players you follow on one page."
+  }
+}

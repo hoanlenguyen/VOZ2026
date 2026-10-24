@@ -10,7 +10,8 @@
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
-  "triggers": { "crons": ["* * * * *"] },
+  // Minute-by-minute news checks and daily podcasts at 05:00 UTC.
+  "triggers": { "crons": ["* * * * *", "0 5 * * *"] },
   // Wrangler automatically provisions this D1 binding on the first deployment.
   "d1_databases": [{ "binding": "VOZ_NEWS_DB", "database_name": "voz-news" }],
   "queues": {
@@ -22,7 +23,7 @@
   "kv_namespaces": [
     { "binding": "VOZ_CACHE", "id": "18009bda6a954a67b6adecd715d3dda5" }
   ],
-  // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY),
+  // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY, NUXT_OPENAI_API_KEY),
   // set by the deploy workflow from GitHub secrets; locally they come from .dev.vars.
   "vars": {
     "NUXT_DATA_MODE": "auto",

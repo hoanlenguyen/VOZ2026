@@ -1,0 +1,130 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "long",
+ "tone": "analyst",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:34:28.322Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1175
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (20 facts cited)",
+   "ms": 6461
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (20 facts cited)",
+   "ms": 5088
+  }
+ ],
+ "usage": {
+  "inputTokens": 5821,
+  "outputTokens": 1292,
+  "turns": 3,
+  "ms": 12724
+ },
+ "headline": "Nottingham Forestin xG-ylivoima ei tuonut täyttä pistepottia Ipswichiltä",
+ "sentences": [
+  {
+   "text": "Ipswich Townin ja Nottingham Forestin 1–1-tasapeli jätti ottelun numerokuvan selväksi: vieraat loivat enemmän, mutta molemmat osuivat kerran ennen taukoa.",
+   "facts": [
+    "f1",
+    "f3",
+    "f7",
+    "f8",
+    "f17"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Nottingham Forest siirtyi johtoon 13. minuutilla Neco Williamsin maalilla, jonka syötti Daniel Muñoz, ja Julio Enciso tasoitti Ipswichille 41. minuutilla.",
+   "facts": [
+    "f7",
+    "f8"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Toisella jaksolla maaleja ei nähty, vaikka Nottingham Forestilla oli selvästi suurempi hyökkäysvolyymi.",
+   "facts": [
+    "f4",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "xG-lukemat olivat Nottingham Forestille 2,29 ja Ipswichille 0,46, joten ero kuvaa vierasjoukkueen huomattavasti vaarallisempia tilanteita.",
+   "facts": [
+    "f17",
+    "f18"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Nottingham Forest vei laukaukset 17–7 ja maalia kohti suuntautuneet laukaukset 5–3; isoja maalipaikkoja se loi 2, kun Ipswich loi 1.",
+   "facts": [
+    "f19",
+    "f20",
+    "f21"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Pallonhallinta oli lähes tasan, 50,6–49,4 Nottingham Forestille, ja syöttömäärät olivat niin ikään lähellä toisiaan: Ipswich 486, Nottingham Forest 480.",
+   "facts": [
+    "f16",
+    "f23"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Nottingham Forest sai lisäksi 5 kulmapotkua Ipswichin jäädessä ilman kulmia, ja taklauksia vieraat tekivät 22 kotijoukkueen 15:tä vastaan.",
+   "facts": [
+    "f22",
+    "f25"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswichin edellisistä viidestä liigaottelusta kertyi 6 pistettä, Nottingham Forestin vastaavasta jaksosta 4.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Tasapeli kasvatti Ipswichin saldon 10 pisteeseen 8 ottelusta ja nosti sen 9:nneksi; Nottingham Forest nousi 6 pisteeseen ja 16:nneksi.",
+   "facts": [
+    "f32",
+    "f34"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ennen ottelua Ipswich oli 10:s 9 pisteellä ja Nottingham Forest 19:s 5 pisteellä, joten pistejako vei molempia ylöspäin sarjataulukossa.",
+   "facts": [
+    "f31",
+    "f33",
+    "f32",
+    "f34"
+   ],
+   "paragraph": 3
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 20
+ },
+ "fallbackReason": null
+}

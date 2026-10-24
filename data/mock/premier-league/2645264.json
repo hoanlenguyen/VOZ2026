@@ -1,0 +1,763 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645264",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-17 15:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Gtech Community Stadium, Brentford",
+    "attendance": 16094,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "94",
+      "name": "Brentford",
+      "shortName": "Brentford",
+      "abbr": "BRE",
+      "score": 1,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "14",
+      "name": "Liverpool",
+      "shortName": "Liverpool",
+      "abbr": "LIV",
+      "score": 2,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Chris Kavanagh"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Josh Smith"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Brentford",
+      "goals": [
+        {
+          "goalType": "Penalty",
+          "period": "FirstHalf",
+          "time": "35",
+          "timestamp": "20261017T153500+0100",
+          "player": "Igor Thiago"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "41",
+          "type": "Yellow",
+          "player": "Mikkel Damsgaard"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "65",
+          "playerOn": "Reiss Nelson",
+          "playerOff": "Kristoffer Ajer"
+        },
+        {
+          "time": "74",
+          "playerOn": "Fábio Carvalho",
+          "playerOff": "Nathan Collins"
+        },
+        {
+          "time": "76",
+          "playerOn": "Dango Ouattara",
+          "playerOff": "Keane Lewis-Potter"
+        },
+        {
+          "time": "82",
+          "playerOn": "Aaron Hickey",
+          "playerOff": "Rico Henry"
+        }
+      ]
+    },
+    "away": {
+      "team": "Liverpool",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "77",
+          "timestamp": "20261017T163200+0100",
+          "player": "Federico Chiesa"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "83",
+          "timestamp": "20261017T163800+0100",
+          "player": "Curtis Jones",
+          "assist": "Hugo Ekitiké"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "13",
+          "type": "Yellow",
+          "player": "Milos Kerkez"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "57",
+          "playerOn": "Federico Chiesa",
+          "playerOff": "Alexis Mac Allister"
+        },
+        {
+          "time": "60",
+          "playerOn": "Hugo Ekitiké",
+          "playerOff": "Cody Gakpo"
+        },
+        {
+          "time": "77",
+          "playerOn": "Curtis Jones",
+          "playerOff": "Alexander Isak"
+        },
+        {
+          "time": "79",
+          "playerOn": "Dominik Szoboszlai",
+          "playerOff": "Ibrahima Konaté"
+        },
+        {
+          "time": "86",
+          "playerOn": "Joe Gomez",
+          "playerOff": "Ryan Gravenberch"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Brentford",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Caoimhín Kelleher"
+        ],
+        [
+          "Michael Kayode",
+          "Nathan Collins",
+          "Kristoffer Ajer",
+          "Rico Henry"
+        ],
+        [
+          "Yehor Yarmoliuk",
+          "Jordan Henderson"
+        ],
+        [
+          "Kevin Schade",
+          "Mikkel Damsgaard",
+          "Keane Lewis-Potter"
+        ],
+        [
+          "Igor Thiago"
+        ]
+      ],
+      "manager": "Keith Andrews",
+      "startingXI": [
+        {
+          "name": "Caoimhín Kelleher",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Michael Kayode",
+          "shirtNumber": 33,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Nathan Collins",
+          "shirtNumber": 22,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Kristoffer Ajer",
+          "shirtNumber": 20,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Rico Henry",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Yehor Yarmoliuk",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jordan Henderson",
+          "shirtNumber": 6,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Kevin Schade",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Mikkel Damsgaard",
+          "shirtNumber": 24,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Keane Lewis-Potter",
+          "shirtNumber": 23,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Igor Thiago",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Hákon Valdimarsson",
+          "shirtNumber": 12,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Sepp van den Berg",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Aaron Hickey",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Mathias Jensen",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Fábio Carvalho",
+          "shirtNumber": 14,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Dango Ouattara",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Reiss Nelson",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Liverpool",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Alisson Becker"
+        ],
+        [
+          "Jeremie Frimpong",
+          "Ibrahima Konaté",
+          "Virgil van Dijk",
+          "Milos Kerkez"
+        ],
+        [
+          "Ryan Gravenberch",
+          "Alexis Mac Allister"
+        ],
+        [
+          "Mohamed Salah",
+          "Florian Wirtz",
+          "Cody Gakpo"
+        ],
+        [
+          "Alexander Isak"
+        ]
+      ],
+      "manager": "Arne Slot",
+      "startingXI": [
+        {
+          "name": "Alisson Becker",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jeremie Frimpong",
+          "shirtNumber": 30,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ibrahima Konaté",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Virgil van Dijk",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Milos Kerkez",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ryan Gravenberch",
+          "shirtNumber": 38,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Alexis Mac Allister",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Mohamed Salah",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Florian Wirtz",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Cody Gakpo",
+          "shirtNumber": 18,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Alexander Isak",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Giorgi Mamardashvili",
+          "shirtNumber": 25,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Joe Gomez",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Conor Bradley",
+          "shirtNumber": 12,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Curtis Jones",
+          "shirtNumber": 17,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Dominik Szoboszlai",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Federico Chiesa",
+          "shirtNumber": 14,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Hugo Ekitiké",
+          "shirtNumber": 22,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 39.1,
+        "away": 60.9
+      },
+      "xG": {
+        "home": 2.2,
+        "away": 2.28
+      },
+      "shots": {
+        "home": 12,
+        "away": 13
+      },
+      "shots_on_target": {
+        "home": 2,
+        "away": 4
+      },
+      "shots_off_target": {
+        "home": 7,
+        "away": 9
+      },
+      "shots_blocked": {
+        "home": 3,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 2,
+        "away": 2
+      },
+      "passes": {
+        "home": 336,
+        "away": 574
+      },
+      "accurate_passes": {
+        "home": 274,
+        "away": 454
+      },
+      "tackles": {
+        "home": 18,
+        "away": 20
+      },
+      "saves": {
+        "home": 2,
+        "away": 1
+      },
+      "fouls": {
+        "home": 15,
+        "away": 13
+      },
+      "offsides": {
+        "home": 4,
+        "away": 3
+      },
+      "yellow_cards": {
+        "home": 1,
+        "away": 1
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 5,
+        "lostCorners": 1
+      },
+      "away": {
+        "wonCorners": 1,
+        "lostCorners": 5
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "4'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Florian Wirtz",
+      "player2": null
+    },
+    {
+      "minute": "8'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Ibrahima Konaté",
+      "player2": null
+    },
+    {
+      "minute": "8'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Alexis Mac Allister",
+      "player2": null
+    },
+    {
+      "minute": "13'",
+      "type": "corner",
+      "team": "Liverpool",
+      "player1": "Milos Kerkez",
+      "player2": null
+    },
+    {
+      "minute": "13'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Alexander Isak",
+      "player2": "Mohamed Salah"
+    },
+    {
+      "minute": "14'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Cody Gakpo",
+      "player2": null
+    },
+    {
+      "minute": "15'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Mikkel Damsgaard",
+      "player2": null
+    },
+    {
+      "minute": "16'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Mikkel Damsgaard",
+      "player2": "Igor Thiago"
+    },
+    {
+      "minute": "17'",
+      "type": "attempt saved",
+      "team": "Liverpool",
+      "player1": "Alexander Isak",
+      "player2": null
+    },
+    {
+      "minute": "21'",
+      "type": "corner",
+      "team": "Liverpool",
+      "player1": "Alisson Becker",
+      "player2": null
+    },
+    {
+      "minute": "30'",
+      "type": "attempt saved",
+      "team": "Liverpool",
+      "player1": "Alexander Isak",
+      "player2": "Jeremie Frimpong"
+    },
+    {
+      "minute": "34'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Yehor Yarmoliuk",
+      "player2": "Michael Kayode"
+    },
+    {
+      "minute": "36'",
+      "type": "attempt saved",
+      "team": "Brentford",
+      "player1": "Kristoffer Ajer",
+      "player2": "Yehor Yarmoliuk"
+    },
+    {
+      "minute": "36'",
+      "type": "offside",
+      "team": "Brentford",
+      "player1": "Mikkel Damsgaard",
+      "player2": null
+    },
+    {
+      "minute": "40'",
+      "type": "offside",
+      "team": "Brentford",
+      "player1": "Nathan Collins",
+      "player2": "Kevin Schade"
+    },
+    {
+      "minute": "40'",
+      "type": "corner",
+      "team": "Brentford",
+      "player1": "Caoimhín Kelleher",
+      "player2": null
+    },
+    {
+      "minute": "41'",
+      "type": "corner",
+      "team": "Liverpool",
+      "player1": "Alisson Becker",
+      "player2": null
+    },
+    {
+      "minute": "44'",
+      "type": "corner",
+      "team": "Liverpool",
+      "player1": "Alisson Becker",
+      "player2": null
+    },
+    {
+      "minute": "44'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Ryan Gravenberch",
+      "player2": "Alexander Isak"
+    },
+    {
+      "minute": "45'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Igor Thiago",
+      "player2": "Michael Kayode"
+    },
+    {
+      "minute": "46'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Kevin Schade",
+      "player2": "Rico Henry"
+    },
+    {
+      "minute": "46'",
+      "type": "attempt blocked",
+      "team": "Brentford",
+      "player1": "Kevin Schade",
+      "player2": "Kristoffer Ajer"
+    },
+    {
+      "minute": "46'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Ryan Gravenberch",
+      "player2": "Cody Gakpo"
+    },
+    {
+      "minute": "53'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Nathan Collins",
+      "player2": "Michael Kayode"
+    },
+    {
+      "minute": "65'",
+      "type": "attempt blocked",
+      "team": "Brentford",
+      "player1": "Mikkel Damsgaard",
+      "player2": "Rico Henry"
+    },
+    {
+      "minute": "72'",
+      "type": "corner",
+      "team": "Liverpool",
+      "player1": "Milos Kerkez",
+      "player2": null
+    },
+    {
+      "minute": "72'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Virgil van Dijk",
+      "player2": null
+    },
+    {
+      "minute": "77'",
+      "type": "offside",
+      "team": "Brentford",
+      "player1": "Kevin Schade",
+      "player2": "Michael Kayode"
+    },
+    {
+      "minute": "79'",
+      "type": "attempt blocked",
+      "team": "Brentford",
+      "player1": "Mikkel Damsgaard",
+      "player2": "Dango Ouattara"
+    },
+    {
+      "minute": "79'",
+      "type": "miss",
+      "team": "Liverpool",
+      "player1": "Florian Wirtz",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "offside",
+      "team": "Brentford",
+      "player1": "Dango Ouattara",
+      "player2": null
+    },
+    {
+      "minute": "82'",
+      "type": "offside",
+      "team": "Liverpool",
+      "player1": "Federico Chiesa",
+      "player2": null
+    },
+    {
+      "minute": "83'",
+      "type": "miss",
+      "team": "Brentford",
+      "player1": "Reiss Nelson",
+      "player2": "Fábio Carvalho"
+    },
+    {
+      "minute": "83'",
+      "type": "offside",
+      "team": "Liverpool",
+      "player1": "Florian Wirtz",
+      "player2": "Dominik Szoboszlai"
+    },
+    {
+      "minute": "85'",
+      "type": "offside",
+      "team": "Liverpool",
+      "player1": "Curtis Jones",
+      "player2": "Milos Kerkez"
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

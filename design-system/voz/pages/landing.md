@@ -40,6 +40,10 @@ big section title, category tabs, lead + side stories, card row, "Latest" list w
   red/blue lines), drawn as SVG at real proportions; `--board-line` / `--board-stripe` / `--board-rink-*` tokens.
 - Reserve space with `aspect-ratio` (16:9 lead/cards, 4:3 list thumbnails at 33% width); 4 px radius to avoid layout shift.
 
+## Podcasts (`NewsPodcastShelf`, `NewsPodcastPlayer`)
+- Section after the 4-up card row: section title, players in a 1 / 2 (≥768) / 3 (≥1024) column grid; hidden when there are no episodes (loaded client-side, never blocks the page).
+- Player: 48 px round gold play button (fill only; icon in `--on-accent`), kicker (kind · subject · league · time; newsroom also sees the "AI content" tag), title 17 px bold, native range seek bar (`accent-color: --stat-lead`) with tabular time, "Transcript" disclosure (the cited facts: newsroom only). Only one episode plays at a time; audio loads on first play.
+
 ## Content rules
 - Every story is generated from data (`server/utils/stories.ts`); the lead carries
   "Written automatically from official match data".

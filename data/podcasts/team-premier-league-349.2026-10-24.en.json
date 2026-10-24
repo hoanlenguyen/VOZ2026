@@ -1,0 +1,102 @@
+{
+ "id": "team-premier-league-349.2026-10-24.en",
+ "subjectId": "team-premier-league-349",
+ "subject": {
+  "kind": "team",
+  "competitionId": "premier-league",
+  "teamKey": "premier-league:349"
+ },
+ "label": "Ipswich Town",
+ "competitionName": "Premier League",
+ "href": "/match/premier-league/2645271",
+ "lang": "en",
+ "title": "Ipswich hold Forest to a draw",
+ "sentences": [
+  {
+   "text": "Ipswich Town drew 1–1 with Nottingham Forest, after Neco Williams scored first and Julio Enciso equalised in the 41st minute.",
+   "facts": [
+    "f1",
+    "f7",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "No goals followed after the break.",
+   "facts": [
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Ipswich are 9th with 10 points from 8 matches.",
+   "facts": [
+    "f32"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Next, Hull City host Ipswich Town on Saturday 31 October, kicking off at 15:00 local time.",
+   "facts": [
+    "f50"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "intro": "Good morning from VOZ.",
+ "outro": "That is all from VOZ for now, thanks for listening.",
+ "evidence": [
+  {
+   "id": "f1",
+   "section": "result",
+   "text": "Premier League matchweek 8: Ipswich Town 1–1 Nottingham Forest (full time)."
+  },
+  {
+   "id": "f4",
+   "section": "result",
+   "text": "No goals were scored in the second half."
+  },
+  {
+   "id": "f7",
+   "section": "timeline",
+   "text": "13' Nott'm Forest goal: Neco Williams (assist: Daniel Muñoz), making it 0–1."
+  },
+  {
+   "id": "f8",
+   "section": "timeline",
+   "text": "41' Ipswich goal: Julio Enciso, making it 1–1."
+  },
+  {
+   "id": "f9",
+   "section": "timeline",
+   "text": "Julio Enciso's goal in the 41' was an equaliser for Ipswich."
+  },
+  {
+   "id": "f32",
+   "section": "table",
+   "text": "After this match Ipswich are 9th with 10 points from 8 matches (counted from results up to this game)."
+  },
+  {
+   "id": "f50",
+   "section": "context",
+   "text": "Ipswich's next Premier League game: Hull City v Ipswich Town on Saturday 31 October, kick-off 15:00 local time."
+  }
+ ],
+ "factsHash": "1dyqct2",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 7
+ },
+ "audio": {
+  "url": "/podcasts/team-premier-league-349.2026-10-24.en.mp3",
+  "bytes": 438528,
+  "seconds": 27.4,
+  "voice": "marin",
+  "model": "gpt-4o-mini-tts"
+ },
+ "model": "gpt-6-luna",
+ "trigger": "newsroom",
+ "generatedAt": "2026-10-24T13:04:07.119Z"
+}

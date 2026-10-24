@@ -1,0 +1,95 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "standard",
+ "tone": "home-fan",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:30:57.002Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1213
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (14 facts cited)",
+   "ms": 4419
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (14 facts cited)",
+   "ms": 3337
+  }
+ ],
+ "usage": {
+  "inputTokens": 5268,
+  "outputTokens": 666,
+  "turns": 3,
+  "ms": 8970
+ },
+ "headline": "Enciso rescues a point as Ipswich hold on at Portman Road",
+ "sentences": [
+  {
+   "text": "Ipswich Town earned a 1–1 draw with Nottingham Forest at Portman Road, taking a point after a match that was level by half-time.",
+   "facts": [
+    "f1",
+    "f2",
+    "f3",
+    "f6"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, but Julio Enciso struck in the 41st to restore parity.",
+   "facts": [
+    "f7",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The second half brought no further goals, and Ipswich had to settle for a share of the points.",
+   "facts": [
+    "f4",
+    "f2"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "There is reason to value the result, but Forest created the clearer danger: they had 17 shots to Ipswich’s 7 and an xG of 2.29 against 0.46.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich’s goalkeeper made 3 saves, while the visitors had 5 corners and 2 big chances to Ipswich’s 1.",
+   "facts": [
+    "f21",
+    "f22",
+    "f26"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "The point lifts Ipswich to 9th with 10 points from 8 matches, a solid return for supporters to take from a hard-fought evening.",
+   "facts": [
+    "f32"
+   ],
+   "paragraph": 2
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 14
+ },
+ "fallbackReason": null
+}

@@ -1,0 +1,46 @@
+{
+  "storyLikedBy": [],
+  "storyLikesBase": 34,
+  "comments": [
+    {
+      "id": "seed-1",
+      "author": { "id": "seed-reader-1", "name": "Mikko L.", "role": "reader" },
+      "text": "17 shots to 7 and Forest still only take a point. That xG gap says it all.",
+      "at": "2026-10-23T21:12:00.000Z",
+      "parentId": null,
+      "hidden": false,
+      "likedBy": [],
+      "likesBase": 12
+    },
+    {
+      "id": "seed-2",
+      "author": { "id": "seed-reader-2", "name": "Jess T.", "role": "reader" },
+      "text": "Enciso's equaliser just before half-time changed the whole game. Happy with a point at Portman Road.",
+      "at": "2026-10-23T21:20:00.000Z",
+      "parentId": null,
+      "hidden": false,
+      "likedBy": [],
+      "likesBase": 8
+    },
+    {
+      "id": "seed-3",
+      "author": { "id": "acc-newsroom", "name": "Noora Newsroom", "role": "newsroom" },
+      "text": "Thanks for the comments! The full match stats are under the timeline: Forest had 5 corners to Ipswich's 0.",
+      "at": "2026-10-23T21:31:00.000Z",
+      "parentId": "seed-1",
+      "hidden": false,
+      "likedBy": [],
+      "likesBase": 5
+    },
+    {
+      "id": "seed-4",
+      "author": { "id": "seed-reader-3", "name": "Aleksi K.", "role": "reader" },
+      "text": "Ipswich up to 9th on 10 points. Not bad for a newly promoted side.",
+      "at": "2026-10-23T22:05:00.000Z",
+      "parentId": null,
+      "hidden": false,
+      "likedBy": [],
+      "likesBase": 3
+    }
+  ]
+}

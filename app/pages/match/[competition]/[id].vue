@@ -1,61 +1,131 @@
 <script setup lang="ts">
 // Match page: scoreboard, then a side-by-side comparison counted from the season's results.
 // The AI match story is built in Phase 2.
-import { PhCaretLeft } from '@phosphor-icons/vue'
+import { PhCaretLeft, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news' })
 
+const { t, locale } = useI18n()
+const fmt = useFormat()
 const route = useRoute()
-const { data, error, refresh: refreshMatch } = await useFetch(() => `/api/competitions/${route.params.competition}/matches/${route.params.id}`)
+// Newsroom preview (/newsroom/stories/:id): ?draft=<id>&as=subscriber|free shows the page with the
+// editor's unsaved settings, as that reader would see it (the server checks the newsroom session).
+const preview = computed(() => (typeof route.query.draft === 'string'
+  ? { draft: route.query.draft, as: route.query.as === 'free' ? 'free' : 'subscriber' }
+  : null))
+const { data, error, refresh: refreshMatch } = await useFetch(() => `/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
+  query: computed(() => ({ lang: locale.value, ...preview.value })),
+})
 const match = computed(() => data.value?.match)
 const finished = computed(() => match.value?.status === 'finished')
-// Football: "Half-time 1–0"; hockey: "Periods 0–1, 0–1, 0–1".
-const periodLine = computed(() => {
-  const m = match.value
-  if (!m || m.status !== 'finished' || !m.periods.length) return ''
-  if (m.sport === 'football') return `Half-time ${m.periods[0]!.home}–${m.periods[0]!.away}`
-  return `Periods ${m.periods.map(p => `${p.home}–${p.away}`).join(', ')}`
+const { can } = useAccount()
+// The newsroom editor for this match's coverage (front-page story id: result or preview).
+const editLink = computed(() => match.value && `/newsroom/stories/${encodeURIComponent(`${finished.value ? 'r' : 'p'}-${match.value.key}`)}`)
+// The page reads as the match story: its headline is the title, with topic, date and author below.
+// AI stories not yet cached on the server report their headline once loaded (NewsMatchStory @loaded).
+const loadedStory = ref<{ headline: string, generatedAt: string } | null>(null)
+const scoreTitle = computed(() => match.value
+  ? `${match.value.home.shortName} ${finished.value ? fmt.score(match.value) : t('visual.vs')} ${match.value.away.shortName}`
+  : '')
+const title = computed(() => data.value?.story?.headline ?? loadedStory.value?.headline ?? data.value?.teaser?.headline ?? scoreTitle.value)
+const byline = computed(() => {
+  const s = data.value?.story
+  const author = s?.edited ? s.edited.by : s?.mode === 'ai' || data.value?.teaser?.source === 'ai' ? t('match.authorAi') : null
+  const date = s?.publishedAt ?? loadedStory.value?.generatedAt ?? match.value?.start
+  return { author, date }
 })
+// The league table beside the article (below it on narrow screens), with this match's teams marked.
+const { data: standings } = useLazyFetch(`/api/competitions/${route.params.competition}/standings`, { query: { lang: locale } })
+const table = computed(() => standings.value?.rows.length
+  ? { competitionId: standings.value.competition.id, competitionName: standings.value.competition.name, rows: standings.value.rows }
+  : null)
+// Discussion totals (public): from the match API, then live from the discussion as readers act.
+// Matches with a story have a discussion, also when the story is locked for this reader.
+const hasDiscussion = computed(() => !preview.value && !!(data.value?.story || data.value?.locked?.includes('story')))
+const liveEngagement = ref<{ comments: number, likes: number } | null>(null)
+const engagement = computed(() => liveEngagement.value ?? data.value?.engagement ?? { comments: 0, likes: 0 })
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
-  title: match.value
-    ? `${match.value.home.shortName} ${finished.value ? formatScore(match.value) : 'vs'} ${match.value.away.shortName} – VOZ`
-    : 'Match – VOZ',
+  title: match.value ? `${title.value} – VOZ` : t('match.pageTitle'),
 }))
 </script>
 
 <template>
   <main id="main" class="wrap">
-    <NuxtLink to="/" class="back">
-      <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
-      Sports
-    </NuxtLink>
+    <template v-if="error">
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
+      <p class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
+    </template>
 
-    <p v-if="error" class="notice">Could not load the match ({{ error.statusMessage }}). Try again in a minute.</p>
-
-    <template v-else-if="match && data">
+    <div v-else-if="match && data" class="layout">
+    <div class="article">
+      <!-- In the article column, so they line up with it at every width. -->
+      <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
       <header class="hero">
-        <p class="kicker">
-          <span>{{ data.competition.name }}</span>
-          <template v-if="match.round">
-            <span aria-hidden="true">·</span><span>Matchday {{ match.round }}</span>
+        <!-- The newsroom's cover image replaces the match graphic when one is set. -->
+        <figure v-if="data.cover" class="visual cover">
+          <img :src="data.cover.src" :alt="data.cover.alt">
+          <figcaption v-if="data.cover.credit">{{ t('match.coverCredit', { credit: data.cover.credit }) }}</figcaption>
+        </figure>
+        <NewsMatchVisual v-else :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
+        <h1 class="title num">{{ title }}</h1>
+        <p class="byline">
+          <span>{{ data.competition.name }}<template v-if="match.round"> · {{ t('match.matchday', { n: match.round }) }}</template></span>
+          <span aria-hidden="true">·</span>
+          <time class="num" :datetime="byline.date">{{ fmt.stamp(byline.date!) }}</time>
+          <template v-if="byline.author">
+            <span aria-hidden="true">·</span><span>{{ t('match.by', { name: byline.author }) }}</span>
           </template>
-          <span aria-hidden="true">·</span><span class="num">{{ storyStamp(match.start) }}</span>
+          <template v-if="hasDiscussion">
+            <span aria-hidden="true">·</span>
+            <a href="#discussion" class="byline-link">{{ t('discussion.comments', { n: engagement.comments }, engagement.comments) }} · {{ t('discussion.likes', { n: engagement.likes }, engagement.likes) }}</a>
+          </template>
         </p>
-        <h1 class="title num">
-          {{ match.home.shortName }} {{ finished ? formatScore(match) : 'vs' }} {{ match.away.shortName }}
-        </h1>
-        <p class="meta num">
-          <template v-if="periodLine">{{ periodLine }}</template>
-          <template v-if="match.venue"><span v-if="periodLine" aria-hidden="true"> · </span>{{ match.venue }}</template>
-          <template v-if="match.attendance"> · {{ match.attendance.toLocaleString('en-GB') }} spectators</template>
-        </p>
-        <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <aside v-if="can.newsroom && editLink && !preview" class="desk" :aria-label="t('match.deskLabel')">
+        <span>
+          <strong>{{ t('match.deskLabel') }}</strong>
+          {{ t('match.deskState', {
+            story: data.story ? t(`editor.modes.${data.story.mode}.label`) + (data.story.mode === 'hidden' ? '' : ` · ${t(`editor.audiences.${data.story.audience}.label`)}`) : t('match.deskNone'),
+          }) }}
+        </span>
+        <NuxtLink :to="editLink" class="desk-edit"><PhPencilSimple :size="16" weight="bold" aria-hidden="true" /> {{ t('match.deskEdit') }}</NuxtLink>
+      </aside>
+
+      <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" hide-headline />
+
+      <!-- The page's content: the match story as the newsroom set it (the published AI version or the
+           newsroom's edited version), or (newsroom accounts only) a note that it is hidden from readers. -->
+      <section v-if="data.story" class="story-body" :aria-label="t('match.story')">
+        <p v-if="data.story.mode === 'hidden'" class="notice">{{ t('match.storyHidden') }}</p>
+        <!-- eslint-disable-next-line vue/no-v-html -->
+        <div v-else-if="data.story.edited" class="article-body" v-html="data.story.edited.body" />
+        <NewsMatchStory
+          v-else :competition-id="data.competition.id" :match-id="match.id" :length="data.story.length" :tone="data.story.tone"
+          :reader="!!preview" :extra-query="preview ?? undefined" hide-headline @loaded="loadedStory = $event"
+        />
+      </section>
+
+      <!-- Discussion: totals for everyone; comments and likes for subscribers and the newsroom. -->
+      <NewsMatchDiscussion
+        v-if="hasDiscussion" :competition-id="data.competition.id" :match-id="match.id"
+        :engagement="engagement" @engagement="liveEngagement = $event"
+      />
+
+      <!-- AI podcast of this match (subscribers listen; others see it locked); the newsroom makes it here. -->
+      <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
+
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
-        <NewsSectionTitle id="timeline-title">Match timeline</NewsSectionTitle>
+        <NewsSectionTitle id="timeline-title">{{ t('match.timeline') }}</NewsSectionTitle>
         <NewsMatchTimeline
           :events="data.extras.timeline"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
@@ -64,21 +134,21 @@ useHead(() => ({
       </section>
 
       <section v-if="data.compare" class="block" aria-labelledby="compare-title">
-        <NewsSectionTitle id="compare-title">Compare</NewsSectionTitle>
+        <NewsSectionTitle id="compare-title">{{ finished ? t('match.statsTitle') : t('match.compare') }}</NewsSectionTitle>
         <NewsStatCompare
           :compare="data.compare"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
           :away="{ name: match.away.shortName, logo: match.away.logo }"
         />
         <p class="source">
-          <template v-if="data.extras">Match stats from {{ data.extras.source.name }}; season numbers counted from official {{ data.competition.name }} results.</template>
-          <template v-else-if="hasMatchStats">Match stats from official {{ data.competition.name }} game data; season numbers counted from official results.</template>
-          <template v-else>Counted from official {{ data.competition.name }} results. Shots, possession and cards are not in our data plan yet.</template>
+          <template v-if="data.extras">{{ t('match.sourceExtras', { source: data.extras.source.name, league: data.competition.name }) }}</template>
+          <template v-else-if="hasMatchStats">{{ t('match.sourceOfficial', { league: data.competition.name }) }}</template>
+          <template v-else>{{ t('match.sourceResults', { league: data.competition.name }) }}</template>
         </p>
       </section>
 
       <section v-if="data.extras?.lineups" class="block" aria-labelledby="lineups-title">
-        <NewsSectionTitle id="lineups-title">Line-ups</NewsSectionTitle>
+        <NewsSectionTitle id="lineups-title">{{ t('match.lineups') }}</NewsSectionTitle>
         <NewsLineups
           :lineups="data.extras.lineups"
           :teams="{ home: { name: match.home.shortName, logo: match.home.logo }, away: { name: match.away.shortName, logo: match.away.logo } }"
@@ -87,12 +157,12 @@ useHead(() => ({
       </section>
 
       <p v-if="data.extras" class="source">
-        <template v-if="data.extras.referee">Referee: {{ data.extras.referee }} · </template>
-        Match data: {{ data.extras.source.name }}. Event labels written by VOZ from the data.
+        <template v-if="data.extras.referee">{{ t('match.referee', { name: data.extras.referee }) }} · </template>
+        {{ t('match.matchData', { source: data.extras.source.name }) }}
       </p>
 
       <section v-if="match.goals.length && !data.extras?.timeline.length" class="block" aria-labelledby="goals-title">
-        <NewsSectionTitle id="goals-title">Goals</NewsSectionTitle>
+        <NewsSectionTitle id="goals-title">{{ t('match.goals') }}</NewsSectionTitle>
         <ol class="goals">
           <li v-for="g in match.goals" :key="g.id" class="goal num" :class="`goal--${g.side}`">
             <span class="clock">{{ g.clockLabel }}</span>
@@ -100,20 +170,56 @@ useHead(() => ({
             <span v-else class="goal-crest goal-crest--text">{{ match[g.side].shortName.slice(0, 3) }}</span>
             <span class="scorer">{{ g.scorer.name }}</span>
             <span class="running">{{ g.homeScore }}–{{ g.awayScore }}</span>
-            <span v-if="g.tags.length" class="tags">{{ g.tags.join(', ') }}</span>
+            <span v-if="g.tags.length" class="tags">{{ g.tags.map(tag => t(`match.tags.${tag}`)).join(', ') }}</span>
           </li>
         </ol>
       </section>
-      <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">Goal scorers are not included in this data plan.</p>
+      <p v-else-if="!data.competition.hasScoringEvents && finished && !data.extras" class="source">{{ t('match.noScorers') }}</p>
 
       <NewsPressCard :key="match.key" :competition-id="data.competition.id" :match-id="match.id" :match-status="match.status" :home-score="match.home.score" :away-score="match.away.score" @match-change="refreshMatch()" />
-    </template>
+    </div>
+    <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
+      <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
+      <!-- Advertisers' posts after the table, for every reader. -->
+      <div v-if="can.ads" class="ads">
+        <NewsAdCard v-for="kind in (['shop', 'event', 'league'] as const)" :key="kind" :kind="kind" />
+      </div>
+    </aside>
+    <!-- The big advertiser's post: left of the article on wide screens, after the other ads otherwise. -->
+    <aside v-if="can.ads" class="left-ad" :aria-label="t('ads.label')">
+      <NewsAdTall />
+    </aside>
+    </div>
   </main>
 </template>
 
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
+/* Side columns stay beside the article down to tablet width (also when the page is zoomed in):
+   - from 1024px: big ad | article | table and ads (the article is centred when both sides have room);
+   - 768–1023px: article | table, ads and the big ad;
+   - below 768px: one column, the table and ads after the article. */
+.layout { display: grid; gap: 48px; }
+.article { min-width: 0; }
+.sidebar { min-width: 0; }
+.left-ad { min-width: 0; }
+.ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
+.preview-banner { margin-top: 12px; }
+@media (min-width: 768px) {
+  .wrap { max-width: none; }
+  .layout { grid-template-columns: minmax(0, 1fr) clamp(220px, 30vw, 300px); gap: 0 24px; align-items: start; }
+  .article { grid-column: 1; grid-row: 1 / span 2; }
+  .sidebar { grid-column: 2; grid-row: 1; padding-top: 60px; }
+  .left-ad { grid-column: 2; grid-row: 2; margin-top: 16px; }
+}
+@media (min-width: 1024px) {
+  .layout { grid-template-columns: minmax(170px, 1fr) minmax(0, 760px) minmax(230px, 1fr); }
+  .article { grid-column: 2; grid-row: 1; }
+  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: 100%; max-width: 300px; margin-top: 0; padding-top: 60px; }
+  .sidebar { grid-column: 3; grid-row: 1; width: 100%; max-width: 340px; }
+}
+@media (min-width: 1280px) { .layout { gap: 0 32px; } }
 
 .back {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 8px;
@@ -125,17 +231,46 @@ useHead(() => ({
 .notice { margin: 24px 0; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--text-2); }
 
 .hero { text-align: center; padding: 16px 0 0; }
-.kicker {
-  margin: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; font-size: 11px; line-height: 16px;
-  font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--meta);
+.byline-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.byline-link:hover { color: var(--link-hover); }
+.byline {
+  margin: 12px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px;
+  font-size: 13px; color: var(--meta);
 }
-.title { margin: 10px 0 0; font-size: clamp(26px, 4vw, 36px); line-height: 1.22; font-weight: 700; color: var(--headline); }
-.meta { margin: 10px 0 0; font-size: 14px; color: var(--summary); }
-.visual { margin-top: 20px; }
+.story-body { margin-top: 32px; }
+.title { margin: 24px 0 0; font-size: clamp(26px, 4vw, 36px); line-height: 1.22; font-weight: 700; color: var(--headline); }
+.visual { margin-top: 8px; }
 @media (min-width: 640px) { .visual { aspect-ratio: 21 / 9; } }
 
 .block { margin-top: 50px; }
 .source { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
+
+.preview-banner {
+  margin: 12px 0 0; padding: 10px 14px; border-radius: 4px; background: var(--accent); color: var(--on-accent);
+  font-size: 14px; font-weight: 700; text-align: center;
+}
+.desk {
+  margin-top: 24px; padding: 10px 10px 10px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  border-radius: 4px; background: var(--surface); font-size: 14px; color: var(--summary);
+}
+.desk strong { margin-right: 6px; color: var(--headline); }
+.desk-edit {
+  min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  background: var(--headline); color: var(--bg); font-weight: 700; text-decoration: none;
+}
+.desk-edit:hover { background: var(--link-hover); }
+.desk-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cover { margin-bottom: 0; }
+.cover img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
+@media (min-width: 640px) { .cover { aspect-ratio: auto; } .cover img { aspect-ratio: 21 / 9; } }
+.cover figcaption { margin-top: 6px; font-size: 12px; text-align: left; color: var(--meta); }
+.article-body { margin-top: 14px; font-size: 17px; line-height: 1.65; color: var(--text-2); }
+.article-body :deep(p), .article-body :deep(ul), .article-body :deep(ol) { margin: 0 0 16px; }
+.article-body :deep(h2) { margin: 28px 0 10px; font-size: 22px; line-height: 1.3; color: var(--headline); }
+.article-body :deep(h3) { margin: 24px 0 8px; font-size: 18px; line-height: 1.35; color: var(--headline); }
+.article-body :deep(blockquote) { margin: 0 0 16px; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent); color: var(--headline); font-style: italic; }
+.article-body :deep(a) { color: var(--link-hover); }
+.article-body :deep(li) { margin-bottom: 6px; }
 
 .goals { list-style: none; margin: 0; padding: 0; }
 .goal {
