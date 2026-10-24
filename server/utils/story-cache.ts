@@ -49,8 +49,11 @@ export async function cachedStory(req: StoryRequest): Promise<{ story: MatchStor
       return { story: kv, cached: 'kv' }
     }
 
+    // Pre-written stories belong to the model that wrote them: after switching NUXT_OPENAI_MODEL the new
+    // model writes its own (without an API key, any checked pre-written story beats none).
     const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${variant}.json`).catch(() => null)
-    if (bundled?.origin === 'agent' && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length }).passed) {
+    const sameModel = bundled?.model === llmConfig().model || !llmConfig().key
+    if (bundled?.origin === 'agent' && sameModel && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length }).passed) {
       memory.set(key, bundled)
       return { story: bundled, cached: 'bundled' }
     }

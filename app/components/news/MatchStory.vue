@@ -40,7 +40,7 @@ const paragraphs = computed(() => {
   return [...groups.entries()].sort(([a], [b]) => a - b).map(([, s]) => s)
 })
 const citedFacts = computed<Fact[]>(() => (data.value?.facts ?? []).filter(f => cited.value.has(f.id)))
-const modelName = computed(() => (story.value?.model ?? '').replace(/^gpt-6-luna$/, 'GPT-6 Luna'))
+const modelName = computed(() => (story.value?.model ? modelLabel(story.value.model) : ''))
 const seconds = (ms: number) => `${(ms / 1000).toFixed(1)} s`
 
 function toggleSentence(i: number) {

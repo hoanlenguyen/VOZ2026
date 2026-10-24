@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     gnewsApiKey: '',
     /** AI match stories (OpenAI Responses API). */
     openaiApiKey: '',
+    /** Display name or API id; set NUXT_OPENAI_MODEL to switch models (e.g. "GPT-6 Sol"). */
     openaiModel: 'gpt-6-luna',
     openaiBaseUrl: 'https://api.openai.com/v1',
     storyReasoningEffort: 'low',

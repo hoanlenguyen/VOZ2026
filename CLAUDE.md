@@ -23,7 +23,8 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `NUXT_LIIGA_API_KEY` — Liiga stats API, sent as `x-api-key`
 - `NUXT_FOOTBALL_DATA_TOKEN` — football-data.org, sent as `X-Auth-Token`; free plan = TIER_ONE competitions, 10 requests/minute
 - `NUXT_GNEWS_API_KEY` — GNews headline search (sent as `apikey` query param, redacted from errors); free plan 100 requests/day, ~1 request/s
-- `NUXT_OPENAI_API_KEY` — OpenAI Responses API for AI match stories (model `gpt-6-luna`, reasoning effort `low`; `NUXT_OPENAI_MODEL`, `NUXT_STORY_REASONING_EFFORT` override)
+- `NUXT_OPENAI_API_KEY` — OpenAI Responses API for AI match stories (reasoning effort `low`; `NUXT_STORY_REASONING_EFFORT` overrides)
+- `NUXT_OPENAI_MODEL` — story model, display name or API id (`GPT-6 Luna` → `gpt-6-luna`, via `shared/utils/model-name.ts`). Production value lives in `wrangler.jsonc` vars. Cache keys include the model, and pre-written stories are only reused by the model that wrote them (unless there is no API key); after switching, re-run `npm run warm:stories` to pre-write the new model's stories.
 - `NUXT_DATA_MODE=live|auto|snapshot` — upstream only / upstream with snapshot fallback / offline only
 
 ## Architecture
