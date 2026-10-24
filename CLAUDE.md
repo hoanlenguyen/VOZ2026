@@ -156,3 +156,6 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
   styles still merge with the global rule; `.card`, `.chip` and `.badge` collisions have each caused layout bugs).
 - Brand mark: `NewsLogoMark` (tokens `--board`, `--accent`) and `public/favicon.svg` share one drawing ("voz" = voice: a gold speech bubble with the V cut out, on the dark square). After changing it, regenerate `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, full-bleed), `icon-192/512.png`.
 - Never copy articles or photos from other news sites into the app or mock data; story text comes from our data, images are crests + data visuals.
+
+## Planned (not built yet)
+- Notifications for subscribers about their teams and matches. Nothing of it exists in the code yet; don't assume it does. When built, it should start from the subscriber's My teams favourites (`server/utils/preferences.ts`, `kvcache` `prefs:<accountId>`).
