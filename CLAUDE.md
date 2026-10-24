@@ -6,6 +6,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 
 ## Commands
 - `npm run dev` — dev server (stop it before restarting; Nuxt refuses a second instance). After adding a new component, restart if SSR logs "Failed to resolve component".
+  Changing `.env` or `nuxt.config.ts` makes the server restart itself; a second dev server of this folder (e.g. an old `--port 3002`) blocks that restart and every request then returns 500 "Another Nuxt dev server is already running".
 - `npm run typecheck` — must pass before committing
 - `npm run snapshot -- [--only liiga|football-data] [--details] [--competitions PL,BL1]` — save upstream
   responses to `data/snapshots/<provider>/` for offline demos (football: ~6.5 s per request, free-plan limit)
@@ -22,7 +23,8 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `NUXT_LIIGA_API_KEY` — Liiga stats API, sent as `x-api-key`
 - `NUXT_FOOTBALL_DATA_TOKEN` — football-data.org, sent as `X-Auth-Token`; free plan = TIER_ONE competitions, 10 requests/minute
 - `NUXT_GNEWS_API_KEY` — GNews headline search (sent as `apikey` query param, redacted from errors); free plan 100 requests/day, ~1 request/s
-- `NUXT_HF_TOKEN`, `NUXT_HF_MODEL` (default `openai/gpt-oss-120b`) — Hugging Face Inference Providers for the translation agent; on Cloudflare set the token with `wrangler secret put`
+- `NUXT_HF_TOKEN`, `NUXT_HF_MODEL` (default `openai/gpt-oss-120b`) — Hugging Face Inference Providers (`https://router.huggingface.co/v1`, OpenAI-compatible) for the translation agent. Without a token, headlines stay untranslated.
+  For Cloudflare, add `NUXT_HF_TOKEN` as a GitHub secret and to the deploy workflow's `secrets:` list and `env:` block (not there yet).
 - `NUXT_DATA_MODE=live|auto|snapshot` — upstream only / upstream with snapshot fallback / offline only
 
 ## Architecture
@@ -31,11 +33,15 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `server/providers/<provider>.ts` — one per data source; implements `SportProvider` (`server/providers/types.ts`) and maps raw JSON → shared types
 - `server/utils/upstream.ts` — the only place that calls external APIs (`UpstreamId` = sports providers + `gnews`): keys, cache, rate limit, snapshot fallback. Query-string keys go in `authQuery` so they never reach cache keys, snapshot names or logs.
 - `server/utils/sports.ts` — provider registry and the `[competition]` route helper
-- API: `/api/landing`, `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id}`, `/api/health`, dev-only `/api/raw/:provider/*`
-- `server/utils/compare.ts` — match-page comparison: goals by period, `MatchTeam.stats` (Liiga: shots, puck control, faceoffs, passes, PIM, … from `games/{season}/{id}/stats`), and both teams' season record before kick-off counted from results (points/goals reconcile with the official tables); returned as `compare` by `/api/competitions/:competition/matches/:id`
+- API: `/api/landing`, `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id,matches/:id/press}`, `/api/health`, dev-only `/api/raw/:provider/*`. Every route that returns text takes `?lang=en|fi`.
+- `server/utils/compare.ts` — match-page comparison: goals by period, `MatchTeam.stats` (Liiga: shots, puck control, faceoffs, passes, PIM, … from `games/{season}/{id}/stats`), and both teams' season record before kick-off counted from results (points/goals reconcile with the official tables); returned as `compare` by `/api/competitions/:competition/matches/:id`. Labels and notes per language in `server/utils/compare-text.ts` (row label key = row id / stats key)
 - `server/utils/press.ts` — "What the press says": GNews search by both team names (ASCII-folded; GNews rejects non-ASCII) in a window around kick-off, kept only if headline/description names both teams; returns headline, source, link only (never description/content/images). Endpoint `/api/competitions/:competition/matches/:id/press`, loaded client-side by `NewsPressCard`.
 - `server/utils/mock-matches.ts` — mock "deep data" matches from `data/mock/<competition>/<id>.json` (server assets `mocks`, bundled on Workers): full match-centre facts (key events, line-ups, stats, structured event list). Mapped to `Match` + `MatchDetailExtras` (`shared/types/match-detail.ts`: timeline, line-ups, referee, source). Teams resolve to the provider's team keys/crests by name; the provider's record of the same game (same teams + UTC day) is replaced on the front page, and both ids serve the mock detail. Mocks always appear on the front page and lead their league. Store facts only, never another outlet's written commentary; labels are written in code.
-- `server/utils/translate.ts` — AI translation agent (HF router, gpt-oss-120b) for text VOZ doesn't write, today the press headlines. Cached 30 days in `kvcache` (one model call per text ever), one batched call per request, number guard keeps the original if digits change; shown with a "Translated automatically" label
+- `server/utils/translate.ts` — AI translation agent `translateTexts(texts, lang)` for text VOZ doesn't write; today only the press headlines (`press.ts`). Never use it for VOZ's own stories or labels (those are templates / i18n).
+  - Cache: `kvcache` key `tr:v1:<lang>:<model>:<sha256>`, 30 days; concurrent requests share one in-flight call; all uncached texts of a request go in one chat call.
+  - `keepsNumbers()` guard: a translation must keep the original's digit groups; otherwise the original is shown and nothing is cached. Any failure returns the originals.
+  - UI: `PressArticle.translated` / `originalTitle`; the card shows "Translated automatically" / "Konekäännös" and the original on hover.
+  - gpt-oss: send `reasoning_effort: 'low'` (about 3× fewer tokens, under 1 s); the reply has `content` plus a separate `reasoning` field; ask for `{"translations": [...]}` and parse from the first `{`.
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
 - Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`
@@ -49,16 +55,21 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 5. Check that goals reconcile with final scores across a full season before trusting the data
 
 ## Languages (English + Finnish)
-- `@nuxtjs/i18n`, strategy `no_prefix`: same URLs, language from the browser on first visit, then the `voz_lang` cookie; EN | FI switcher in the header.
-- Interface text: `i18n/locales/en.json` + `fi.json` (keep the same keys). Use `t()`; dates, scores and numbers via `useFormat()`.
-- Server text (stories, compare labels, timeline, press notes) is written per language: APIs take `?lang=en|fi` (`requestLang`), pages fetch with the current locale.
-- Stories: `server/utils/stories.ts` picks the facts, `server/utils/story-text/{en,fi}.ts` words them. Finnish keeps team names in the basic form (no case endings): "HIFK voittoon: K-Espoo–HIFK 0–3".
+- `@nuxtjs/i18n`, strategy `no_prefix`: same URLs, language from the browser on first visit, then the `voz_lang` cookie; EN | FI switcher in the header (`SiteHeader.vue`). `<html lang>` follows via `useLocaleHead()` in the layouts.
+- Interface text: `i18n/locales/en.json` + `fi.json`, which must keep the same keys. Use `t()` and never hardcode English in components.
+- Dates, scores and numbers: `useFormat()` (`app/composables/useFormat.ts`) → `fixture()` (time + day, `relative` today/tomorrow), `stamp()`, `score()`, `number()`. Never compare display words like "Today".
+- `Lang` / `INTL_LOCALE` live in `shared/utils/format.ts`; `formatScore(m, lang)` suffixes: en `OT`, `SO`, `AET`, `pens`; fi `ja`, `vl`, `ja`, `rp.`
+- Server text (stories, compare labels, timeline, press notes) is written per language. APIs read `requestLang(event)` (`server/utils/lang.ts`), and pages fetch with `query: { lang: locale }` (reactive, so switching refetches).
+- Competition names and countries per language: `competitionName(c, lang)`, `competitionCountry(c, lang)` (`fi` field in `shared/utils/competitions.ts`, e.g. Mestarien liiga); `describeCompetition(def, lang)`.
+- Stories: `server/utils/stories.ts` picks the facts, `server/utils/story-text/{en,fi}.ts` words them (`StoryPhrases`). Both languages must state the same numbers.
+  Finnish keeps team names in the basic form (no case endings): "HIFK voittoon: K-Espoo–HIFK 0–3", "Maalit (HIFK): …".
 - Code never reads display labels: use structured fields (`TimelineEvent.goalType`, `assist`, `playerOff`).
+- External text (other outlets' headlines) is translated by the AI agent (`server/utils/translate.ts`), not by i18n. The press search runs in the reader's language first, then any language.
 
 ## Score semantics (important for the fact ledger)
 - `MatchTeam.score` = goals scored in play (regulation + overtime/extra time). Never shootout goals.
 - `Match.shootout` records who won a hockey shootout / football penalty shootout (tallies when known).
-- Display with `formatScore()` (`shared/utils/format.ts`): hockey "4–3 SO", football "1–1, 5–4 pens".
+- Display with `formatScore(m, lang)` (`shared/utils/format.ts`): hockey "4–3 SO" (fi "4–3 vl"), football "1–1, 5–4 pens" (fi "1–1, rp. 5–4"). `displayScore()` gives the shown numbers without text.
 
 ## Data gotchas
 - Liiga season id = the year the season ends (`2027` = 2026–27); regular season serie `runkosarja`.
