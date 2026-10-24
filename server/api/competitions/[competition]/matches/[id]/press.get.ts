@@ -1,10 +1,15 @@
-// Headlines about one match from other outlets (title, source, link only).
+// Discovery only: match coverage and three recent updates for each team. No AI calls here.
 export default defineEventHandler(async (event) => {
-  const { def, provider } = competitionParam(event)
-  const id = getRouterParam(event, 'id') ?? ''
-  if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })
-  const { data: match } = await provider.match(def, id)
-  setResponseHeader(event, 'cache-control', 'public, max-age=900')
-  // ?lang= keeps the two languages apart in browser and CDN caches.
-  return pressForMatch(match, requestLang(event))
+  const match = await resolveNewsMatch(event)
+  // Do not allow a browser cache to conceal an official phase or score transition.
+  setResponseHeader(event, 'cache-control', 'no-store')
+  const coverage = await newsCoverageForMatch(match)
+  // Preserve the existing headline translator while discovery and IDs keep publisher originals.
+  const articles = coverage.groups.flatMap(group => group.articles)
+  const titles = await translateTexts(articles.map(article => article.title), requestLang(event))
+  let index = 0
+  return { ...coverage, groups: coverage.groups.map(group => ({ ...group, articles: group.articles.map(article => {
+    const title = titles[index++]!
+    return { ...article, title: title.text, translated: title.translated, originalTitle: title.translated ? article.title : undefined }
+  }) })) }
 })

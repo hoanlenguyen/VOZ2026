@@ -142,14 +142,45 @@
     }
   },
   "press": {
-    "title": "What the press says",
+    "title": "News",
     "before": "Before the match",
     "after": "After the match",
     "opens": "(opens {source} in a new tab)",
-    "unavailable": "Press headlines are unavailable right now.",
-    "sourceNote": "Headlines and links from other outlets, found by GNews and matched to this game by date and both team names. VOZ links to the original articles and does not republish them.",
+    "unavailable": "News is unavailable right now.",
+    "sourceNote": "News covers pre-match and post-match reporting; live updates stay on the match page. Team summaries are cached for up to 24 hours and refreshed sooner if the source changes.",
     "translated": "Translated automatically",
-    "original": "Original headline"
+    "original": "Original headline",
+    "intro": "Match reports and updates on each team. Open a team headline for its AI summary.",
+    "preMatchNews": "Pre-match news",
+    "postMatchNews": "Post-match news",
+    "sources": "Match news sources",
+    "liveNote": "Pre-match sources retained during play. Follow this match page for live updates.",
+    "preMatchTeam": "Pre-match coverage · Form, players & injuries",
+    "postMatchTeam": "Post-match coverage · Form, players & injuries",
+    "teamGap": "{count} of 3 recent, verified team updates available.",
+    "empty": "No verified news is available for this match yet.",
+    "retry": "Try again",
+    "topics": {
+      "form": "Current form",
+      "players": "Player news",
+      "injuries": "Injuries & fitness"
+    },
+    "aiSummary": "AI summary",
+    "summaryLanguage": "AI summary (English)",
+    "preparing": "Preparing your AI summary…",
+    "summaryError": "This summary is unavailable right now. Please try again or read the original.",
+    "summarized": "Summarized {date} from {source}’s report.",
+    "paused": "Pre-match source retained. News summaries resume after full time; live updates are on the match page.",
+    "summaryUnavailable": "AI summaries are temporarily unavailable. You can read the original below.",
+    "retrySummary": "Try summary again",
+    "close": "Select headline to close",
+    "select": "Select headline for AI summary",
+    "pausedHint": "Pre-match source · summaries resume after full time",
+    "originalLink": "Read original",
+    "matchStatus": {
+      "postponed": "Match postponed",
+      "cancelled": "Match cancelled"
+    }
   },
   "onboarding": {
     "title": "Make it your sports world",

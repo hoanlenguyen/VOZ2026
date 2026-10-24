@@ -42,6 +42,12 @@ jobs:
       - name: Build (Nitro preset cloudflare_module)
         run: npm run build
 
+      - name: Provision news processing queues
+        run: npm run news:provision
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
       - name: Deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
@@ -56,8 +62,10 @@ jobs:
             NUXT_FOOTBALL_DATA_TOKEN
             NUXT_GNEWS_API_KEY
             NUXT_OPENAI_API_KEY
+            ${{ secrets.NUXT_HF_TOKEN != '' && 'NUXT_HF_TOKEN' || '' }}
         env:
           NUXT_LIIGA_API_KEY: ${{ secrets.NUXT_LIIGA_API_KEY }}
           NUXT_FOOTBALL_DATA_TOKEN: ${{ secrets.NUXT_FOOTBALL_DATA_TOKEN }}
           NUXT_GNEWS_API_KEY: ${{ secrets.NUXT_GNEWS_API_KEY }}
           NUXT_OPENAI_API_KEY: ${{ secrets.NUXT_OPENAI_API_KEY }}
+          NUXT_HF_TOKEN: ${{ secrets.NUXT_HF_TOKEN }}
