@@ -9,7 +9,6 @@
   "nav": {
     "sports": "Sports",
     "myTeams": "My teams",
-    "status": "Data status",
     "personalise": "Personalise",
     "signIn": "Sign in",
     "account": "My account",
@@ -401,6 +400,49 @@
       "h2h": "Head-to-head",
       "context": "Context",
       "edge": "Edge"
+    }
+  },
+  "prefs": {
+    "pageTitle": "My teams – VOZ",
+    "title": "My teams",
+    "lead": "Choose your favourite teams, leagues and players.",
+    "signIn": "Sign in to choose your favourite teams, leagues and players.",
+    "newsroom": "Favourites are for reader accounts. Newsroom accounts have the newsroom dashboard.",
+    "loadError": "Your favourites could not be loaded ({reason}).",
+    "summary": "Following {teams}, {leagues} and {players}.",
+    "saving": "Saving…",
+    "saved": "Saved",
+    "saveError": "Could not save. Try again.",
+    "teams": "Favourite teams",
+    "leagues": "Favourite leagues",
+    "players": "Favourite players",
+    "follow": "Follow",
+    "following": "Following",
+    "unavailable": "(not available yet)",
+    "searchPlayers": "Search players",
+    "filterTeam": "Show players of",
+    "allTeams": "All",
+    "favouritePlayer": "Favourite: {name}",
+    "noPlayers": "No players match.",
+    "positions": {
+      "goalkeeper": "Goalkeeper",
+      "defender": "Defender",
+      "midfielder": "Midfielder",
+      "forward": "Forward"
+    },
+    "demoNote": "Demo: teams and players come from the Ipswich – Nott'm Forest match data.",
+    "freeNote": "Pick your favourites, then save them with VOZ Plus.",
+    "unsaved": "You have unsaved changes.",
+    "save": "Save favourites",
+    "offerTitle": "Subscribe to save your favourites",
+    "offerText": "With VOZ Plus your teams, leagues and players are saved to your account, with full match pages and AI match stories.",
+    "subscribe": "See VOZ Plus",
+    "notNow": "Not now",
+    "close": "Close",
+    "count": {
+      "teams": "{n} teams | {n} team | {n} teams",
+      "leagues": "{n} leagues | {n} league | {n} leagues",
+      "players": "{n} players | {n} player | {n} players"
     }
   }
 }

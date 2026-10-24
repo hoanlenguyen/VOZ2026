@@ -7,8 +7,7 @@
       "name": "Sanna Subscriber",
       "plan": "subscriber",
       "followedTeams": [
-        "liiga:karpat",
-        "premier-league:57"
+        "premier-league:349"
       ],
       "subscription": {
         "product": "VOZ Plus",
@@ -30,7 +29,7 @@
       "name": "Frank Free",
       "plan": "free",
       "followedTeams": [
-        "liiga:ilves"
+        "premier-league:351"
       ],
       "subscription": null,
       "newsroom": null,
