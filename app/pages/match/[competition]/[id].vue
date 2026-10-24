@@ -208,13 +208,14 @@ useHead(() => ({
 .preview-banner { margin-top: 12px; }
 @media (min-width: 768px) {
   .wrap { max-width: none; }
-  .layout { grid-template-columns: minmax(0, 1fr) clamp(220px, 30vw, 300px); gap: 0 24px; align-items: start; }
+  .layout { grid-template-columns: minmax(0, 1fr) clamp(260px, 30vw, 300px); gap: 0 24px; align-items: start; }
   .article { grid-column: 1; grid-row: 1 / span 2; }
   .sidebar { grid-column: 2; grid-row: 1; padding-top: 60px; }
   .left-ad { grid-column: 2; grid-row: 2; margin-top: 16px; }
 }
 @media (min-width: 1024px) {
-  .layout { grid-template-columns: minmax(170px, 1fr) minmax(0, 760px) minmax(230px, 1fr); }
+  /* The league table needs about 260 px to show team names; the article gives way first. */
+  .layout { grid-template-columns: minmax(170px, 1fr) minmax(0, 760px) minmax(260px, 1fr); }
   .article { grid-column: 2; grid-row: 1; }
   .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: 100%; max-width: 300px; margin-top: 0; padding-top: 60px; }
   .sidebar { grid-column: 3; grid-row: 1; width: 100%; max-width: 340px; }
