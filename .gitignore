@@ -14,3 +14,8 @@ logs
 
 # Per-game snapshots are large (~28 MB); regenerate with `npm run snapshot -- --details`
 data/snapshots/liiga/games_2027_*
+
+# Wrangler local secrets and state
+.dev.vars*
+!.dev.vars.example
+.wrangler

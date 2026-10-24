@@ -30,12 +30,18 @@ export default defineNuxtConfig({
     liigaSeason: 2027,
     footballDataToken: '',
     footballDataBaseUrl: 'https://api.football-data.org/v4',
+    /** GNews headline search for "What the press says" (free plan: 100 requests/day). */
+    gnewsApiKey: '',
+    gnewsBaseUrl: 'https://gnews.io/api/v4',
     dataMode: 'auto',
   },
 
   nitro: {
-    storage: {
-      snapshots: { driver: 'fs', base: './data/snapshots' },
-    },
+    // Cloudflare Workers (module syntax) + static assets; config in wrangler.jsonc.
+    preset: 'cloudflare_module',
+    cloudflare: { deployConfig: false, nodeCompat: true },
+    // Snapshots are bundled into the Worker (no filesystem there) and read via useStorage('assets:snapshots').
+    // Per-game Liiga files (~28 MB) stay out of the bundle.
+    serverAssets: [{ baseName: 'snapshots', dir: '../data/snapshots', ignore: ['liiga/games_2027_*'] }],
   },
 })

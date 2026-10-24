@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "nuxt dev",
     "build": "nuxt build",
-    "preview": "nuxt preview",
+    "preview": "nuxt build && wrangler dev",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
-    "snapshot": "node --env-file-if-exists=.env scripts/snapshot.ts"
+    "snapshot": "node --env-file-if-exists=.env scripts/snapshot.ts",
+    "deploy": "nuxt build && wrangler deploy"
   },
   "dependencies": {
     "@phosphor-icons/vue": "^2.2.1",
@@ -19,7 +20,8 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "typescript": "^5.9.0",
-    "vue-tsc": "^3.0.0"
+    "vue-tsc": "^3.0.0",
+    "wrangler": "^4.152.0"
   },
   "engines": {
     "node": ">=22.18"

@@ -317,11 +317,19 @@ export const liigaProvider: SportProvider = {
   },
 
   async match(c, id) {
-    const [{ data, source }, stats] = await Promise.all([
-      upstream<{ game: RawGame }>('liiga', `games/${season()}/${id}`),
+    const [detail, stats] = await Promise.all([
+      // Per-game snapshots are not bundled on Workers; offline, fall back to the season games list,
+      // which carries the same goal events (without referees and awards).
+      upstream<{ game: RawGame }>('liiga', `games/${season()}/${id}`).catch(async (err) => {
+        const list = await upstream<{ games: RawGame[] }>('liiga', 'games', { season: season() })
+        const game = list.data.games.find(g => String(g.id) === id)
+        if (!game) throw err
+        return { data: { game }, source: list.source }
+      }),
       // Missing before puck drop; the match page then simply has no match stats.
       upstream<RawGameStats>('liiga', `games/${season()}/${id}/stats`).then(r => r.data, () => null),
     ])
+    const { data, source } = detail
     const match = normalizeGame(c, data.game)
     if (stats) {
       Object.assign(match.home.stats, gameStats(stats, 'home'))

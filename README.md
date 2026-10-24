@@ -17,6 +17,9 @@ and nothing is published that the data does not support.
   Primeira Liga and Champions League, via [football-data.org](https://www.football-data.org).
 - **Match page** (`/match/:competition/:id`): score, periods/halves, goals (where the data plan
   includes them), xG, attendance.
+- **What the press says** (match page): other outlets' headlines about the game, with source and
+  link, found via [GNews](https://gnews.io) and matched by date and both team names. Only headlines and
+  links are shown, so VOZ points to the coverage instead of republishing it.
 - **Onboarding** (`/onboarding`): pick a league and see its teams (first version).
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.
@@ -42,6 +45,7 @@ Fill in `.env`:
 |---|---|
 | `NUXT_LIIGA_API_KEY` | Liiga stats API key, sent as `x-api-key` |
 | `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token ([free registration](https://www.football-data.org/client/register)) |
+| `NUXT_GNEWS_API_KEY` | [GNews](https://gnews.io) key for "What the press says" (optional) |
 | `NUXT_DATA_MODE` | `live` (APIs only), `auto` (APIs, fall back to snapshots) or `snapshot` (offline) |
 
 ```bash
@@ -63,12 +67,50 @@ Options: `--only liiga|football-data`, `--competitions PL,BL1` (football codes),
 (every finished Liiga game; about 28 MB, not committed). Football takes about 3 minutes because the
 free plan allows 10 requests per minute.
 
+## Deployment (Cloudflare Workers)
+
+Every push to `main` builds and deploys the app to Cloudflare Workers through GitHub Actions
+([.github/workflows/deploy.yml](.github/workflows/deploy.yml)): install → typecheck → `nuxt build`
+(Nitro preset `cloudflare_module`) → `wrangler deploy`. It can also be started by hand from the
+Actions tab ("Run workflow").
+
+One-time setup, in the GitHub repository under **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+|---|---|
+| `CLOUDFLARE_API_TOKEN` | Cloudflare API token from the "Edit Cloudflare Workers" template |
+| `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account id (Workers & Pages overview page) |
+| `NUXT_LIIGA_API_KEY` | Liiga API key |
+| `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token |
+| `NUXT_GNEWS_API_KEY` | GNews API key (press headlines) |
+
+The API keys are uploaded as encrypted Worker secrets on each deploy. Non-secret settings
+(`NUXT_DATA_MODE`) live in [wrangler.jsonc](wrangler.jsonc). The site is served at
+`https://voz.<your-subdomain>.workers.dev`.
+
+Offline snapshots in `data/snapshots/` that are committed to git are bundled into the Worker, so
+`auto` mode still falls back to them in production. Run `npm run snapshot` and commit to refresh them.
+
+Test the production build locally in the Workers runtime (copy `.dev.vars.example` to `.dev.vars` first):
+
+```bash
+npm run preview
+```
+
+Deploy from your machine (needs `npx wrangler login`):
+
+```bash
+npm run deploy
+```
+
 ## Scripts
 
 | Command | Does |
 |---|---|
 | `npm run dev` | Development server |
-| `npm run build` / `npm run preview` | Production build and local preview |
+| `npm run build` | Production build for Cloudflare Workers (`.output/`) |
+| `npm run preview` | Build and run it locally in the Workers runtime (`wrangler dev`) |
+| `npm run deploy` | Build and deploy to Cloudflare from your machine |
 | `npm run typecheck` | Type check (must pass before committing) |
 | `npm run snapshot` | Save API responses to `data/snapshots/` |
 
@@ -101,6 +143,7 @@ football ──┘  (keys, cache,  (raw JSON →     (Match,    └─ /api/comp
 | `GET /api/competitions/:competition/standings` | Table |
 | `GET /api/competitions/:competition/matches?team=&state=finished\|upcoming` | Current-season matches |
 | `GET /api/competitions/:competition/matches/:id` | One match |
+| `GET /api/competitions/:competition/matches/:id/press` | Press headlines about the match |
 | `GET /api/health` | Status of each data source |
 
 Every data response carries an `x-voz-data-source: live|snapshot` header.
@@ -124,6 +167,8 @@ The challenge asks that nothing be published as fact unless it is true. What is 
 
 - The football-data.org free plan covers 12 top competitions (scores, standings, teams), with no goal
   scorers, lineups or match stats. **Veikkausliiga requires a paid plan.**
+- GNews (free plan: 100 requests a day) has no Finnish-language sources, so Liiga games rarely have
+  press headlines; the card then says so. Results are cached for 6 hours.
 - Liiga season ids are the year the season ends (`2027` = 2026–27).
 
 ## Project layout
@@ -148,3 +193,4 @@ in [CLAUDE.md](CLAUDE.md).
 
 - Liiga stats API – official Finnish ice hockey league data
 - [football-data.org](https://www.football-data.org) – football data (free plan)
+- [GNews](https://gnews.io) – headline search for "What the press says"
