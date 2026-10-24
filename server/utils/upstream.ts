@@ -140,6 +140,13 @@ const fetchCached = Object.fromEntries(
   ]),
 ) as Record<UpstreamId, (path: string, query: UpstreamQuery) => Promise<unknown>>
 
+// A match's status/score must not sit behind the 30-minute season/table cache.
+// Shared cache and the existing token throttle still apply; no stale-while-revalidate at transitions.
+const fetchFootballMatch = defineCachedFunction(
+  (path: string, query: UpstreamQuery) => fetchLive('football-data', path, query),
+  { name: 'upstream-football-match', base: 'kvcache', maxAge: 60, swr: false, getKey: snapshotKey },
+)
+
 /** Storage key of a snapshot file data/snapshots/<provider>/<snapshotKey> (server asset, see nuxt.config). */
 export function snapshotStorageKey(provider: UpstreamId, path: string, query: UpstreamQuery = {}) {
   return `${provider}:${snapshotKey(path, query)}`
@@ -156,7 +163,9 @@ export async function upstream<T>(provider: UpstreamId, path: string, query: Ups
 
   if (mode !== 'snapshot') {
     try {
-      return { data: (await fetchCached[provider](clean, query)) as T, source: 'live' }
+      const data = provider === 'football-data' && /^matches\/\d+$/.test(clean)
+        ? await fetchFootballMatch(clean, query) : await fetchCached[provider](clean, query)
+      return { data: data as T, source: 'live' }
     }
     catch (err) {
       if (mode === 'live') {

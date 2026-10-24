@@ -10,9 +10,15 @@
   "compatibility_date": "2026-10-01",
   "compatibility_flags": ["nodejs_compat"],
   "observability": { "enabled": true },
-  // Daily AI podcasts at 05:00 UTC (08:00 in Helsinki in summer, 07:00 in winter); nuxt.config
-  // nitro.scheduledTasks maps this cron to the podcasts:daily task.
-  "triggers": { "crons": ["0 5 * * *"] },
+  // Crons: "* * * * *" drives the news monitor (server/plugins/news-monitor.ts); "0 5 * * *" runs the
+  // daily AI podcasts at 05:00 UTC (nuxt.config nitro.scheduledTasks maps it to podcasts:daily).
+  "triggers": { "crons": ["* * * * *", "0 5 * * *"] },
+  // Wrangler automatically provisions this D1 binding on the first deployment.
+  "d1_databases": [{ "binding": "VOZ_NEWS_DB", "database_name": "voz-news" }],
+  "queues": {
+    "producers": [{ "binding": "VOZ_NEWS_QUEUE", "queue": "voz-news" }],
+    "consumers": [{ "queue": "voz-news", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 3, "max_concurrency": 4, "dead_letter_queue": "voz-news-dead" }]
+  },
   // Upstream response cache shared by all Worker instances (football-data and GNews have tight
   // per-token quotas; per-instance memory caches would each spend them). Nitro storage "kvcache".
   "kv_namespaces": [
@@ -22,7 +28,11 @@
   // set by the deploy workflow from GitHub secrets; locally they come from .dev.vars.
   "vars": {
     "NUXT_DATA_MODE": "auto",
-    // AI match story model: display name or API id. Change it here and deploy to switch models.
-    "NUXT_OPENAI_MODEL": "GPT-6 Luna"
+    // Model for AI match stories, headline translation and news summaries: API id or display name.
+    "NUXT_OPENAI_MODEL": "gpt-6-luna",
+    "NUXT_NEWS_AI_PROVIDER": "openai",
+    "NUXT_HF_MODEL": "openai/gpt-oss-120b",
+    "NUXT_NEWS_MONITOR_ENABLED": "true",
+    "NUXT_NEWS_ASSESSMENT_DAILY_LIMIT": "100"
   }
 }

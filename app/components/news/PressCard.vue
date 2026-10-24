@@ -9,7 +9,7 @@ import type { PressResult } from '#shared/types/press'
 const props = defineProps<{ competitionId: string, matchId: string }>()
 const { t, locale } = useI18n()
 const { data, status } = useLazyFetch<PressResult>(
-  () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press`,
+  () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press-headlines`,
   { server: false, query: { lang: locale } },
 )
 const { stamp } = useFormat()

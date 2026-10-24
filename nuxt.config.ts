@@ -58,6 +58,12 @@ export default defineNuxtConfig({
     openaiTtsModel: 'gpt-4o-mini-tts',
     podcastVoice: 'marin',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
+    /** News summaries (news monitor): 'openai' uses openaiApiKey/openaiModel above, 'huggingface' uses hf*. */
+    newsAiProvider: 'openai',
+    hfToken: '',
+    hfModel: 'openai/gpt-oss-120b',
+    newsMonitorEnabled: true,
+    newsAssessmentDailyLimit: 100,
     dataMode: 'auto',
     /** Signs the session cookie (NUXT_SESSION_SECRET); a demo secret is used when empty. */
     sessionSecret: '',
@@ -88,7 +94,14 @@ export default defineNuxtConfig({
     experimental: { tasks: true },
     scheduledTasks: { '0 5 * * *': ['podcasts:daily'] },
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
-    storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },
-    devStorage: { kvcache: { driver: 'memory' } },
+    storage: {
+      kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' },
+      newscache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' },
+    },
+    devStorage: {
+      kvcache: { driver: 'memory' },
+      // Keep generated summaries through local server restarts; expiry is also checked explicitly.
+      newscache: { driver: 'fs', base: '.data/news' },
+    },
   },
 })
