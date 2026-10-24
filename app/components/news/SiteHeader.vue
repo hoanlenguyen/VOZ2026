@@ -24,9 +24,9 @@ watch(() => route.fullPath, () => (open.value = false))
       </button>
 
       <NuxtLink to="/" class="logo" :aria-label="t('site.logoLabel')">
-        <span class="logo-mark" aria-hidden="true">V</span>
+        <NewsLogoMark :size="36" />
         <span class="logo-text">
-          <span class="display">VOZ</span>
+          <span class="wordmark">VOZ</span>
           <small>{{ t('site.tagline') }}</small>
         </span>
       </NuxtLink>
@@ -76,14 +76,11 @@ watch(() => route.fullPath, () => (open.value = false))
   display: grid; place-items: center;
 }
 .icon-btn:hover { background: var(--surface); }
-.logo { justify-self: center; display: flex; align-items: center; gap: 8px; color: var(--text); text-decoration: none; }
-.logo-mark {
-  width: 36px; height: 36px; border-radius: 8px; background: var(--board); color: var(--accent);
-  display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; font-size: 24px;
-}
+.logo { justify-self: center; display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
-.logo-text .display { font-size: 24px; letter-spacing: 0.08em; }
-.logo-text small { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-top: 2px; }
+.wordmark { font-family: var(--font-display); font-weight: 700; font-size: 26px; letter-spacing: 0.06em; line-height: 0.9; color: var(--headline); }
+.logo-text small { margin-top: 3px; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; color: var(--muted); }
+.logo:hover .wordmark { color: var(--link-hover); }
 .desktop-nav { display: none; }
 .account-slot { justify-self: end; }
 .lang { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line-strong); border-radius: 999px; }
