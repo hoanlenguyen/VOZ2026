@@ -24,7 +24,10 @@ const storyForm = reactive({
   mode: 'ai' as StoryMode, audience: 'subscribers' as ArticleAudience, length: 'standard' as StoryLength, tone: 'neutral' as StoryTone,
   headline: '', body: '', cover: null as StoryCover | null,
 })
-const status = ref<'idle' | 'saving' | 'saved' | 'drafted' | 'review' | 'discarded' | 'reverted' | 'copied' | 'error'>('idle')
+const status = ref<'idle' | 'saving' | 'saved' | 'drafted' | 'review' | 'discarded' | 'reverted' | 'copied' | 'cancelled' | 'error'>('idle')
+// What was last loaded (the saved draft or the live version): "Cancel changes" goes back to it.
+const loaded = ref('')
+const dirty = computed(() => !!loaded.value && JSON.stringify(storyForm) !== loaded.value)
 const message = ref('')
 
 function load() {
@@ -37,6 +40,15 @@ function load() {
     headline: c?.headline ?? '', body: c?.body ?? '',
     cover: c?.cover ? { ...c.cover } : null,
   })
+  loaded.value = JSON.stringify(storyForm)
+}
+
+// A new edit replaces the last message ("Published.", "Draft saved." ...) with the unsaved note.
+watch(dirty, (d) => { if (d && status.value !== 'saving') status.value = 'idle' })
+
+function cancelChanges() {
+  load()
+  status.value = 'cancelled'
 }
 watch(data, load, { immediate: true })
 
@@ -289,6 +301,7 @@ async function revert() {
           <button type="button" class="secondary" @click="openPreview">
             <PhEye :size="16" weight="bold" aria-hidden="true" /> {{ t('editor.preview.open') }}
           </button>
+          <button v-if="dirty" type="button" class="secondary" @click="cancelChanges">{{ t('editor.cancelChanges') }}</button>
           <button v-if="data.pending" type="button" class="secondary" @click="copyPreviewLink">{{ t('editor.copyPreview') }}</button>
           <button v-if="data.pending" type="button" class="secondary" :disabled="status === 'saving'" @click="discardDraft">{{ t('editor.discardDraft') }}</button>
           <button v-if="data.matchStory.control" type="button" class="secondary" :disabled="status === 'saving'" @click="revert">{{ t('editor.revert') }}</button>
@@ -296,13 +309,15 @@ async function revert() {
             {{ t('editor.view') }} <PhArrowSquareOut :size="16" weight="bold" aria-hidden="true" />
           </NuxtLink>
         </div>
-        <p class="status" role="status" :class="{ 'status--error': status === 'error' }">
+        <p class="status" role="status" :class="{ 'status--error': status === 'error', 'status--note': status === 'idle' && dirty }">
           <template v-if="status === 'saved'">{{ t('editor.saved') }}</template>
           <template v-else-if="status === 'reverted'">{{ t('editor.reverted') }}</template>
           <template v-else-if="status === 'drafted'">{{ t('editor.draftSaved') }}</template>
           <template v-else-if="status === 'review'">{{ t('editor.reviewSaved') }}</template>
           <template v-else-if="status === 'discarded'">{{ t('editor.draftDiscarded') }}</template>
           <template v-else-if="status === 'copied'">{{ t('editor.previewCopied') }}</template>
+          <template v-else-if="status === 'cancelled'">{{ t('editor.changesCancelled') }}</template>
+          <template v-else-if="dirty">{{ t('editor.unsaved') }}</template>
           <template v-else-if="status === 'error'">{{ t('editor.saveError', { reason: message }) }}</template>
         </p>
       </form>
@@ -467,4 +482,5 @@ async function revert() {
 .primary:focus-visible, .secondary:focus-visible, .view:focus-visible { outline: 2px solid var(--headline); outline-offset: 2px; }
 .status { min-height: 22px; margin: 10px 0 0; font-size: 14px; font-weight: 600; color: var(--win); }
 .status--error { color: var(--loss); }
+.status--note { color: var(--meta); }
 </style>

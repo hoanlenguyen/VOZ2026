@@ -387,7 +387,10 @@
     "pendingNote": {
       "draft": "Draft by {name}, {time}; not published.",
       "review": "Ready for review, by {name}, {time}; not published."
-    }
+    },
+    "cancelChanges": "Cancel changes",
+    "changesCancelled": "Changes cancelled: back to the last saved version.",
+    "unsaved": "You have unsaved changes."
   },
   "matchStory": {
     "title": "Match story",

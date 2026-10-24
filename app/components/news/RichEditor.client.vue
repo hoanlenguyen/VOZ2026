@@ -9,6 +9,8 @@ const emit = defineEmits<{ 'update:modelValue': [html: string] }>()
 const target = ref<HTMLTextAreaElement>()
 const ready = ref(false)
 let editor: Editor | null = null
+// TinyMCE fires a last "change" while it is removed; that must not overwrite what the page set.
+let active = true
 
 onMounted(async () => {
   const { default: tinymce } = await import('tinymce')
@@ -51,7 +53,9 @@ onMounted(async () => {
         e.getBody().setAttribute('lang', props.lang)
         ready.value = true
       })
-      e.on('input change undo redo SetContent', () => emit('update:modelValue', e.getContent()))
+      // Only the editor's own edits are reported (not content set from outside), so the page can
+      // tell whether anything changed ("Cancel changes").
+      e.on('input change undo redo', () => { if (active) emit('update:modelValue', e.getContent()) })
     },
   })
   editor = ed ?? null
@@ -62,7 +66,10 @@ watch(() => props.modelValue, (html) => {
   if (editor && ready.value && html !== editor.getContent()) editor.setContent(html || '')
 })
 
-onBeforeUnmount(() => editor?.remove())
+onBeforeUnmount(() => {
+  active = false
+  editor?.remove()
+})
 </script>
 
 <template>

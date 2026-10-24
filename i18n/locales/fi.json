@@ -387,7 +387,10 @@
     "pendingNote": {
       "draft": "Luonnos: {name}, {time}; ei julkaistu.",
       "review": "Valmis tarkistettavaksi: {name}, {time}; ei julkaistu."
-    }
+    },
+    "cancelChanges": "Peru muutokset",
+    "changesCancelled": "Muutokset peruttu: palattu viimeksi tallennettuun versioon.",
+    "unsaved": "Sinulla on tallentamattomia muutoksia."
   },
   "matchStory": {
     "title": "Otteluraportti",
