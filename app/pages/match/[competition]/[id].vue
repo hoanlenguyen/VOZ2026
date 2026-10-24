@@ -54,6 +54,15 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
+        <NewsSectionTitle id="timeline-title">Match timeline</NewsSectionTitle>
+        <NewsMatchTimeline
+          :events="data.extras.timeline"
+          :home="{ name: match.home.shortName, logo: match.home.logo }"
+          :away="{ name: match.away.shortName, logo: match.away.logo }"
+        />
+      </section>
+
       <section v-if="data.compare" class="block" aria-labelledby="compare-title">
         <NewsSectionTitle id="compare-title">Compare</NewsSectionTitle>
         <NewsStatCompare
@@ -62,12 +71,27 @@ useHead(() => ({
           :away="{ name: match.away.shortName, logo: match.away.logo }"
         />
         <p class="source">
-          <template v-if="hasMatchStats">Match stats from official {{ data.competition.name }} game data; season numbers counted from official results.</template>
+          <template v-if="data.extras">Match stats from {{ data.extras.source.name }}; season numbers counted from official {{ data.competition.name }} results.</template>
+          <template v-else-if="hasMatchStats">Match stats from official {{ data.competition.name }} game data; season numbers counted from official results.</template>
           <template v-else>Counted from official {{ data.competition.name }} results. Shots, possession and cards are not in our data plan yet.</template>
         </p>
       </section>
 
-      <section v-if="match.goals.length" class="block" aria-labelledby="goals-title">
+      <section v-if="data.extras?.lineups" class="block" aria-labelledby="lineups-title">
+        <NewsSectionTitle id="lineups-title">Line-ups</NewsSectionTitle>
+        <NewsLineups
+          :lineups="data.extras.lineups"
+          :teams="{ home: { name: match.home.shortName, logo: match.home.logo }, away: { name: match.away.shortName, logo: match.away.logo } }"
+          :timeline="data.extras.timeline"
+        />
+      </section>
+
+      <p v-if="data.extras" class="source">
+        <template v-if="data.extras.referee">Referee: {{ data.extras.referee }} · </template>
+        Match data: {{ data.extras.source.name }}. Event labels written by VOZ from the data.
+      </p>
+
+      <section v-if="match.goals.length && !data.extras?.timeline.length" class="block" aria-labelledby="goals-title">
         <NewsSectionTitle id="goals-title">Goals</NewsSectionTitle>
         <ol class="goals">
           <li v-for="g in match.goals" :key="g.id" class="goal num" :class="`goal--${g.side}`">

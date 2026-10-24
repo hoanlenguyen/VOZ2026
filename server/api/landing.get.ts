@@ -18,7 +18,14 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
     try {
       const [matches, standings] = await Promise.all([provider.matches(def, {}), provider.standings(def)])
       sources.push(matches.source, standings.source)
-      stories.push(...buildStories(def, matches.data, standings.data))
+      // Mock "deep data" matches replace the provider's record of the same game, stay on the front
+      // page regardless of age (demo), and lead their league: they are the richest coverage we have.
+      const mocks = await mockMatchesFor(def, matches.data)
+      const twins = new Set(mocks.map(m => m.providerId).filter(Boolean))
+      stories.push(...buildStories(def, matches.data.filter(m => !twins.has(m.id)), standings.data))
+      for (const s of buildStories(def, mocks.map(m => m.match), standings.data, 3650)) {
+        stories.push({ ...s, weight: Math.max(s.weight, 0) + 40 })
+      }
       ticker.push({
         competitionId: def.id,
         competitionName: def.name,

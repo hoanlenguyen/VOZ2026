@@ -20,6 +20,9 @@ and nothing is published that the data does not support.
 - **What the press says** (match page): other outlets' headlines about the game, with source and
   link, found via [GNews](https://gnews.io) and matched by date and both team names. Only headlines and
   links are shown, so VOZ points to the coverage instead of republishing it.
+- **Full match data demo** (mock): Ipswich Town 1–1 Nottingham Forest (Premier League, 23 Oct 2026)
+  with an event timeline, line-ups on a pitch, possession/xG/shots and officials. It shows what VOZ does
+  with a richer data feed than the free football plan. Add more in `data/mock/<competition>/<id>.json`.
 - **Onboarding** (`/onboarding`): pick a league and see its teams (first version).
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.

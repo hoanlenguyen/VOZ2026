@@ -26,6 +26,10 @@
   --board-stripe: rgba(255, 255, 255, 0.025);
   --board-line: rgba(255, 255, 255, 0.11);
   --board-rink-red: rgba(230, 57, 70, 0.22);
+  /* Booking cards in timelines and line-ups; the dark edge keeps yellow visible on white (3:1). */
+  --card-yellow: #F5C518;
+  --card-red: #D7263D;
+  --card-edge: rgb(17 18 20 / 0.55);
   --board-rink-blue: rgba(110, 168, 254, 0.2);
   /* editorial (news) roles; the paper theme gives them their light values */
   --headline: var(--text);

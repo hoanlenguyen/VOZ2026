@@ -69,10 +69,12 @@ function resultStory(c: CompetitionDef, m: Match, table: Map<string, StandingRow
       lines.push(`${winner.shortName} came back after trailing ${w}–${l} at the end of the first ${m.sport === 'hockey' ? 'period' : 'half'}.`)
     }
   }
-  if (m.sport === 'hockey' && m.home.stats.xg != null && m.away.stats.xg != null) {
-    lines.push(`Expected goals: ${m.home.shortName} ${m.home.stats.xg}, ${m.away.shortName} ${m.away.stats.xg}.`)
+  if (m.home.stats.xg != null && m.away.stats.xg != null) {
+    const xg = (v: number) => Math.round(v * 100) / 100
+    lines.push(`Expected goals: ${m.home.shortName} ${xg(m.home.stats.xg)}, ${m.away.shortName} ${xg(m.away.stats.xg)}.`)
   }
   if (winner) lines.push(scorersLine(m, sideWon!))
+  else lines.push(scorersLine(m, 'home'), scorersLine(m, 'away'))
   if (winner) lines.push(tableLine(c, winner, table))
   if (m.attendance) lines.push(`${m.attendance.toLocaleString('en-GB')} spectators${m.venue ? ` at ${m.venue}` : ''}.`)
 

@@ -98,11 +98,20 @@ function thisMatch(m: Match): CompareGroup | null {
 
 /** MatchTeam.stats keys we know how to show, in display order. */
 const STAT_ROWS: Array<{ key: string, label: string, better?: CompareRow['better'], decimals?: number, unit?: string }> = [
+  { key: 'possessionPct', label: 'Possession', decimals: 0, unit: '%' },
   { key: 'xg', label: 'Expected goals (xG)', decimals: 2 },
   { key: 'shots', label: 'Shots' },
+  { key: 'shotsOnTarget', label: 'Shots on target' },
+  { key: 'bigChances', label: 'Big chances created' },
+  { key: 'corners', label: 'Corners' },
   { key: 'blockedShots', label: 'Blocked shots' },
   { key: 'faceoffWins', label: 'Faceoffs won' },
   { key: 'passes', label: 'Passes' },
+  { key: 'tackles', label: 'Tackles' },
+  { key: 'saves', label: 'Saves' },
+  { key: 'fouls', label: 'Fouls', better: 'lower' },
+  { key: 'offsides', label: 'Offsides', better: 'none' },
+  { key: 'yellowCards', label: 'Yellow cards', better: 'lower' },
   { key: 'powerplayGoals', label: 'Power-play goals' },
   { key: 'powerplayChances', label: 'Power plays' },
   { key: 'shortHandedGoals', label: 'Short-handed goals' },
