@@ -187,3 +187,118 @@ export function factNames(m: Match, extras: MatchDetailExtras | null): string[] 
   names.delete('Unknown')
   return [...names]
 }
+
+/**
+ * "Edge" facts for AI headlines: where each side had the advantage, worked out here so the model
+ * never does arithmetic. Season records follow compare.ts (sport-specific points, results before
+ * kick-off); history is this season only, as older seasons are not in our data. Ids continue
+ * after `startAt` facts, so they can be appended to buildFacts().
+ */
+export function buildEdgeFacts(c: CompetitionDef, m: Match, season: Match[], startAt = 0): Fact[] {
+  const facts: Fact[] = []
+  const add = (text: string) => facts.push({ id: `f${startAt + facts.length + 1}`, section: 'edge', text })
+  const H = m.home.shortName
+  const A = m.away.shortName
+  const unit = c.sport === 'hockey' ? 'period' : 'half'
+  const sum = (xs: number[]) => xs.reduce((x, y) => x + y, 0)
+  const h = seasonRecord(season, m.home.key, m.start, 'home')
+  const a = seasonRecord(season, m.away.key, m.start, 'away')
+
+  // Table before kick-off, counted from results with the same points as the comparison.
+  const keys = new Set(season.flatMap(x => [x.home.key, x.away.key]))
+  const standing = [...keys].map((key) => {
+    const r = seasonRecord(season, key, m.start, 'home')
+    return { key, points: sum(r.points), gd: r.goalsFor - r.goalsAgainst, gf: r.goalsFor, played: r.played }
+  }).filter(r => r.played).sort((x, y) => y.points - x.points || y.gd - x.gd || y.gf - x.gf)
+  const rank = (key: string) => standing.findIndex(r => r.key === key) + 1
+  const hr = rank(m.home.key)
+  const ar = rank(m.away.key)
+  const hp = sum(h.points)
+  const ap = sum(a.points)
+  if (hr && ar) {
+    add(`Before kick-off ${H} were ${ordinal(hr)} and ${A} ${ordinal(ar)} in the ${c.name} table (counted from results, ${standing.length} teams).`)
+    if (hp === ap) add(`${H} and ${A} were level on ${hp} points before kick-off.`)
+    else add(`Before kick-off ${hp > ap ? H : A} were ${Math.abs(hp - ap)} points ahead of ${hp > ap ? A : H} (${Math.max(hp, ap)} to ${Math.min(hp, ap)}).`)
+  }
+
+  // Form: points from the last five, streaks only when the results show them.
+  for (const [team, r] of [[H, h], [A, a]] as const) {
+    if (!r.played) continue
+    const last = r.points.slice(-5)
+    add(`${team} took ${sum(last)} points from their last ${last.length} ${c.name} games before this match.`)
+    const tail = (ok: (x: string) => boolean) => {
+      let n = 0
+      for (let i = r.results.length - 1; i >= 0 && ok(r.results[i]!); i--) n++
+      return n
+    }
+    const won = tail(x => x === 'W')
+    const unbeaten = tail(x => x !== 'L')
+    const lost = tail(x => x === 'L')
+    if (won >= 3) add(`${team} had won their last ${won} ${c.name} games in a row before this match.`)
+    else if (unbeaten >= 4) add(`${team} were unbeaten in their last ${unbeaten} ${c.name} games before this match.`)
+    if (lost >= 3) add(`${team} had lost their last ${lost} ${c.name} games in a row before this match.`)
+  }
+
+  // Attack, defence and venue record.
+  if (h.played && a.played) {
+    const pg = (n: number, g: number) => round(n / g, 2)
+    add(`Before this match ${H} scored ${pg(h.goalsFor, h.played)} and conceded ${pg(h.goalsAgainst, h.played)} goals per game; ${A} scored ${pg(a.goalsFor, a.played)} and conceded ${pg(a.goalsAgainst, a.played)}.`)
+    const hgd = h.goalsFor - h.goalsAgainst
+    const agd = a.goalsFor - a.goalsAgainst
+    const sign = (n: number) => (n > 0 ? `+${n}` : String(n))
+    if (hgd !== agd) add(`${hgd > agd ? H : A} had the better goal difference before kick-off: ${sign(Math.max(hgd, agd))} against ${sign(Math.min(hgd, agd))}.`)
+  }
+  if (h.venuePlayed && a.venuePlayed) {
+    add(`${H} had taken ${h.venuePoints} points from ${h.venuePlayed} home games this season; ${A} had taken ${a.venuePoints} points from ${a.venuePlayed} away games.`)
+  }
+
+  // Meetings earlier this season.
+  const earlier = season.filter(x => x.status === 'finished' && x.start < m.start && x.home.score !== null
+    && ((x.home.key === m.home.key && x.away.key === m.away.key) || (x.home.key === m.away.key && x.away.key === m.home.key)))
+  if (earlier.length) {
+    let hw = 0
+    let aw = 0
+    for (const x of earlier) {
+      const res = matchOutcome(x, x.home.key === m.home.key ? 'home' : 'away')?.result
+      if (res === 'W') hw++
+      else if (res === 'L') aw++
+    }
+    const d = earlier.length - hw - aw
+    add(`In their ${earlier.length} earlier ${c.name} meeting${earlier.length > 1 ? 's' : ''} this season ${H} won ${hw}, ${A} won ${aw}${d ? ` and ${d} ended level` : ''}.`)
+    const lastMeet = earlier.sort((x, y) => x.start.localeCompare(y.start)).at(-1)!
+    const lastRes = matchOutcome(lastMeet, lastMeet.home.key === m.home.key ? 'home' : 'away')?.result
+    if (m.status === 'finished' && lastRes && lastRes !== 'D') {
+      const beatenBefore = lastRes === 'W' ? A : H
+      const res = matchOutcome(m, lastRes === 'W' ? 'away' : 'home')?.result
+      if (res === 'W') add(`${beatenBefore} lost the previous meeting this season (${lastMeet.home.shortName} ${lastMeet.home.score}–${lastMeet.away.score} ${lastMeet.away.shortName}) and won this one.`)
+    }
+  }
+
+  // The match itself: comebacks, late winners, results against the table or the numbers.
+  if (m.status !== 'finished' || m.home.score === null || m.away.score === null) return facts
+  const hres = matchOutcome(m, 'home')?.result
+  const winSide = hres === 'W' ? 'home' : hres === 'L' ? 'away' : null
+  if (!winSide) return facts
+  const W = winSide === 'home' ? H : A
+  const L = winSide === 'home' ? A : H
+  const first = m.periods[0]
+  if (first) {
+    const [wf, lf] = winSide === 'home' ? [first.home, first.away] : [first.away, first.home]
+    if (wf < lf) add(`${W} came from behind: they trailed ${wf}–${lf} after the first ${unit} and won.`)
+  }
+  if (m.home.score !== m.away.score) {
+    // The decisive goal: the winner's goal after which the loser never drew level again.
+    const goals = [...m.goals].sort((x, y) => x.clock - y.clock)
+    const loserFinal = winSide === 'home' ? m.away.score : m.home.score
+    const decisive = goals.find(g => g.side === winSide && (winSide === 'home' ? g.homeScore : g.awayScore) === loserFinal + 1)
+    const late = c.sport === 'hockey' ? 55 * 60 : 80 * 60
+    if (decisive && decisive.clock >= late) add(`${decisive.scorer.name} scored the decisive goal late in the match, at ${decisive.clockLabel}.`)
+  }
+  const wr = winSide === 'home' ? hr : ar
+  const lr = winSide === 'home' ? ar : hr
+  if (wr && lr && wr - lr >= 4) add(`${W} won although they started the match ${wr - lr} places below ${L} in the table.`)
+  const wxg = m[winSide].stats.xg
+  const lxg = m[winSide === 'home' ? 'away' : 'home'].stats.xg
+  if (wxg != null && lxg != null && wxg < lxg) add(`${W} won although ${L} had more expected goals (${round(lxg, 2)} to ${round(wxg, 2)}).`)
+  return facts
+}

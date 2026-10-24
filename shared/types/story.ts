@@ -2,7 +2,7 @@
 
 export type StoryLength = 'short' | 'standard' | 'long'
 export type StoryTone = 'neutral' | 'home-fan' | 'away-fan' | 'analyst'
-export type FactSection = 'result' | 'timeline' | 'stats' | 'form' | 'table' | 'h2h' | 'context'
+export type FactSection = 'result' | 'timeline' | 'stats' | 'form' | 'table' | 'h2h' | 'context' | 'edge'
 
 /** One verified statement. The agent may only state what facts say, and cites them by id. */
 export interface Fact {

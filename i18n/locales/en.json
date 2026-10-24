@@ -40,7 +40,9 @@
   "story": {
     "result": "Result",
     "preview": "Preview",
-    "auto": "Written automatically from official match data"
+    "auto": "Written automatically from official match data",
+    "aiTag": "AI headline",
+    "aiAuto": "Headline and summary line written by AI and checked against official match data"
   },
   "table": {
     "title": "{league} table",
@@ -72,6 +74,8 @@
     "halfTime": "Half-time {score}",
     "periods": "Periods {list}",
     "spectators": "{n} spectators",
+    "aiHeadline": "Headline written by AI from {n} checked fact | Headline written by AI from {n} checked facts",
+    "aiEvidence": "Facts behind the headline",
     "timeline": "Match timeline",
     "compare": "Compare",
     "lineups": "Line-ups",

@@ -40,7 +40,9 @@
   "story": {
     "result": "Tulos",
     "preview": "Ennakko",
-    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta"
+    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
+    "aiTag": "Tekoälyotsikko",
+    "aiAuto": "Otsikon ja ingressin kirjoitti tekoäly, ja ne on tarkistettu virallisesta otteludatasta"
   },
   "table": {
     "title": "{league} – sarjataulukko",
@@ -72,6 +74,8 @@
     "halfTime": "Puoliaika {score}",
     "periods": "Erät {list}",
     "spectators": "{n} katsojaa",
+    "aiHeadline": "Tekoälyn kirjoittama otsikko, pohjana {n} tarkistettu fakta | Tekoälyn kirjoittama otsikko, pohjana {n} tarkistettua faktaa",
+    "aiEvidence": "Otsikon taustalla olevat faktat",
     "timeline": "Ottelun tapahtumat",
     "compare": "Vertailu",
     "lineups": "Kokoonpanot",

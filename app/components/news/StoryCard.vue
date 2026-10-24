@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Story } from '#shared/types/stories'
 
-withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
+const props = withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
 const { t } = useI18n()
 const { stamp } = useFormat()
+const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.story.subtitle)
 </script>
 
 <template>
@@ -16,15 +17,21 @@ const { stamp } = useFormat()
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
+        <template v-if="ai && variant !== 'lead'">
+          <span aria-hidden="true">·</span>
+          <span class="ai-tag">{{ t('story.aiTag') }}</span>
+        </template>
       </p>
       <h3 class="headline">
-        <NuxtLink :to="story.href">{{ story.headline }}</NuxtLink>
+        <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
       </h3>
       <p v-if="variant === 'row'" class="stamp num">{{ stamp(story.time) }}</p>
-      <p v-if="(variant === 'lead' || variant === 'row') && story.summary" class="summary">{{ story.summary }}</p>
+      <p v-if="ai && variant !== 'card'" class="dek">{{ keepScoresTogether(story.subtitle!) }}</p>
+      <!-- Rows show the AI dek instead of the summary; the lead keeps both. -->
+      <p v-if="(variant === 'lead' || (variant === 'row' && !ai)) && story.summary" class="summary">{{ story.summary }}</p>
       <p v-if="variant === 'lead'" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
-        {{ t('story.auto') }}
+        {{ ai ? t('story.aiAuto') : t('story.auto') }}
       </p>
     </div>
   </article>
@@ -44,6 +51,8 @@ const { stamp } = useFormat()
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }
 .stamp { margin: 0; font-size: 12px; color: var(--meta); }
 .summary { margin: 0; font-size: 14px; line-height: 1.5; color: var(--summary); }
+.dek { margin: 0; font-size: 15px; line-height: 1.45; font-weight: 500; color: var(--text-2); }
+.ai-tag { color: var(--link-hover); }
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
 
 .story--lead { gap: 15px; }
@@ -51,6 +60,8 @@ const { stamp } = useFormat()
 .story--lead .headline { font-size: clamp(22px, 2.6vw, 28px); line-height: 1.29; text-align: center; }
 .story--lead .kicker, .story--lead .auto { justify-content: center; }
 .story--lead .summary { text-align: center; font-size: 16px; line-height: 1.56; }
+.story--lead .dek { text-align: center; font-size: 17px; line-height: 1.5; }
+.story--side .dek { font-size: 14px; }
 
 .story--side .headline { font-size: 18px; line-height: 1.22; }
 
@@ -59,10 +70,10 @@ const { stamp } = useFormat()
 .story--row:last-of-type { border-bottom: 0; }
 .story--row .media { flex: 0 0 33%; }
 .story--row .headline { font-size: 17px; line-height: 1.3; }
-.story--row .summary { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.story--row .summary, .story--row .dek { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 @media (min-width: 1360px) { .story--row .headline { font-size: 18px; } }
 @media (max-width: 479px) {
   .story--row .media { flex-basis: 120px; }
-  .story--row .summary { display: none; }
+  .story--row .summary, .story--row .dek { display: none; }
 }
 </style>

@@ -10,7 +10,7 @@ import { COMPARE_TEXT } from './compare-text'
 
 type Text = (typeof COMPARE_TEXT)[Lang]
 
-interface TeamRecord {
+export interface TeamRecord {
   played: number
   won: number
   drawn: number
@@ -28,7 +28,7 @@ interface TeamRecord {
 }
 
 /** Result and league points for one side of a finished match. */
-function outcome(m: Match, side: 'home' | 'away'): { result: FormResult, points: number } | null {
+export function matchOutcome(m: Match, side: 'home' | 'away'): { result: FormResult, points: number } | null {
   const us = m[side]
   const them = side === 'home' ? m.away : m.home
   if (us.score === null || them.score === null) return null
@@ -43,7 +43,7 @@ function outcome(m: Match, side: 'home' | 'away'): { result: FormResult, points:
 
 const perGame = (n: number, games: number) => (games ? n / games : 0)
 
-function record(season: Match[], teamKey: string, before: string, side: 'home' | 'away'): TeamRecord {
+export function seasonRecord(season: Match[], teamKey: string, before: string, side: 'home' | 'away'): TeamRecord {
   const r: TeamRecord = {
     played: 0, won: 0, drawn: 0, lost: 0, goalsFor: 0, goalsAgainst: 0,
     cleanSheets: 0, failedToScore: 0, venuePoints: 0, venuePlayed: 0, results: [], points: [],
@@ -53,7 +53,7 @@ function record(season: Match[], teamKey: string, before: string, side: 'home' |
     .sort((a, b) => a.start.localeCompare(b.start))
   for (const m of games) {
     const atHome = m.home.key === teamKey
-    const o = outcome(m, atHome ? 'home' : 'away')
+    const o = matchOutcome(m, atHome ? 'home' : 'away')
     if (!o) continue
     const us = atHome ? m.home : m.away
     const them = atHome ? m.away : m.home
@@ -184,7 +184,7 @@ function meetings(season: Match[], m: Match, tx: Text): CompareGroup | null {
   let away = 0
   let drawn = 0
   for (const x of earlier) {
-    const result = outcome(x, x.home.key === m.home.key ? 'home' : 'away')?.result
+    const result = matchOutcome(x, x.home.key === m.home.key ? 'home' : 'away')?.result
     if (result === 'W') home++
     else if (result === 'L') away++
     else drawn++
@@ -199,8 +199,8 @@ function meetings(season: Match[], m: Match, tx: Text): CompareGroup | null {
 
 export function buildCompare(c: CompetitionDef, m: Match, season: Match[], lang: Lang = 'en'): MatchCompare | null {
   const tx = COMPARE_TEXT[lang]
-  const h = record(season, m.home.key, m.start, 'home')
-  const a = record(season, m.away.key, m.start, 'away')
+  const h = seasonRecord(season, m.home.key, m.start, 'home')
+  const a = seasonRecord(season, m.away.key, m.start, 'away')
   const groups = [thisMatch(m, tx), matchStats(m, tx), beforeKickOff(c, h, a, tx, competitionName(c, lang)), lastFive(h, a, tx), meetings(season, m, tx)]
     .filter((g): g is CompareGroup => g !== null)
   return { groups, form: { home: h.results.slice(-5), away: a.results.slice(-5) } }
