@@ -73,7 +73,6 @@
     "halfTime": "Half-time {score}",
     "periods": "Periods {list}",
     "spectators": "{n} spectators",
-    "aiHeadline": "Headline written by AI from {n} checked fact | Headline written by AI from {n} checked facts",
     "aiEvidence": "Facts behind the headline",
     "timeline": "Match timeline",
     "compare": "Compare",

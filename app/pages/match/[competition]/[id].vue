@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Match page: scoreboard, then a side-by-side comparison counted from the season's results.
 // The AI match story is built in Phase 2.
-import { PhCaretLeft, PhSparkle } from '@phosphor-icons/vue'
+import { PhCaretLeft } from '@phosphor-icons/vue'
 import type { HeadlineResponse } from '#shared/types/headline'
 
 definePageMeta({ layout: 'news' })
@@ -70,8 +70,8 @@ useHead(() => ({
         </p>
         <details v-if="ai" class="ai-note">
           <summary>
-            <PhSparkle :size="13" weight="fill" aria-hidden="true" />
-            {{ t('match.aiHeadline', { n: ai.evidence.length }, ai.evidence.length) }}
+            <span class="ai-tag">{{ t('story.aiTag') }}</span>
+            <span class="sr-only">{{ t('match.aiEvidence') }}</span>
           </summary>
           <ul class="evidence" :aria-label="t('match.aiEvidence')">
             <li v-for="f in ai.evidence" :key="f.id">{{ f.text }}</li>
@@ -170,7 +170,12 @@ useHead(() => ({
   transition: color var(--dur-fast) var(--ease-out);
 }
 .ai-note summary::-webkit-details-marker { display: none; }
-.ai-note summary:hover { color: var(--link-hover); }
+.ai-note summary:hover .ai-tag { background: var(--surface); }
+.ai-tag {
+  padding: 0 4px; border: 1px solid currentColor; border-radius: 3px; text-transform: uppercase;
+  font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
+  transition: background var(--dur-fast) var(--ease-out);
+}
 .ai-note summary:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 2px; border-radius: 4px; }
 .evidence { margin: 0; padding: 0 0 0 18px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--summary); }
 .evidence li + li { margin-top: 4px; }

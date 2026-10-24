@@ -73,7 +73,6 @@
     "halfTime": "Puoliaika {score}",
     "periods": "Erät {list}",
     "spectators": "{n} katsojaa",
-    "aiHeadline": "Tekoälyn kirjoittama otsikko, pohjana {n} tarkistettu fakta | Tekoälyn kirjoittama otsikko, pohjana {n} tarkistettua faktaa",
     "aiEvidence": "Otsikon taustalla olevat faktat",
     "timeline": "Ottelun tapahtumat",
     "compare": "Vertailu",
