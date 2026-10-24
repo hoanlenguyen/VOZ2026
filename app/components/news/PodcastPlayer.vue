@@ -1,12 +1,13 @@
 <script setup lang="ts">
-// One AI podcast episode: play/pause, seek bar and time, the transcript and the facts it cites.
-// Only one episode plays at a time on a page. Audio loads on first play (preload="none").
+// One AI podcast episode: play/pause, seek bar and time, the transcript; for the newsroom also the
+// "AI content" tag and the facts it cites. Only one episode plays at a time on a page. Audio loads on first play (preload="none").
 import { PhCaretRight, PhPause, PhPlay } from '@phosphor-icons/vue'
 import type { PodcastEpisode } from '#shared/types/podcast'
 
 const props = withDefaults(defineProps<{ episode: PodcastEpisode, showLink?: boolean }>(), { showLink: true })
 const { t } = useI18n()
 const { stamp } = useFormat()
+const { can } = useAccount()
 
 const audio = ref<HTMLAudioElement | null>(null)
 const playing = ref(false)
@@ -62,7 +63,7 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
           </template>
           <span aria-hidden="true">·</span>
           <time class="num" :datetime="episode.generatedAt">{{ stamp(episode.generatedAt) }}</time>
-          <span class="ai-tag">{{ t('story.aiTag') }}</span>
+          <span v-if="can.newsroom" class="ai-tag">{{ t('story.aiTag') }}</span>
         </p>
         <h3 class="title">{{ episode.title }}</h3>
         <div class="bar">
@@ -85,10 +86,10 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
       <summary><PhCaretRight :size="14" weight="bold" class="caret" aria-hidden="true" />{{ t('podcast.transcript') }}</summary>
       <p class="script">{{ transcript }}</p>
       <p class="made">{{ made }}</p>
-      <button type="button" class="facts-toggle" :aria-pressed="showFacts" @click="showFacts = !showFacts">
+      <button v-if="can.newsroom" type="button" class="facts-toggle" :aria-pressed="showFacts" @click="showFacts = !showFacts">
         {{ showFacts ? t('podcast.hideFacts') : t('podcast.showFacts') }}
       </button>
-      <ol v-if="showFacts" class="facts">
+      <ol v-if="can.newsroom && showFacts" class="facts">
         <li v-for="f in episode.evidence" :key="f.id">{{ f.text }}</li>
       </ol>
     </details>

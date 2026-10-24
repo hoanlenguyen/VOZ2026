@@ -507,7 +507,6 @@
   },
   "podcast": {
     "title": "Podcasts",
-    "lead": "Daily 30-second AI audio bulletins on teams and leagues, written from verified match data and checked before they are read aloud.",
     "matchTitle": "Match podcast",
     "kinds": {
       "match": "Match",

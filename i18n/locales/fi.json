@@ -507,7 +507,6 @@
   },
   "podcast": {
     "title": "Podcastit",
-    "lead": "Päivittäiset 30 sekunnin tekoälyn äänikoosteet joukkueista ja sarjoista, kirjoitettu vahvistetusta otteludatasta ja tarkistettu ennen kuin ne luetaan ääneen.",
     "matchTitle": "Ottelupodcast",
     "kinds": {
       "match": "Ottelu",

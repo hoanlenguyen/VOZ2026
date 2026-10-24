@@ -11,7 +11,6 @@ const episodes = computed(() => data.value?.episodes ?? [])
 <template>
   <section v-if="episodes.length" class="shelf" aria-labelledby="podcasts-title">
     <NewsSectionTitle id="podcasts-title">{{ t('podcast.title') }}</NewsSectionTitle>
-    <p class="lead">{{ t('podcast.lead') }}</p>
     <div class="grid">
       <NewsPodcastPlayer v-for="e in episodes" :key="e.id" :episode="e" />
     </div>
@@ -20,7 +19,6 @@ const episodes = computed(() => data.value?.episodes ?? [])
 
 <style scoped>
 .shelf { margin-top: 50px; }
-.lead { margin: -8px 0 20px; font-size: 14px; color: var(--summary); }
 .grid { display: grid; gap: 16px; align-items: start; }
 @media (min-width: 768px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
