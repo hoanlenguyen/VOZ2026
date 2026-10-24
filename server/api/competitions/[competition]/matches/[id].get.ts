@@ -21,14 +21,14 @@ export default defineEventHandler(async (event) => {
     setDataSource(event, res.source)
   }
   // Paywall, enforced here: free and signed-out readers get the match itself, not the premium parts.
-  const { entitlements } = await sessionInfo(event)
   const compare = season ? buildCompare(def, match, season, lang) : null
   const extras = mock?.extras ?? null
   setResponseHeader(event, 'cache-control', 'private, no-store')
   const finished = match.status === 'finished'
   // Newsroom control (per language): the match story is the AI version, the newsroom's edit or
   // hidden, for everyone or for subscribers only.
-  const control = await matchStoryControl(match.key, lang)
+  // (A newsroom preview of a draft: the draft, seen as a subscriber or a free reader.)
+  const { entitlements, control } = await readerContext(event, match.key, lang)
   const { mode, audience, length, tone } = controlSettings(control)
   const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
   const storyLocked = hasStory && audience === 'subscribers' && !entitlements.premium

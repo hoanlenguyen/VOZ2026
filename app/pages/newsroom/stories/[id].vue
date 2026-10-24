@@ -14,7 +14,6 @@ definePageMeta({ layout: 'news', middleware: 'newsroom' })
 const { t, locale } = useI18n()
 const { stamp } = useFormat()
 const route = useRoute()
-const { account } = useAccount()
 const id = computed(() => String(route.params.id))
 const url = computed(() => `/api/newsroom/stories/${encodeURIComponent(id.value)}`)
 useHead({ title: () => t('editor.pageTitle') })
@@ -53,23 +52,27 @@ async function loadAiStory() {
 onMounted(() => { if (data.value?.matchStory.available) void loadAiStory() })
 watch(() => [storyForm.length, storyForm.tone], () => void loadAiStory())
 
-// Preview before publishing: the unsaved settings as a subscriber or a free reader would see them.
+// Preview before publishing: the real match page in a frame, with the unsaved settings saved as a
+// one-hour draft and the page read as a subscriber or a free reader (server: readerContext).
 const previewDialog = ref<HTMLDialogElement>()
 const previewAs = ref<'subscriber' | 'free'>('subscriber')
-const previewLocked = computed(() => previewAs.value === 'free' && storyForm.audience === 'subscribers')
-const previewTeaser = computed(() => {
-  if (storyForm.mode === 'edited') {
-    const text = editText.value.slice(1, 3).join(' ')
-    return { headline: storyForm.headline, text, translated: false, source: 'newsroom' as const }
-  }
-  const story = ai.value?.story
-  return story
-    ? { headline: story.headline, text: story.sentences.slice(0, 2).map(x => x.text).join(' '), translated: false, source: 'ai' as const }
-    : null
-})
-function openPreview() {
+const draftId = ref<string | null>(null)
+const previewError = ref('')
+const previewSrc = computed(() => (draftId.value && data.value
+  ? `${data.value.story.href}?draft=${draftId.value}&as=${previewAs.value}`
+  : null))
+async function openPreview() {
+  previewError.value = ''
+  draftId.value = null
   previewAs.value = 'subscriber'
   previewDialog.value?.showModal()
+  try {
+    const res = await $fetch<{ draft: string }>('/api/newsroom/drafts', { method: 'POST', body: { id: id.value, ...storyForm } })
+    draftId.value = res.draft
+  }
+  catch (err) {
+    previewError.value = t('editor.preview.error', { reason: (err as { statusMessage?: string }).statusMessage ?? '' })
+  }
 }
 const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const aiHtml = computed(() => {
@@ -256,7 +259,7 @@ async function revert() {
         </p>
       </form>
 
-      <!-- Preview: the match page's cover and story section as readers would get them, unsaved. -->
+      <!-- Preview: the whole match page as a subscriber or free reader would get it, unsaved. -->
       <dialog ref="previewDialog" class="dialog" aria-labelledby="preview-title">
         <header class="dialog-head">
           <h2 id="preview-title" class="dialog-title">{{ t('editor.preview.title') }}</h2>
@@ -273,28 +276,12 @@ async function revert() {
         </header>
         <div class="dialog-body">
           <p class="preview-note">{{ t('editor.preview.note') }}</p>
-          <figure v-if="storyForm.cover" class="preview-cover">
-            <img :src="`/api/images/${storyForm.cover.id}`" :alt="storyForm.cover.alt">
-            <figcaption v-if="storyForm.cover.credit">{{ t('match.coverCredit', { credit: storyForm.cover.credit }) }}</figcaption>
-          </figure>
-          <NewsMatchVisual v-else :story="data.story" size="lg" />
-
-          <section class="preview-story" aria-labelledby="preview-story-title">
-            <NewsSectionTitle id="preview-story-title">{{ t('match.story') }}</NewsSectionTitle>
-            <p v-if="storyForm.mode === 'hidden'" class="notice">{{ t('editor.preview.hidden') }}</p>
-            <NewsPaywall v-else-if="previewLocked" :teaser="previewTeaser" />
-            <article v-else-if="storyForm.mode === 'edited'">
-              <p class="article-kicker">{{ t('match.storyEdited', { name: account?.name ?? '', time: stamp(new Date().toISOString()) }) }}</p>
-              <h3 class="article-headline">{{ storyForm.headline }}</h3>
-              <!-- The editor's own unsaved text (TinyMCE keeps only the allowed tags); the server sanitises it on publish. -->
-              <!-- eslint-disable-next-line vue/no-v-html -->
-              <div class="article-body" v-html="storyForm.body" />
-            </article>
-            <NewsMatchStory
-              v-else :competition-id="data.story.competitionId" :match-id="matchId"
-              :length="storyForm.length" :tone="storyForm.tone" reader
-            />
-          </section>
+          <p v-if="previewError" class="notice" role="alert">{{ previewError }}</p>
+          <iframe
+            v-else-if="previewSrc" :key="previewSrc" :src="previewSrc" class="frame"
+            :title="t('editor.preview.frameTitle', { as: t(`editor.preview.${previewAs}`) })"
+          />
+          <p v-else class="hint">{{ t('editor.preview.loading') }}</p>
         </div>
         <footer class="dialog-foot">
           <button type="button" class="secondary" @click="previewDialog?.close()">{{ t('editor.preview.back') }}</button>
@@ -385,7 +372,7 @@ async function revert() {
 .fact-section { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
 .primary, .secondary { display: inline-flex; align-items: center; justify-content: center; gap: 6px; }
 .dialog {
-  width: min(860px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 8px;
+  width: min(1100px, calc(100vw - 32px)); height: calc(100vh - 32px); max-height: none; padding: 0; border: 0; border-radius: 8px;
   background: var(--bg); color: var(--headline); box-shadow: 0 24px 64px rgb(0 0 0 / 0.3);
 }
 .dialog::backdrop { background: rgb(0 0 0 / 0.55); }
@@ -403,21 +390,10 @@ async function revert() {
 .view-as-option input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 .close { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 999px; background: none; color: var(--headline); }
 .close:hover { background: var(--surface); }
-.dialog-body { overflow: auto; padding: 20px; }
+.dialog-body { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; padding: 12px 20px 0; }
+.frame { flex: 1 1 auto; width: 100%; min-height: 60vh; border: 1px solid var(--line-strong); border-radius: 4px; background: var(--bg); }
 .dialog-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 12px 20px; border-top: 1px solid var(--line-strong); }
 .preview-note { margin: 0 0 14px; font-size: 13px; color: var(--meta); }
-.preview-cover { margin: 0; }
-.preview-cover img { display: block; width: 100%; aspect-ratio: 21 / 9; object-fit: cover; border-radius: 4px; }
-.preview-cover figcaption { margin-top: 6px; font-size: 12px; color: var(--meta); }
-.preview-story { margin-top: 32px; }
-.article-kicker { margin: 0; font-size: 13px; color: var(--meta); }
-.article-headline { margin: 6px 0 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.29; font-weight: 700; color: var(--headline); }
-.article-body { margin-top: 14px; font-size: 17px; line-height: 1.65; color: var(--text-2); }
-.article-body :deep(p), .article-body :deep(ul), .article-body :deep(ol) { margin: 0 0 16px; }
-.article-body :deep(h2) { margin: 28px 0 10px; font-size: 22px; line-height: 1.3; }
-.article-body :deep(h3) { margin: 24px 0 8px; font-size: 18px; line-height: 1.35; }
-.article-body :deep(blockquote) { margin: 0 0 16px; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent); font-style: italic; }
-.article-body :deep(a) { color: var(--link-hover); }
 .bar { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .primary, .secondary {
   min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px;

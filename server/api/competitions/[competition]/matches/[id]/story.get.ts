@@ -11,7 +11,6 @@ const LENGTHS: StoryLength[] = ['short', 'standard', 'long']
 const TONES: StoryTone[] = ['neutral', 'home-fan', 'away-fan', 'analyst']
 
 export default defineEventHandler(async (event): Promise<StoryResponse> => {
-  const { entitlements } = await sessionInfo(event)
   const { def, provider } = competitionParam(event)
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })
@@ -22,12 +21,16 @@ export default defineEventHandler(async (event): Promise<StoryResponse> => {
   const season = await provider.matches(def, {}).then(r => r.data, () => [])
   const mock = await findMockMatch(def, id, season)
   const match = mock?.match ?? (await provider.match(def, id)).data
-  const published = controlSettings(await matchStoryControl(match.key, requestLang(event)))
+  // A newsroom preview of a draft reads as a subscriber or free reader (readerContext).
+  const reader = await readerContext(event, match.key, requestLang(event))
+  const { entitlements } = reader
+  const published = controlSettings(reader.control)
   const { mode, audience } = published
   if (!entitlements.newsroom) {
     if (mode !== 'ai') throw createError({ statusCode: 404, statusMessage: 'No AI story for this match' })
     if (audience === 'subscribers' && !entitlements.premium) {
-      await requireEntitlement(event, 'premium')
+      if (!reader.preview) await requireEntitlement(event, 'premium')
+      throw createError({ statusCode: 403, statusMessage: 'Subscribers only' })
     }
     ;[length, tone] = [published.length, published.tone]
   }

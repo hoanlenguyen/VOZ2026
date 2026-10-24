@@ -103,7 +103,8 @@
     "deskNone": "ei",
     "deskEdit": "Muokkaa sisältöä",
     "storyPlus": "Tilaajille",
-    "coverCredit": "Kuva: {credit}"
+    "coverCredit": "Kuva: {credit}",
+    "previewBanner": "Esikatselu, ei julkaistu · lukijana: {as}"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -355,10 +356,12 @@
       "as": "Esikatsele",
       "subscriber": "Tilaaja",
       "free": "Maksuton lukija",
-      "note": "Ei vielä julkaistu. Tämä on ottelusivun yläosa ja raporttiosio nykyisillä asetuksillasi.",
-      "hidden": "Lukijat eivät näe tästä ottelusta raporttia.",
+      "note": "Ei vielä julkaistu: koko ottelusivu nykyisillä asetuksillasi, niin kuin tämä lukija sen näkee.",
       "close": "Sulje esikatselu",
-      "back": "Jatka muokkausta"
+      "back": "Jatka muokkausta",
+      "loading": "Valmistellaan esikatselua…",
+      "error": "Esikatselua ei voitu valmistella ({reason}).",
+      "frameTitle": "Ottelusivun esikatselu: {as}"
     }
   }
 }

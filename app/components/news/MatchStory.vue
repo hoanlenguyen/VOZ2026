@@ -14,6 +14,8 @@ const props = withDefaults(defineProps<{
   tone?: StoryTone
   preview?: boolean
   reader?: boolean
+  /** Extra query for the story request (the newsroom's draft preview: draft, as). */
+  extraQuery?: Record<string, string>
 }>(), { length: 'standard', tone: 'neutral' })
 
 // The evidence (AI label, facts behind each sentence, "How this was made") is a newsroom tool.
@@ -26,7 +28,7 @@ const activeSentence = ref<number | null>(null)
 // Loaded in the browser: the first view of a version may take ~10 s while the agent writes it.
 const { data, status, error, refresh } = useLazyFetch<StoryResponse>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/story`,
-  { query: computed(() => ({ length: props.length, tone: props.tone, lang: locale.value })), server: false },
+  { query: computed(() => ({ length: props.length, tone: props.tone, lang: locale.value, ...props.extraQuery })), server: false },
 )
 watch(() => [props.length, props.tone], () => (activeSentence.value = null))
 

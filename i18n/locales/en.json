@@ -103,7 +103,8 @@
     "deskNone": "none",
     "deskEdit": "Edit coverage",
     "storyPlus": "For subscribers",
-    "coverCredit": "Photo: {credit}"
+    "coverCredit": "Photo: {credit}",
+    "previewBanner": "Preview, not published · seen as: {as}"
   },
   "timeline": {
     "shown": "Events shown",
@@ -355,10 +356,12 @@
       "as": "Preview as",
       "subscriber": "Subscriber",
       "free": "Free reader",
-      "note": "Not published yet. This is the top of the match page and its story section with your current settings.",
-      "hidden": "Readers get no match story for this match.",
+      "note": "Not published yet: the whole match page with your current settings, as this reader sees it.",
       "close": "Close preview",
-      "back": "Keep editing"
+      "back": "Keep editing",
+      "loading": "Preparing the preview…",
+      "error": "The preview could not be prepared ({reason}).",
+      "frameTitle": "Match page preview as {as}"
     }
   }
 }

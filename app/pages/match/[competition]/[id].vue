@@ -8,7 +8,14 @@ definePageMeta({ layout: 'news' })
 const { t, locale } = useI18n()
 const fmt = useFormat()
 const route = useRoute()
-const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, { query: { lang: locale } })
+// Newsroom preview (/newsroom/stories/:id): ?draft=<id>&as=subscriber|free shows the page with the
+// editor's unsaved settings, as that reader would see it (the server checks the newsroom session).
+const preview = computed(() => (typeof route.query.draft === 'string'
+  ? { draft: route.query.draft, as: route.query.as === 'free' ? 'free' : 'subscriber' }
+  : null))
+const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
+  query: computed(() => ({ lang: locale.value, ...preview.value })),
+})
 const match = computed(() => data.value?.match)
 const finished = computed(() => match.value?.status === 'finished')
 // Football: "Half-time 1–0"; hockey: "Periods 0–1, 0–1, 0–1".
@@ -32,6 +39,7 @@ useHead(() => ({
 
 <template>
   <main id="main" class="wrap">
+    <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
     <NuxtLink to="/" class="back">
       <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
       {{ t('match.back') }}
@@ -64,7 +72,7 @@ useHead(() => ({
         <NewsMatchVisual v-else :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
-      <aside v-if="can.newsroom && editLink" class="desk" :aria-label="t('match.deskLabel')">
+      <aside v-if="can.newsroom && editLink && !preview" class="desk" :aria-label="t('match.deskLabel')">
         <span>
           <strong>{{ t('match.deskLabel') }}</strong>
           {{ t('match.deskState', {
@@ -91,7 +99,9 @@ useHead(() => ({
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="article-body" v-html="data.story.edited.body" />
           </article>
-          <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :length="data.story.length" :tone="data.story.tone" />
+          <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :length="data.story.length" :tone="data.story.tone"
+            :reader="!!preview" :extra-query="preview ?? undefined"
+          />
         </template>
       </section>
 
@@ -178,6 +188,10 @@ useHead(() => ({
 .block { margin-top: 50px; }
 .source { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
 
+.preview-banner {
+  margin: 12px 0 0; padding: 10px 14px; border-radius: 4px; background: var(--accent); color: var(--on-accent);
+  font-size: 14px; font-weight: 700; text-align: center;
+}
 .desk {
   margin-top: 24px; padding: 10px 10px 10px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
   border-radius: 4px; background: var(--surface); font-size: 14px; color: var(--summary);

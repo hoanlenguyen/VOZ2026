@@ -4,6 +4,7 @@
 // Edited bodies are sanitised here on save (allowlist below), never trusted from the browser; the match
 // page renders them with v-html. `audience` decides who reads them: 'everyone' (free and signed-out
 // readers too) or 'subscribers' (premium; others get the opening as the paywall teaser).
+import type { H3Event } from 'h3'
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
 import type { StoryLength, StoryTone } from '#shared/types/story'
@@ -111,4 +112,33 @@ export async function saveMatchStoryControl(lang: Lang, matchKey: string, contro
   if (control) map[matchKey] = control
   else delete map[matchKey]
   await useStorage('kvcache').setItem(controlKey(lang), map)
+}
+
+// Preview drafts: the editor's unsaved control, kept for an hour, so the real match page can be
+// shown with it (?draft=<id>&as=subscriber|free) before publishing.
+const DRAFT_ID = /^[a-f0-9-]{36}$/
+const DRAFT_TTL = 3600
+const draftKey = (id: string) => `newsroom:draft:${id}`
+
+export async function saveDraft(matchKey: string, control: MatchStoryControl): Promise<string> {
+  const id = crypto.randomUUID()
+  await useStorage('kvcache').setItem(draftKey(id), { matchKey, control }, { ttl: DRAFT_TTL })
+  return id
+}
+
+/**
+ * Who is reading and which control applies. Normally the session's entitlements and the published
+ * control; for a newsroom account previewing a draft of this match, the draft and a simulated
+ * subscriber or free reader (never newsroom), so the page shows exactly what that reader gets.
+ */
+export async function readerContext(event: H3Event, matchKey: string, lang: Lang) {
+  const info = await sessionInfo(event)
+  const q = getQuery(event)
+  if (info.entitlements.newsroom && typeof q.draft === 'string' && DRAFT_ID.test(q.draft)) {
+    const draft = await useStorage('kvcache').getItem<{ matchKey: string, control: MatchStoryControl }>(draftKey(q.draft)).catch(() => null)
+    if (draft?.matchKey === matchKey) {
+      return { entitlements: entitlements(q.as === 'free' ? 'free' : 'subscriber'), control: draft.control, preview: true }
+    }
+  }
+  return { entitlements: info.entitlements, control: await matchStoryControl(matchKey, lang), preview: false }
 }
