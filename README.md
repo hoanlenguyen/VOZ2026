@@ -47,6 +47,10 @@ and nothing is published that the data does not support.
   attributed links. Posts are tagged "AI content" and "Simulated data" and wait for the newsroom's review;
   readers see nothing until a post is approved. The Workers cron ticks every 5 minutes and runs the agent
   when the interval set in the Newsroom (5 minutes to 24 hours) has passed; "Run now" runs it at once.
+  The review page (`/newsroom/posts/:id`) shows the story with the facts each sentence cites, and lets
+  the newsroom edit it (with a live fact check), approve, reject or unpublish it. Approved posts appear
+  on the front page with a "Simulated data" tag and at `/posts/:id`, which opens with a banner saying the
+  match details were simulated.
 - **Onboarding** (`/onboarding`): pick a league and see its teams (first version).
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.

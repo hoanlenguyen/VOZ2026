@@ -42,7 +42,8 @@
     "result": "Tulos",
     "preview": "Ennakko",
     "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
-    "aiTag": "Tekoälysisältö"
+    "aiTag": "Tekoälysisältö",
+    "simulated": "Simuloitu data"
   },
   "table": {
     "title": "{league} – sarjataulukko",
@@ -647,5 +648,57 @@
       "rejected": "Hylätty",
       "failed": "Epäonnistui"
     }
+  },
+  "post": {
+    "notFound": "Tämä artikkeli ei ole saatavilla.",
+    "loadError": "Artikkelia ei voitu ladata.",
+    "simTitle": "Simuloitu otteludata (demo).",
+    "simText": "Lopputulos on todellinen; jutun maalintekijät, kokoonpanot, tapahtumat ja tilastot on tuottanut SportWorld-simulaattori, eikä niitä tapahtunut.",
+    "round": "{n}. kierros",
+    "byline": "Kirjoitettu automaattisesti SportWorldin otteludatasta, tarkistanut {name}",
+    "pressTitle": "Muualla näistä joukkueista",
+    "pressNote": "Linkit muiden medioiden omiin juttuihin. VOZ ei käytä niiden tekstiä.",
+    "aboutMatch": "tämä ottelu",
+    "aboutTeam": "{team}",
+    "newTab": "avautuu uuteen välilehteen"
+  },
+  "review": {
+    "pageTitle": "Tarkista tekoälyartikkeli – VOZ",
+    "back": "Takaisin toimitukseen",
+    "lead": "Tarkista juttu faktoja vasten, muokkaa tarvittaessa ja hyväksy tai hylkää. Lukijat eivät näe mitään ennen hyväksyntää.",
+    "written": "kirjoitettu {time}, malli {model}",
+    "approve": "Hyväksy ja julkaise",
+    "reject": "Hylkää",
+    "confirmReject": "Hylkää artikkeli",
+    "cancel": "Peruuta",
+    "reason": "Syy (valinnainen)",
+    "reasonHint": "esim. väärä sävy, kaksoiskappale",
+    "reopen": "Palauta tarkistukseen",
+    "unpublish": "Poista julkaisusta",
+    "viewAsReader": "Näytä lukijana",
+    "approved": "Hyväksytty: artikkeli on etusivulla.",
+    "rejected": "Hylätty: lukijat eivät näe artikkelia.",
+    "reopened": "Palautettu tarkistukseen: lukijat eivät enää näe artikkelia.",
+    "editSaved": "Muokkaus tallennettu.",
+    "reverted": "Palattu tekoälyn versioon.",
+    "failed": "Artikkelia ei voitu päivittää: {reason}",
+    "last": {
+      "approved": "Hyväksynyt {by}, {time}",
+      "rejected": "Hylännyt {by}, {time}",
+      "reopened": "Palauttanut {by}, {time}"
+    },
+    "edit": "Muokkaa",
+    "revert": "Käytä tekoälyn versiota",
+    "edited": "Muokattu",
+    "editedBy": "Muokannut {by}, {time}",
+    "checked": "Läpäisi faktantarkistuksen: {n} faktaa lähteenä. Vie osoitin faktatunnuksen päälle lukeaksesi sen.",
+    "fallback": "Ei tarkistettua tekoälyjuttua ({reason}); faktat näytetään sellaisenaan.",
+    "headline": "Otsikko",
+    "text": "Teksti",
+    "textHint": "Erota kappaleet tyhjällä rivillä.",
+    "saveEdit": "Tallenna muokkaus",
+    "facts": "Ottelun faktat ({n})",
+    "pressNote": "Liitetty vain linkkeinä; juttu ei käytä niiden tekstiä.",
+    "howMade": "Näin tämä tehtiin ({turns} kierrosta, {s} s)"
   }
 }

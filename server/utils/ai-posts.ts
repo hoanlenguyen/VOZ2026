@@ -10,10 +10,13 @@
 // Runs from the cron (AGENT_CRON, task newsroom:agent) when the newsroom's interval has passed,
 // or at once from "Run now".
 
-import type { AgentDesk, AgentRun, AgentRunResult, AgentSettings, AgentTrigger, AiPost, AiPostPress, AiPostStatus, AiPostSummary } from '#shared/types/ai-post'
+import type { AgentDesk, AgentRun, AgentRunResult, AgentSettings, AgentTrigger, AiPost, AiPostAction, AiPostPress, AiPostStatus, AiPostSummary, ReaderPost } from '#shared/types/ai-post'
+import type { Match } from '#shared/types/sports'
+import type { Story } from '#shared/types/stories'
 import type { MatchStory } from '#shared/types/story'
-import { COMPETITIONS } from '#shared/utils/competitions'
-import { AGENT_CRON, AGENT_MATCHES_PER_RUN, agentDue, cleanAgentSettings, nextAgentRun } from '#shared/utils/newsroom-agent'
+import { COMPETITIONS, competitionName, type CompetitionDef } from '#shared/utils/competitions'
+import type { Lang } from '#shared/utils/format'
+import { AGENT_CRON, AGENT_MATCHES_PER_RUN, agentDue, cleanAgentSettings, nextAgentRun, postText, textParagraphs } from '#shared/utils/newsroom-agent'
 
 const SCHEMA = `
 CREATE TABLE IF NOT EXISTS ai_posts (id TEXT PRIMARY KEY, match_key TEXT NOT NULL UNIQUE, competition TEXT NOT NULL, match_id TEXT NOT NULL, status TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, summary TEXT, body TEXT);
@@ -70,6 +73,7 @@ function summaryOf(post: AiPost): AiPostSummary {
     id: post.id, status: post.status, createdAt: post.createdAt, competitionId: post.competitionId, competitionName: post.competitionName,
     matchId: post.matchId, match: post.match, headline: story?.headline ?? `${post.match.home} ${post.match.score.home}–${post.match.score.away} ${post.match.away}`,
     origin: story?.origin ?? null, langs: Object.keys(post.stories) as AiPostSummary['langs'], pressCount: post.press.length, error: post.error,
+    edited: !!post.edits && Object.keys(post.edits).length > 0, reviewedBy: post.review?.by ?? null,
   }
 }
 
@@ -175,4 +179,100 @@ export async function agentDesk(): Promise<AgentDesk> {
   const [settings, lastRun, posts, waiting] = await Promise.all([agentSettings(), lastAgentRun(), listAiPosts({ limit: 30 }), waitingMatches(100)])
   const next = nextAgentRun(settings, lastRun?.at ?? null, new Date())
   return { settings, cron: AGENT_CRON, lastRun, nextRunAt: next?.toISOString() ?? null, waiting: waiting.length, posts, aiConfigured: !!llmConfig().key }
+}
+
+// Review: pending -> approved | rejected; approved | rejected -> pending (reopen). Text is edited
+// while pending only, so what readers get never changes under them.
+const MAX_EDIT_CHARS = 8000
+
+export async function reviewAiPost(id: string, act: AiPostAction, by: string): Promise<AiPost> {
+  const post = await getAiPost(id)
+  if (!post) throw createError({ statusCode: 404, statusMessage: 'No AI post with this id' })
+  const at = new Date().toISOString()
+  const need = (...ok: AiPostStatus[]) => {
+    if (!ok.includes(post.status)) throw createError({ statusCode: 409, statusMessage: `Not possible while the post is ${post.status}` })
+  }
+  switch (act.action) {
+    case 'approve':
+      need('pending')
+      post.status = 'approved'
+      post.review = { action: 'approved', by, at, reason: null }
+      break
+    case 'reject':
+      need('pending', 'approved')
+      post.status = 'rejected'
+      post.review = { action: 'rejected', by, at, reason: String(act.reason ?? '').trim().slice(0, 500) || null }
+      break
+    case 'reopen':
+      need('approved', 'rejected')
+      post.status = 'pending'
+      post.review = { action: 'reopened', by, at, reason: null }
+      break
+    case 'edit': {
+      need('pending')
+      if (!post.stories[act.lang]) throw createError({ statusCode: 400, statusMessage: 'No story in this language' })
+      const headline = String(act.headline ?? '').replace(/\s+/g, ' ').trim()
+      const text = String(act.text ?? '')
+      if (!headline || headline.length > 200) throw createError({ statusCode: 400, statusMessage: 'The headline must be 1–200 characters' })
+      if (text.length > MAX_EDIT_CHARS) throw createError({ statusCode: 400, statusMessage: `The text is longer than ${MAX_EDIT_CHARS} characters` })
+      const paragraphs = textParagraphs(text)
+      if (!paragraphs.length) throw createError({ statusCode: 400, statusMessage: 'The text is empty' })
+      post.edits = { ...post.edits, [act.lang]: { headline, paragraphs, by, at } }
+      break
+    }
+    case 'revert':
+      need('pending')
+      if (post.edits) delete post.edits[act.lang]
+      break
+    default:
+      throw createError({ statusCode: 400, statusMessage: 'Unknown action' })
+  }
+  post.updatedAt = at
+  await save(post)
+  return post
+}
+
+export async function approvedAiPosts(competition: string): Promise<AiPost[]> {
+  const { results } = await (await db()).prepare(`SELECT body FROM ai_posts WHERE competition=? AND status='approved' ORDER BY created_at DESC LIMIT 20`)
+    .bind(competition).all<{ body: string }>()
+  return results.map(r => JSON.parse(r.body) as AiPost)
+}
+
+/** The match as cards draw it: the provider's record of the fixture (crests, team keys), else the post's names. */
+function cardMatch(def: CompetitionDef, post: AiPost, season: Match[]): Story['match'] {
+  const real = season.find(m => m.id === post.matchId)
+  const team = (side: 'home' | 'away') => {
+    const name = post.match[side]
+    const r = real?.[side]
+    return { key: r?.key ?? `${def.id}:${name}`, name, shortName: r?.shortName ?? name, logo: r?.logo ?? null, score: post.match.score[side], rank: null, stats: {} }
+  }
+  return { sport: def.sport, home: team('home'), away: team('away'), shootout: null, finishType: 'regulation', status: 'finished', start: post.match.start }
+}
+
+/** An approved post as a front-page story (links to /posts/:id; the card carries "Simulated data"). */
+export function postStory(def: CompetitionDef, post: AiPost, season: Match[], lang: Lang): Story | null {
+  const text = postText(post, lang)
+  if (!text) return null
+  return {
+    id: `ai-${post.id}`, kind: 'result', sport: def.sport, competitionId: def.id, competitionName: competitionName(def, lang),
+    headline: text.headline, headlineOrigin: 'agent', summary: text.paragraphs[0] ?? '', time: post.match.start,
+    href: `/posts/${post.id}`, match: cardMatch(def, post, season), weight: 45, simulated: post.simulated,
+  }
+}
+
+/** GET /api/posts/:id: approved posts only (the newsroom reviews in /newsroom/posts/:id). */
+export async function readerPost(id: string, lang: Lang): Promise<ReaderPost | null> {
+  const post = await getAiPost(id)
+  const def = COMPETITIONS.find(c => c.id === post?.competitionId)
+  if (!post || post.status !== 'approved' || !def) return null
+  const text = postText(post, lang)
+  if (!text) return null
+  const season = await providerFor(def).matches(def, {}).then(r => r.data, () => [])
+  const name = competitionName(def, lang)
+  return {
+    id: post.id, lang: text.lang, competitionId: def.id, competitionName: name,
+    round: season.find(m => m.id === post.matchId)?.round ?? null,
+    headline: text.headline, paragraphs: text.paragraphs, publishedAt: post.review?.at ?? post.updatedAt, reviewedBy: post.review?.by ?? '',
+    simulated: post.simulated, match: post.match, card: { competitionName: name, match: cardMatch(def, post, season) }, press: post.press,
+  }
 }

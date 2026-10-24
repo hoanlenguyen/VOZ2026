@@ -25,6 +25,8 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
         <span v-if="showAiTag" class="ai-tag">{{ t('story.aiTag') }}</span>
+        <!-- Every reader sees this one: the match details behind the post are simulated (SportWorld). -->
+        <span v-if="story.simulated" class="ai-tag sim-tag">{{ t('story.simulated') }}</span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
@@ -63,6 +65,7 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
   flex: 0 0 auto; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px;
   font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
 }
+.sim-tag { color: var(--summary); }
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
 
 .story--lead { gap: 15px; }

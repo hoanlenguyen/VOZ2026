@@ -108,12 +108,15 @@ const LANGS: Lang[] = ['en', 'fi']
             <span class="num">{{ score(p.match.score) }}</span><span aria-hidden="true">·</span>
             <span class="num">{{ stamp(p.createdAt) }}</span>
           </p>
-          <p class="headline" :lang="p.langs.includes(locale as Lang) ? undefined : 'en'">{{ p.headline }}</p>
+          <p class="headline" :lang="p.langs.includes(locale as Lang) ? undefined : 'en'">
+            <NuxtLink :to="`/newsroom/posts/${p.id}`">{{ p.headline }}</NuxtLink>
+          </p>
           <p class="tags">
             <span class="tag tag--status" :class="`tag--${p.status}`">{{ t(`agent.status.${p.status}`) }}</span>
             <span class="tag tag--ai">{{ t('story.aiTag') }}</span>
             <span class="tag tag--sim">{{ t('agent.simulated') }}</span>
             <span v-if="p.origin === 'template'" class="tag">{{ t('agent.template') }}</span>
+            <span v-if="p.edited" class="tag">{{ t('review.edited') }}</span>
             <span class="tag">{{ p.langs.map(l => l.toUpperCase()).join(' + ') }}</span>
             <span class="tag">{{ t('agent.press', { n: p.pressCount }, p.pressCount) }}</span>
           </p>
@@ -158,6 +161,9 @@ const LANGS: Lang[] = ['en', 'fi']
 .post { padding: 12px 0; border-bottom: 1px solid var(--line); }
 .kicker { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--meta); }
 .headline { margin: 4px 0 0; font-size: 16px; font-weight: 700; line-height: 1.35; color: var(--headline); }
+.headline a { color: inherit; text-decoration: none; }
+.headline a:hover { color: var(--link-hover); text-decoration: underline; }
+.headline a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .tags { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
 .tag {
   padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 11px; font-weight: 700;

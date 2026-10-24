@@ -27,10 +27,13 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       // Mock "deep data" matches replace the provider's record of the same game, stay on the front
       // page regardless of age (demo), and lead their league: they are the richest coverage we have.
       const mocks = await mockMatchesFor(def, matches.data)
-      const twins = new Set(mocks.map(m => m.providerId).filter(Boolean))
+      // Approved AI posts (SportWorld, simulated details) replace the provider's story of the same game.
+      const posts = await approvedAiPosts(def.id).catch(() => [])
+      const twins = new Set([...mocks.map(m => m.providerId), ...posts.map(p => p.matchId)].filter(Boolean))
       const own = buildStories(def, matches.data.filter(m => !twins.has(m.id)), standings.data, 4, lang)
       const deep = buildStories(def, mocks.map(m => m.match), standings.data, 3650, lang)
       stories.push(...own, ...deep.map(s => ({ ...s, weight: Math.max(s.weight, 0) + 40 })))
+      stories.push(...posts.map(p => postStory(def, p, matches.data, lang)).filter(s => s !== null))
       const byKey = new Map(matches.data.map(m => [m.key, { match: m, extras: null as MockMatch['extras'] | null }]))
       for (const mk of mocks) byKey.set(mk.match.key, { match: mk.match, extras: mk.extras })
       for (const s of [...own, ...deep]) {

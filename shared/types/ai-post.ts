@@ -46,6 +46,37 @@ export interface AiPost {
   /** Why there is no or little press context, when the search said so. */
   pressNote: string | null
   error: string | null
+  /** The newsroom's edited text per language; readers get it in place of the AI story. */
+  edits?: Partial<Record<Lang, AiPostEdit>>
+  /** The last review decision. */
+  review?: AiPostReview | null
+}
+
+export interface AiPostEdit { headline: string, paragraphs: string[], by: string, at: string }
+export interface AiPostReview { action: 'approved' | 'rejected' | 'reopened', by: string, at: string, reason: string | null }
+
+export type AiPostAction =
+  | { action: 'approve' | 'reopen' }
+  | { action: 'reject', reason?: string }
+  | { action: 'edit', lang: Lang, headline: string, text: string }
+  | { action: 'revert', lang: Lang }
+
+/** An approved post as readers get it (GET /api/posts/:id). */
+export interface ReaderPost {
+  id: string
+  lang: Lang
+  competitionId: string
+  competitionName: string
+  round: number | null
+  headline: string
+  paragraphs: string[]
+  publishedAt: string
+  reviewedBy: string
+  simulated: boolean
+  match: AiPostMatch
+  /** For the match graphic (NewsMatchVisual). */
+  card: { competitionName: string, match: import('./stories.ts').Story['match'] }
+  press: AiPostPress[]
 }
 
 export interface AiPostSummary {
@@ -62,6 +93,8 @@ export interface AiPostSummary {
   langs: Lang[]
   pressCount: number
   error: string | null
+  edited: boolean
+  reviewedBy: string | null
 }
 
 export type AgentTrigger = 'schedule' | 'manual'
