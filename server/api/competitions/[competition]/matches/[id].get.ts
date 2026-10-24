@@ -47,14 +47,20 @@ export default defineEventHandler(async (event) => {
     teaser = { headline: edited.headline, text: excerpt(edited.body), translated: false, source: 'newsroom' }
   }
   else if (storyLocked) {
-    const hit = await peekStory({
+    // The story in the reader's language when one exists; otherwise the English one, translated.
+    // Facts as the story endpoint builds them (from the English mock), so the cache keys match.
+    const source = lang === 'en' ? mock : await findMockMatch(def, id, season ?? [])
+    const m = source?.match ?? match
+    const x = source?.extras ?? extras
+    const req = {
       competitionId: def.id, matchId: match.id, length, tone,
-      facts: buildFacts(def, match, extras, season ?? []), names: factNames(match, extras),
-    }).catch(() => null)
+      facts: buildFacts(def, m, x, season ?? []), names: factNames(m, x),
+    }
+    const own = lang === 'en' ? null : await peekStory({ ...req, lang }).catch(() => null)
+    const hit = own ?? await peekStory({ ...req, lang: 'en' }).catch(() => null)
     if (hit) {
       const parts = [hit.story.headline, hit.story.sentences.slice(0, 2).map(s => s.text).join(' ')]
-      // Stories are written in English; other languages go through the cached translation agent.
-      const [headline, text] = lang === 'en' ? parts.map(p => ({ text: p, translated: false })) : await translateTexts(parts, lang)
+      const [headline, text] = own || lang === 'en' ? parts.map(p => ({ text: p, translated: false })) : await translateTexts(parts, lang)
       teaser = { headline: headline!.text, text: text!.text, translated: headline!.translated || text!.translated, source: 'ai' }
     }
   }

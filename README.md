@@ -55,6 +55,7 @@ Fill in `.env`:
 | `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token ([free registration](https://www.football-data.org/client/register)) |
 | `NUXT_GNEWS_API_KEY` | [GNews](https://gnews.io) key for "What the press says" (optional) |
 | `NUXT_OPENAI_API_KEY` | OpenAI key for AI match stories (optional: without it the pre-written demo stories are served) |
+| `NUXT_OPENAI_MODEL` | Model for AI match stories, as a name or API id (default `GPT-6 Luna`). Switch models by changing it; in production it is set in `wrangler.jsonc` |
 | `NUXT_DATA_MODE` | `live` (APIs only), `auto` (APIs, fall back to snapshots) or `snapshot` (offline) |
 
 ```bash
@@ -170,6 +171,9 @@ match data ─ facts.ts ─ fact list f1…fN ─┐
   template story built from the facts is shown instead and labelled as such.
 - **Versions:** 3 lengths (short, standard, long read) × 4 perspectives (neutral, home fans, away
   fans, analyst) = 12 per match.
+- **Switching models:** set `NUXT_OPENAI_MODEL` (for example `GPT-6 Sol`). The page label follows the
+  model, and pre-written stories from another model are not reused, so the new model writes its own;
+  run `npm run warm:stories` to pre-write them.
 - **Cache** (`server/utils/story-cache.ts`): memory, then Workers KV, then stories pre-written into the
   app with `npm run warm:stories` (re-checked against today's facts before use), then a live run.
   Only stories that passed the check are cached.

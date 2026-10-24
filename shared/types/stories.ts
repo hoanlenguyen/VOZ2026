@@ -1,7 +1,10 @@
 import type { Match, SportId, StandingRow } from './sports.ts'
 import type { StoryLength, StoryTone } from './story.ts'
 
-/** A news item on the landing page. Every sentence is built from data fields, never free text. */
+/**
+ * A news item on the landing page. Every sentence is built from data fields; an AI headline and
+ * subtitle replace the template headline only after passing the headline checker.
+ */
 export interface Story {
   id: string
   kind: 'result' | 'preview'
@@ -9,6 +12,10 @@ export interface Story {
   competitionId: string
   competitionName: string
   headline: string
+  /** AI-written dek under the headline (only with an AI headline). */
+  subtitle?: string
+  /** "agent": headline and subtitle written by the AI headline desk and checked; "template": from data templates. */
+  headlineOrigin: 'agent' | 'template'
   summary: string
   /** ISO time the story is about (kick-off / puck drop). */
   time: string

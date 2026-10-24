@@ -17,10 +17,11 @@ const props = withDefaults(defineProps<{
   /** Extra query for the story request (the newsroom's draft preview: draft, as). */
   extraQuery?: Record<string, string>
 }>(), { length: 'standard', tone: 'neutral' })
+const { t, locale } = useI18n()
+const { number } = useFormat()
 
 // The evidence (AI label, facts behind each sentence, "How this was made") is a newsroom tool.
 const { can } = useAccount()
-const { locale } = useI18n()
 const editor = computed(() => can.value.newsroom && !props.reader)
 const showFacts = ref(props.preview)
 const activeSentence = ref<number | null>(null)
@@ -42,8 +43,8 @@ const paragraphs = computed(() => {
   return [...groups.entries()].sort(([a], [b]) => a - b).map(([, s]) => s)
 })
 const citedFacts = computed<Fact[]>(() => (data.value?.facts ?? []).filter(f => cited.value.has(f.id)))
-const modelName = computed(() => (story.value?.model ?? '').replace(/^gpt-6-luna$/, 'GPT-6 Luna'))
-const seconds = (ms: number) => `${(ms / 1000).toFixed(1)} s`
+const modelName = computed(() => (story.value?.model ? modelLabel(story.value.model) : ''))
+const seconds = (ms: number) => `${number(Math.round(ms / 100) / 10)} s`
 
 function toggleSentence(i: number) {
   activeSentence.value = activeSentence.value === i ? null : i
@@ -56,12 +57,12 @@ function toggleSentence(i: number) {
     <div class="body" aria-live="polite" :aria-busy="status === 'pending'">
       <div v-if="status === 'pending' || status === 'idle'" class="loading">
         <span class="sk sk--title" /><span class="sk" /><span class="sk" /><span class="sk sk--short" />
-        <p class="loading-note"><PhSparkle :size="14" weight="fill" aria-hidden="true" /> Writing this version from the match facts… the first time takes about 10 seconds.</p>
+        <p class="loading-note"><PhSparkle :size="14" weight="fill" aria-hidden="true" /> {{ t('matchStory.writing') }}</p>
       </div>
 
       <div v-else-if="error || !story" class="error">
-        <p>The story could not be loaded{{ error?.statusMessage ? ` (${error.statusMessage})` : '' }}.</p>
-        <button type="button" class="retry" @click="refresh()"><PhArrowClockwise :size="14" weight="bold" aria-hidden="true" /> Try again</button>
+        <p>{{ error?.statusMessage ? t('matchStory.loadErrorReason', { reason: error.statusMessage }) : t('matchStory.loadError') }}</p>
+        <button type="button" class="retry" @click="refresh()"><PhArrowClockwise :size="14" weight="bold" aria-hidden="true" /> {{ t('matchStory.retry') }}</button>
       </div>
 
       <article v-else class="story">
@@ -73,7 +74,7 @@ function toggleSentence(i: number) {
               @click="toggleSentence(s.index)"
             >{{ s.text }}</span><sup v-if="showFacts" class="refs"><a
               v-for="id in s.facts" :key="id" :href="`#fact-${id}`" class="ref num"
-              :aria-label="`Fact ${factIndex.get(id)}`" @click="activeSentence = s.index"
+              :aria-label="t('matchStory.factN', { n: factIndex.get(id) })" @click="activeSentence = s.index"
             >{{ factIndex.get(id) }}</a></sup>{{ ' ' }}
           </template>
         </p>
@@ -82,15 +83,15 @@ function toggleSentence(i: number) {
         <p class="label" :class="{ 'label--fallback': story.origin === 'template' }">
           <PhCheckCircle v-if="story.origin === 'agent'" :size="15" weight="fill" aria-hidden="true" />
           <template v-if="story.origin === 'agent'">
-            AI-written by {{ modelName }} from official match data · checked against {{ story.check.factsUsed }} facts
+            {{ t('matchStory.byAgent', { model: modelName, n: story.check.factsUsed }) }}
           </template>
-          <template v-else>Written from match data (the AI story was not available, so this is our template)</template>
+          <template v-else>{{ t('matchStory.byTemplate') }}</template>
         </p>
 
         <div class="tools">
           <button type="button" class="facts-toggle" :aria-pressed="showFacts" @click="showFacts = !showFacts; activeSentence = null">
             <PhListChecks :size="16" weight="bold" aria-hidden="true" />
-            {{ showFacts ? 'Hide the facts' : 'Show the facts behind this story' }}
+            {{ showFacts ? t('matchStory.hideFacts') : t('matchStory.showFacts') }}
           </button>
         </div>
 
@@ -99,22 +100,20 @@ function toggleSentence(i: number) {
             v-for="f in citedFacts" :id="`fact-${f.id}`" :key="f.id" :value="factIndex.get(f.id)"
             class="fact" :class="{ 'fact--active': highlighted.has(f.id) }"
           >
-            <span class="fact-section">{{ f.section }}</span> {{ f.text }}
+            <span class="fact-section">{{ t(`matchStory.section.${f.section}`) }}</span> {{ f.text }}
           </li>
         </ol>
 
         <details class="how">
-          <summary>How this was made</summary>
+          <summary>{{ t('matchStory.how') }}</summary>
           <p v-if="story.origin === 'agent'">
-            A single AI agent ({{ modelName }}) read {{ data?.facts.length }} verified facts about this match, wrote the story,
-            checked every number and name against the facts it cites, and submitted it. Our harness checked it again before
-            publishing{{ data?.cached ? '; this copy was served from the cache' : '' }}.
+            {{ t('matchStory.howAgent', { model: modelName, n: data?.facts.length ?? 0 }) }}{{ data?.cached ? ` ${t('matchStory.fromCache')}` : '' }}
           </p>
-          <p v-else>The agent could not produce a story that passed the check ({{ story.fallbackReason }}), so the harness published the facts as a template instead.</p>
+          <p v-else>{{ t('matchStory.howTemplate', { reason: story.fallbackReason ?? '' }) }}</p>
           <ol class="steps">
             <li v-for="(s, i) in story.trace" :key="i"><span class="step-tool">{{ s.tool }}</span> {{ s.summary }} <span class="num step-ms">{{ seconds(s.ms) }}</span></li>
           </ol>
-          <p class="meta num">{{ story.usage.turns }} turns · {{ seconds(story.usage.ms) }} · {{ story.usage.inputTokens.toLocaleString('en-GB') }} tokens in, {{ story.usage.outputTokens.toLocaleString('en-GB') }} out</p>
+          <p class="meta num">{{ t('matchStory.usage', { turns: story.usage.turns, time: seconds(story.usage.ms), tokensIn: number(story.usage.inputTokens), tokensOut: number(story.usage.outputTokens) }) }}</p>
         </details>
         </template>
       </article>

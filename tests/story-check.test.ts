@@ -84,3 +84,20 @@ test('an edit flags numbers and people missing from the facts, and quotes', () =
     { kind: 'speech', sentence: 2 },
   ])
 })
+
+test('Finnish: number words, speech and injuries are checked', () => {
+  assert.deepEqual(numbersIn('Forest laukoi kolme kertaa'), ['3'])
+  const fi = { ...ctx, lang: 'fi' as const }
+  const r = checkStory({ headline: 'Tasapeli Portman Roadilla', sentences: [{ text: `Forest teki viisi maalia. ${filler}`, facts: ['f1'], paragraph: 1 }] }, fi)
+  assert.match(r.issues.join(' '), /"5"/)
+  assert.match(checkStory({ headline: 'Tasapeli', sentences: [{ text: `Valmentaja sanoi tuloksen olevan reilu. ${filler}`, facts: ['f1'], paragraph: 1 }] }, fi).issues.join(' '), /speech/)
+  assert.match(checkStory({ headline: 'Tasapeli', sentences: [{ text: `Enciso loukkaantui toisella puoliajalla. ${filler}`, facts: ['f3'], paragraph: 1 }] }, fi).issues.join(' '), /injury/)
+})
+
+test('Finnish stories use the Finnish word ranges', () => {
+  // 17 words: below the English short minimum (20), inside the Finnish one (15).
+  const text = 'Ipswich ja Forest pelasivat tasapelin 1–1 Premier Leaguen kahdeksannella kierroksella, ja molemmat joukkueet saivat ottelusta yhden pisteen.'
+  const draft = { headline: 'Tasapeli Ipswichissä', sentences: [{ text, facts: ['f1'], paragraph: 1 }] }
+  assert.match(checkStory(draft, ctx).issues.join(' '), /words/)
+  assert.equal(checkStory(draft, { ...ctx, lang: 'fi' }).passed, true, checkStory(draft, { ...ctx, lang: 'fi' }).issues.join('\n'))
+})

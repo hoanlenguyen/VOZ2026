@@ -2,7 +2,7 @@
 
 export type StoryLength = 'short' | 'standard' | 'long'
 export type StoryTone = 'neutral' | 'home-fan' | 'away-fan' | 'analyst'
-export type FactSection = 'result' | 'timeline' | 'stats' | 'form' | 'table' | 'h2h' | 'context'
+export type FactSection = 'result' | 'timeline' | 'stats' | 'form' | 'table' | 'h2h' | 'context' | 'edge'
 
 /** One verified statement. The agent may only state what facts say, and cites them by id. */
 export interface Fact {
@@ -43,6 +43,8 @@ export interface MatchStory extends StoryDraft {
   matchKey: string
   length: StoryLength
   tone: StoryTone
+  /** Language of the text; missing in stories written before Finnish existed (= English). */
+  lang?: 'en' | 'fi'
   /** "agent" when the AI story passed the check; "template" when the harness fell back. */
   origin: 'agent' | 'template'
   model: string | null

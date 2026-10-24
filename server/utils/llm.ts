@@ -32,7 +32,8 @@ export interface ResponsesResult {
 
 export function llmConfig() {
   const c = useRuntimeConfig()
-  return { key: String(c.openaiApiKey || ''), model: String(c.openaiModel), baseUrl: String(c.openaiBaseUrl), effort: String(c.storyReasoningEffort) }
+  // NUXT_OPENAI_MODEL may be a display name ("GPT-6 Luna"); the API needs the id ("gpt-6-luna").
+  return { key: String(c.openaiApiKey || ''), model: modelId(String(c.openaiModel)), baseUrl: String(c.openaiBaseUrl), effort: String(c.storyReasoningEffort) }
 }
 
 export async function respond(req: ResponsesRequest): Promise<ResponsesResult> {

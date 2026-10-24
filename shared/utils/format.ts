@@ -41,3 +41,8 @@ export function displayScore(m: Pick<Match, 'sport' | 'home' | 'away' | 'shootou
   }
   return { home, away }
 }
+
+/** Keeps scores like "1–1" on one line: word joiners around a dash between digits (free text such as AI headlines). */
+export function keepScoresTogether(text: string): string {
+  return text.replace(/(\d)([–-])(\d)/g, '$1\u2060$2\u2060$3')
+}

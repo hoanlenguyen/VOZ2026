@@ -6,6 +6,7 @@
 // template fallback, so a failed or slow run can never publish an unchecked story.
 
 import type { AgentStep, Fact, FactSection, MatchStory, StoryDraft, StoryLength, StoryTone } from '#shared/types/story'
+import type { Lang } from '#shared/utils/format'
 import type { FunctionTool, ResponseItem } from './llm'
 
 const MAX_TURNS = 8
@@ -57,6 +58,13 @@ const LENGTH_BRIEF: Record<StoryLength, string> = {
   long: 'Long read: 200–320 words in 9–15 sentences, 3–4 paragraphs, covering how the game unfolded, the numbers, form and the table.',
 }
 
+// Finnish words are longer (cases, compounds): the checker's Finnish ranges are about 20 % lower.
+const LENGTH_BRIEF_FI: Record<StoryLength, string> = {
+  short: 'Short: 25–50 words in 2–3 sentences, one paragraph. For a push alert or a card.',
+  standard: 'Standard: 80–130 words in 5–8 sentences, 2 paragraphs.',
+  long: 'Long read: 160–260 words in 9–15 sentences, 3–4 paragraphs, covering how the game unfolded, the numbers, form and the table.',
+}
+
 function toneBrief(tone: StoryTone, home: string, away: string): string {
   return {
     'neutral': 'Neutral match report for a general sports reader: balanced, clear, no cheering for either side.',
@@ -66,7 +74,7 @@ function toneBrief(tone: StoryTone, home: string, away: string): string {
   }[tone]
 }
 
-const INSTRUCTIONS = `You write sports match stories for VOZ, a Finnish sports media app. Accuracy matters more than style.
+const instructions = (lang: Lang) => `You write sports match stories for VOZ, a Finnish sports media app. Accuracy matters more than style.
 
 Process:
 1. Call get_facts once with every section you need.
@@ -80,7 +88,9 @@ Rules:
 - Use only facts from get_facts. Do not invent quotes, injuries, motives, crowd reactions, weather, or anything about earlier seasons.
 - No quotation marks. Do not say anyone said, admitted or claimed anything.
 - Tone may change word choice and emphasis, never the facts.
-- English only. Team names as given in the facts.`
+- ${lang === 'fi'
+    ? 'Write in Finnish (the facts are in English; translate them, never their numbers or names). Team names exactly as given in the facts, in the basic form without case endings (write "HIFK voitti Kärpät", not "HIFK:n" or "Kärppien"). Natural Finnish sports journalism, not a word-for-word translation.'
+    : 'English only. Team names as given in the facts.'}`
 
 export interface StoryAgentInput {
   match: Match
@@ -89,6 +99,7 @@ export interface StoryAgentInput {
   names: string[]
   length: StoryLength
   tone: StoryTone
+  lang: Lang
 }
 
 /** Deterministic story from the facts themselves, used when the agent cannot produce a checked one. */
@@ -106,13 +117,13 @@ export function templateStory(input: StoryAgentInput): StoryDraft {
 export async function runStoryAgent(input: StoryAgentInput): Promise<MatchStory> {
   const started = Date.now()
   const { model } = llmConfig()
-  const ctx = { facts: input.facts, names: input.names, length: input.length }
+  const ctx = { facts: input.facts, names: input.names, length: input.length, lang: input.lang }
   const trace: AgentStep[] = []
   const usage = { inputTokens: 0, outputTokens: 0, turns: 0, ms: 0 }
   const { home, away } = input.match
   const brief = [
     `Match: ${input.competitionName}, ${home.name} ${home.score}–${away.score} ${away.name}.`,
-    `Length: ${LENGTH_BRIEF[input.length]}`,
+    `Length: ${(input.lang === 'fi' ? LENGTH_BRIEF_FI : LENGTH_BRIEF)[input.length]}`,
     `Tone: ${toneBrief(input.tone, home.shortName, away.shortName)}`,
     `Fact sections available: ${SECTIONS.join(', ')}.`,
   ].join('\n')
@@ -152,7 +163,7 @@ export async function runStoryAgent(input: StoryAgentInput): Promise<MatchStory>
       }
       usage.turns = turn
       const t0 = Date.now()
-      const res = await respond({ instructions: INSTRUCTIONS, input: items, tools: TOOLS, tool_choice: 'required', parallel_tool_calls: false, max_output_tokens: 6000 })
+      const res = await respond({ instructions: instructions(input.lang), input: items, tools: TOOLS, tool_choice: 'required', parallel_tool_calls: false, max_output_tokens: 6000 })
       usage.inputTokens += res.usage?.input_tokens ?? 0
       usage.outputTokens += res.usage?.output_tokens ?? 0
       // Reasoning and call items go back verbatim, as the Responses API requires.
@@ -185,10 +196,11 @@ export async function runStoryAgent(input: StoryAgentInput): Promise<MatchStory>
   }
   usage.ms = Date.now() - started
 
-  const base = { matchKey: input.match.key, length: input.length, tone: input.tone, generatedAt: new Date().toISOString(), trace, usage }
+  const base = { matchKey: input.match.key, length: input.length, tone: input.tone, lang: input.lang, generatedAt: new Date().toISOString(), trace, usage }
   if (published) {
     return { ...base, ...(published as StoryDraft), origin: 'agent', model, check: checkStory(published, ctx), fallbackReason: null }
   }
   const fallback = templateStory(input)
-  return { ...base, ...fallback, origin: 'template', model: null, check: checkStory(fallback, { ...ctx, length: 'long' }), fallbackReason: failure }
+  // The template is the facts themselves, which are English.
+  return { ...base, lang: 'en', ...fallback, origin: 'template', model: null, check: checkStory(fallback, { ...ctx, length: 'long', lang: 'en' }), fallbackReason: failure }
 }

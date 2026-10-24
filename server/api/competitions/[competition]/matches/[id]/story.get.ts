@@ -1,4 +1,4 @@
-// AI match story: ?length=short|standard|long&tone=neutral|home-fan|away-fan|analyst
+// AI match story: ?length=short|standard|long&tone=neutral|home-fan|away-fan|analyst&lang=en|fi
 // Written by the story agent from the fact ledger and checked before it is returned; cached in
 // memory, KV and (for the demo) pre-written bundles. ?fresh=1 regenerates (dev only).
 // Who may read it follows the newsroom's control for the match (?lang=, per language): by default
@@ -11,6 +11,7 @@ const LENGTHS: StoryLength[] = ['short', 'standard', 'long']
 const TONES: StoryTone[] = ['neutral', 'home-fan', 'away-fan', 'analyst']
 
 export default defineEventHandler(async (event): Promise<StoryResponse> => {
+  const lang = requestLang(event)
   const { def, provider } = competitionParam(event)
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })
@@ -44,10 +45,11 @@ export default defineEventHandler(async (event): Promise<StoryResponse> => {
     matchId: match.id,
     length,
     tone,
+    lang,
     facts,
     names,
     fresh: import.meta.dev && q.fresh === '1',
-    generate: () => runStoryAgent({ match, competitionName: def.name, facts, names, length, tone }),
+    generate: () => runStoryAgent({ match, competitionName: def.name, facts, names, length, tone, lang }),
   })
   return { story, facts, names, cached: cached !== false }
 })

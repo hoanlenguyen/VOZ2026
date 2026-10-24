@@ -9,6 +9,8 @@ export interface CheckContext {
   /** People and places that must be backed by a cited fact when mentioned (players, managers, referee, venue). */
   names: string[]
   length: StoryLength
+  /** Language the story is written in (default English); Finnish uses fewer, longer words. */
+  lang?: 'en' | 'fi'
 }
 
 /** Word-count range per length (body text, headline excluded). */
@@ -18,15 +20,24 @@ export const LENGTH_WORDS: Record<StoryLength, [number, number]> = {
   long: [170, 360],
 }
 
+/** Finnish packs more into each word (cases, compounds): about 20 % fewer words for the same story. */
+export const LENGTH_WORDS_FI: Record<StoryLength, [number, number]> = {
+  short: [15, 65],
+  standard: [60, 160],
+  long: [130, 300],
+}
+
 const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
 
 const NUMBER_WORDS: Record<string, number> = {
   two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10,
   eleven: 11, twelve: 12, thirteen: 13, fourteen: 14, fifteen: 15, sixteen: 16, seventeen: 17,
   eighteen: 18, nineteen: 19, twenty: 20,
+  // Finnish (basic forms; the agents are told to write digits anyway)
+  kaksi: 2, kolme: 3, nelja: 4, viisi: 5, kuusi: 6, seitseman: 7, kahdeksan: 8, yhdeksan: 9, kymmenen: 10,
 }
 
-/** Numbers written in a text: digits ("2.29", "1–1", "45+2", "8th") and number words two–twenty. */
+/** Numbers written in a text: digits ("2.29", "1–1", "45+2", "8th") and number words (English two–twenty, Finnish kaksi–kymmenen). */
 export function numbersIn(text: string): string[] {
   const out = [...text.matchAll(/\d+(?:[.,]\d+)?/g)].map(m => m[0].replace(',', '.'))
   for (const w of fold(text).match(/[a-z]+/g) ?? []) {
@@ -58,8 +69,8 @@ const mentions = (text: string, form: string) => new RegExp(`(^|[^a-z])${form.re
 
 const BANNED: Array<[RegExp, string, 'quote' | 'speech' | 'injury']> = [
   [/["“”]/, 'contains a quotation; quotes are not allowed', 'quote'],
-  [/\b(said|says|told|according to|admitted|claimed)\b/i, 'attributes speech to someone; we have no quotes', 'speech'],
-  [/\binjur/i, 'mentions an injury; injuries are not in the facts', 'injury'],
+  [/\b(said|says|told|according to|admitted|claimed)\b|\b(sanoi|sanoo|kertoi|myönsi|totesi|väitti)\b/i, 'attributes speech to someone; we have no quotes', 'speech'],
+  [/\binjur|loukkaan|loukkaa|loukkasi/i, 'mentions an injury; injuries are not in the facts', 'injury'],
 ]
 
 export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
@@ -112,7 +123,7 @@ export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
   })
 
   const words = draft.sentences.reduce((n, s) => n + s.text.trim().split(/\s+/).length, 0)
-  const [min, max] = LENGTH_WORDS[ctx.length]
+  const [min, max] = (ctx.lang === 'fi' ? LENGTH_WORDS_FI : LENGTH_WORDS)[ctx.length]
   if (draft.sentences.length && (words < min || words > max)) {
     issues.push(`The story has ${words} words; the ${ctx.length} length needs ${min}–${max}.`)
   }

@@ -45,7 +45,8 @@
   "story": {
     "result": "Result",
     "preview": "Preview",
-    "auto": "Written automatically from official match data"
+    "auto": "Written automatically from official match data",
+    "aiTag": "AI content"
   },
   "table": {
     "title": "{league} table",
@@ -104,7 +105,8 @@
     "deskEdit": "Edit coverage",
     "storyPlus": "For subscribers",
     "coverCredit": "Photo: {credit}",
-    "previewBanner": "Preview, not published · seen as: {as}"
+    "previewBanner": "Preview, not published · seen as: {as}",
+    "aiEvidence": "Facts behind the headline"
   },
   "timeline": {
     "shown": "Events shown",
@@ -362,6 +364,41 @@
       "loading": "Preparing the preview…",
       "error": "The preview could not be prepared ({reason}).",
       "frameTitle": "Match page preview as {as}"
+    }
+  },
+  "matchStory": {
+    "title": "Match story",
+    "length": "Length",
+    "short": "Short",
+    "standard": "Standard",
+    "long": "Long read",
+    "writtenFor": "Written for",
+    "neutral": "Neutral",
+    "fans": "{team} fans",
+    "analyst": "Analyst",
+    "writing": "Writing this version from the match facts… the first time takes about 10 seconds.",
+    "loadError": "The story could not be loaded.",
+    "loadErrorReason": "The story could not be loaded ({reason}).",
+    "retry": "Try again",
+    "factN": "Fact {n}",
+    "byAgent": "AI-written by {model} from official match data · checked against {n} facts",
+    "byTemplate": "Written from match data (the AI story was not available, so this is our template)",
+    "showFacts": "Show the facts behind this story",
+    "hideFacts": "Hide the facts",
+    "how": "How this was made",
+    "howAgent": "A single AI agent ({model}) read {n} verified facts about this match, wrote the story, checked every number and name against the facts it cites, and submitted it. Our harness checked it again before publishing.",
+    "fromCache": "This copy was served from the cache.",
+    "howTemplate": "The agent could not produce a story that passed the check ({reason}), so the harness published the facts as a template instead.",
+    "usage": "{turns} turns · {time} · {tokensIn} tokens in, {tokensOut} out",
+    "section": {
+      "result": "Result",
+      "timeline": "Timeline",
+      "stats": "Stats",
+      "form": "Form",
+      "table": "Table",
+      "h2h": "Head-to-head",
+      "context": "Context",
+      "edge": "Edge"
     }
   }
 }

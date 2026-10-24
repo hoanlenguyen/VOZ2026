@@ -18,6 +18,8 @@
   // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY, NUXT_OPENAI_API_KEY),
   // set by the deploy workflow from GitHub secrets; locally they come from .dev.vars.
   "vars": {
-    "NUXT_DATA_MODE": "auto"
+    "NUXT_DATA_MODE": "auto",
+    // AI match story model: display name or API id. Change it here and deploy to switch models.
+    "NUXT_OPENAI_MODEL": "GPT-6 Luna"
   }
 }

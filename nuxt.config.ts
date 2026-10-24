@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     gnewsApiKey: '',
     /** AI match stories (OpenAI Responses API). */
     openaiApiKey: '',
+    /** Display name or API id; set NUXT_OPENAI_MODEL to switch models (e.g. "GPT-6 Sol"). */
     openaiModel: 'gpt-6-luna',
     openaiBaseUrl: 'https://api.openai.com/v1',
     storyReasoningEffort: 'low',
@@ -68,6 +69,8 @@ export default defineNuxtConfig({
       { baseName: 'accounts', dir: '../data/accounts' },
       // Pre-written AI stories (npm run warm:stories), read via useStorage('assets:stories').
       { baseName: 'stories', dir: '../data/stories' },
+      // Pre-written AI headlines (npm run warm:stories), read via useStorage('assets:headlines').
+      { baseName: 'headlines', dir: '../data/headlines' },
     ],
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
     storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },

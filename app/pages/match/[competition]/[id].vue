@@ -2,6 +2,7 @@
 // Match page: scoreboard, then a side-by-side comparison counted from the season's results.
 // The AI match story is built in Phase 2.
 import { PhCaretLeft, PhPencilSimple } from '@phosphor-icons/vue'
+import type { HeadlineResponse } from '#shared/types/headline'
 
 definePageMeta({ layout: 'news' })
 
@@ -28,6 +29,13 @@ const periodLine = computed(() => {
 const { can } = useAccount()
 // The newsroom editor for this match's coverage (front-page story id: result or preview).
 const editLink = computed(() => match.value && `/newsroom/stories/${encodeURIComponent(`${finished.value ? 'r' : 'p'}-${match.value.key}`)}`)
+// AI title + subtitle, loaded in the browser (a first-time write takes a few seconds); until then,
+// and whenever there is none, the score is the title.
+const { data: aiData } = useLazyFetch<HeadlineResponse>(
+  () => `/api/competitions/${route.params.competition}/matches/${route.params.id}/headline`,
+  { query: { lang: locale }, server: false },
+)
+const ai = computed(() => aiData.value?.headline ?? null)
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -56,7 +64,14 @@ useHead(() => ({
           </template>
           <span aria-hidden="true">·</span><span class="num">{{ fmt.stamp(match.start) }}</span>
         </p>
-        <h1 class="title num">
+        <template v-if="ai">
+          <h1 class="title">{{ keepScoresTogether(ai.headline) }}</h1>
+          <p class="dek">{{ keepScoresTogether(ai.subtitle) }}</p>
+          <p class="scoreline num">
+            {{ match.home.shortName }} {{ finished ? fmt.score(match) : t('visual.vs') }} {{ match.away.shortName }}
+          </p>
+        </template>
+        <h1 v-else class="title num">
           {{ match.home.shortName }} {{ finished ? fmt.score(match) : t('visual.vs') }} {{ match.away.shortName }}
         </h1>
         <p class="meta num">
@@ -64,6 +79,15 @@ useHead(() => ({
           <template v-if="match.venue"><span v-if="periodLine" aria-hidden="true"> · </span>{{ match.venue }}</template>
           <template v-if="match.attendance"> · {{ t('match.spectators', { n: fmt.number(match.attendance) }) }}</template>
         </p>
+        <details v-if="ai" class="ai-note">
+          <summary>
+            <span class="ai-tag">{{ t('story.aiTag') }}</span>
+            <span class="sr-only">{{ t('match.aiEvidence') }}</span>
+          </summary>
+          <ul class="evidence" :aria-label="t('match.aiEvidence')">
+            <li v-for="f in ai.evidence" :key="f.id">{{ f.text }}</li>
+          </ul>
+        </details>
         <!-- The newsroom's cover image replaces the match graphic when one is set. -->
         <figure v-if="data.cover" class="visual cover">
           <img :src="data.cover.src" :alt="data.cover.alt">
@@ -182,6 +206,23 @@ useHead(() => ({
 }
 .title { margin: 10px 0 0; font-size: clamp(26px, 4vw, 36px); line-height: 1.22; font-weight: 700; color: var(--headline); }
 .meta { margin: 10px 0 0; font-size: 14px; color: var(--summary); }
+.dek { margin: 12px auto 0; max-width: 640px; font-size: 18px; line-height: 1.5; font-weight: 500; color: var(--text-2); }
+.scoreline { margin: 14px 0 0; font-size: 20px; font-weight: 700; color: var(--headline); }
+.ai-note { margin: 12px auto 0; max-width: 640px; font-size: 12px; color: var(--meta); }
+.ai-note summary {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; cursor: pointer; list-style: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.ai-note summary::-webkit-details-marker { display: none; }
+.ai-note summary:hover .ai-tag { background: var(--surface); }
+.ai-tag {
+  padding: 0 4px; border: 1px solid currentColor; border-radius: 3px; text-transform: uppercase;
+  font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.ai-note summary:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 2px; border-radius: 4px; }
+.evidence { margin: 0; padding: 0 0 0 18px; text-align: left; font-size: 13px; line-height: 1.5; color: var(--summary); }
+.evidence li + li { margin-top: 4px; }
 .visual { margin-top: 20px; }
 @media (min-width: 640px) { .visual { aspect-ratio: 21 / 9; } }
 
