@@ -49,10 +49,6 @@ export default defineNuxtConfig({
     openaiBaseUrl: 'https://api.openai.com/v1',
     storyReasoningEffort: 'low',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
-    /** Hugging Face Inference Providers (OpenAI-compatible router) for the translation agent. */
-    hfToken: '',
-    hfModel: 'openai/gpt-oss-120b',
-    hfBaseUrl: 'https://router.huggingface.co/v1',
     dataMode: 'auto',
   },
 
