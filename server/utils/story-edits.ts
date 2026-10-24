@@ -6,7 +6,8 @@
 // readers too) or 'subscribers' (premium; others get the opening as the paywall teaser).
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
-import type { ArticleAudience, MatchStoryControl, StoryCover, StoryMode } from '#shared/types/stories'
+import type { StoryLength, StoryTone } from '#shared/types/story'
+import type { ArticleAudience, CoverImage, MatchStoryControl, StoryCover, StoryMode } from '#shared/types/stories'
 
 export const STORY_ID = /^[rp]-[\w-]+:\w+$/
 
@@ -49,8 +50,10 @@ const audienceOf = (v: unknown): ArticleAudience => (v === 'subscribers' ? 'subs
 const line = (v: unknown, max: number) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim().slice(0, max) : '')
 
 /** Readers' default when the newsroom has not touched a match story. */
-export const DEFAULT_STORY_CONTROL: Pick<MatchStoryControl, 'mode' | 'audience'> = { mode: 'ai', audience: 'subscribers' }
+export const DEFAULT_STORY_CONTROL: Pick<MatchStoryControl, 'mode' | 'audience' | 'length' | 'tone'> = { mode: 'ai', audience: 'subscribers', length: 'standard', tone: 'neutral' }
 const MODES: StoryMode[] = ['ai', 'edited', 'hidden']
+const LENGTHS: StoryLength[] = ['short', 'standard', 'long']
+const TONES: StoryTone[] = ['neutral', 'home-fan', 'away-fan', 'analyst']
 const controlKey = (lang: Lang) => `newsroom:match-stories:${lang}`
 
 /** Validates a match story control; the edited version needs a headline and text. */
@@ -61,7 +64,17 @@ export function cleanStoryControl(input: Record<string, unknown> | undefined, by
   if (mode === 'edited' && (!headline || !plainText(body))) {
     throw createError({ statusCode: 400, statusMessage: 'The edited match story needs a headline and text' })
   }
-  return { mode, audience: audienceOf(input?.audience), headline, body, cover: cleanCover(input?.cover), by, at: new Date().toISOString() }
+  return {
+    mode,
+    audience: audienceOf(input?.audience),
+    length: LENGTHS.includes(input?.length as StoryLength) ? input!.length as StoryLength : 'standard',
+    tone: TONES.includes(input?.tone as StoryTone) ? input!.tone as StoryTone : 'neutral',
+    headline,
+    body,
+    cover: cleanCover(input?.cover),
+    by,
+    at: new Date().toISOString(),
+  }
 }
 
 /** A cover needs a stored image id and alt text; the PUT handler checks the image exists. */
@@ -73,10 +86,15 @@ function cleanCover(input: unknown): StoryCover | null {
   return { id: c.id, alt, credit: line(c.credit, 120) }
 }
 
-/** The cover as pages show it (null when the story is hidden). */
-export function coverOf(control: MatchStoryControl | null) {
-  const c = control?.mode !== 'hidden' ? control?.cover : null
+/** The cover as pages show it; it belongs to the match, so it shows whatever the story mode. */
+export function coverOf(control: MatchStoryControl | null): CoverImage | null {
+  const c = control?.cover
   return c ? { src: imageUrl(c.id), alt: c.alt, credit: c.credit } : null
+}
+
+/** The control with defaults filled in (controls saved before length/tone existed lack them). */
+export function controlSettings(control: MatchStoryControl | null) {
+  return { ...DEFAULT_STORY_CONTROL, ...control }
 }
 
 export async function storyControls(lang: Lang): Promise<Record<string, MatchStoryControl>> {

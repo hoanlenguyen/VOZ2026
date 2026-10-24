@@ -56,7 +56,12 @@ useHead(() => ({
           <template v-if="match.venue"><span v-if="periodLine" aria-hidden="true"> · </span>{{ match.venue }}</template>
           <template v-if="match.attendance"> · {{ t('match.spectators', { n: fmt.number(match.attendance) }) }}</template>
         </p>
-        <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
+        <!-- The newsroom's cover image replaces the match graphic when one is set. -->
+        <figure v-if="data.cover" class="visual cover">
+          <img :src="data.cover.src" :alt="data.cover.alt">
+          <figcaption v-if="data.cover.credit">{{ t('match.coverCredit', { credit: data.cover.credit }) }}</figcaption>
+        </figure>
+        <NewsMatchVisual v-else :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
       <aside v-if="can.newsroom && editLink" class="desk" :aria-label="t('match.deskLabel')">
@@ -71,16 +76,12 @@ useHead(() => ({
 
       <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" />
 
-      <!-- Match story as the newsroom set it: the AI story or the newsroom's edited version, with its
-           cover image, or (newsroom accounts only) a note that it is hidden from readers. -->
+      <!-- Match story as the newsroom set it: the published AI version or the newsroom's edited version,
+           or (newsroom accounts only) a note that it is hidden from readers. -->
       <section v-if="data.story" class="block" aria-labelledby="story-title">
         <NewsSectionTitle id="story-title">{{ t('match.story') }}</NewsSectionTitle>
         <p v-if="data.story.mode === 'hidden'" class="notice">{{ t('match.storyHidden') }}</p>
         <template v-else>
-          <figure v-if="data.story.cover" class="cover">
-            <img :src="data.story.cover.src" :alt="data.story.cover.alt">
-            <figcaption v-if="data.story.cover.credit">{{ t('match.coverCredit', { credit: data.story.cover.credit }) }}</figcaption>
-          </figure>
           <article v-if="data.story.edited">
             <p class="article-kicker">
               <span v-if="data.story.audience === 'subscribers'" class="plus">{{ t('match.storyPlus') }} · </span>
@@ -90,7 +91,7 @@ useHead(() => ({
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div class="article-body" v-html="data.story.edited.body" />
           </article>
-          <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
+          <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :length="data.story.length" :tone="data.story.tone" />
         </template>
       </section>
 
@@ -188,9 +189,10 @@ useHead(() => ({
 }
 .desk-edit:hover { background: var(--link-hover); }
 .desk-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.cover { margin: 0 0 20px; }
+.cover { margin-bottom: 0; }
 .cover img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
-.cover figcaption { margin-top: 6px; font-size: 12px; color: var(--meta); }
+@media (min-width: 640px) { .cover { aspect-ratio: auto; } .cover img { aspect-ratio: 21 / 9; } }
+.cover figcaption { margin-top: 6px; font-size: 12px; text-align: left; color: var(--meta); }
 .article-kicker { margin: 0; font-size: 13px; color: var(--meta); }
 .plus { font-weight: 700; color: var(--accent-ink); }
 .article-headline { margin: 6px 0 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.29; font-weight: 700; color: var(--headline); }

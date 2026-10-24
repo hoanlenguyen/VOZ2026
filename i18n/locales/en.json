@@ -267,7 +267,7 @@
     "revert": "Revert to automatic",
     "view": "View match page",
     "saved": "Published.",
-    "reverted": "Reverted: subscribers get the AI story again.",
+    "reverted": "Reverted: subscribers get the standard AI story and the match graphic again.",
     "saveError": "Could not publish ({reason}).",
     "loadError": "The story could not be loaded ({reason}).",
     "partStory": "Match story",
@@ -319,18 +319,46 @@
     "noStory": "This match has no match story: stories are written for finished matches with full match data.",
     "cover": {
       "title": "Cover image",
-      "hint": "Shown above the story and on the front-page card. Use only photos VOZ owns or has the rights to.",
-      "add": "Add a cover image",
-      "formats": "JPEG, PNG or WebP, up to 2 MB",
+      "hint": "The image at the top of the match page and on the front-page card. Use only photos VOZ owns or has the rights to.",
+      "formats": "JPEG, PNG or WebP, up to 2 MB.",
       "uploading": "Uploading…",
-      "replace": "Replace",
-      "remove": "Remove",
+      "replace": "Replace image",
       "alt": "Alt text",
       "altHint": "Describe the image for readers who cannot see it.",
       "credit": "Credit",
       "creditPlaceholder": "Photographer / agency",
       "tooLarge": "The image is larger than 2 MB.",
-      "uploadError": "The image could not be uploaded ({reason})."
+      "uploadError": "The image could not be uploaded ({reason}).",
+      "graphic": "Now: the match graphic, drawn from match data.",
+      "custom": "Now: your cover image.",
+      "useGraphic": "Use the match graphic"
+    },
+    "format": {
+      "title": "Version readers get",
+      "titleEdited": "AI version to start from",
+      "length": "Length",
+      "tone": "Written for",
+      "lengths": {
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long read"
+      },
+      "tones": {
+        "neutral": "Neutral",
+        "fans": "{team} fans",
+        "analyst": "Analyst"
+      }
+    },
+    "preview": {
+      "open": "Preview",
+      "title": "Preview: what readers see",
+      "as": "Preview as",
+      "subscriber": "Subscriber",
+      "free": "Free reader",
+      "note": "Not published yet. This is the top of the match page and its story section with your current settings.",
+      "hidden": "Readers get no match story for this match.",
+      "close": "Close preview",
+      "back": "Keep editing"
     }
   }
 }

@@ -3,7 +3,8 @@
 // memory, KV and (for the demo) pre-written bundles. ?fresh=1 regenerates (dev only).
 // Who may read it follows the newsroom's control for the match (?lang=, per language): by default
 // subscribers; everyone when published for everyone; only the newsroom when the newsroom replaced
-// it with an edited version or hid it. Readers without a subscription get the standard version only.
+// it with an edited version or hid it. Readers get the version the newsroom published (length and
+// tone); only newsroom accounts may ask for the others.
 import type { StoryLength, StoryResponse, StoryTone } from '#shared/types/story'
 
 const LENGTHS: StoryLength[] = ['short', 'standard', 'long']
@@ -21,13 +22,14 @@ export default defineEventHandler(async (event): Promise<StoryResponse> => {
   const season = await provider.matches(def, {}).then(r => r.data, () => [])
   const mock = await findMockMatch(def, id, season)
   const match = mock?.match ?? (await provider.match(def, id)).data
-  const { mode, audience } = (await matchStoryControl(match.key, requestLang(event))) ?? DEFAULT_STORY_CONTROL
+  const published = controlSettings(await matchStoryControl(match.key, requestLang(event)))
+  const { mode, audience } = published
   if (!entitlements.newsroom) {
     if (mode !== 'ai') throw createError({ statusCode: 404, statusMessage: 'No AI story for this match' })
     if (audience === 'subscribers' && !entitlements.premium) {
       await requireEntitlement(event, 'premium')
     }
-    if (!entitlements.premium) [length, tone] = ['standard', 'neutral']
+    ;[length, tone] = [published.length, published.tone]
   }
   if (match.status !== 'finished') throw createError({ statusCode: 409, statusMessage: 'Stories are written after the final whistle' })
 

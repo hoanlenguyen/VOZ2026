@@ -1,41 +1,34 @@
 <script setup lang="ts">
-// AI match story with reader choices (length, perspective) and its evidence: every sentence links
-// to the verified facts it cites, and "How this was made" shows the agent's steps.
+// AI match story and its evidence: every sentence links to the verified facts it cites, and "How
+// this was made" shows the agent's steps. The version (length, perspective) is chosen in the
+// newsroom editor; readers always get the published one (the server enforces it).
 import { PhArrowClockwise, PhCheckCircle, PhListChecks, PhSparkle } from '@phosphor-icons/vue'
 import type { Fact, StoryLength, StoryResponse, StoryTone } from '#shared/types/story'
 
-// `preview`: the newsroom editor's view of what readers get (standard, neutral): no format
-// switches, facts and references open.
-const props = defineProps<{ competitionId: string, matchId: string, home: string, away: string, preview?: boolean }>()
+// `preview`: the editor's view with facts and references open. `reader`: exactly what readers see,
+// without the newsroom's evidence tools (the editor's reader preview).
+const props = withDefaults(defineProps<{
+  competitionId: string
+  matchId: string
+  length?: StoryLength
+  tone?: StoryTone
+  preview?: boolean
+  reader?: boolean
+}>(), { length: 'standard', tone: 'neutral' })
 
-// Readers get the story itself (standard, neutral). The format switches and the evidence
-// (AI label, facts behind each sentence, "How this was made") are newsroom tools.
+// The evidence (AI label, facts behind each sentence, "How this was made") is a newsroom tool.
 const { can } = useAccount()
 const { locale } = useI18n()
-const editor = computed(() => can.value.newsroom)
-const length = ref<StoryLength>('standard')
-const tone = ref<StoryTone>('neutral')
+const editor = computed(() => can.value.newsroom && !props.reader)
 const showFacts = ref(props.preview)
 const activeSentence = ref<number | null>(null)
-
-const LENGTHS: Array<{ id: StoryLength, label: string }> = [
-  { id: 'short', label: 'Short' },
-  { id: 'standard', label: 'Standard' },
-  { id: 'long', label: 'Long read' },
-]
-const tones = computed<Array<{ id: StoryTone, label: string }>>(() => [
-  { id: 'neutral', label: 'Neutral' },
-  { id: 'home-fan', label: `${props.home} fans` },
-  { id: 'away-fan', label: `${props.away} fans` },
-  { id: 'analyst', label: 'Analyst' },
-])
 
 // Loaded in the browser: the first view of a version may take ~10 s while the agent writes it.
 const { data, status, error, refresh } = useLazyFetch<StoryResponse>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/story`,
-  { query: { length, tone, lang: locale }, server: false },
+  { query: computed(() => ({ length: props.length, tone: props.tone, lang: locale.value })), server: false },
 )
-watch([length, tone], () => (activeSentence.value = null))
+watch(() => [props.length, props.tone], () => (activeSentence.value = null))
 
 const story = computed(() => data.value?.story)
 const factIndex = computed(() => new Map((data.value?.facts ?? []).map((f, i) => [f.id, i + 1])))
@@ -58,23 +51,6 @@ function toggleSentence(i: number) {
 
 <template>
   <div class="story-block">
-    <div v-if="editor && !preview" class="controls">
-      <fieldset class="seg">
-        <legend class="seg-label">Length</legend>
-        <label v-for="l in LENGTHS" :key="l.id" class="seg-option">
-          <input v-model="length" type="radio" name="story-length" :value="l.id">
-          <span>{{ l.label }}</span>
-        </label>
-      </fieldset>
-      <fieldset class="seg">
-        <legend class="seg-label">Written for</legend>
-        <label v-for="t in tones" :key="t.id" class="seg-option">
-          <input v-model="tone" type="radio" name="story-tone" :value="t.id">
-          <span>{{ t.label }}</span>
-        </label>
-      </fieldset>
-    </div>
-
     <div class="body" aria-live="polite" :aria-busy="status === 'pending'">
       <div v-if="status === 'pending' || status === 'idle'" class="loading">
         <span class="sk sk--title" /><span class="sk" /><span class="sk" /><span class="sk sk--short" />
@@ -145,20 +121,6 @@ function toggleSentence(i: number) {
 </template>
 
 <style scoped>
-.controls { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-bottom: 20px; }
-.seg { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px; }
-.seg-label { float: left; margin-right: 8px; padding: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
-.seg-option { position: relative; }
-.seg-option input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
-.seg-option span {
-  display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border-radius: 999px;
-  border: 1px solid var(--line-strong); font-size: 14px; font-weight: 600; color: var(--summary);
-  transition: background-color var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
-}
-.seg-option:hover span { border-color: var(--border-control); color: var(--headline); }
-.seg-option input:checked + span { background: var(--headline); border-color: var(--headline); color: var(--bg); }
-.seg-option input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
-
 .body { min-height: 180px; }
 .loading { display: flex; flex-direction: column; gap: 10px; }
 .sk { display: block; height: 14px; border-radius: 4px; background: var(--surface); }

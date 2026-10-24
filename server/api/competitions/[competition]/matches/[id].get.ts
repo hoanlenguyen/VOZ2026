@@ -29,14 +29,14 @@ export default defineEventHandler(async (event) => {
   // Newsroom control (per language): the match story is the AI version, the newsroom's edit or
   // hidden, for everyone or for subscribers only.
   const control = await matchStoryControl(match.key, lang)
-  const { mode, audience } = control ?? DEFAULT_STORY_CONTROL
+  const { mode, audience, length, tone } = controlSettings(control)
   const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
   const storyLocked = hasStory && audience === 'subscribers' && !entitlements.premium
   const edited = control?.mode === 'edited'
     ? { headline: control.headline, body: control.body, audience, by: control.by, at: control.at }
     : null
   // Newsroom accounts also get a hidden story's section (mode 'hidden'), so they can see the state.
-  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, edited, cover: coverOf(control) } : null
+  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, length, tone, edited } : null
 
   // Locked readers see the opening of the match story, fading into the offer. AI text only from stories that already exist (cache / pre-written),
   // so a free reader never starts the agent.
@@ -46,7 +46,7 @@ export default defineEventHandler(async (event) => {
   }
   else if (storyLocked) {
     const hit = await peekStory({
-      competitionId: def.id, matchId: match.id, length: 'standard', tone: 'neutral',
+      competitionId: def.id, matchId: match.id, length, tone,
       facts: buildFacts(def, match, extras, season ?? []), names: factNames(match, extras),
     }).catch(() => null)
     if (hit) {
@@ -59,6 +59,8 @@ export default defineEventHandler(async (event) => {
   return {
     teaser,
     story,
+    /** The newsroom's cover image, in place of the match graphic (null: show the graphic). */
+    cover: coverOf(control),
     competition: describeCompetition(def, lang),
     match,
     compare: entitlements.premium ? compare : null,

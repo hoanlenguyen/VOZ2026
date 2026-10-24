@@ -1,4 +1,5 @@
 import type { Match, SportId, StandingRow } from './sports.ts'
+import type { StoryLength, StoryTone } from './story.ts'
 
 /** A news item on the landing page. Every sentence is built from data fields, never free text. */
 export interface Story {
@@ -66,10 +67,14 @@ export type StoryMode = 'ai' | 'edited' | 'hidden'
 export interface MatchStoryControl {
   mode: StoryMode
   audience: ArticleAudience
+  /** The AI version readers get (mode 'ai'). */
+  length: StoryLength
+  tone: StoryTone
   /** The edited version (mode 'edited'); `body` is sanitised HTML. Kept when switching modes. */
   headline: string
   body: string
-  /** Cover image (uploaded to the newsroom image store), shown with the AI or edited story. */
+  /** Cover image (uploaded to the newsroom image store): replaces the match graphic on the match
+   *  page and the front-page card. */
   cover: StoryCover | null
   by: string
   at: string
@@ -86,7 +91,12 @@ export interface StoryCover {
 export interface MatchStorySection {
   mode: StoryMode
   audience: ArticleAudience
+  /** The published AI version (mode 'ai'). */
+  length: StoryLength
+  tone: StoryTone
   /** The newsroom's version when mode is 'edited'. */
   edited: EditedMatchStory | null
-  cover: { src: string, alt: string, credit: string } | null
 }
+
+/** A cover image as pages show it. */
+export interface CoverImage { src: string, alt: string, credit: string }
