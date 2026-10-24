@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { LandingData } from '#shared/types/stories'
 
-const props = withDefaults(defineProps<{ table: LandingData['tables'][number], limit?: number }>(), { limit: 8 })
+// `highlight`: team keys to mark (the match page marks its two teams).
+const props = withDefaults(defineProps<{ table: LandingData['tables'][number], limit?: number, highlight?: string[] }>(), { limit: 8, highlight: () => [] })
 const rows = computed(() => props.table.rows.slice(0, props.limit))
 const { t } = useI18n()
 </script>
@@ -14,7 +15,7 @@ const { t } = useI18n()
         <tr><th scope="col">#</th><th scope="col">{{ t('table.team') }}</th><th scope="col"><abbr :title="t('table.played')">{{ t('table.playedShort') }}</abbr></th><th scope="col"><abbr :title="t('table.points')">{{ t('table.pointsShort') }}</abbr></th></tr>
       </thead>
       <tbody>
-        <tr v-for="r in rows" :key="r.teamKey">
+        <tr v-for="r in rows" :key="r.teamKey" :class="{ 'row--on': highlight.includes(r.teamKey) }" :aria-current="highlight.includes(r.teamKey) ? 'true' : undefined">
           <td class="rank">{{ r.rank }}</td>
           <td class="team">
             <img v-if="r.logo" :src="r.logo" alt="" width="20" height="20" loading="lazy">
@@ -44,5 +45,7 @@ td { padding: 8px 4px; border-top: 1px solid var(--line); color: var(--headline)
 .team img { object-fit: contain; flex-shrink: 0; }
 .team span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pts { font-weight: 700; }
+.row--on td { background: var(--surface); font-weight: 700; }
+.row--on td:first-child { box-shadow: inset 3px 0 0 var(--accent); }
 abbr { text-decoration: none; }
 </style>

@@ -107,7 +107,8 @@
     "previewBanner": "Preview, not published · seen as: {as}",
     "aiEvidence": "Facts behind the headline",
     "by": "By {name}",
-    "authorAi": "VOZ AI, from official match data"
+    "authorAi": "VOZ AI, from official match data",
+    "standings": "League table"
   },
   "timeline": {
     "shown": "Events shown",

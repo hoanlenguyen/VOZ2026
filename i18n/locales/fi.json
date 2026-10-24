@@ -107,7 +107,8 @@
     "previewBanner": "Esikatselu, ei julkaistu · lukijana: {as}",
     "aiEvidence": "Otsikon taustalla olevat faktat",
     "by": "Teksti: {name}",
-    "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta"
+    "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta",
+    "standings": "Sarjataulukko"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
