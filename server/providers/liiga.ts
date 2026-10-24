@@ -68,6 +68,28 @@ interface RawStanding {
   shortHandedPercentage?: string | null
 }
 
+// games/{season}/{id}/stats: one entry per period and team, plus puck control per period.
+interface RawPeriodPlayer {
+  distance?: number | null
+  totalPasses?: number | null
+  successfulPasses?: number | null
+  period?: { blockedShots?: number | null } | null
+}
+
+interface RawPeriodTeam {
+  shots: number
+  faceOffWins: number
+  penaltyMinutes: number
+  totalDistanceTravelled?: number | null
+  periodPlayerStats?: RawPeriodPlayer[]
+}
+
+interface RawGameStats {
+  homeTeam?: RawPeriodTeam[]
+  awayTeam?: RawPeriodTeam[]
+  puckStats?: Array<{ homeTeamControlDuration: number, awayTeamControlDuration: number }>
+}
+
 const FINISH: Record<string, FinishType> = {
   ENDED_DURING_REGULAR_GAME_TIME: 'regulation',
   ENDED_DURING_EXTENDED_GAME_TIME: 'overtime',
@@ -137,6 +159,28 @@ function team(c: CompetitionDef, t: RawTeamInGame): MatchTeam {
       powerplayChances: t.powerplayInstances ?? null,
       shortHandedGoals: t.shortHandedGoals ?? null,
     },
+  }
+}
+
+const total = <T>(rows: T[], f: (r: T) => number | null | undefined) => rows.reduce((sum, r) => sum + (f(r) ?? 0), 0)
+
+/** Whole-game team numbers from the per-period stats; keys extend MatchTeam.stats. */
+function gameStats(raw: RawGameStats, side: 'home' | 'away'): MatchTeam['stats'] {
+  const periods = (side === 'home' ? raw.homeTeam : raw.awayTeam) ?? []
+  if (!periods.length) return {}
+  const players = periods.flatMap(p => p.periodPlayerStats ?? [])
+  const puck = raw.puckStats ?? []
+  return {
+    shots: total(periods, p => p.shots),
+    faceoffWins: total(periods, p => p.faceOffWins),
+    penaltyMinutes: total(periods, p => p.penaltyMinutes),
+    blockedShots: total(players, p => p.period?.blockedShots),
+    passes: total(players, p => p.totalPasses),
+    passesCompleted: total(players, p => p.successfulPasses),
+    puckControlSeconds: puck.length
+      ? Math.round(total(puck, p => (side === 'home' ? p.homeTeamControlDuration : p.awayTeamControlDuration)))
+      : null,
+    distanceKm: Math.round(total(periods, p => p.totalDistanceTravelled) / 100) / 10,
   }
 }
 
@@ -273,7 +317,16 @@ export const liigaProvider: SportProvider = {
   },
 
   async match(c, id) {
-    const { data, source } = await upstream<{ game: RawGame }>('liiga', `games/${season()}/${id}`)
-    return { data: normalizeGame(c, data.game), source }
+    const [{ data, source }, stats] = await Promise.all([
+      upstream<{ game: RawGame }>('liiga', `games/${season()}/${id}`),
+      // Missing before puck drop; the match page then simply has no match stats.
+      upstream<RawGameStats>('liiga', `games/${season()}/${id}/stats`).then(r => r.data, () => null),
+    ])
+    const match = normalizeGame(c, data.game)
+    if (stats) {
+      Object.assign(match.home.stats, gameStats(stats, 'home'))
+      Object.assign(match.away.stats, gameStats(stats, 'away'))
+    }
+    return { data: match, source }
   },
 }

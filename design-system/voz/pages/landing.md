@@ -6,14 +6,22 @@ big section title, category tabs, lead + side stories, card row, "Latest" list w
 ## Overrides
 - **Theme: light "paper"** (`[data-theme="paper"]`, set by `app/layouts/news.vue`). App screens stay dark.
   Contrast on #FFF: ink 18.7, ink-2 10.3, muted 6.2, control border 5.0, `--accent-ink` 6.3.
-- Gold `#F5C518` is a **fill only** here (CTA, active-tab underline, section bar); never text on white (1.6:1).
-- Headlines: Inter 700, -0.01em; section titles and scores: Barlow Condensed 700 uppercase.
-- Width: content max 1200 px, 16 px gutters; grid 2fr/1fr from 1024 px.
+- Gold `#F5C518` is a **fill only** here (CTA, active-tab underline); never text on white (1.6:1).
+- Editorial colours (tokens in `main.css`): headline `--headline` #333 (12.6), hover `--link-hover` #006BA0 (5.9),
+  meta `--meta` #767676 (4.5), summary `--summary` #666 (5.7), dividers `--line` #EEE / `--line-strong` #DDD,
+  section bar `--section-bar` orange→pink gradient (decoration only).
+- Type scale: lead 28/1.29 centred · side 18/1.22 · card 16/1.4 · list 17–18/1.3 · summary 14/1.5 (lead 16/1.56)
+  · kicker 11/16 uppercase · section title Inter 700 32 uppercase with 5 px skewed bar · widget title 20/24 with `#`.
+- Width: content max 1100 px (`--page-max`); gutters 16 / 30 (≥768) / 50 (≥1280). Header 52 px.
+- Spacing: featured block 66 / 34 with 1 px divider, side items 20 px apart; 4-up card row below a 20 px rule;
+  50 px between blocks; Latest + 300 px sidebar, 30 px gap; sidebar boxes 24 px padding, 4 px radius.
 
 ## Imagery
 - No photos. Each story's picture is `NewsMatchVisual`: team crests + score/kick-off on the dark scoreboard
   (`--board`). It is built from the same data as the text, so it cannot show something that did not happen.
-- Reserve space with `aspect-ratio` (16:9 lead/cards, 4:3 list thumbnails) to avoid layout shift.
+- The board carries faint line art of the sport's field (football pitch with mowing stripes, hockey rink with
+  red/blue lines), drawn as SVG at real proportions; `--board-line` / `--board-stripe` / `--board-rink-*` tokens.
+- Reserve space with `aspect-ratio` (16:9 lead/cards, 4:3 list thumbnails at 33% width); 4 px radius to avoid layout shift.
 
 ## Content rules
 - Every story is generated from data (`server/utils/stories.ts`); the lead carries

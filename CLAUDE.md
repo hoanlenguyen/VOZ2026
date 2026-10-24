@@ -22,6 +22,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `server/utils/upstream.ts` — the only place that calls external APIs: keys, cache, rate limit, snapshot fallback
 - `server/utils/sports.ts` — provider registry and the `[competition]` route helper
 - API: `/api/landing`, `/api/competitions`, `/api/competitions/:competition/{teams,standings,matches,matches/:id}`, `/api/health`, dev-only `/api/raw/:provider/*`
+- `server/utils/compare.ts` — match-page comparison: goals by period, `MatchTeam.stats` (Liiga: shots, puck control, faceoffs, passes, PIM, … from `games/{season}/{id}/stats`), and both teams' season record before kick-off counted from results (points/goals reconcile with the official tables); returned as `compare` by `/api/competitions/:competition/matches/:id`
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
 - Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`

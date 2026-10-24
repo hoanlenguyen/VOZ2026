@@ -16,7 +16,7 @@ useHead({ htmlAttrs: { 'data-theme': 'paper' }, meta: [{ name: 'theme-color', co
 <style scoped>
 .news-layout { min-height: 100dvh; background: var(--bg); color: var(--text); }
 .news-footer {
-  max-width: 1200px; margin: 48px auto 0; padding: 24px 16px calc(32px + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--line); color: var(--muted); font-size: 13px;
+  width: calc(100% - 32px); max-width: var(--page-max); margin: 50px auto 0; padding: 24px 0 calc(32px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--line-strong); color: var(--meta); font-size: 13px;
 }
 </style>
