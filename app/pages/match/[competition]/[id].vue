@@ -110,7 +110,7 @@ useHead(() => ({
       </section>
 
       <section v-if="data.compare" class="block" aria-labelledby="compare-title">
-        <NewsSectionTitle id="compare-title">{{ t('match.compare') }}</NewsSectionTitle>
+        <NewsSectionTitle id="compare-title">{{ finished ? t('match.statsTitle') : t('match.compare') }}</NewsSectionTitle>
         <NewsStatCompare
           :compare="data.compare"
           :home="{ name: match.home.shortName, logo: match.home.logo }"

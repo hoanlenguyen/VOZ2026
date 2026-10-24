@@ -197,11 +197,22 @@ function meetings(season: Match[], m: Match, tx: Text): CompareGroup | null {
   }
 }
 
+/** "This match" rows followed by the game's stats, as one group titled "Match stats". */
+function mergeStats(played: CompareGroup, stats: CompareGroup | null, tx: Text): CompareGroup {
+  const note = [played.note, stats?.note].filter(Boolean).join(' ') || null
+  return { id: 'stats', title: tx.matchStats, note, rows: [...played.rows, ...(stats?.rows ?? [])] }
+}
+
 export function buildCompare(c: CompetitionDef, m: Match, season: Match[], lang: Lang = 'en'): MatchCompare | null {
   const tx = COMPARE_TEXT[lang]
   const h = seasonRecord(season, m.home.key, m.start, 'home')
   const a = seasonRecord(season, m.away.key, m.start, 'away')
-  const groups = [thisMatch(m, tx), matchStats(m, tx), beforeKickOff(c, h, a, tx, competitionName(c, lang)), lastFive(h, a, tx), meetings(season, m, tx)]
+  // A result shows one "Match stats" group (score by period, then the game's stats) and the earlier
+  // meetings; the pre-match comparison (season before kick-off, last five) is for upcoming games.
+  const played = thisMatch(m, tx)
+  const groups = (played
+    ? [mergeStats(played, matchStats(m, tx), tx), meetings(season, m, tx)]
+    : [matchStats(m, tx), beforeKickOff(c, h, a, tx, competitionName(c, lang)), lastFive(h, a, tx), meetings(season, m, tx)])
     .filter((g): g is CompareGroup => g !== null)
   return { groups, form: { home: h.results.slice(-5), away: a.results.slice(-5) } }
 }

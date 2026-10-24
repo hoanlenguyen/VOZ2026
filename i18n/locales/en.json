@@ -110,7 +110,8 @@
     "aiEvidence": "Facts behind the headline",
     "by": "By {name}",
     "authorAi": "VOZ AI, from official match data",
-    "standings": "League table"
+    "standings": "League table",
+    "statsTitle": "Match stats"
   },
   "timeline": {
     "shown": "Events shown",

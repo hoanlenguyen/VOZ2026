@@ -110,7 +110,8 @@
     "aiEvidence": "Otsikon taustalla olevat faktat",
     "by": "Teksti: {name}",
     "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta",
-    "standings": "Sarjataulukko"
+    "standings": "Sarjataulukko",
+    "statsTitle": "Ottelutilastot"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
