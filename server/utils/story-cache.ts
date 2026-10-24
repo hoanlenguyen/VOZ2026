@@ -35,25 +35,34 @@ export interface StoryRequest {
   fresh?: boolean
 }
 
+const storyKey = (req: Omit<StoryRequest, 'generate' | 'fresh'>) =>
+  `story:${PROMPT_VERSION}:${req.competitionId}:${req.matchId}:${req.length}-${req.tone}:${hash(JSON.stringify(req.facts) + llmConfig().model)}`
+
+/** A story from the cache layers only (memory, KV, bundled); never runs the agent. */
+export async function peekStory(req: Omit<StoryRequest, 'generate' | 'fresh'>): Promise<{ story: MatchStory, cached: 'memory' | 'kv' | 'bundled' } | null> {
+  const key = storyKey(req)
+  const mem = memory.get(key)
+  if (mem) return { story: mem, cached: 'memory' }
+
+  const kv = await useStorage('kvcache').getItem<MatchStory>(key).catch(() => null)
+  if (kv) {
+    memory.set(key, kv)
+    return { story: kv, cached: 'kv' }
+  }
+
+  const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${req.length}-${req.tone}.json`).catch(() => null)
+  if (bundled?.origin === 'agent' && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length }).passed) {
+    memory.set(key, bundled)
+    return { story: bundled, cached: 'bundled' }
+  }
+  return null
+}
+
 export async function cachedStory(req: StoryRequest): Promise<{ story: MatchStory, cached: 'memory' | 'kv' | 'bundled' | false }> {
-  const variant = `${req.length}-${req.tone}`
-  const key = `story:${PROMPT_VERSION}:${req.competitionId}:${req.matchId}:${variant}:${hash(JSON.stringify(req.facts) + llmConfig().model)}`
-
+  const key = storyKey(req)
   if (!req.fresh) {
-    const mem = memory.get(key)
-    if (mem) return { story: mem, cached: 'memory' }
-
-    const kv = await useStorage('kvcache').getItem<MatchStory>(key).catch(() => null)
-    if (kv) {
-      memory.set(key, kv)
-      return { story: kv, cached: 'kv' }
-    }
-
-    const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${variant}.json`).catch(() => null)
-    if (bundled?.origin === 'agent' && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length }).passed) {
-      memory.set(key, bundled)
-      return { story: bundled, cached: 'bundled' }
-    }
+    const hit = await peekStory(req)
+    if (hit) return hit
   }
 
   let run = inFlight.get(key)

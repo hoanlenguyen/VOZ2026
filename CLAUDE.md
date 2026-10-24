@@ -53,7 +53,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
   - Stories show only on match pages with full data (`data.extras`), i.e. mock matches today. Cost per version ≈ $0.001 (3 turns, ~5k tokens in / 700 out).
   - Before reading the OpenAI API shape from memory, check the docs: Responses API `/v1/responses`, `tool_choice: required`, function outputs as `function_call_output` items, reasoning/call items passed back verbatim, `store: false`.
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
-- Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
+- Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/login`, `/account`, `/newsroom`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`
 - `shared/utils/` must stay free of Nuxt imports: `scripts/` runs it with plain Node (type stripping)
 
@@ -75,6 +75,17 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
   Finnish keeps team names in the basic form (no case endings): "HIFK voittoon: K-Espoo–HIFK 0–3", "Maalit (HIFK): …".
 - Code never reads display labels: use structured fields (`TimelineEvent.goalType`, `assist`, `playerOff`).
 - External text (other outlets' headlines) is translated by the AI agent (`server/utils/translate.ts`), not by i18n. The press search runs in the reader's language first, then any language.
+
+## Accounts and paywall (demo)
+- Demo accounts in `data/accounts/accounts.json` (server asset `accounts`), passwords as PBKDF2-SHA256 hashes; all three use the password `demo`:
+  `subscription@demo.com` (plan `subscriber`), `free@demo.com` (`free`), `newsroom@demo.com` (`newsroom`).
+- `server/utils/accounts.ts`: `verifyLogin`, signed session cookie `voz_session` (HMAC with `NUXT_SESSION_SECRET`, demo secret when empty; httpOnly, 7 days), `sessionInfo(event)`, `requireEntitlement(event, 'premium' | 'newsroom')`.
+  Entitlements: subscriber and newsroom = premium, no ads; newsroom also gets `/newsroom`.
+- API: `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`; client state via `useAccount()` (plugin `app/plugins/session.ts` loads it once; login/logout call `refreshNuxtData()`).
+- The paywall is enforced on the server: for free and signed-out readers the match API sends `compare: null`, `extras: null`, `locked: [...]` and a `teaser` (headline + two sentences of an already cached or pre-written AI story via `peekStory()`, never a new agent run; translated for fi). The story endpoint answers 401/403.
+  `NewsPaywall` shows the teaser fading into the subscription offer.
+- Readers see only the match story text; the length/perspective switches, AI label, facts and "How this was made" in `MatchStory.vue` are newsroom tools.
+- Newsroom: `/newsroom` (middleware `newsroom`) shows front-page stories with hide/show (`server/utils/moderation.ts`, stored in `kvcache`; `/api/landing` drops hidden stories, `?moderation=all` for newsroom), data-source health and AI cache counts.
 
 ## Score semantics (important for the fact ledger)
 - `MatchTeam.score` = goals scored in play (regulation + overtime/extra time). Never shootout goals.

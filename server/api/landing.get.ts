@@ -58,11 +58,15 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
     for (const q of queues) if (q.length) ranked.push(q.shift()!)
   }
 
+  // Stories an editor hid in the newsroom dashboard are left out for readers. The dashboard itself
+  // asks with ?moderation=all to see them too (newsroom accounts only).
+  const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
+  const hidden = showAll ? new Set<string>() : await hiddenStories()
   const order = (id: string) => FRONT_PAGE.indexOf(id)
   setDataSource(event, ...sources)
   return {
     generatedAt: new Date().toISOString(),
-    stories: ranked,
+    stories: ranked.filter(s => !hidden.has(s.id)),
     ticker: ticker.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     tables: tables.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     missing,

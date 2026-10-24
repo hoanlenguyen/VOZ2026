@@ -5,6 +5,7 @@ import type { Story } from '#shared/types/stories'
 
 definePageMeta({ layout: 'news' })
 const { t, locale } = useI18n()
+const { can } = useAccount()
 useHead({ title: () => t('home.pageTitle') })
 
 const { data, error, status } = await useFetch('/api/landing', { query: { lang: locale } })
@@ -77,7 +78,7 @@ const latest = computed(() => {
         </section>
         <aside class="sidebar" :aria-label="t('home.sidebar')">
           <NewsTableWidget v-for="t in data?.tables" :key="t.competitionId" :table="t" />
-          <aside class="sponsor" :aria-label="t('home.sponsored')">
+          <aside v-if="can.ads" class="sponsor" :aria-label="t('home.sponsored')">
             <p class="sponsor-label">{{ t('home.adLabel') }}</p>
             <p class="sponsor-text">{{ t('home.adText') }}</p>
           </aside>

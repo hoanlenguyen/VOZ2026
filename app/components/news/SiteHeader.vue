@@ -43,7 +43,7 @@ watch(() => route.fullPath, () => (open.value = false))
         </button>
       </div>
 
-      <NuxtLink to="/onboarding" class="cta">{{ t('nav.personalise') }}</NuxtLink>
+      <div class="account-slot"><NewsAccountMenu /></div>
     </div>
 
     <nav v-show="open" id="site-menu" class="menu" aria-label="Main">
@@ -83,12 +83,8 @@ watch(() => route.fullPath, () => (open.value = false))
 .logo-text { display: flex; flex-direction: column; line-height: 1; }
 .logo-text .display { font-size: 24px; letter-spacing: 0.08em; }
 .logo-text small { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; margin-top: 2px; }
-.cta {
-  min-height: 40px; padding: 0 14px; border-radius: 999px; display: inline-flex; align-items: center;
-  background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 14px; text-decoration: none;
-}
-.cta:hover { color: var(--on-accent); filter: brightness(0.95); }
 .desktop-nav { display: none; }
+.account-slot { justify-self: end; }
 .lang { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line-strong); border-radius: 999px; }
 .lang-btn {
   min-width: 44px; min-height: 36px; padding: 0 10px; border: 0; border-radius: 999px; background: transparent;
@@ -116,7 +112,7 @@ watch(() => route.fullPath, () => (open.value = false))
   }
   .nav-link:hover { background: transparent; color: var(--link-hover); }
   .nav-link.router-link-exact-active { color: var(--text); box-shadow: inset 0 -3px 0 var(--accent); border-radius: 0; }
-  .cta { justify-self: end; }
+  .account-slot { justify-self: end; }
   .menu { display: none !important; }
 }
 </style>

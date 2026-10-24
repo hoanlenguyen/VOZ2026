@@ -7,6 +7,7 @@ const LENGTHS: StoryLength[] = ['short', 'standard', 'long']
 const TONES: StoryTone[] = ['neutral', 'home-fan', 'away-fan', 'analyst']
 
 export default defineEventHandler(async (event): Promise<StoryResponse> => {
+  await requireEntitlement(event, 'premium')
   const { def, provider } = competitionParam(event)
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })

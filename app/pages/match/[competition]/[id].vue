@@ -56,6 +56,8 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" />
+
       <section v-if="finished && data.extras" class="block" aria-labelledby="story-title">
         <NewsSectionTitle id="story-title">Match story</NewsSectionTitle>
         <NewsMatchStory :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />

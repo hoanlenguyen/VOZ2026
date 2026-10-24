@@ -10,7 +10,12 @@
     "sports": "Sports",
     "myTeams": "My teams",
     "status": "Data status",
-    "personalise": "Personalise"
+    "personalise": "Personalise",
+    "signIn": "Sign in",
+    "account": "My account",
+    "newsroom": "Newsroom",
+    "signOut": "Sign out",
+    "accountMenu": "Account menu"
   },
   "sport": {
     "all": "All sports",
@@ -141,5 +146,89 @@
     "latest": "Latest results",
     "standings": "Standings",
     "loadError": "Could not load {name}: {reason}"
+  },
+  "plan": {
+    "free": "Free",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Newsroom"
+  },
+  "login": {
+    "pageTitle": "Sign in – VOZ",
+    "title": "Sign in",
+    "lead": "Sign in to read the full match coverage.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "busy": "Signing in…",
+    "error": "Wrong email or password.",
+    "failed": "Signing in failed. Try again in a minute.",
+    "demoTitle": "Demo accounts",
+    "demoHint": "All demo passwords are \"demo\". Choose an account to sign in.",
+    "demo": {
+      "subscriber": "Subscription account: everything, no ads",
+      "free": "Free account: scores, tables and stories, premium parts locked",
+      "newsroom": "Newsroom: everything plus the editor dashboard"
+    }
+  },
+  "paywall": {
+    "title": "Autumn offer, for you!",
+    "subBefore": "The first 2 months of VOZ Plus",
+    "subPrice": "only €9.90",
+    "benefits": {
+      "unlimited": "Full match pages in the app and on the web",
+      "stories": "AI match stories, fact-checked sentence by sentence",
+      "stats": "Stats comparison, timelines and line-ups",
+      "noAds": "No ads",
+      "languages": "Everything in English and Finnish"
+    },
+    "cta": "Discover here",
+    "manage": "You can conveniently manage your subscription in your account.",
+    "already": "Already a subscriber?",
+    "logIn": "Log in.",
+    "teaserKicker": "AI match story"
+  },
+  "account": {
+    "pageTitle": "My account – VOZ",
+    "title": "My account",
+    "plan": "Plan",
+    "subscriber": {
+      "since": "Subscriber since {date}",
+      "renews": "Renews on {date}",
+      "price": "{price} € / month",
+      "perks": "Full match coverage, AI match stories and no ads."
+    },
+    "free": {
+      "perks": "Front page, scores, tables and automatic stories. Match stats, timelines, line-ups and AI stories are for VOZ Plus subscribers.",
+      "upgradeDemo": "Upgrading is not part of the demo: sign in as subscription{'@'}demo.com to see VOZ Plus."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Full coverage plus the editor dashboard.",
+      "open": "Open the newsroom dashboard"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Newsroom – VOZ",
+    "title": "Newsroom",
+    "editor": "Signed in as {name}, {role}",
+    "stats": {
+      "stories": "Stories today",
+      "hidden": "Hidden by editors",
+      "translations": "Cached translations",
+      "aiStories": "Pre-written AI stories"
+    },
+    "sources": "Data sources",
+    "mode": "Mode: {mode}",
+    "ok": "OK",
+    "down": "Down",
+    "storiesTitle": "Front-page stories",
+    "storiesLead": "Hidden stories disappear from the front page for every reader. Showing them again puts them back.",
+    "hide": "Hide",
+    "show": "Show",
+    "hiddenBadge": "Hidden",
+    "liveBadge": "Live",
+    "open": "Open",
+    "missing": "Unavailable leagues: {list}",
+    "loadError": "The newsroom data could not be loaded ({reason})."
   }
 }

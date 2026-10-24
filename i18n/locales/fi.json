@@ -10,7 +10,12 @@
     "sports": "Urheilu",
     "myTeams": "Omat joukkueet",
     "status": "Datan tila",
-    "personalise": "Personoi"
+    "personalise": "Personoi",
+    "signIn": "Kirjaudu",
+    "account": "Oma tili",
+    "newsroom": "Toimitus",
+    "signOut": "Kirjaudu ulos",
+    "accountMenu": "Tilivalikko"
   },
   "sport": {
     "all": "Kaikki lajit",
@@ -141,5 +146,89 @@
     "latest": "Viimeisimmät tulokset",
     "standings": "Sarjataulukko",
     "loadError": "Kohdetta {name} ei voitu ladata: {reason}"
+  },
+  "plan": {
+    "free": "Maksuton",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Toimitus"
+  },
+  "login": {
+    "pageTitle": "Kirjaudu – VOZ",
+    "title": "Kirjaudu sisään",
+    "lead": "Kirjaudu lukeaksesi otteluiden koko sisällön.",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "submit": "Kirjaudu",
+    "busy": "Kirjaudutaan…",
+    "error": "Väärä sähköposti tai salasana.",
+    "failed": "Kirjautuminen epäonnistui. Yritä hetken päästä uudelleen.",
+    "demoTitle": "Demotilit",
+    "demoHint": "Kaikkien demotilien salasana on \"demo\". Valitse tili kirjautuaksesi.",
+    "demo": {
+      "subscriber": "Tilaajatili: kaikki sisältö, ei mainoksia",
+      "free": "Maksuton tili: tulokset, sarjataulukot ja jutut, lisäsisältö lukittu",
+      "newsroom": "Toimitus: kaikki sisältö ja toimituksen näkymä"
+    }
+  },
+  "paywall": {
+    "title": "Syystarjous, sinulle!",
+    "subBefore": "VOZ Plus kaksi ensimmäistä kuukautta",
+    "subPrice": "vain 9,90 €",
+    "benefits": {
+      "unlimited": "Otteluiden koko sisältö sovelluksessa ja verkossa",
+      "stories": "Tekoälyn otteluraportit, jokainen lause tarkistettu",
+      "stats": "Tilastovertailu, tapahtumat ja kokoonpanot",
+      "noAds": "Ei mainoksia",
+      "languages": "Kaikki suomeksi ja englanniksi"
+    },
+    "cta": "Tutustu tästä",
+    "manage": "Hallitset tilaustasi helposti omalla tililläsi.",
+    "already": "Oletko jo tilaaja?",
+    "logIn": "Kirjaudu.",
+    "teaserKicker": "Tekoälyn otteluraportti"
+  },
+  "account": {
+    "pageTitle": "Oma tili – VOZ",
+    "title": "Oma tili",
+    "plan": "Tilaus",
+    "subscriber": {
+      "since": "Tilaaja {date} alkaen",
+      "renews": "Uusiutuu {date}",
+      "price": "{price} € / kk",
+      "perks": "Otteluiden koko sisältö, tekoälyn otteluraportit eikä mainoksia."
+    },
+    "free": {
+      "perks": "Etusivu, tulokset, sarjataulukot ja automaattiset jutut. Ottelutilastot, tapahtumat, kokoonpanot ja tekoälyn raportit ovat VOZ Plus -tilaajille.",
+      "upgradeDemo": "Päivitys ei kuulu demoon: kirjaudu tilillä subscription{'@'}demo.com nähdäksesi VOZ Plussan."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Koko sisältö ja toimituksen näkymä.",
+      "open": "Avaa toimituksen näkymä"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Toimitus – VOZ",
+    "title": "Toimitus",
+    "editor": "Kirjautuneena: {name}, {role}",
+    "stats": {
+      "stories": "Juttuja tänään",
+      "hidden": "Toimituksen piilottamat",
+      "translations": "Tallennetut käännökset",
+      "aiStories": "Valmiit tekoälyraportit"
+    },
+    "sources": "Datalähteet",
+    "mode": "Tila: {mode}",
+    "ok": "OK",
+    "down": "Poissa",
+    "storiesTitle": "Etusivun jutut",
+    "storiesLead": "Piilotettu juttu katoaa etusivulta kaikilta lukijoilta. Näytä palauttaa sen.",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "hiddenBadge": "Piilotettu",
+    "liveBadge": "Näkyvissä",
+    "open": "Avaa",
+    "missing": "Ei saatavilla: {list}",
+    "loadError": "Toimituksen tietoja ei voitu ladata ({reason})."
   }
 }

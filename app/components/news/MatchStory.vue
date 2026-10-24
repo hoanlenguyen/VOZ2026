@@ -6,6 +6,10 @@ import type { Fact, StoryLength, StoryResponse, StoryTone } from '#shared/types/
 
 const props = defineProps<{ competitionId: string, matchId: string, home: string, away: string }>()
 
+// Readers get the story itself (standard, neutral). The format switches and the evidence
+// (AI label, facts behind each sentence, "How this was made") are newsroom tools.
+const { can } = useAccount()
+const editor = computed(() => can.value.newsroom)
 const length = ref<StoryLength>('standard')
 const tone = ref<StoryTone>('neutral')
 const showFacts = ref(false)
@@ -51,7 +55,7 @@ function toggleSentence(i: number) {
 
 <template>
   <div class="story-block">
-    <div class="controls">
+    <div v-if="editor" class="controls">
       <fieldset class="seg">
         <legend class="seg-label">Length</legend>
         <label v-for="l in LENGTHS" :key="l.id" class="seg-option">
@@ -93,6 +97,7 @@ function toggleSentence(i: number) {
           </template>
         </p>
 
+        <template v-if="editor">
         <p class="label" :class="{ 'label--fallback': story.origin === 'template' }">
           <PhCheckCircle v-if="story.origin === 'agent'" :size="15" weight="fill" aria-hidden="true" />
           <template v-if="story.origin === 'agent'">
@@ -130,6 +135,7 @@ function toggleSentence(i: number) {
           </ol>
           <p class="meta num">{{ story.usage.turns }} turns · {{ seconds(story.usage.ms) }} · {{ story.usage.inputTokens.toLocaleString('en-GB') }} tokens in, {{ story.usage.outputTokens.toLocaleString('en-GB') }} out</p>
         </details>
+        </template>
       </article>
     </div>
   </div>

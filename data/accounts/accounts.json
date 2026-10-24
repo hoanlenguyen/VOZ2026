@@ -1,0 +1,63 @@
+{
+  "note": "Demo accounts. Passwords are PBKDF2 hashes (all three demo passwords are \"demo\", see README/CLAUDE.md).",
+  "accounts": [
+    {
+      "id": "acc-subscription",
+      "email": "subscription@demo.com",
+      "name": "Sanna Subscriber",
+      "plan": "subscriber",
+      "followedTeams": [
+        "liiga:karpat",
+        "premier-league:57"
+      ],
+      "subscription": {
+        "product": "VOZ Plus",
+        "since": "2026-02-01",
+        "renewsOn": "2027-02-01",
+        "priceEurPerMonth": 7.9
+      },
+      "newsroom": null,
+      "password": {
+        "algo": "PBKDF2-SHA256",
+        "iterations": 100000,
+        "salt": "d3b9aaacb8e891242d1eb6d012c663b3",
+        "hash": "667c72ba30963397c2a1645be17668a79171f332adba20b1c5eb8a3fef9ca17d"
+      }
+    },
+    {
+      "id": "acc-free",
+      "email": "free@demo.com",
+      "name": "Frank Free",
+      "plan": "free",
+      "followedTeams": [
+        "liiga:ilves"
+      ],
+      "subscription": null,
+      "newsroom": null,
+      "password": {
+        "algo": "PBKDF2-SHA256",
+        "iterations": 100000,
+        "salt": "be9806fb44a488778715f6e0198ccbdd",
+        "hash": "f02f03a57e78c57b82608a491a0b5f81c5f26b419344903133a87355091dc434"
+      }
+    },
+    {
+      "id": "acc-newsroom",
+      "email": "newsroom@demo.com",
+      "name": "Noora Newsroom",
+      "plan": "newsroom",
+      "followedTeams": [],
+      "subscription": null,
+      "newsroom": {
+        "role": "Sports editor",
+        "desk": "VOZ sports desk"
+      },
+      "password": {
+        "algo": "PBKDF2-SHA256",
+        "iterations": 100000,
+        "salt": "74224b0315b0a612a1a08588a2dab91a",
+        "hash": "6c86be6506230a12ceccd87a2028077009becc997fc0032406b1e49898a3b80d"
+      }
+    }
+  ]
+}
