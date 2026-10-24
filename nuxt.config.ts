@@ -44,6 +44,10 @@ export default defineNuxtConfig({
     /** GNews headline search for "What the press says" (free plan: 100 requests/day). */
     gnewsApiKey: '',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
+    /** Hugging Face Inference Providers (OpenAI-compatible router) for the translation agent. */
+    hfToken: '',
+    hfModel: 'openai/gpt-oss-120b',
+    hfBaseUrl: 'https://router.huggingface.co/v1',
     dataMode: 'auto',
   },
 

@@ -6,9 +6,21 @@
     "language": "Language",
     "footer": "VOZ – My Sports World · Stories on this page are written automatically from official league data (Liiga, football-data.org)."
   },
-  "nav": { "sports": "Sports", "myTeams": "My teams", "status": "Data status", "personalise": "Personalise" },
-  "sport": { "all": "All sports", "hockey": "Ice hockey", "football": "Football" },
-  "time": { "today": "Today", "tomorrow": "Tomorrow" },
+  "nav": {
+    "sports": "Sports",
+    "myTeams": "My teams",
+    "status": "Data status",
+    "personalise": "Personalise"
+  },
+  "sport": {
+    "all": "All sports",
+    "hockey": "Ice hockey",
+    "football": "Football"
+  },
+  "time": {
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
   "home": {
     "title": "Sports",
     "pageTitle": "Sports – VOZ",
@@ -25,8 +37,19 @@
     "adLabel": "Ad · Local partner",
     "adText": "Your club's matchday, presented by [LOCAL SPONSOR]"
   },
-  "story": { "result": "Result", "preview": "Preview", "auto": "Written automatically from official match data" },
-  "table": { "title": "{league} table", "team": "Team", "played": "Played", "playedShort": "P", "points": "Points", "pointsShort": "Pts" },
+  "story": {
+    "result": "Result",
+    "preview": "Preview",
+    "auto": "Written automatically from official match data"
+  },
+  "table": {
+    "title": "{league} table",
+    "team": "Team",
+    "played": "Played",
+    "playedShort": "P",
+    "points": "Points",
+    "pointsShort": "Pts"
+  },
   "ticker": {
     "label": "Upcoming fixtures",
     "upcoming": "{n} upcoming",
@@ -37,7 +60,10 @@
     "league": "League: {name}. Change league",
     "choose": "Choose a league"
   },
-  "visual": { "final": "Final", "vs": "vs" },
+  "visual": {
+    "final": "Final",
+    "vs": "vs"
+  },
   "match": {
     "back": "Sports",
     "pageTitle": "Match – VOZ",
@@ -65,7 +91,12 @@
       "game-winner": "game-winner"
     }
   },
-  "timeline": { "shown": "Events shown", "key": "Key events", "all": "All events", "score": "score {score}" },
+  "timeline": {
+    "shown": "Events shown",
+    "key": "Key events",
+    "all": "All events",
+    "score": "score {score}"
+  },
   "lineups": {
     "starting": "{team} starting line-up, {formation}: {players}",
     "subs": "Substitutes",
@@ -75,8 +106,16 @@
   },
   "compare": {
     "formLabel": "{team}, last five results, oldest first",
-    "form": { "W": "Win", "D": "Draw", "L": "Defeat" },
-    "formLetter": { "W": "W", "D": "D", "L": "L" }
+    "form": {
+      "W": "Win",
+      "D": "Draw",
+      "L": "Defeat"
+    },
+    "formLetter": {
+      "W": "W",
+      "D": "D",
+      "L": "L"
+    }
   },
   "press": {
     "title": "What the press says",
@@ -84,7 +123,9 @@
     "after": "After the match",
     "opens": "(opens {source} in a new tab)",
     "unavailable": "Press headlines are unavailable right now.",
-    "sourceNote": "Headlines and links from other outlets, found by GNews and matched to this game by date and both team names. VOZ links to the original articles and does not republish them."
+    "sourceNote": "Headlines and links from other outlets, found by GNews and matched to this game by date and both team names. VOZ links to the original articles and does not republish them.",
+    "translated": "Translated automatically",
+    "original": "Original headline"
   },
   "onboarding": {
     "title": "Make it your sports world",

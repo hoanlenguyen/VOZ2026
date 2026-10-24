@@ -22,6 +22,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `NUXT_LIIGA_API_KEY` — Liiga stats API, sent as `x-api-key`
 - `NUXT_FOOTBALL_DATA_TOKEN` — football-data.org, sent as `X-Auth-Token`; free plan = TIER_ONE competitions, 10 requests/minute
 - `NUXT_GNEWS_API_KEY` — GNews headline search (sent as `apikey` query param, redacted from errors); free plan 100 requests/day, ~1 request/s
+- `NUXT_HF_TOKEN`, `NUXT_HF_MODEL` (default `openai/gpt-oss-120b`) — Hugging Face Inference Providers for the translation agent; on Cloudflare set the token with `wrangler secret put`
 - `NUXT_DATA_MODE=live|auto|snapshot` — upstream only / upstream with snapshot fallback / offline only
 
 ## Architecture
@@ -34,6 +35,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `server/utils/compare.ts` — match-page comparison: goals by period, `MatchTeam.stats` (Liiga: shots, puck control, faceoffs, passes, PIM, … from `games/{season}/{id}/stats`), and both teams' season record before kick-off counted from results (points/goals reconcile with the official tables); returned as `compare` by `/api/competitions/:competition/matches/:id`
 - `server/utils/press.ts` — "What the press says": GNews search by both team names (ASCII-folded; GNews rejects non-ASCII) in a window around kick-off, kept only if headline/description names both teams; returns headline, source, link only (never description/content/images). Endpoint `/api/competitions/:competition/matches/:id/press`, loaded client-side by `NewsPressCard`.
 - `server/utils/mock-matches.ts` — mock "deep data" matches from `data/mock/<competition>/<id>.json` (server assets `mocks`, bundled on Workers): full match-centre facts (key events, line-ups, stats, structured event list). Mapped to `Match` + `MatchDetailExtras` (`shared/types/match-detail.ts`: timeline, line-ups, referee, source). Teams resolve to the provider's team keys/crests by name; the provider's record of the same game (same teams + UTC day) is replaced on the front page, and both ids serve the mock detail. Mocks always appear on the front page and lead their league. Store facts only, never another outlet's written commentary; labels are written in code.
+- `server/utils/translate.ts` — AI translation agent (HF router, gpt-oss-120b) for text VOZ doesn't write, today the press headlines. Cached 30 days in `kvcache` (one model call per text ever), one batched call per request, number guard keeps the original if digits change; shown with a "Translated automatically" label
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
 - Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`

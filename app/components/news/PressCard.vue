@@ -27,13 +27,18 @@ const { stamp } = useFormat()
 
     <ul v-else-if="data?.status === 'ok'" class="list">
       <li v-for="a in data.articles" :key="a.url" class="item">
-        <a :href="a.url" target="_blank" rel="noopener noreferrer nofollow" class="headline">
+        <a :href="a.url" target="_blank" rel="noopener noreferrer nofollow" class="headline" :title="a.originalTitle ?? undefined">
           {{ a.title }}
           <PhArrowUpRight :size="14" weight="bold" class="ext" aria-hidden="true" />
           <span class="sr-only">{{ t('press.opens', { source: a.source }) }}</span>
         </a>
         <p class="meta">
           <span class="source">{{ a.source }}</span>
+          <template v-if="a.translated">
+            <span aria-hidden="true">·</span>
+            <span class="mt">{{ t('press.translated') }}</span>
+            <span class="sr-only">{{ t('press.original') }}: {{ a.originalTitle }}</span>
+          </template>
           <span aria-hidden="true">·</span>
           <span>{{ t(`press.${a.timing}`) }}</span>
           <span aria-hidden="true">·</span>
@@ -63,6 +68,7 @@ const { stamp } = useFormat()
 .headline:hover { color: var(--link-hover); }
 .ext { vertical-align: -1px; margin-left: 2px; color: var(--meta); }
 .meta { margin: 6px 0 0; display: flex; flex-wrap: wrap; gap: 6px; font-size: 12px; color: var(--meta); }
+.mt { font-style: italic; }
 .source { font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
 .empty { margin: 0; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--summary); font-size: 14px; }
 .source-note { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }

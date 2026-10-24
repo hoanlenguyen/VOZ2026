@@ -102,6 +102,12 @@ export async function pressForMatch(match: Match, lang: Lang = 'en'): Promise<Pr
     return { status: 'unavailable', articles: [], note: notes.down }
   }
 
+  // Headlines come in the outlet's language; the translation agent puts them in the reader's (cached).
+  const translations = await translateTexts(articles.map(a => a.title), lang)
+  articles = articles.map((a, i) => (translations[i]?.translated
+    ? { ...a, title: translations[i]!.text, translated: true, originalTitle: a.title }
+    : a))
+
   return articles.length
     ? { status: 'ok', articles, note: null }
     : { status: 'none', articles, note: notes.none(match.home.shortName, match.away.shortName) }
@@ -123,6 +129,8 @@ function pick(raw: RawArticle[], home: string[], away: string[], start: number):
       source: a.source.name,
       publishedAt: a.publishedAt,
       timing: Date.parse(a.publishedAt) < start ? 'before' : 'after',
+      translated: false,
+      originalTitle: null,
     })
     if (articles.length === MAX_ARTICLES * 2) break
   }
