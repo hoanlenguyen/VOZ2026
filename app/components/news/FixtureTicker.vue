@@ -116,26 +116,24 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', updateEdges)
 })
 
-const timeParts = (iso: string) => {
-  const [time, day] = fixtureTime(iso).split(', ')
-  return { time, day }
-}
+const { t } = useI18n()
+const { fixture: timeParts } = useFormat()
 </script>
 
 <template>
   <section
-    v-if="league" class="ticker" aria-roledescription="carousel" aria-label="Upcoming fixtures"
+    v-if="league" class="ticker" aria-roledescription="carousel" :aria-label="t('ticker.label')"
     @pointerenter="hovered = true" @pointerleave="hovered = false"
     @focusin="focused = true" @focusout="focused = false"
   >
     <div class="league">
       <NewsLeaguePicker v-model="selected" :leagues="leagues" />
-      <p class="count num">{{ league.fixtures.length }} upcoming</p>
+      <p class="count num">{{ t('ticker.upcoming', { n: league.fixtures.length }) }}</p>
     </div>
 
     <div class="strip">
       <button
-        v-show="!atStart" type="button" class="nav-btn prev" aria-label="Previous fixtures"
+        v-show="!atStart" type="button" class="nav-btn prev" :aria-label="t('ticker.prev')"
         aria-controls="ticker-fixtures" @click="page(-1)"
       >
         <PhCaretLeft :size="16" weight="bold" aria-hidden="true" />
@@ -146,11 +144,11 @@ const timeParts = (iso: string) => {
         @scroll.passive="updateEdges" @pointerdown="takeOver" @wheel.passive="takeOver" @touchstart.passive="takeOver"
         @keydown="onKeydown"
       >
-        <li v-for="(f, i) in league.fixtures" :key="f.key" class="fixture" aria-roledescription="slide" :aria-label="`${i + 1} of ${league.fixtures.length}`">
+        <li v-for="(f, i) in league.fixtures" :key="f.key" class="fixture" aria-roledescription="slide" :aria-label="t('ticker.slide', { i: i + 1, n: league.fixtures.length })">
           <NuxtLink :to="f.href" class="fixture-card">
             <span class="when num">
               <strong>{{ timeParts(f.start).time }}</strong>
-              <span class="day" :class="{ 'day--soon': ['Today', 'Tomorrow'].includes(timeParts(f.start).day ?? '') }">{{ timeParts(f.start).day }}</span>
+              <span class="day" :class="{ 'day--soon': timeParts(f.start).relative }">{{ timeParts(f.start).day }}</span>
             </span>
             <span v-for="(t, side) in { home: f.home, away: f.away }" :key="side" class="team">
               <img v-if="t.logo" :src="t.logo" alt="" width="24" height="24" loading="lazy">
@@ -159,11 +157,11 @@ const timeParts = (iso: string) => {
             </span>
           </NuxtLink>
         </li>
-        <li v-if="!league.fixtures.length" class="fixture empty">No upcoming fixtures</li>
+        <li v-if="!league.fixtures.length" class="fixture empty">{{ t('ticker.empty') }}</li>
       </ol>
 
       <button
-        v-show="!atEnd" type="button" class="nav-btn next" aria-label="Next fixtures"
+        v-show="!atEnd" type="button" class="nav-btn next" :aria-label="t('ticker.next')"
         aria-controls="ticker-fixtures" @click="page(1)"
       >
         <PhCaretRight :size="16" weight="bold" aria-hidden="true" />

@@ -15,8 +15,10 @@ function bars(r: CompareRow) {
     lead,
   }
 }
-const fmt = (v: number, r: CompareRow) => `${v.toFixed(r.decimals)}${r.unit}`
-const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat' }
+const { number } = useFormat()
+const fmt = (v: number, r: CompareRow) => `${number(v, { minimumFractionDigits: r.decimals, maximumFractionDigits: r.decimals })}${r.unit}`
+const { t } = useI18n()
+const formLabel = (r: FormResult) => t(`compare.form.${r}`)
 </script>
 
 <template>
@@ -36,9 +38,9 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
       <h3 :id="`cmp-${g.id}`" class="group-title">{{ g.title }}</h3>
 
       <div v-if="g.id === 'form'" class="form-row">
-        <ol v-for="side in (['home', 'away'] as const)" :key="side" class="form" :class="`form--${side}`" :aria-label="`${side === 'home' ? home.name : away.name}, last five results, oldest first`">
-          <li v-for="(r, i) in compare.form[side]" :key="i" class="pill" :class="`pill--${r}`" :title="FORM_LABEL[r]">
-            <span aria-hidden="true">{{ r }}</span><span class="sr-only">{{ FORM_LABEL[r] }}</span>
+        <ol v-for="side in (['home', 'away'] as const)" :key="side" class="form" :class="`form--${side}`" :aria-label="t('compare.formLabel', { team: side === 'home' ? home.name : away.name })">
+          <li v-for="(r, i) in compare.form[side]" :key="i" class="pill" :class="`pill--${r}`" :title="formLabel(r)">
+            <span aria-hidden="true">{{ t(`compare.formLetter.${r}`) }}</span><span class="sr-only">{{ formLabel(r) }}</span>
           </li>
         </ol>
       </div>

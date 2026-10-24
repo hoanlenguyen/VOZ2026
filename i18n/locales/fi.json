@@ -1,0 +1,145 @@
+{
+  "site": {
+    "tagline": "Oma urheilumaailmani",
+    "logoLabel": "VOZ – Oma urheilumaailmani, etusivu",
+    "menu": "Valikko",
+    "language": "Kieli",
+    "footer": "VOZ – Oma urheilumaailmani · Tämän sivun jutut kirjoitetaan automaattisesti virallisesta sarjadatasta (Liiga, football-data.org)."
+  },
+  "nav": {
+    "sports": "Urheilu",
+    "myTeams": "Omat joukkueet",
+    "status": "Datan tila",
+    "personalise": "Personoi"
+  },
+  "sport": {
+    "all": "Kaikki lajit",
+    "hockey": "Jääkiekko",
+    "football": "Jalkapallo"
+  },
+  "time": {
+    "today": "Tänään",
+    "tomorrow": "Huomenna"
+  },
+  "home": {
+    "title": "Urheilu",
+    "pageTitle": "Urheilu – VOZ",
+    "sections": "Osiot",
+    "loadError": "Juttuja ei voitu ladata ({reason}). Yritä hetken päästä uudelleen.",
+    "empty": "Tässä osiossa ei ole tuoreita juttuja.",
+    "missing": "Tilapäisesti poissa käytöstä: {list}.",
+    "topStories": "Pääuutiset",
+    "moreStories": "Lisää juttuja",
+    "latest": "Uusimmat",
+    "allAbove": "Kaikki päivän jutut ovat yllä.",
+    "sidebar": "Sarjataulukot ja kumppanit",
+    "sponsored": "Sponsoroitu",
+    "adLabel": "Mainos · Paikallinen kumppani",
+    "adText": "Seurasi ottelupäivä, yhteistyössä [PAIKALLINEN SPONSORI]"
+  },
+  "story": {
+    "result": "Tulos",
+    "preview": "Ennakko",
+    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta"
+  },
+  "table": {
+    "title": "{league} – sarjataulukko",
+    "team": "Joukkue",
+    "played": "Ottelut",
+    "playedShort": "O",
+    "points": "Pisteet",
+    "pointsShort": "P"
+  },
+  "ticker": {
+    "label": "Tulevat ottelut",
+    "upcoming": "{n} tulossa",
+    "prev": "Edelliset ottelut",
+    "next": "Seuraavat ottelut",
+    "slide": "{i}/{n}",
+    "empty": "Ei tulevia otteluita",
+    "league": "Sarja: {name}. Vaihda sarjaa",
+    "choose": "Valitse sarja"
+  },
+  "visual": {
+    "final": "Päättynyt",
+    "vs": "vs."
+  },
+  "match": {
+    "back": "Urheilu",
+    "pageTitle": "Ottelu – VOZ",
+    "loadError": "Ottelua ei voitu ladata ({reason}). Yritä hetken päästä uudelleen.",
+    "matchday": "{n}. kierros",
+    "halfTime": "Puoliaika {score}",
+    "periods": "Erät {list}",
+    "spectators": "{n} katsojaa",
+    "timeline": "Ottelun tapahtumat",
+    "compare": "Vertailu",
+    "lineups": "Kokoonpanot",
+    "goals": "Maalit",
+    "sourceExtras": "Ottelutilastot: {source}. Kauden luvut on laskettu virallisista tuloksista ({league}).",
+    "sourceOfficial": "Ottelutilastot virallisesta otteludatasta ({league}). Kauden luvut on laskettu virallisista tuloksista.",
+    "sourceResults": "Laskettu virallisista tuloksista ({league}). Laukaukset, pallonhallinta ja kortit eivät vielä sisälly datapakettiimme.",
+    "referee": "Erotuomari: {name}",
+    "matchData": "Otteludata: {source}. VOZ on nimennyt tapahtumat datan pohjalta.",
+    "noScorers": "Maalintekijät eivät sisälly tähän datapakettiin.",
+    "tags": {
+      "power-play": "ylivoima",
+      "short-handed": "alivoima",
+      "empty-net": "tyhjään maaliin",
+      "penalty": "rangaistuslaukaus",
+      "own-goal": "oma maali",
+      "game-winner": "voittomaali"
+    }
+  },
+  "timeline": {
+    "shown": "Näytettävät tapahtumat",
+    "key": "Tärkeimmät",
+    "all": "Kaikki tapahtumat",
+    "score": "tilanne {score}"
+  },
+  "lineups": {
+    "starting": "{team}, avauskokoonpano {formation}: {players}",
+    "subs": "Vaihtopelaajat",
+    "cameOn": "Tuli kentälle",
+    "manager": "Päävalmentaja",
+    "captain": "kapteeni"
+  },
+  "compare": {
+    "formLabel": "{team}, viisi viimeisintä tulosta, vanhin ensin",
+    "form": {
+      "W": "Voitto",
+      "D": "Tasapeli",
+      "L": "Tappio"
+    },
+    "formLetter": {
+      "W": "V",
+      "D": "T",
+      "L": "H"
+    }
+  },
+  "press": {
+    "title": "Mitä media kirjoittaa",
+    "before": "Ennen ottelua",
+    "after": "Ottelun jälkeen",
+    "opens": "(avaa lähteen {source} uudessa välilehdessä)",
+    "unavailable": "Mediaotsikot eivät ole juuri nyt saatavilla.",
+    "sourceNote": "Muiden medioiden otsikot ja linkit. GNews löytää ne, ja ne yhdistetään otteluun päivämäärän ja molempien joukkueiden nimien perusteella. VOZ linkittää alkuperäisiin juttuihin eikä julkaise niitä uudelleen.",
+    "translated": "Konekäännös",
+    "original": "Alkuperäinen otsikko"
+  },
+  "onboarding": {
+    "title": "Tee siitä oma urheilumaailmasi",
+    "note": "Käyttöönotto tulee vaiheessa 4. Valitse sarja nähdäksesi sen joukkueet.",
+    "league": "Sarja",
+    "loadError": "Joukkueita ei voitu ladata: {reason}"
+  },
+  "status": {
+    "subtitle": "Oma urheilumaailmani · datakerroksen tila",
+    "sources": "Datalähteet · tila {mode}",
+    "off": "pois",
+    "onboarding": "Käyttöönotto →",
+    "latest": "Viimeisimmät tulokset",
+    "standings": "Sarjataulukko",
+    "loadError": "Kohdetta {name} ei voitu ladata: {reason}"
+  }
+}

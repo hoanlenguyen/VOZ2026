@@ -6,6 +6,9 @@ export interface PressArticle {
   publishedAt: string
   /** Published before or after kick-off / puck drop. */
   timing: 'before' | 'after'
+  /** True when `title` was machine-translated into the reader's language; `originalTitle` is the outlet's own. */
+  translated: boolean
+  originalTitle: string | null
 }
 
 export interface PressResult {

@@ -4,17 +4,18 @@
 import type { Story } from '#shared/types/stories'
 
 definePageMeta({ layout: 'news' })
-useHead({ title: 'Sports – VOZ' })
+const { t, locale } = useI18n()
+useHead({ title: () => t('home.pageTitle') })
 
-const { data, error, status } = await useFetch('/api/landing')
+const { data, error, status } = await useFetch('/api/landing', { query: { lang: locale } })
 
 type Filter = { id: string, label: string, match: (s: Story) => boolean }
 const filters = computed<Filter[]>(() => {
   const comps = [...new Map((data.value?.stories ?? []).map(s => [s.competitionId, s.competitionName]))]
   return [
-    { id: 'all', label: 'All sports', match: () => true },
-    { id: 'hockey', label: 'Ice hockey', match: s => s.sport === 'hockey' },
-    { id: 'football', label: 'Football', match: s => s.sport === 'football' },
+    { id: 'all', label: t('sport.all'), match: () => true },
+    { id: 'hockey', label: t('sport.hockey'), match: s => s.sport === 'hockey' },
+    { id: 'football', label: t('sport.football'), match: s => s.sport === 'football' },
     ...comps.map(([id, label]) => ({ id, label, match: (s: Story) => s.competitionId === id })),
   ]
 })
@@ -41,8 +42,8 @@ const latest = computed(() => {
     <NewsFixtureTicker v-if="data?.ticker.length" :leagues="data.ticker" />
 
     <div class="wrap">
-      <h1 class="page-title">Sports</h1>
-      <nav class="sections" aria-label="Sections">
+      <h1 class="page-title">{{ t('home.title') }}</h1>
+      <nav class="sections" :aria-label="t('home.sections')">
         <button
           v-for="f in filters" :key="f.id" type="button" class="section-tab"
           :aria-pressed="active === f.id" @click="active = f.id"
@@ -51,34 +52,34 @@ const latest = computed(() => {
         </button>
       </nav>
 
-      <p v-if="error" class="notice">Stories could not be loaded ({{ error.statusMessage }}). Try again in a minute.</p>
-      <p v-else-if="status === 'success' && !stories.length" class="notice">No recent stories in this section.</p>
+      <p v-if="error" class="notice">{{ t('home.loadError', { reason: error.statusMessage }) }}</p>
+      <p v-else-if="status === 'success' && !stories.length" class="notice">{{ t('home.empty') }}</p>
       <p v-if="data?.missing.length" class="notice notice--soft">
-        Temporarily unavailable: {{ data.missing.join(', ') }}.
+        {{ t('home.missing', { list: data.missing.join(', ') }) }}
       </p>
 
-      <section v-if="lead" class="top" aria-label="Top stories">
+      <section v-if="lead" class="top" :aria-label="t('home.topStories')">
         <NewsStoryCard :story="lead" variant="lead" class="lead" />
         <div v-if="side.length" class="side">
           <NewsStoryCard v-for="s in side" :key="s.id" :story="s" variant="side" />
         </div>
       </section>
 
-      <section v-if="cards.length" class="cards" aria-label="More stories">
+      <section v-if="cards.length" class="cards" :aria-label="t('home.moreStories')">
         <NewsStoryCard v-for="s in cards" :key="s.id" :story="s" />
       </section>
 
       <div v-if="latest.length || data?.tables.length" class="latest-wrap">
         <section class="latest" aria-labelledby="latest-title">
-          <NewsSectionTitle id="latest-title">Latest</NewsSectionTitle>
+          <NewsSectionTitle id="latest-title">{{ t('home.latest') }}</NewsSectionTitle>
           <NewsStoryCard v-for="s in latest" :key="s.id" :story="s" variant="row" />
-          <p v-if="!latest.length" class="notice notice--soft">All of today's stories are above.</p>
+          <p v-if="!latest.length" class="notice notice--soft">{{ t('home.allAbove') }}</p>
         </section>
-        <aside class="sidebar" aria-label="Tables and partners">
+        <aside class="sidebar" :aria-label="t('home.sidebar')">
           <NewsTableWidget v-for="t in data?.tables" :key="t.competitionId" :table="t" />
-          <aside class="sponsor" aria-label="Sponsored">
-            <p class="sponsor-label">Ad · Local partner</p>
-            <p class="sponsor-text">Your club's matchday, presented by [LOCAL SPONSOR]</p>
+          <aside class="sponsor" :aria-label="t('home.sponsored')">
+            <p class="sponsor-label">{{ t('home.adLabel') }}</p>
+            <p class="sponsor-text">{{ t('home.adText') }}</p>
           </aside>
         </aside>
       </div>

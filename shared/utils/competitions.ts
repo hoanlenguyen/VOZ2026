@@ -10,24 +10,34 @@ export interface CompetitionDef {
   providerCode: string
   name: string
   country: string
+  /** Finnish name and country, where they differ from English. */
+  fi?: { name?: string, country: string }
   /** football-data plan needed; the free plan is TIER_ONE. */
   tier?: 'TIER_ONE' | 'TIER_TWO' | 'TIER_THREE' | 'TIER_FOUR'
 }
 
 export const COMPETITIONS: CompetitionDef[] = [
-  { id: 'liiga', sport: 'hockey', provider: 'liiga', providerCode: 'runkosarja', name: 'Liiga', country: 'Finland' },
+  { id: 'liiga', sport: 'hockey', provider: 'liiga', providerCode: 'runkosarja', name: 'Liiga', country: 'Finland', fi: { country: 'Suomi' } },
 
-  { id: 'veikkausliiga', sport: 'football', provider: 'football-data', providerCode: 'VEI', name: 'Veikkausliiga', country: 'Finland', tier: 'TIER_THREE' },
-  { id: 'premier-league', sport: 'football', provider: 'football-data', providerCode: 'PL', name: 'Premier League', country: 'England', tier: 'TIER_ONE' },
-  { id: 'championship', sport: 'football', provider: 'football-data', providerCode: 'ELC', name: 'Championship', country: 'England', tier: 'TIER_ONE' },
-  { id: 'la-liga', sport: 'football', provider: 'football-data', providerCode: 'PD', name: 'LaLiga', country: 'Spain', tier: 'TIER_ONE' },
-  { id: 'bundesliga', sport: 'football', provider: 'football-data', providerCode: 'BL1', name: 'Bundesliga', country: 'Germany', tier: 'TIER_ONE' },
-  { id: 'serie-a', sport: 'football', provider: 'football-data', providerCode: 'SA', name: 'Serie A', country: 'Italy', tier: 'TIER_ONE' },
-  { id: 'ligue-1', sport: 'football', provider: 'football-data', providerCode: 'FL1', name: 'Ligue 1', country: 'France', tier: 'TIER_ONE' },
-  { id: 'eredivisie', sport: 'football', provider: 'football-data', providerCode: 'DED', name: 'Eredivisie', country: 'Netherlands', tier: 'TIER_ONE' },
-  { id: 'primeira-liga', sport: 'football', provider: 'football-data', providerCode: 'PPL', name: 'Primeira Liga', country: 'Portugal', tier: 'TIER_ONE' },
-  { id: 'champions-league', sport: 'football', provider: 'football-data', providerCode: 'CL', name: 'Champions League', country: 'Europe', tier: 'TIER_ONE' },
+  { id: 'veikkausliiga', sport: 'football', provider: 'football-data', providerCode: 'VEI', name: 'Veikkausliiga', country: 'Finland', fi: { country: 'Suomi' }, tier: 'TIER_THREE' },
+  { id: 'premier-league', sport: 'football', provider: 'football-data', providerCode: 'PL', name: 'Premier League', country: 'England', fi: { country: 'Englanti' }, tier: 'TIER_ONE' },
+  { id: 'championship', sport: 'football', provider: 'football-data', providerCode: 'ELC', name: 'Championship', country: 'England', fi: { country: 'Englanti' }, tier: 'TIER_ONE' },
+  { id: 'la-liga', sport: 'football', provider: 'football-data', providerCode: 'PD', name: 'LaLiga', country: 'Spain', fi: { country: 'Espanja' }, tier: 'TIER_ONE' },
+  { id: 'bundesliga', sport: 'football', provider: 'football-data', providerCode: 'BL1', name: 'Bundesliga', country: 'Germany', fi: { country: 'Saksa' }, tier: 'TIER_ONE' },
+  { id: 'serie-a', sport: 'football', provider: 'football-data', providerCode: 'SA', name: 'Serie A', country: 'Italy', fi: { country: 'Italia' }, tier: 'TIER_ONE' },
+  { id: 'ligue-1', sport: 'football', provider: 'football-data', providerCode: 'FL1', name: 'Ligue 1', country: 'France', fi: { country: 'Ranska' }, tier: 'TIER_ONE' },
+  { id: 'eredivisie', sport: 'football', provider: 'football-data', providerCode: 'DED', name: 'Eredivisie', country: 'Netherlands', fi: { country: 'Alankomaat' }, tier: 'TIER_ONE' },
+  { id: 'primeira-liga', sport: 'football', provider: 'football-data', providerCode: 'PPL', name: 'Primeira Liga', country: 'Portugal', fi: { country: 'Portugali' }, tier: 'TIER_ONE' },
+  { id: 'champions-league', sport: 'football', provider: 'football-data', providerCode: 'CL', name: 'Champions League', country: 'Europe', fi: { name: 'Mestarien liiga', country: 'Eurooppa' }, tier: 'TIER_ONE' },
 ]
+
+export function competitionName(c: CompetitionDef, lang: 'en' | 'fi' = 'en'): string {
+  return (lang === 'fi' && c.fi?.name) || c.name
+}
+
+export function competitionCountry(c: CompetitionDef, lang: 'en' | 'fi' = 'en'): string {
+  return (lang === 'fi' && c.fi?.country) || c.country
+}
 
 export function findCompetition(id: string | null | undefined): CompetitionDef | undefined {
   return COMPETITIONS.find(c => c.id === id)

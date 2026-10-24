@@ -2,11 +2,22 @@ export default defineNuxtConfig({
   compatibilityDate: '2026-10-01',
   devtools: { enabled: false },
   css: ['~/assets/css/main.css'],
+  modules: ['@nuxtjs/i18n'],
+
+  // English and Finnish on the same URLs; the reader's choice is kept in a cookie (first visit: browser language).
+  i18n: {
+    strategy: 'no_prefix',
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', language: 'en-GB', file: 'en.json', name: 'English' },
+      { code: 'fi', language: 'fi-FI', file: 'fi.json', name: 'Suomi' },
+    ],
+    detectBrowserLanguage: { useCookie: true, cookieKey: 'voz_lang', fallbackLocale: 'en' },
+  },
 
   app: {
     head: {
       title: 'VOZ – My Sports World',
-      htmlAttrs: { lang: 'en' },
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1, viewport-fit=cover' },
         { name: 'theme-color', content: '#0E0F11' },
@@ -38,6 +49,10 @@ export default defineNuxtConfig({
     openaiBaseUrl: 'https://api.openai.com/v1',
     storyReasoningEffort: 'low',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
+    /** Hugging Face Inference Providers (OpenAI-compatible router) for the translation agent. */
+    hfToken: '',
+    hfModel: 'openai/gpt-oss-120b',
+    hfBaseUrl: 'https://router.huggingface.co/v1',
     dataMode: 'auto',
   },
 

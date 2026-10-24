@@ -1,5 +1,6 @@
 import type { H3Event } from 'h3'
 import type { CompetitionDef } from '#shared/utils/competitions'
+import type { Lang } from '#shared/utils/format'
 import type { SportProvider } from '../providers/types'
 import { footballDataProvider } from '../providers/football-data'
 import { liigaProvider } from '../providers/liiga'
@@ -13,15 +14,15 @@ export function providerFor(c: CompetitionDef): SportProvider {
   return PROVIDERS[c.provider]
 }
 
-export function describeCompetition(c: CompetitionDef): Competition {
+export function describeCompetition(c: CompetitionDef, lang: Lang = 'en'): Competition {
   const p = providerFor(c)
   const reason = p.unavailableReason(c)
   return {
     id: c.id,
     sport: c.sport,
     provider: c.provider,
-    name: c.name,
-    country: c.country,
+    name: competitionName(c, lang),
+    country: competitionCountry(c, lang),
     emblem: p.emblem(c),
     available: reason === null,
     unavailableReason: reason,
