@@ -25,6 +25,8 @@ export interface NewsItem extends NewsSourceAttribution {
   link: string
   source: string
   publishedAt: string
+  translated?: boolean
+  originalTitle?: string
   topic?: TeamNewsTopic
 }
 

@@ -313,3 +313,16 @@ export async function runDailyPodcasts(trigger: PodcastTrigger = 'schedule'): Pr
   await storage().setItem('podcast:lastrun', run).catch(() => undefined)
   return run
 }
+
+/** An episode as a free or signed-out reader gets it: no script, facts or audio URL. */
+export function lockEpisode(e: PodcastEpisode): PodcastEpisode {
+  return {
+    ...e,
+    locked: true,
+    sentences: [],
+    intro: '',
+    outro: '',
+    evidence: [],
+    audio: e.audio ? { ...e.audio, url: '' } : null,
+  }
+}

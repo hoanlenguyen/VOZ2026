@@ -63,7 +63,7 @@ jobs:
             NUXT_FOOTBALL_DATA_TOKEN
             NUXT_GNEWS_API_KEY
             NUXT_OPENAI_API_KEY
-            NUXT_HF_TOKEN
+            ${{ secrets.NUXT_HF_TOKEN != '' && 'NUXT_HF_TOKEN' || '' }}
         env:
           NUXT_LIIGA_API_KEY: ${{ secrets.NUXT_LIIGA_API_KEY }}
           NUXT_FOOTBALL_DATA_TOKEN: ${{ secrets.NUXT_FOOTBALL_DATA_TOKEN }}

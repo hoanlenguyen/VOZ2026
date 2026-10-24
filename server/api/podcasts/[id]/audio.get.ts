@@ -1,7 +1,9 @@
-// MP3 of a generated podcast episode (kvcache). Supports Range requests, which Safari needs to play
-// audio. Bundled demo episodes are static files under /podcasts/ instead.
+// MP3 of a generated podcast episode (kvcache), for subscribers. Supports Range requests, which Safari
+// needs to play audio. Bundled demo episodes are static files under /podcasts/ instead (their URL is
+// only given to subscribers by /api/podcasts).
 
 export default defineEventHandler(async (event) => {
+  await requireEntitlement(event, 'premium')
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^[a-z0-9.-]+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid episode id' })
   const audio = await episodeAudio(id)
@@ -10,7 +12,7 @@ export default defineEventHandler(async (event) => {
     'content-type': 'audio/mpeg',
     'accept-ranges': 'bytes',
     // The URL carries ?v=<version>, so a regenerated episode gets a new URL.
-    'cache-control': 'public, max-age=86400',
+    'cache-control': 'private, max-age=86400',
   })
   const range = /^bytes=(\d*)-(\d*)$/.exec(getRequestHeader(event, 'range') ?? '')
   if (!range || (!range[1] && !range[2])) {

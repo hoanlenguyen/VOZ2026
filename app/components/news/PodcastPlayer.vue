@@ -1,13 +1,18 @@
 <script setup lang="ts">
 // One AI podcast episode: play/pause, seek bar and time, the transcript; for the newsroom also the
 // "AI content" tag and the facts it cites. Only one episode plays at a time on a page. Audio loads on first play (preload="none").
-import { PhCaretRight, PhPause, PhPlay } from '@phosphor-icons/vue'
+// Podcasts are for subscribers: a locked episode (free / signed out) shows its title and length,
+// and its lock button opens the VOZ Plus invitation instead of playing.
+import { PhCaretRight, PhLockSimple, PhPause, PhPlay } from '@phosphor-icons/vue'
 import type { PodcastEpisode } from '#shared/types/podcast'
 
 const props = withDefaults(defineProps<{ episode: PodcastEpisode, showLink?: boolean }>(), { showLink: true })
 const { t } = useI18n()
 const { stamp } = useFormat()
-const { can } = useAccount()
+const { can, account } = useAccount()
+const route = useRoute()
+const showInvite = ref(false)
+const inviteLink = computed(() => (account.value ? '/account' : { path: '/login', query: { redirect: route.fullPath } }))
 
 const audio = ref<HTMLAudioElement | null>(null)
 const playing = ref(false)
@@ -50,7 +55,13 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
   <article v-if="episode.audio" class="pod" :lang="episode.lang">
     <div class="pod-main">
       <button
-        type="button" class="play" :aria-label="t(playing ? 'podcast.pause' : 'podcast.play', { title: episode.title })"
+        v-if="episode.locked" type="button" class="play play--locked" :aria-expanded="showInvite"
+        :aria-label="t('podcast.lockedPlay', { title: episode.title })" @click="showInvite = !showInvite"
+      >
+        <PhLockSimple :size="22" weight="bold" aria-hidden="true" />
+      </button>
+      <button
+        v-else type="button" class="play" :aria-label="t(playing ? 'podcast.pause' : 'podcast.play', { title: episode.title })"
         @click="toggle"
       >
         <PhPause v-if="playing" :size="22" weight="fill" aria-hidden="true" />
@@ -68,7 +79,7 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
         <h3 class="title">{{ episode.title }}</h3>
         <div class="bar">
           <input
-            type="range" class="seek" min="0" :max="duration || 1" step="0.1" :value="current"
+            type="range" class="seek" min="0" :max="duration || 1" step="0.1" :value="current" :disabled="episode.locked"
             :aria-label="t('podcast.seek', { title: episode.title })" :aria-valuetext="`${clock(current)} / ${clock(duration)}`"
             @input="seek"
           >
@@ -76,13 +87,21 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
         </div>
       </div>
     </div>
+    <!-- Locked: the VOZ Plus invitation, opened from the lock button. -->
+    <div v-if="episode.locked && showInvite" class="invite">
+      <p class="invite-title">{{ t('podcast.lockedTitle') }}</p>
+      <p class="invite-text">{{ t(account ? 'podcast.lockedFree' : 'podcast.lockedSignedOut') }}</p>
+      <NuxtLink :to="inviteLink" class="invite-cta">{{ account ? t('discussion.subscribe') : t('nav.signIn') }}</NuxtLink>
+    </div>
+    <p v-else-if="episode.locked" class="locked-note"><PhLockSimple :size="13" weight="bold" aria-hidden="true" /> {{ t('podcast.lockedNote') }}</p>
     <audio
+      v-if="!episode.locked"
       ref="audio" :src="episode.audio.url" preload="none"
       @play="playing = true" @pause="playing = false" @ended="playing = false; current = 0"
       @timeupdate="current = ($event.target as HTMLAudioElement).currentTime"
       @loadedmetadata="duration = ($event.target as HTMLAudioElement).duration || duration"
     />
-    <details class="transcript">
+    <details v-if="!episode.locked" class="transcript">
       <summary><PhCaretRight :size="14" weight="bold" class="caret" aria-hidden="true" />{{ t('podcast.transcript') }}</summary>
       <p class="script">{{ transcript }}</p>
       <p class="made">{{ made }}</p>
@@ -106,6 +125,18 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
   transition: opacity var(--dur-fast) var(--ease-out);
 }
 .play:hover { opacity: 0.85; }
+.play--locked { background: var(--offer-bg); color: var(--offer-ink); border: 2px solid var(--offer-ink); }
+.seek:disabled { cursor: not-allowed; opacity: 0.5; }
+.locked-note { margin: 0; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--offer-ink); }
+.invite { padding: 14px 16px; border-radius: 4px; background: var(--offer-bg); color: var(--offer-text); display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.invite-title { margin: 0; font-size: 15px; font-weight: 700; }
+.invite-text { margin: 0; font-size: 14px; line-height: 1.45; }
+.invite-cta {
+  margin-top: 4px; min-height: 40px; padding: 0 18px; display: inline-flex; align-items: center; border-radius: 999px;
+  background: var(--offer-ink); color: var(--offer-bg); font-size: 14px; font-weight: 700; text-decoration: none;
+}
+.invite-cta:hover { background: var(--offer-ink-hover); color: var(--offer-bg); }
+.invite-cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .play:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 3px; }
 .pod-body { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
 .kicker { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--meta); }

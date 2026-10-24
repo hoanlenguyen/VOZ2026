@@ -1,0 +1,759 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645267",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-18 14:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Elland Road, Leeds",
+    "attendance": 35488,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "2",
+      "name": "Leeds United",
+      "shortName": "Leeds",
+      "abbr": "LEE",
+      "score": 1,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "1",
+      "name": "Manchester United",
+      "shortName": "Man United",
+      "abbr": "MUN",
+      "score": 1,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Stuart Attwell"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Michael Salisbury"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Leeds United",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "90",
+          "timestamp": "20261018T154500+0100",
+          "player": "Daniel James",
+          "assist": "Sean Longstaff"
+        }
+      ],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "56",
+          "type": "Yellow",
+          "player": "Sean Longstaff"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "65",
+          "type": "Yellow",
+          "player": "Anton Stach"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "74",
+          "type": "Yellow",
+          "player": "Daniel James"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "72",
+          "playerOn": "Ao Tanaka",
+          "playerOff": "Dominic Calvert-Lewin"
+        },
+        {
+          "time": "77",
+          "playerOn": "Wilfried Gnonto",
+          "playerOff": "Brenden Aaronson"
+        },
+        {
+          "time": "82",
+          "playerOn": "Ilia Gruev",
+          "playerOff": "Gabriel Gudmundsson"
+        }
+      ]
+    },
+    "away": {
+      "team": "Manchester United",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "12",
+          "timestamp": "20261018T141200+0100",
+          "player": "Leny Yoro",
+          "assist": "Matthijs de Ligt"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "21",
+          "type": "Yellow",
+          "player": "Bruno Fernandes"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "65",
+          "playerOn": "Harry Maguire",
+          "playerOff": "Luke Shaw"
+        },
+        {
+          "time": "69",
+          "playerOn": "Manuel Ugarte",
+          "playerOff": "Matheus Cunha"
+        },
+        {
+          "time": "78",
+          "playerOn": "Diogo Dalot",
+          "playerOff": "Amad Diallo"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Leeds United",
+      "formation": "4-3-3",
+      "formationRows": [
+        [
+          "Lucas Perri"
+        ],
+        [
+          "Jayden Bogle",
+          "Joe Rodon",
+          "Pascal Struijk",
+          "Gabriel Gudmundsson"
+        ],
+        [
+          "Ethan Ampadu",
+          "Anton Stach",
+          "Sean Longstaff"
+        ],
+        [
+          "Daniel James",
+          "Dominic Calvert-Lewin",
+          "Brenden Aaronson"
+        ]
+      ],
+      "manager": "Daniel Farke",
+      "startingXI": [
+        {
+          "name": "Lucas Perri",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jayden Bogle",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Joe Rodon",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Pascal Struijk",
+          "shirtNumber": 21,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Gabriel Gudmundsson",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ethan Ampadu",
+          "shirtNumber": 4,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Anton Stach",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Sean Longstaff",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Daniel James",
+          "shirtNumber": 20,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Dominic Calvert-Lewin",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Brenden Aaronson",
+          "shirtNumber": 11,
+          "position": "Midfielder",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Karl Darlow",
+          "shirtNumber": 26,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Sebastiaan Bornauw",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jaka Bijol",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ilia Gruev",
+          "shirtNumber": 44,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Ao Tanaka",
+          "shirtNumber": 22,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Wilfried Gnonto",
+          "shirtNumber": 29,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Joël Piroe",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Manchester United",
+      "formation": "3-4-2-1",
+      "formationRows": [
+        [
+          "Senne Lammens"
+        ],
+        [
+          "Leny Yoro",
+          "Matthijs de Ligt",
+          "Luke Shaw"
+        ],
+        [
+          "Amad Diallo",
+          "Bruno Fernandes",
+          "Casemiro",
+          "Patrick Dorgu"
+        ],
+        [
+          "Bryan Mbeumo",
+          "Matheus Cunha"
+        ],
+        [
+          "Benjamin Šeško"
+        ]
+      ],
+      "manager": "Ruben Amorim",
+      "startingXI": [
+        {
+          "name": "Senne Lammens",
+          "shirtNumber": 31,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Leny Yoro",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Matthijs de Ligt",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Luke Shaw",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Amad Diallo",
+          "shirtNumber": 16,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Bruno Fernandes",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Casemiro",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Patrick Dorgu",
+          "shirtNumber": 13,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Bryan Mbeumo",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Matheus Cunha",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Benjamin Šeško",
+          "shirtNumber": 30,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Altay Bayındır",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Harry Maguire",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Diogo Dalot",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Manuel Ugarte",
+          "shirtNumber": 25,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Kobbie Mainoo",
+          "shirtNumber": 37,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Mason Mount",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Joshua Zirkzee",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 47.6,
+        "away": 52.4
+      },
+      "xG": {
+        "home": 2.02,
+        "away": 1.85
+      },
+      "shots": {
+        "home": 10,
+        "away": 10
+      },
+      "shots_on_target": {
+        "home": 2,
+        "away": 3
+      },
+      "shots_off_target": {
+        "home": 6,
+        "away": 7
+      },
+      "shots_blocked": {
+        "home": 2,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 4,
+        "away": 1
+      },
+      "passes": {
+        "home": 417,
+        "away": 473
+      },
+      "accurate_passes": {
+        "home": 338,
+        "away": 393
+      },
+      "tackles": {
+        "home": 15,
+        "away": 22
+      },
+      "saves": {
+        "home": 2,
+        "away": 1
+      },
+      "fouls": {
+        "home": 12,
+        "away": 10
+      },
+      "offsides": {
+        "home": 4,
+        "away": 0
+      },
+      "yellow_cards": {
+        "home": 3,
+        "away": 1
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 5,
+        "lostCorners": 9
+      },
+      "away": {
+        "wonCorners": 9,
+        "lostCorners": 5
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "3'",
+      "type": "corner",
+      "team": "Manchester United",
+      "player1": "Luke Shaw",
+      "player2": null
+    },
+    {
+      "minute": "6'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Bruno Fernandes",
+      "player2": "Leny Yoro"
+    },
+    {
+      "minute": "8'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Lucas Perri",
+      "player2": null
+    },
+    {
+      "minute": "9'",
+      "type": "offside",
+      "team": "Leeds United",
+      "player1": "Dominic Calvert-Lewin",
+      "player2": "Gabriel Gudmundsson"
+    },
+    {
+      "minute": "12'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Lucas Perri",
+      "player2": null
+    },
+    {
+      "minute": "14'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Matheus Cunha",
+      "player2": "Bryan Mbeumo"
+    },
+    {
+      "minute": "15'",
+      "type": "offside",
+      "team": "Leeds United",
+      "player1": "Sean Longstaff",
+      "player2": null
+    },
+    {
+      "minute": "15'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Lucas Perri",
+      "player2": null
+    },
+    {
+      "minute": "18'",
+      "type": "attempt saved",
+      "team": "Leeds United",
+      "player1": "Brenden Aaronson",
+      "player2": null
+    },
+    {
+      "minute": "23'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Casemiro",
+      "player2": "Bruno Fernandes"
+    },
+    {
+      "minute": "29'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Amad Diallo",
+      "player2": "Benjamin Šeško"
+    },
+    {
+      "minute": "30'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Jayden Bogle",
+      "player2": null
+    },
+    {
+      "minute": "32'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Ethan Ampadu",
+      "player2": null
+    },
+    {
+      "minute": "34'",
+      "type": "corner",
+      "team": "Manchester United",
+      "player1": "Senne Lammens",
+      "player2": null
+    },
+    {
+      "minute": "38'",
+      "type": "attempt blocked",
+      "team": "Leeds United",
+      "player1": "Daniel James",
+      "player2": "Ethan Ampadu"
+    },
+    {
+      "minute": "39'",
+      "type": "attempt saved",
+      "team": "Manchester United",
+      "player1": "Leny Yoro",
+      "player2": null
+    },
+    {
+      "minute": "39'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Pascal Struijk",
+      "player2": null
+    },
+    {
+      "minute": "42'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Pascal Struijk",
+      "player2": null
+    },
+    {
+      "minute": "42'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Matheus Cunha",
+      "player2": null
+    },
+    {
+      "minute": "45'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Lucas Perri",
+      "player2": null
+    },
+    {
+      "minute": "46'",
+      "type": "attempt saved",
+      "team": "Manchester United",
+      "player1": "Matthijs de Ligt",
+      "player2": null
+    },
+    {
+      "minute": "48'",
+      "type": "attempt blocked",
+      "team": "Leeds United",
+      "player1": "Dominic Calvert-Lewin",
+      "player2": "Anton Stach"
+    },
+    {
+      "minute": "49'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Ethan Ampadu",
+      "player2": null
+    },
+    {
+      "minute": "55'",
+      "type": "corner",
+      "team": "Manchester United",
+      "player1": "Patrick Dorgu",
+      "player2": null
+    },
+    {
+      "minute": "56'",
+      "type": "offside",
+      "team": "Leeds United",
+      "player1": "Ethan Ampadu",
+      "player2": null
+    },
+    {
+      "minute": "63'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Lucas Perri",
+      "player2": null
+    },
+    {
+      "minute": "69'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Dominic Calvert-Lewin",
+      "player2": null
+    },
+    {
+      "minute": "69'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Manuel Ugarte",
+      "player2": "Benjamin Šeško"
+    },
+    {
+      "minute": "73'",
+      "type": "corner",
+      "team": "Manchester United",
+      "player1": "Harry Maguire",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "corner",
+      "team": "Manchester United",
+      "player1": "Diogo Dalot",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Jayden Bogle",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Joe Rodon",
+      "player2": null
+    },
+    {
+      "minute": "82'",
+      "type": "corner",
+      "team": "Leeds United",
+      "player1": "Joe Rodon",
+      "player2": null
+    },
+    {
+      "minute": "84'",
+      "type": "offside",
+      "team": "Leeds United",
+      "player1": "Ethan Ampadu",
+      "player2": "Sean Longstaff"
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Leeds United",
+      "player1": "Ilia Gruev",
+      "player2": null
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Manchester United",
+      "player1": "Casemiro",
+      "player2": "Manuel Ugarte"
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

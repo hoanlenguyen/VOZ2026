@@ -1,0 +1,733 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645265",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-17 17:30:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "St James' Park, Newcastle",
+    "attendance": 49551,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "4",
+      "name": "Newcastle United",
+      "shortName": "Newcastle",
+      "abbr": "NEW",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "7",
+      "name": "Aston Villa",
+      "shortName": "Aston Villa",
+      "abbr": "AVL",
+      "score": 1,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Jarred Gillett"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Lewis Smith"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Newcastle United",
+      "goals": [],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "37",
+          "type": "Yellow",
+          "player": "Fabian Schär"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "77",
+          "type": "Yellow",
+          "player": "Jacob Murphy"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "73",
+          "playerOn": "Yoane Wissa",
+          "playerOff": "Fabian Schär"
+        },
+        {
+          "time": "74",
+          "playerOn": "Jacob Ramsey",
+          "playerOff": "Joelinton"
+        },
+        {
+          "time": "85",
+          "playerOn": "Joe Willock",
+          "playerOff": "Nick Woltemade"
+        },
+        {
+          "time": "86",
+          "playerOn": "Dan Burn",
+          "playerOff": "Kieran Trippier"
+        }
+      ]
+    },
+    "away": {
+      "team": "Aston Villa",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "38",
+          "timestamp": "20261017T180800+0100",
+          "player": "Ezri Konsa"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "37",
+          "type": "Yellow",
+          "player": "Matty Cash"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "69",
+          "type": "Yellow",
+          "player": "Matty Cash"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "78",
+          "playerOn": "Evann Guessand",
+          "playerOff": "Emiliano Buendía"
+        },
+        {
+          "time": "82",
+          "playerOn": "Jadon Sancho",
+          "playerOff": "Morgan Rogers"
+        },
+        {
+          "time": "83",
+          "playerOn": "Amadou Onana",
+          "playerOff": "Lucas Digne"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Newcastle United",
+      "formation": "4-3-3",
+      "formationRows": [
+        [
+          "Nick Pope"
+        ],
+        [
+          "Kieran Trippier",
+          "Fabian Schär",
+          "Sven Botman",
+          "Lewis Hall"
+        ],
+        [
+          "Sandro Tonali",
+          "Bruno Guimarães",
+          "Joelinton"
+        ],
+        [
+          "Jacob Murphy",
+          "Nick Woltemade",
+          "Anthony Gordon"
+        ]
+      ],
+      "manager": "Eddie Howe",
+      "startingXI": [
+        {
+          "name": "Nick Pope",
+          "shirtNumber": 22,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Kieran Trippier",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Fabian Schär",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Sven Botman",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Lewis Hall",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Sandro Tonali",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Bruno Guimarães",
+          "shirtNumber": 39,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Joelinton",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jacob Murphy",
+          "shirtNumber": 23,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Nick Woltemade",
+          "shirtNumber": 27,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Anthony Gordon",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Aaron Ramsdale",
+          "shirtNumber": 32,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Malick Thiaw",
+          "shirtNumber": 12,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Dan Burn",
+          "shirtNumber": 33,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Joe Willock",
+          "shirtNumber": 28,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jacob Ramsey",
+          "shirtNumber": 41,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Harvey Barnes",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Yoane Wissa",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Aston Villa",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Emiliano Martínez"
+        ],
+        [
+          "Matty Cash",
+          "Ezri Konsa",
+          "Pau Torres",
+          "Lucas Digne"
+        ],
+        [
+          "Boubacar Kamara",
+          "Youri Tielemans"
+        ],
+        [
+          "Morgan Rogers",
+          "John McGinn",
+          "Emiliano Buendía"
+        ],
+        [
+          "Ollie Watkins"
+        ]
+      ],
+      "manager": "Unai Emery",
+      "startingXI": [
+        {
+          "name": "Emiliano Martínez",
+          "shirtNumber": 23,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Matty Cash",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ezri Konsa",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Pau Torres",
+          "shirtNumber": 14,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Lucas Digne",
+          "shirtNumber": 12,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Boubacar Kamara",
+          "shirtNumber": 44,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Youri Tielemans",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Morgan Rogers",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "John McGinn",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Emiliano Buendía",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Ollie Watkins",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Marco Bizot",
+          "shirtNumber": 40,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Tyrone Mings",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ian Maatsen",
+          "shirtNumber": 22,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Amadou Onana",
+          "shirtNumber": 24,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Ross Barkley",
+          "shirtNumber": 6,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Evann Guessand",
+          "shirtNumber": 29,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Jadon Sancho",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 51.7,
+        "away": 48.3
+      },
+      "xG": {
+        "home": 0.81,
+        "away": 1.53
+      },
+      "shots": {
+        "home": 12,
+        "away": 12
+      },
+      "shots_on_target": {
+        "home": 4,
+        "away": 3
+      },
+      "shots_off_target": {
+        "home": 6,
+        "away": 8
+      },
+      "shots_blocked": {
+        "home": 2,
+        "away": 1
+      },
+      "big_chances_created": {
+        "home": 0,
+        "away": 2
+      },
+      "passes": {
+        "home": 506,
+        "away": 478
+      },
+      "accurate_passes": {
+        "home": 423,
+        "away": 409
+      },
+      "tackles": {
+        "home": 19,
+        "away": 20
+      },
+      "saves": {
+        "home": 2,
+        "away": 4
+      },
+      "fouls": {
+        "home": 14,
+        "away": 7
+      },
+      "offsides": {
+        "home": 3,
+        "away": 4
+      },
+      "yellow_cards": {
+        "home": 2,
+        "away": 2
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 2,
+        "lostCorners": 1
+      },
+      "away": {
+        "wonCorners": 1,
+        "lostCorners": 2
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "3'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "Boubacar Kamara",
+      "player2": null
+    },
+    {
+      "minute": "6'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "Emiliano Buendía",
+      "player2": null
+    },
+    {
+      "minute": "10'",
+      "type": "attempt saved",
+      "team": "Newcastle United",
+      "player1": "Nick Woltemade",
+      "player2": "Anthony Gordon"
+    },
+    {
+      "minute": "10'",
+      "type": "offside",
+      "team": "Aston Villa",
+      "player1": "Emiliano Buendía",
+      "player2": "Morgan Rogers"
+    },
+    {
+      "minute": "12'",
+      "type": "attempt saved",
+      "team": "Newcastle United",
+      "player1": "Sandro Tonali",
+      "player2": "Nick Woltemade"
+    },
+    {
+      "minute": "15'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Nick Woltemade",
+      "player2": "Sandro Tonali"
+    },
+    {
+      "minute": "20'",
+      "type": "offside",
+      "team": "Aston Villa",
+      "player1": "Matty Cash",
+      "player2": null
+    },
+    {
+      "minute": "21'",
+      "type": "attempt saved",
+      "team": "Newcastle United",
+      "player1": "Bruno Guimarães",
+      "player2": null
+    },
+    {
+      "minute": "24'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Bruno Guimarães",
+      "player2": "Jacob Murphy"
+    },
+    {
+      "minute": "25'",
+      "type": "offside",
+      "team": "Newcastle United",
+      "player1": "Anthony Gordon",
+      "player2": "Lewis Hall"
+    },
+    {
+      "minute": "35'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "John McGinn",
+      "player2": null
+    },
+    {
+      "minute": "36'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Nick Woltemade",
+      "player2": "Sven Botman"
+    },
+    {
+      "minute": "39'",
+      "type": "corner",
+      "team": "Aston Villa",
+      "player1": "Pau Torres",
+      "player2": null
+    },
+    {
+      "minute": "39'",
+      "type": "corner",
+      "team": "Newcastle United",
+      "player1": "Sven Botman",
+      "player2": null
+    },
+    {
+      "minute": "42'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Anthony Gordon",
+      "player2": "Bruno Guimarães"
+    },
+    {
+      "minute": "43'",
+      "type": "attempt saved",
+      "team": "Aston Villa",
+      "player1": "Pau Torres",
+      "player2": "Lucas Digne"
+    },
+    {
+      "minute": "45'",
+      "type": "offside",
+      "team": "Aston Villa",
+      "player1": "Ollie Watkins",
+      "player2": null
+    },
+    {
+      "minute": "49'",
+      "type": "attempt blocked",
+      "team": "Newcastle United",
+      "player1": "Sandro Tonali",
+      "player2": "Joelinton"
+    },
+    {
+      "minute": "54'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Fabian Schär",
+      "player2": null
+    },
+    {
+      "minute": "56'",
+      "type": "attempt blocked",
+      "team": "Newcastle United",
+      "player1": "Anthony Gordon",
+      "player2": "Lewis Hall"
+    },
+    {
+      "minute": "61'",
+      "type": "offside",
+      "team": "Newcastle United",
+      "player1": "Joelinton",
+      "player2": null
+    },
+    {
+      "minute": "64'",
+      "type": "attempt blocked",
+      "team": "Aston Villa",
+      "player1": "John McGinn",
+      "player2": null
+    },
+    {
+      "minute": "66'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "John McGinn",
+      "player2": null
+    },
+    {
+      "minute": "66'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "Ollie Watkins",
+      "player2": "Matty Cash"
+    },
+    {
+      "minute": "72'",
+      "type": "miss",
+      "team": "Newcastle United",
+      "player1": "Anthony Gordon",
+      "player2": null
+    },
+    {
+      "minute": "79'",
+      "type": "offside",
+      "team": "Aston Villa",
+      "player1": "Ollie Watkins",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "Ollie Watkins",
+      "player2": null
+    },
+    {
+      "minute": "83'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "Jadon Sancho",
+      "player2": "Pau Torres"
+    },
+    {
+      "minute": "84'",
+      "type": "attempt saved",
+      "team": "Newcastle United",
+      "player1": "Sandro Tonali",
+      "player2": null
+    },
+    {
+      "minute": "84'",
+      "type": "miss",
+      "team": "Aston Villa",
+      "player1": "John McGinn",
+      "player2": "Youri Tielemans"
+    },
+    {
+      "minute": "86'",
+      "type": "offside",
+      "team": "Newcastle United",
+      "player1": "Jacob Ramsey",
+      "player2": "Sven Botman"
+    },
+    {
+      "minute": "87'",
+      "type": "attempt saved",
+      "team": "Aston Villa",
+      "player1": "Jadon Sancho",
+      "player2": null
+    },
+    {
+      "minute": "90'",
+      "type": "corner",
+      "team": "Aston Villa",
+      "player1": "Pau Torres",
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

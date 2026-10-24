@@ -1,0 +1,776 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645270",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-19 20:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Tottenham Hotspur Stadium, London",
+    "attendance": 59617,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "6",
+      "name": "Tottenham Hotspur",
+      "shortName": "Tottenham",
+      "abbr": "TOT",
+      "score": 3,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "9",
+      "name": "Coventry City",
+      "shortName": "Coventry",
+      "abbr": "COV",
+      "score": 1,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Andy Madley"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Farai Hallam"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Tottenham Hotspur",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "25",
+          "timestamp": "20261019T202500+0100",
+          "player": "Richarlison",
+          "assist": "Cristian Romero"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "72",
+          "timestamp": "20261019T212700+0100",
+          "player": "Brennan Johnson",
+          "assist": "Djed Spence"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "82",
+          "timestamp": "20261019T213700+0100",
+          "player": "Brennan Johnson"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "11",
+          "type": "Yellow",
+          "player": "Cristian Romero"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "65",
+          "playerOn": "Brennan Johnson",
+          "playerOff": "Mathys Tel"
+        },
+        {
+          "time": "67",
+          "playerOn": "Pape Matar Sarr",
+          "playerOff": "Mohammed Kudus"
+        },
+        {
+          "time": "75",
+          "playerOn": "Randal Kolo Muani",
+          "playerOff": "Djed Spence"
+        },
+        {
+          "time": "86",
+          "playerOn": "Lucas Bergvall",
+          "playerOff": "Rodrigo Bentancur"
+        },
+        {
+          "time": "88",
+          "playerOn": "Destiny Udogie",
+          "playerOff": "Cristian Romero"
+        }
+      ]
+    },
+    "away": {
+      "team": "Coventry City",
+      "goals": [
+        {
+          "goalType": "Penalty",
+          "period": "SecondHalf",
+          "time": "82",
+          "timestamp": "20261019T213700+0100",
+          "player": "Tatsuhiro Sakamoto"
+        }
+      ],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "68",
+          "type": "Yellow",
+          "player": "Matt Grimes"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "58",
+          "playerOn": "Victor Torp",
+          "playerOff": "Jack Rudoni"
+        },
+        {
+          "time": "64",
+          "playerOn": "Josh Eccles",
+          "playerOff": "Haji Wright"
+        },
+        {
+          "time": "76",
+          "playerOn": "Joel Latibeaudiere",
+          "playerOff": "Jay Dasilva"
+        },
+        {
+          "time": "80",
+          "playerOn": "Brandon Thomas-Asante",
+          "playerOff": "Ephron Mason-Clark"
+        },
+        {
+          "time": "85",
+          "playerOn": "Jake Bidwell",
+          "playerOff": "Bobby Thomas"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Tottenham Hotspur",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Guglielmo Vicario"
+        ],
+        [
+          "Pedro Porro",
+          "Cristian Romero",
+          "Micky van de Ven",
+          "Djed Spence"
+        ],
+        [
+          "João Palhinha",
+          "Rodrigo Bentancur"
+        ],
+        [
+          "Mohammed Kudus",
+          "Xavi Simons",
+          "Mathys Tel"
+        ],
+        [
+          "Richarlison"
+        ]
+      ],
+      "manager": "Thomas Frank",
+      "startingXI": [
+        {
+          "name": "Guglielmo Vicario",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Pedro Porro",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Cristian Romero",
+          "shirtNumber": 17,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Micky van de Ven",
+          "shirtNumber": 37,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Djed Spence",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "João Palhinha",
+          "shirtNumber": 6,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Rodrigo Bentancur",
+          "shirtNumber": 30,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Mohammed Kudus",
+          "shirtNumber": 20,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Xavi Simons",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Mathys Tel",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Richarlison",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Antonín Kinský",
+          "shirtNumber": 31,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Kevin Danso",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Destiny Udogie",
+          "shirtNumber": 13,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Pape Matar Sarr",
+          "shirtNumber": 29,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Lucas Bergvall",
+          "shirtNumber": 15,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Brennan Johnson",
+          "shirtNumber": 22,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Randal Kolo Muani",
+          "shirtNumber": 39,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Coventry City",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Carl Rushworth"
+        ],
+        [
+          "Milan van Ewijk",
+          "Bobby Thomas",
+          "Liam Kitching",
+          "Jay Dasilva"
+        ],
+        [
+          "Ben Sheaf",
+          "Matt Grimes"
+        ],
+        [
+          "Ephron Mason-Clark",
+          "Jack Rudoni",
+          "Tatsuhiro Sakamoto"
+        ],
+        [
+          "Haji Wright"
+        ]
+      ],
+      "manager": "Frank Lampard",
+      "startingXI": [
+        {
+          "name": "Carl Rushworth",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Milan van Ewijk",
+          "shirtNumber": 27,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Bobby Thomas",
+          "shirtNumber": 4,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Liam Kitching",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jay Dasilva",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ben Sheaf",
+          "shirtNumber": 14,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Matt Grimes",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Ephron Mason-Clark",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Jack Rudoni",
+          "shirtNumber": 5,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Tatsuhiro Sakamoto",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Haji Wright",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Ben Wilson",
+          "shirtNumber": 13,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Joel Latibeaudiere",
+          "shirtNumber": 22,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jake Bidwell",
+          "shirtNumber": 21,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Victor Torp",
+          "shirtNumber": 29,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Josh Eccles",
+          "shirtNumber": 28,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Brandon Thomas-Asante",
+          "shirtNumber": 23,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Ellis Simms",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 64.4,
+        "away": 35.6
+      },
+      "xG": {
+        "home": 3.38,
+        "away": 1.71
+      },
+      "shots": {
+        "home": 17,
+        "away": 11
+      },
+      "shots_on_target": {
+        "home": 7,
+        "away": 4
+      },
+      "shots_off_target": {
+        "home": 8,
+        "away": 7
+      },
+      "shots_blocked": {
+        "home": 2,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 4,
+        "away": 4
+      },
+      "passes": {
+        "home": 621,
+        "away": 352
+      },
+      "accurate_passes": {
+        "home": 507,
+        "away": 283
+      },
+      "tackles": {
+        "home": 16,
+        "away": 19
+      },
+      "saves": {
+        "home": 3,
+        "away": 4
+      },
+      "fouls": {
+        "home": 13,
+        "away": 15
+      },
+      "offsides": {
+        "home": 1,
+        "away": 1
+      },
+      "yellow_cards": {
+        "home": 1,
+        "away": 1
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 2,
+        "lostCorners": 7
+      },
+      "away": {
+        "wonCorners": 7,
+        "lostCorners": 2
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "2'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Mathys Tel",
+      "player2": "Xavi Simons"
+    },
+    {
+      "minute": "2'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Milan van Ewijk",
+      "player2": "Jack Rudoni"
+    },
+    {
+      "minute": "4'",
+      "type": "corner",
+      "team": "Coventry City",
+      "player1": "Jay Dasilva",
+      "player2": null
+    },
+    {
+      "minute": "7'",
+      "type": "attempt saved",
+      "team": "Coventry City",
+      "player1": "Milan van Ewijk",
+      "player2": null
+    },
+    {
+      "minute": "7'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Jay Dasilva",
+      "player2": "Ben Sheaf"
+    },
+    {
+      "minute": "11'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Rodrigo Bentancur",
+      "player2": "Djed Spence"
+    },
+    {
+      "minute": "17'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Richarlison",
+      "player2": "Djed Spence"
+    },
+    {
+      "minute": "20'",
+      "type": "attempt saved",
+      "team": "Tottenham Hotspur",
+      "player1": "João Palhinha",
+      "player2": "Djed Spence"
+    },
+    {
+      "minute": "20'",
+      "type": "attempt saved",
+      "team": "Tottenham Hotspur",
+      "player1": "Micky van de Ven",
+      "player2": "João Palhinha"
+    },
+    {
+      "minute": "22'",
+      "type": "attempt saved",
+      "team": "Tottenham Hotspur",
+      "player1": "Richarlison",
+      "player2": "Djed Spence"
+    },
+    {
+      "minute": "24'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Richarlison",
+      "player2": null
+    },
+    {
+      "minute": "25'",
+      "type": "attempt blocked",
+      "team": "Tottenham Hotspur",
+      "player1": "Rodrigo Bentancur",
+      "player2": "Mohammed Kudus"
+    },
+    {
+      "minute": "25'",
+      "type": "attempt saved",
+      "team": "Coventry City",
+      "player1": "Haji Wright",
+      "player2": null
+    },
+    {
+      "minute": "29'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Pedro Porro",
+      "player2": null
+    },
+    {
+      "minute": "29'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Djed Spence",
+      "player2": null
+    },
+    {
+      "minute": "30'",
+      "type": "corner",
+      "team": "Coventry City",
+      "player1": "Milan van Ewijk",
+      "player2": null
+    },
+    {
+      "minute": "34'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Cristian Romero",
+      "player2": null
+    },
+    {
+      "minute": "36'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Mathys Tel",
+      "player2": "João Palhinha"
+    },
+    {
+      "minute": "40'",
+      "type": "offside",
+      "team": "Coventry City",
+      "player1": "Milan van Ewijk",
+      "player2": null
+    },
+    {
+      "minute": "41'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Mathys Tel",
+      "player2": null
+    },
+    {
+      "minute": "41'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Micky van de Ven",
+      "player2": null
+    },
+    {
+      "minute": "52'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Xavi Simons",
+      "player2": null
+    },
+    {
+      "minute": "54'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Tatsuhiro Sakamoto",
+      "player2": null
+    },
+    {
+      "minute": "61'",
+      "type": "attempt blocked",
+      "team": "Tottenham Hotspur",
+      "player1": "Richarlison",
+      "player2": null
+    },
+    {
+      "minute": "64'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Guglielmo Vicario",
+      "player2": null
+    },
+    {
+      "minute": "66'",
+      "type": "miss",
+      "team": "Tottenham Hotspur",
+      "player1": "Richarlison",
+      "player2": "Pedro Porro"
+    },
+    {
+      "minute": "68'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Milan van Ewijk",
+      "player2": "Ben Sheaf"
+    },
+    {
+      "minute": "73'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Djed Spence",
+      "player2": null
+    },
+    {
+      "minute": "75'",
+      "type": "attempt saved",
+      "team": "Coventry City",
+      "player1": "Ephron Mason-Clark",
+      "player2": "Victor Torp"
+    },
+    {
+      "minute": "78'",
+      "type": "corner",
+      "team": "Tottenham Hotspur",
+      "player1": "Cristian Romero",
+      "player2": null
+    },
+    {
+      "minute": "79'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Josh Eccles",
+      "player2": "Matt Grimes"
+    },
+    {
+      "minute": "80'",
+      "type": "offside",
+      "team": "Tottenham Hotspur",
+      "player1": "Rodrigo Bentancur",
+      "player2": null
+    },
+    {
+      "minute": "84'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Tatsuhiro Sakamoto",
+      "player2": "Victor Torp"
+    },
+    {
+      "minute": "87'",
+      "type": "attempt saved",
+      "team": "Tottenham Hotspur",
+      "player1": "Randal Kolo Muani",
+      "player2": "Brennan Johnson"
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Coventry City",
+      "player1": "Brandon Thomas-Asante",
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

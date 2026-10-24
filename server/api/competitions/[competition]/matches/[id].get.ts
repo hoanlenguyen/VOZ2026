@@ -82,6 +82,8 @@ export default defineEventHandler(async (event) => {
   return {
     teaser,
     story,
+    /** Public totals of the discussion (comments, story likes); the comments are for subscribers. */
+    engagement: engagementOf(await loadThread(match.key)),
     /** The newsroom's cover image, in place of the match graphic (null: show the graphic). */
     cover: coverOf(control),
     competition: describeCompetition(def, lang),

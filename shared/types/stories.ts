@@ -28,6 +28,8 @@ export interface Story {
   cover?: { src: string, alt: string }
   /** An AI post from SportWorld: the match details are simulated (cards say so to every reader). */
   simulated?: boolean
+  /** Public discussion totals (comments, story likes), when the match has a discussion. */
+  engagement?: { comments: number, likes: number }
 }
 
 /** Who may read a match story: everyone, or subscribers (premium) only. */

@@ -28,7 +28,9 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       // page regardless of age (demo), and lead their league: they are the richest coverage we have.
       const mocks = await mockMatchesFor(def, matches.data)
       // Approved AI posts (SportWorld, simulated details) replace the provider's story of the same game.
-      const posts = await approvedAiPosts(def.id).catch(() => [])
+      // A fixture with bundled real match data keeps that story; its simulated post stays off the front page.
+      const real = new Set(mocks.map(m => m.providerId).filter(Boolean))
+      const posts = (await approvedAiPosts(def.id).catch(() => [])).filter(p => !real.has(p.matchId))
       const twins = new Set([...mocks.map(m => m.providerId), ...posts.map(p => p.matchId)].filter(Boolean))
       const own = buildStories(def, matches.data.filter(m => !twins.has(m.id)), standings.data, 4, lang)
       const deep = buildStories(def, mocks.map(m => m.match), standings.data, 3650, lang)
@@ -85,7 +87,7 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   // Stories an editor hid in the newsroom dashboard are left out for readers. The dashboard itself
   // asks with ?moderation=all to see them too (newsroom accounts only).
   const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
-  const [hidden, controls] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang)])
+  const [hidden, controls, engagement] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang), engagementMap()])
 
   // Matches with a match story lead with it, as their match page does: the story's headline and
   // opening lines (the published version, from the cache only), no AI subtitle. Cover images the
@@ -100,6 +102,7 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       ...s,
       ...(published && { headline: published.headline, summary: published.text, subtitle: undefined, headlineOrigin: published.origin === 'ai' ? 'agent' as const : 'template' as const }),
       ...(cover && { cover: { src: cover.src, alt: cover.alt } }),
+      ...(engagement[key] && { engagement: engagement[key] }),
     }
   }))
   const order = (id: string) => FRONT_PAGE.indexOf(id)

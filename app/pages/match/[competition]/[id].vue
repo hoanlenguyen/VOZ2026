@@ -13,7 +13,7 @@ const route = useRoute()
 const preview = computed(() => (typeof route.query.draft === 'string'
   ? { draft: route.query.draft, as: route.query.as === 'free' ? 'free' : 'subscriber' }
   : null))
-const { data, error, refresh: refreshMatch } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
+const { data, error, refresh: refreshMatch } = await useFetch(() => `/api/competitions/${route.params.competition}/matches/${route.params.id}`, {
   query: computed(() => ({ lang: locale.value, ...preview.value })),
 })
 const match = computed(() => data.value?.match)
@@ -39,6 +39,11 @@ const { data: standings } = useLazyFetch(`/api/competitions/${route.params.compe
 const table = computed(() => standings.value?.rows.length
   ? { competitionId: standings.value.competition.id, competitionName: standings.value.competition.name, rows: standings.value.rows }
   : null)
+// Discussion totals (public): from the match API, then live from the discussion as readers act.
+// Matches with a story have a discussion, also when the story is locked for this reader.
+const hasDiscussion = computed(() => !preview.value && !!(data.value?.story || data.value?.locked?.includes('story')))
+const liveEngagement = ref<{ comments: number, likes: number } | null>(null)
+const engagement = computed(() => liveEngagement.value ?? data.value?.engagement ?? { comments: 0, likes: 0 })
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -48,16 +53,22 @@ useHead(() => ({
 
 <template>
   <main id="main" class="wrap">
-    <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
-    <NuxtLink to="/" class="back">
-      <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
-      {{ t('match.back') }}
-    </NuxtLink>
-
-    <p v-if="error" class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
+    <template v-if="error">
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
+      <p class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
+    </template>
 
     <div v-else-if="match && data" class="layout">
     <div class="article">
+      <!-- In the article column, so they line up with it at every width. -->
+      <p v-if="preview" class="preview-banner" role="status">{{ t('match.previewBanner', { as: t(`editor.preview.${preview.as}`) }) }}</p>
+      <NuxtLink to="/" class="back">
+        <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
+        {{ t('match.back') }}
+      </NuxtLink>
       <header class="hero">
         <!-- The newsroom's cover image replaces the match graphic when one is set. -->
         <figure v-if="data.cover" class="visual cover">
@@ -72,6 +83,10 @@ useHead(() => ({
           <time class="num" :datetime="byline.date">{{ fmt.stamp(byline.date!) }}</time>
           <template v-if="byline.author">
             <span aria-hidden="true">·</span><span>{{ t('match.by', { name: byline.author }) }}</span>
+          </template>
+          <template v-if="hasDiscussion">
+            <span aria-hidden="true">·</span>
+            <a href="#discussion" class="byline-link">{{ t('discussion.comments', { n: engagement.comments }, engagement.comments) }} · {{ t('discussion.likes', { n: engagement.likes }, engagement.likes) }}</a>
           </template>
         </p>
       </header>
@@ -100,7 +115,13 @@ useHead(() => ({
         />
       </section>
 
-      <!-- AI podcast of this match (free for every reader); the newsroom makes it here. -->
+      <!-- Discussion: totals for everyone; comments and likes for subscribers and the newsroom. -->
+      <NewsMatchDiscussion
+        v-if="hasDiscussion" :competition-id="data.competition.id" :match-id="match.id"
+        :engagement="engagement" @engagement="liveEngagement = $event"
+      />
+
+      <!-- AI podcast of this match (subscribers listen; others see it locked); the newsroom makes it here. -->
       <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
 
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
@@ -153,11 +174,9 @@ useHead(() => ({
           </li>
         </ol>
       </section>
-      <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">{{ t('match.noScorers') }}</p>
+      <p v-else-if="!data.competition.hasScoringEvents && finished && !data.extras" class="source">{{ t('match.noScorers') }}</p>
 
-      <!-- Trusted publishers' coverage (news-monitor); it refreshes the match when its phase or score changes. -->
-      <NewsInsights :key="match.key" :competition-id="data.competition.id" :match-id="match.id" :match-status="match.status" :home-score="match.home.score" :away-score="match.away.score" @match-change="refreshMatch()" />
-      <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
+      <NewsPressCard :key="match.key" :competition-id="data.competition.id" :match-id="match.id" :match-status="match.status" :home-score="match.home.score" :away-score="match.away.score" @match-change="refreshMatch()" />
     </div>
     <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
       <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
@@ -177,23 +196,30 @@ useHead(() => ({
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
-/* The article stays centred on the screen; the big ad sits to its left and the league table (with
-   the smaller ads) to its right when there is room (columns: ad | article | table); below the
-   article otherwise. */
+/* Side columns stay beside the article down to tablet width (also when the page is zoomed in):
+   - from 1024px: big ad | article | table and ads (the article is centred when both sides have room);
+   - 768–1023px: article | table, ads and the big ad;
+   - below 768px: one column, the table and ads after the article. */
 .layout { display: grid; gap: 48px; }
 .article { min-width: 0; }
 .sidebar { min-width: 0; }
 .left-ad { min-width: 0; }
 .ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
-@media (min-width: 1400px) {
+.preview-banner { margin-top: 12px; }
+@media (min-width: 768px) {
   .wrap { max-width: none; }
-  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }
-  .article { grid-column: 2; grid-row: 1; }
-  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: calc(100% - 32px); max-width: 300px; margin-right: 32px; padding-top: 16px; }
-  .sidebar { grid-row: 1; grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
-  .wrap > .back, .wrap > .notice, .wrap > .preview-banner { margin-left: calc(50% - 380px); }
-  .wrap > .notice, .wrap > .preview-banner { max-width: 760px; }
+  .layout { grid-template-columns: minmax(0, 1fr) clamp(220px, 30vw, 300px); gap: 0 24px; align-items: start; }
+  .article { grid-column: 1; grid-row: 1 / span 2; }
+  .sidebar { grid-column: 2; grid-row: 1; padding-top: 60px; }
+  .left-ad { grid-column: 2; grid-row: 2; margin-top: 16px; }
 }
+@media (min-width: 1024px) {
+  .layout { grid-template-columns: minmax(170px, 1fr) minmax(0, 760px) minmax(230px, 1fr); }
+  .article { grid-column: 2; grid-row: 1; }
+  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: 100%; max-width: 300px; margin-top: 0; padding-top: 60px; }
+  .sidebar { grid-column: 3; grid-row: 1; width: 100%; max-width: 340px; }
+}
+@media (min-width: 1280px) { .layout { gap: 0 32px; } }
 
 .back {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 8px;
@@ -205,6 +231,8 @@ useHead(() => ({
 .notice { margin: 24px 0; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--text-2); }
 
 .hero { text-align: center; padding: 16px 0 0; }
+.byline-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.byline-link:hover { color: var(--link-hover); }
 .byline {
   margin: 12px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px;
   font-size: 13px; color: var(--meta);

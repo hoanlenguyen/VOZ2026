@@ -1,0 +1,726 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645263",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-17 15:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Etihad Stadium, Manchester",
+    "attendance": 49766,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "43",
+      "name": "Manchester City",
+      "shortName": "Man City",
+      "abbr": "MCI",
+      "score": 3,
+      "halfTimeScore": 2,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "40",
+      "name": "Ipswich Town",
+      "shortName": "Ipswich",
+      "abbr": "IPS",
+      "score": 2,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Simon Hooper"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Tim Robinson"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Manchester City",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "13",
+          "timestamp": "20261017T151300+0100",
+          "player": "Phil Foden",
+          "assist": "Rodri"
+        },
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "14",
+          "timestamp": "20261017T151400+0100",
+          "player": "Rodri",
+          "assist": "Joško Gvardiol"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "87",
+          "timestamp": "20261017T164200+0100",
+          "player": "Rodri",
+          "assist": "Tijjani Reijnders"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "30",
+          "type": "Yellow",
+          "player": "Rúben Dias"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "68",
+          "playerOn": "John Stones",
+          "playerOff": "Bernardo Silva"
+        },
+        {
+          "time": "80",
+          "playerOn": "Omar Marmoush",
+          "playerOff": "Rúben Dias"
+        },
+        {
+          "time": "82",
+          "playerOn": "Oscar Bobb",
+          "playerOff": "Erling Haaland"
+        }
+      ]
+    },
+    "away": {
+      "team": "Ipswich Town",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "28",
+          "timestamp": "20261017T152800+0100",
+          "player": "Emersonn Correia da Silva",
+          "assist": "Issa Diop"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "87",
+          "timestamp": "20261017T164200+0100",
+          "player": "Julio Enciso",
+          "assist": "Jaden Philogene"
+        }
+      ],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "53",
+          "type": "Yellow",
+          "player": "Emersonn Correia da Silva"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "88",
+          "type": "Yellow",
+          "player": "Darnell Furlong"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "71",
+          "playerOn": "Azor Matusiwa",
+          "playerOff": "Emersonn Correia da Silva"
+        },
+        {
+          "time": "76",
+          "playerOn": "Marcelino Núñez",
+          "playerOff": "Dara O'Shea"
+        },
+        {
+          "time": "84",
+          "playerOn": "Darnell Furlong",
+          "playerOff": "Abdul Fatawu Issahaku"
+        },
+        {
+          "time": "85",
+          "playerOn": "Zian Flemming",
+          "playerOff": "Florentino Ibrain Morris Luís"
+        },
+        {
+          "time": "86",
+          "playerOn": "Jacob Greaves",
+          "playerOff": "Issa Diop"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Manchester City",
+      "formation": "4-1-4-1",
+      "formationRows": [
+        [
+          "Gianluigi Donnarumma"
+        ],
+        [
+          "Matheus Nunes",
+          "Rúben Dias",
+          "Joško Gvardiol",
+          "Nico O'Reilly"
+        ],
+        [
+          "Rodri"
+        ],
+        [
+          "Bernardo Silva",
+          "Tijjani Reijnders",
+          "Phil Foden",
+          "Jérémy Doku"
+        ],
+        [
+          "Erling Haaland"
+        ]
+      ],
+      "manager": "Pep Guardiola",
+      "startingXI": [
+        {
+          "name": "Gianluigi Donnarumma",
+          "shirtNumber": 25,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Matheus Nunes",
+          "shirtNumber": 27,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Rúben Dias",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Joško Gvardiol",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Nico O'Reilly",
+          "shirtNumber": 33,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Rodri",
+          "shirtNumber": 16,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Bernardo Silva",
+          "shirtNumber": 20,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Tijjani Reijnders",
+          "shirtNumber": 4,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Phil Foden",
+          "shirtNumber": 47,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jérémy Doku",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Erling Haaland",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "James Trafford",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "John Stones",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Rayan Aït-Nouri",
+          "shirtNumber": 21,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Nico González",
+          "shirtNumber": 14,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Rayan Cherki",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Omar Marmoush",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Oscar Bobb",
+          "shirtNumber": 52,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Ipswich Town",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Christian Walton"
+        ],
+        [
+          "Abdoul Ouattara",
+          "Issa Diop",
+          "Dara O'Shea",
+          "Leif Davis"
+        ],
+        [
+          "Exequiel Palacios",
+          "Florentino Ibrain Morris Luís"
+        ],
+        [
+          "Abdul Fatawu Issahaku",
+          "Julio Enciso",
+          "Jaden Philogene"
+        ],
+        [
+          "Emersonn Correia da Silva"
+        ]
+      ],
+      "manager": "Gary O'Neil",
+      "startingXI": [
+        {
+          "name": "Christian Walton",
+          "shirtNumber": 28,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Abdoul Ouattara",
+          "shirtNumber": 42,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Issa Diop",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Dara O'Shea",
+          "shirtNumber": 26,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Leif Davis",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Exequiel Palacios",
+          "shirtNumber": 25,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Florentino Ibrain Morris Luís",
+          "shirtNumber": 12,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Abdul Fatawu Issahaku",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Julio Enciso",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jaden Philogene",
+          "shirtNumber": 11,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Emersonn Correia da Silva",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Kjell Scherpen",
+          "shirtNumber": 37,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Darnell Furlong",
+          "shirtNumber": 2,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Azor Matusiwa",
+          "shirtNumber": 5,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Zian Flemming",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Jacob Greaves",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Chuba Akpom",
+          "shirtNumber": 29,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Marcelino Núñez",
+          "shirtNumber": 32,
+          "position": "Midfielder",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 58.4,
+        "away": 41.6
+      },
+      "xG": {
+        "home": 2.85,
+        "away": 2.71
+      },
+      "shots": {
+        "home": 12,
+        "away": 9
+      },
+      "shots_on_target": {
+        "home": 6,
+        "away": 6
+      },
+      "shots_off_target": {
+        "home": 5,
+        "away": 2
+      },
+      "shots_blocked": {
+        "home": 1,
+        "away": 1
+      },
+      "big_chances_created": {
+        "home": 4,
+        "away": 4
+      },
+      "passes": {
+        "home": 520,
+        "away": 370
+      },
+      "accurate_passes": {
+        "home": 440,
+        "away": 328
+      },
+      "tackles": {
+        "home": 14,
+        "away": 18
+      },
+      "saves": {
+        "home": 4,
+        "away": 3
+      },
+      "fouls": {
+        "home": 8,
+        "away": 12
+      },
+      "offsides": {
+        "home": 0,
+        "away": 1
+      },
+      "yellow_cards": {
+        "home": 1,
+        "away": 2
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 7,
+        "lostCorners": 3
+      },
+      "away": {
+        "wonCorners": 3,
+        "lostCorners": 7
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "2'",
+      "type": "miss",
+      "team": "Ipswich Town",
+      "player1": "Exequiel Palacios",
+      "player2": "Abdul Fatawu Issahaku"
+    },
+    {
+      "minute": "3'",
+      "type": "miss",
+      "team": "Manchester City",
+      "player1": "Phil Foden",
+      "player2": null
+    },
+    {
+      "minute": "12'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Issa Diop",
+      "player2": null
+    },
+    {
+      "minute": "14'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Abdoul Ouattara",
+      "player2": null
+    },
+    {
+      "minute": "16'",
+      "type": "miss",
+      "team": "Manchester City",
+      "player1": "Jérémy Doku",
+      "player2": "Bernardo Silva"
+    },
+    {
+      "minute": "17'",
+      "type": "attempt saved",
+      "team": "Ipswich Town",
+      "player1": "Dara O'Shea",
+      "player2": null
+    },
+    {
+      "minute": "19'",
+      "type": "offside",
+      "team": "Ipswich Town",
+      "player1": "Jaden Philogene",
+      "player2": "Julio Enciso"
+    },
+    {
+      "minute": "31'",
+      "type": "attempt saved",
+      "team": "Ipswich Town",
+      "player1": "Julio Enciso",
+      "player2": "Abdoul Ouattara"
+    },
+    {
+      "minute": "32'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Christian Walton",
+      "player2": null
+    },
+    {
+      "minute": "39'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Dara O'Shea",
+      "player2": null
+    },
+    {
+      "minute": "39'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Christian Walton",
+      "player2": null
+    },
+    {
+      "minute": "40'",
+      "type": "attempt saved",
+      "team": "Manchester City",
+      "player1": "Erling Haaland",
+      "player2": null
+    },
+    {
+      "minute": "40'",
+      "type": "attempt saved",
+      "team": "Ipswich Town",
+      "player1": "Julio Enciso",
+      "player2": "Abdoul Ouattara"
+    },
+    {
+      "minute": "42'",
+      "type": "attempt saved",
+      "team": "Ipswich Town",
+      "player1": "Florentino Ibrain Morris Luís",
+      "player2": null
+    },
+    {
+      "minute": "48'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Abdoul Ouattara",
+      "player2": null
+    },
+    {
+      "minute": "53'",
+      "type": "corner",
+      "team": "Manchester City",
+      "player1": "Rúben Dias",
+      "player2": null
+    },
+    {
+      "minute": "58'",
+      "type": "miss",
+      "team": "Ipswich Town",
+      "player1": "Dara O'Shea",
+      "player2": null
+    },
+    {
+      "minute": "62'",
+      "type": "attempt saved",
+      "team": "Manchester City",
+      "player1": "Jérémy Doku",
+      "player2": "Bernardo Silva"
+    },
+    {
+      "minute": "65'",
+      "type": "attempt saved",
+      "team": "Manchester City",
+      "player1": "Joško Gvardiol",
+      "player2": null
+    },
+    {
+      "minute": "68'",
+      "type": "corner",
+      "team": "Manchester City",
+      "player1": "Matheus Nunes",
+      "player2": null
+    },
+    {
+      "minute": "69'",
+      "type": "miss",
+      "team": "Manchester City",
+      "player1": "Phil Foden",
+      "player2": "John Stones"
+    },
+    {
+      "minute": "72'",
+      "type": "corner",
+      "team": "Ipswich Town",
+      "player1": "Abdoul Ouattara",
+      "player2": null
+    },
+    {
+      "minute": "76'",
+      "type": "attempt blocked",
+      "team": "Ipswich Town",
+      "player1": "Jaden Philogene",
+      "player2": "Exequiel Palacios"
+    },
+    {
+      "minute": "78'",
+      "type": "miss",
+      "team": "Manchester City",
+      "player1": "Nico O'Reilly",
+      "player2": null
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Manchester City",
+      "player1": "Jérémy Doku",
+      "player2": "Omar Marmoush"
+    },
+    {
+      "minute": "89'",
+      "type": "corner",
+      "team": "Manchester City",
+      "player1": "Matheus Nunes",
+      "player2": null
+    },
+    {
+      "minute": "90'",
+      "type": "attempt blocked",
+      "team": "Manchester City",
+      "player1": "Joško Gvardiol",
+      "player2": "Matheus Nunes"
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

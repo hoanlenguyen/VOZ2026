@@ -116,6 +116,8 @@ async function writePost(competition: string, matchId: string, settings: AgentSe
   try {
     if (!def || !found) throw new Error(!def ? `unknown competition ${competition}` : 'match no longer in SportWorld')
     const season = await providerFor(def).matches(def, {}).then(r => r.data, () => [])
+    // Real match data bundled for the same game (data/mock) beats a simulated post about it.
+    if ((await mockMatchesFor(def, season)).some(m => m.providerId === matchId)) throw new Error('real match data is bundled for this fixture')
     const { match, extras } = toMock(def, found.file, season, 'en')
     const facts = buildFacts(def, match, extras, season)
     const names = factNames(match, extras)

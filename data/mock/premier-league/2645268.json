@@ -1,0 +1,717 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645268",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-18 14:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "American Express Stadium, Brighton",
+    "attendance": 31452,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "36",
+      "name": "Brighton & Hove Albion",
+      "shortName": "Brighton",
+      "abbr": "BHA",
+      "score": 5,
+      "halfTimeScore": 3,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "31",
+      "name": "Crystal Palace",
+      "shortName": "Crystal Palace",
+      "abbr": "CRY",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Samuel Barrott"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Tom Bramall"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "Brighton & Hove Albion",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "26",
+          "timestamp": "20261018T142600+0100",
+          "player": "Yankuba Minteh",
+          "assist": "Danny Welbeck"
+        },
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "29",
+          "timestamp": "20261018T142900+0100",
+          "player": "Danny Welbeck",
+          "assist": "Maxim De Cuyper"
+        },
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "35",
+          "timestamp": "20261018T143500+0100",
+          "player": "Georginio Rutter",
+          "assist": "Kaoru Mitoma"
+        },
+        {
+          "goalType": "Penalty",
+          "period": "SecondHalf",
+          "time": "50",
+          "timestamp": "20261018T150500+0100",
+          "player": "Georginio Rutter"
+        },
+        {
+          "goalType": "Goal",
+          "period": "SecondHalf",
+          "time": "80",
+          "timestamp": "20261018T153500+0100",
+          "player": "Kaoru Mitoma",
+          "assist": "Yasin Ayari"
+        }
+      ],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "16",
+          "type": "Yellow",
+          "player": "Danny Welbeck"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "57",
+          "type": "Yellow",
+          "player": "Lewis Dunk"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "68",
+          "playerOn": "Stefanos Tzimas",
+          "playerOff": "Carlos Baleba"
+        },
+        {
+          "time": "71",
+          "playerOn": "Ferdi Kadıoğlu",
+          "playerOff": "Maxim De Cuyper"
+        },
+        {
+          "time": "80",
+          "playerOn": "Mats Wieffer",
+          "playerOff": "Lewis Dunk"
+        }
+      ]
+    },
+    "away": {
+      "team": "Crystal Palace",
+      "goals": [],
+      "cards": [
+        {
+          "period": "SecondHalf",
+          "time": "75",
+          "type": "Yellow",
+          "player": "Jean-Philippe Mateta"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "58",
+          "playerOn": "Eddie Nketiah",
+          "playerOff": "Marc Guéhi"
+        },
+        {
+          "time": "59",
+          "playerOn": "Jaydee Canvot",
+          "playerOff": "Yéremy Pino"
+        },
+        {
+          "time": "72",
+          "playerOn": "Daichi Kamada",
+          "playerOff": "Adam Wharton"
+        },
+        {
+          "time": "75",
+          "playerOn": "Jefferson Lerma",
+          "playerOff": "Nathaniel Clyne"
+        },
+        {
+          "time": "86",
+          "playerOn": "Justin Devenny",
+          "playerOff": "Jean-Philippe Mateta"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "Brighton & Hove Albion",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Bart Verbruggen"
+        ],
+        [
+          "Joël Veltman",
+          "Jan Paul van Hecke",
+          "Lewis Dunk",
+          "Maxim De Cuyper"
+        ],
+        [
+          "Carlos Baleba",
+          "Yasin Ayari"
+        ],
+        [
+          "Kaoru Mitoma",
+          "Georginio Rutter",
+          "Yankuba Minteh"
+        ],
+        [
+          "Danny Welbeck"
+        ]
+      ],
+      "manager": "Fabian Hürzeler",
+      "startingXI": [
+        {
+          "name": "Bart Verbruggen",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Joël Veltman",
+          "shirtNumber": 34,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jan Paul van Hecke",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Lewis Dunk",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Maxim De Cuyper",
+          "shirtNumber": 29,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Carlos Baleba",
+          "shirtNumber": 17,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Yasin Ayari",
+          "shirtNumber": 26,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Kaoru Mitoma",
+          "shirtNumber": 22,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Georginio Rutter",
+          "shirtNumber": 10,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Yankuba Minteh",
+          "shirtNumber": 11,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Danny Welbeck",
+          "shirtNumber": 18,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Jason Steele",
+          "shirtNumber": 23,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Olivier Boscagli",
+          "shirtNumber": 21,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ferdi Kadıoğlu",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Mats Wieffer",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Diego Gómez",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Brajan Gruda",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Stefanos Tzimas",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Crystal Palace",
+      "formation": "3-4-2-1",
+      "formationRows": [
+        [
+          "Dean Henderson"
+        ],
+        [
+          "Chris Richards",
+          "Maxence Lacroix",
+          "Marc Guéhi"
+        ],
+        [
+          "Nathaniel Clyne",
+          "Adam Wharton",
+          "Will Hughes",
+          "Tyrick Mitchell"
+        ],
+        [
+          "Ismaïla Sarr",
+          "Yéremy Pino"
+        ],
+        [
+          "Jean-Philippe Mateta"
+        ]
+      ],
+      "manager": "Oliver Glasner",
+      "startingXI": [
+        {
+          "name": "Dean Henderson",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Chris Richards",
+          "shirtNumber": 26,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Maxence Lacroix",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Marc Guéhi",
+          "shirtNumber": 6,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Nathaniel Clyne",
+          "shirtNumber": 17,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Adam Wharton",
+          "shirtNumber": 20,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Will Hughes",
+          "shirtNumber": 19,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Tyrick Mitchell",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Ismaïla Sarr",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Yéremy Pino",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Jean-Philippe Mateta",
+          "shirtNumber": 14,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Walter Benítez",
+          "shirtNumber": 44,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Jaydee Canvot",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Borna Sosa",
+          "shirtNumber": 24,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Jefferson Lerma",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Daichi Kamada",
+          "shirtNumber": 18,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Justin Devenny",
+          "shirtNumber": 55,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Eddie Nketiah",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 61.9,
+        "away": 38.1
+      },
+      "xG": {
+        "home": 4.77,
+        "away": 0.81
+      },
+      "shots": {
+        "home": 15,
+        "away": 11
+      },
+      "shots_on_target": {
+        "home": 7,
+        "away": 2
+      },
+      "shots_off_target": {
+        "home": 8,
+        "away": 7
+      },
+      "shots_blocked": {
+        "home": 0,
+        "away": 2
+      },
+      "big_chances_created": {
+        "home": 7,
+        "away": 0
+      },
+      "passes": {
+        "home": 575,
+        "away": 381
+      },
+      "accurate_passes": {
+        "home": 470,
+        "away": 328
+      },
+      "tackles": {
+        "home": 17,
+        "away": 23
+      },
+      "saves": {
+        "home": 2,
+        "away": 2
+      },
+      "fouls": {
+        "home": 10,
+        "away": 8
+      },
+      "offsides": {
+        "home": 1,
+        "away": 1
+      },
+      "yellow_cards": {
+        "home": 2,
+        "away": 1
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 1,
+        "lostCorners": 2
+      },
+      "away": {
+        "wonCorners": 2,
+        "lostCorners": 1
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "7'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Kaoru Mitoma",
+      "player2": "Carlos Baleba"
+    },
+    {
+      "minute": "9'",
+      "type": "corner",
+      "team": "Brighton & Hove Albion",
+      "player1": "Lewis Dunk",
+      "player2": null
+    },
+    {
+      "minute": "14'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Adam Wharton",
+      "player2": "Chris Richards"
+    },
+    {
+      "minute": "18'",
+      "type": "attempt saved",
+      "team": "Brighton & Hove Albion",
+      "player1": "Carlos Baleba",
+      "player2": null
+    },
+    {
+      "minute": "23'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Ismaïla Sarr",
+      "player2": "Tyrick Mitchell"
+    },
+    {
+      "minute": "27'",
+      "type": "attempt blocked",
+      "team": "Crystal Palace",
+      "player1": "Adam Wharton",
+      "player2": "Chris Richards"
+    },
+    {
+      "minute": "33'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Will Hughes",
+      "player2": null
+    },
+    {
+      "minute": "45'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Kaoru Mitoma",
+      "player2": "Lewis Dunk"
+    },
+    {
+      "minute": "45'",
+      "type": "attempt saved",
+      "team": "Crystal Palace",
+      "player1": "Tyrick Mitchell",
+      "player2": null
+    },
+    {
+      "minute": "50'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Kaoru Mitoma",
+      "player2": "Yasin Ayari"
+    },
+    {
+      "minute": "51'",
+      "type": "attempt saved",
+      "team": "Brighton & Hove Albion",
+      "player1": "Yasin Ayari",
+      "player2": null
+    },
+    {
+      "minute": "51'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Yéremy Pino",
+      "player2": "Jean-Philippe Mateta"
+    },
+    {
+      "minute": "51'",
+      "type": "attempt blocked",
+      "team": "Crystal Palace",
+      "player1": "Maxence Lacroix",
+      "player2": null
+    },
+    {
+      "minute": "56'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Georginio Rutter",
+      "player2": "Carlos Baleba"
+    },
+    {
+      "minute": "58'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Ismaïla Sarr",
+      "player2": "Tyrick Mitchell"
+    },
+    {
+      "minute": "64'",
+      "type": "offside",
+      "team": "Brighton & Hove Albion",
+      "player1": "Lewis Dunk",
+      "player2": "Joël Veltman"
+    },
+    {
+      "minute": "66'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Yankuba Minteh",
+      "player2": "Kaoru Mitoma"
+    },
+    {
+      "minute": "68'",
+      "type": "attempt saved",
+      "team": "Crystal Palace",
+      "player1": "Eddie Nketiah",
+      "player2": "Adam Wharton"
+    },
+    {
+      "minute": "73'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Eddie Nketiah",
+      "player2": "Nathaniel Clyne"
+    },
+    {
+      "minute": "74'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Danny Welbeck",
+      "player2": null
+    },
+    {
+      "minute": "75'",
+      "type": "corner",
+      "team": "Crystal Palace",
+      "player1": "Tyrick Mitchell",
+      "player2": null
+    },
+    {
+      "minute": "76'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Danny Welbeck",
+      "player2": "Joël Veltman"
+    },
+    {
+      "minute": "79'",
+      "type": "offside",
+      "team": "Crystal Palace",
+      "player1": "Tyrick Mitchell",
+      "player2": null
+    },
+    {
+      "minute": "83'",
+      "type": "miss",
+      "team": "Brighton & Hove Albion",
+      "player1": "Georginio Rutter",
+      "player2": "Yankuba Minteh"
+    },
+    {
+      "minute": "83'",
+      "type": "miss",
+      "team": "Crystal Palace",
+      "player1": "Jean-Philippe Mateta",
+      "player2": null
+    },
+    {
+      "minute": "90'",
+      "type": "corner",
+      "team": "Brighton & Hove Albion",
+      "player1": "Bart Verbruggen",
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}

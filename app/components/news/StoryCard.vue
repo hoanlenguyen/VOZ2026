@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PhChatCircle, PhHeart } from '@phosphor-icons/vue'
 import type { Story } from '#shared/types/stories'
 
 const props = withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
@@ -27,6 +28,15 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
         <span v-if="showAiTag" class="ai-tag">{{ t('story.aiTag') }}</span>
         <!-- Every reader sees this one: the match details behind the post are simulated (SportWorld). -->
         <span v-if="story.simulated" class="ai-tag sim-tag">{{ t('story.simulated') }}</span>
+        <!-- Public discussion totals. -->
+        <span v-if="story.engagement?.comments" class="count num">
+          <PhChatCircle :size="13" weight="bold" aria-hidden="true" />{{ story.engagement.comments }}
+          <span class="sr-only">{{ t('discussion.comments', { n: story.engagement.comments }, story.engagement.comments) }}</span>
+        </span>
+        <span v-if="story.engagement?.likes" class="count num">
+          <PhHeart :size="13" weight="bold" aria-hidden="true" />{{ story.engagement.likes }}
+          <span class="sr-only">{{ t('discussion.likes', { n: story.engagement.likes }, story.engagement.likes) }}</span>
+        </span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
@@ -53,6 +63,7 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
   text-transform: uppercase; color: var(--meta);
 }
 .kicker > span { white-space: nowrap; }
+.count { display: inline-flex; align-items: center; gap: 3px; letter-spacing: 0; }
 .headline { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: var(--headline); }
 .headline a { color: inherit; text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }

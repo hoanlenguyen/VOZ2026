@@ -3,6 +3,7 @@ import { articleUrl, readPublisherArticle } from '../lib/news/lookup'
 import { sourceForUrl } from '../lib/news/sources'
 import { createSummaryService, generateNewsSummary, SummaryError, type SummaryArticle, type SummaryConfig } from '../lib/news/summary'
 import { collectedArticleHash, recentlyVerifiedNews } from './news-monitor'
+import { modelId } from '../../shared/utils/model-name'
 
 export async function readNewsSummaryEvidence(article: SummaryArticle) {
     const source = sourceForUrl(article.link)
