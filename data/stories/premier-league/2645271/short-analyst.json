@@ -2,37 +2,38 @@
  "matchKey": "premier-league:2645271",
  "length": "short",
  "tone": "analyst",
- "generatedAt": "2026-10-24T09:37:36.310Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:30:38.682Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
-   "summary": "Read 39 facts (result, timeline, stats, form, table, context)",
-   "ms": 1218
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1001
   },
   {
    "turn": 2,
    "tool": "check_story",
-   "summary": "Draft checked: passed (7 facts cited)",
-   "ms": 2816
+   "summary": "Draft checked: passed (8 facts cited)",
+   "ms": 2740
   },
   {
    "turn": 3,
    "tool": "submit_story",
-   "summary": "Submitted: passed the final check (7 facts cited)",
-   "ms": 2313
+   "summary": "Submitted: passed the final check (8 facts cited)",
+   "ms": 2305
   }
  ],
  "usage": {
-  "inputTokens": 5006,
-  "outputTokens": 374,
+  "inputTokens": 5170,
+  "outputTokens": 422,
   "turns": 3,
-  "ms": 6347
+  "ms": 6046
  },
- "headline": "Forest’s chance volume earns only a point at Ipswich",
+ "headline": "Forest’s chance volume goes unrewarded in Ipswich draw",
  "sentences": [
   {
-   "text": "Nottingham Forest’s 17 shots and 2.29 xG dwarfed Ipswich Town’s 7 shots and 0.46 xG, yet the sides shared a 1–1 draw in the Premier League.",
+   "text": "Ipswich Town and Nottingham Forest shared a 1–1 draw, but the underlying numbers tilted heavily toward Forest: 2.29 xG to 0.46 and 17 shots to 7.",
    "facts": [
     "f1",
     "f17",
@@ -41,12 +42,19 @@
    "paragraph": 1
   },
   {
-   "text": "Forest also led 5–0 on corners and created 2 big chances to Ipswich’s 1, but neither team scored after the break; the near-even 49.4%–50.6% possession split offers little explanation for the gap in threat.",
+   "text": "Forest also led 5–3 in shots on target and created 2 big chances to Ipswich’s 1, while possession was nearly even at 50.6% to 49.4%.",
    "facts": [
-    "f4",
     "f16",
-    "f21",
-    "f22"
+    "f20",
+    "f21"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The result leaves Ipswich 9th on 10 points and Forest 16th on 6 after 8 matches.",
+   "facts": [
+    "f32",
+    "f34"
    ],
    "paragraph": 1
   }
@@ -56,7 +64,7 @@
  "check": {
   "passed": true,
   "issues": [],
-  "factsUsed": 7
+  "factsUsed": 8
  },
  "fallbackReason": null
 }

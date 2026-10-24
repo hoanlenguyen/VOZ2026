@@ -1,0 +1,129 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "long",
+ "tone": "away-fan",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:34:15.579Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 996
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (17 facts cited)",
+   "ms": 6644
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (17 facts cited)",
+   "ms": 4877
+  }
+ ],
+ "usage": {
+  "inputTokens": 5798,
+  "outputTokens": 1240,
+  "turns": 3,
+  "ms": 12517
+ },
+ "headline": "Nott'm Forestin vahva tilastopäivä toi pisteen Ipswichistä",
+ "sentences": [
+  {
+   "text": "Nott'm Forest joutui tyytymään 1–1-tasapeliin Ipswich Townin vieraana, vaikka ottelun numerot kallistuivat selvästi Forestin puolelle.",
+   "facts": [
+    "f1",
+    "f2",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams vei vieraat johtoon 13. minuutilla Daniel Muñozin syötöstä, mutta Julio Enciso tasoitti Ipswich Townin 41. minuutilla.",
+   "facts": [
+    "f7",
+    "f8"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Tauolle mentiin 1–1-tilanteessa, eikä toisella jaksolla nähty maaleja.",
+   "facts": [
+    "f3",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest hallitsi palloa niukasti, 50,6 prosenttia 49,4:ää vastaan, mutta loi paljon vaarallisempia tilanteita: maaliodottama oli 2,29–0,46 ja laukaukset menivät Forestille 17–7.",
+   "facts": [
+    "f16",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Maalia kohti Forest laukoi 5 kertaa, Ipswich 3, ja Forest sai myös 5 kulmapotkua Ipswichin jäädessä ilman yhtäkään.",
+   "facts": [
+    "f20",
+    "f22"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Kokonaiskuva tekee tasapelistä Forestille harmillisen, vaikka joukkue ei pystynyt hyödyntämään paikkojaan eikä rikkonut Ipswichin puolustusta tauon jälkeen.",
+   "facts": [
+    "f4",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ottelu toi silti tarpeellisen pisteen vaikean jakson keskelle: Forestin viidestä edellisestä liigapelistä oli kertynyt 4 pistettä, kun Ipswichin saalis oli 6.",
+   "facts": [
+    "f30",
+    "f29",
+    "f2"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Forest oli ennen ottelua 19. sijalla 5 pisteellä, mutta nousi nyt 16:nneksi 6 pisteeseen 8 ottelusta.",
+   "facts": [
+    "f33",
+    "f34"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich Town nousi 9:nneksi 10 pisteeseen, joten Forestin pistelisä oli tärkeä mutta ei riittänyt merkittävään kiinniottoon sarjataulukossa.",
+   "facts": [
+    "f32",
+    "f34",
+    "f2"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Joukkueet kohtaavat uudelleen 23. toukokuuta 2027, jolloin Nott'm Forest isännöi Ipswich Townia.",
+   "facts": [
+    "f36"
+   ],
+   "paragraph": 3
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 17
+ },
+ "fallbackReason": null
+}
