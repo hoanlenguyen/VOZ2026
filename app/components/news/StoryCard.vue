@@ -42,10 +42,12 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
 .media:focus-visible { outline: none; }
 .cover { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
 .body { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+/* Wrap between items, never inside one: in narrow cards "Champions League" and the AI tag broke mid-label. */
 .kicker {
-  margin: 0; display: flex; gap: 6px; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
+  margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 6px; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
   text-transform: uppercase; color: var(--meta);
 }
+.kicker > span { white-space: nowrap; }
 .headline { margin: 0; font-size: 16px; line-height: 1.4; font-weight: 700; color: var(--headline); }
 .headline a { color: inherit; text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }
@@ -55,7 +57,7 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
   display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
 }
 .ai-tag {
-  align-self: center; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px;
+  flex: 0 0 auto; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px;
   font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
 }
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
