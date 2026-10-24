@@ -12,6 +12,7 @@ const props = defineProps<{
   away: { name: string, logo: string | null }
 }>()
 
+const { t } = useI18n()
 const showAll = ref(false)
 const visible = computed(() => props.events.filter(e => showAll.value || e.key))
 const hiddenCount = computed(() => props.events.filter(e => !e.key).length)
@@ -30,7 +31,7 @@ const isPeriod = (e: TimelineEvent) => e.kind === 'half-time' || e.kind === 'ful
 const teamName = (e: TimelineEvent) => (e.side ? props[e.side].name : '')
 // One sentence per event for screen readers; the visual layout carries the same facts.
 const spoken = (e: TimelineEvent) =>
-  [e.minute, teamName(e), e.label, e.player, e.detail, e.score ? `score ${e.score}` : null].filter(Boolean).join(', ')
+  [e.minute, teamName(e), e.label, e.player, e.detail, e.score ? t('timeline.score', { score: e.score }) : null].filter(Boolean).join(', ')
 </script>
 
 <template>
@@ -40,9 +41,9 @@ const spoken = (e: TimelineEvent) =>
         <span class="team"><img v-if="home.logo" :src="home.logo" alt="" width="20" height="20">{{ home.name }}</span>
         <span class="team team--away">{{ away.name }}<img v-if="away.logo" :src="away.logo" alt="" width="20" height="20"></span>
       </div>
-      <div class="switch" role="group" aria-label="Events shown">
-        <button type="button" :aria-pressed="!showAll" @click="showAll = false">Key events</button>
-        <button type="button" :aria-pressed="showAll" @click="showAll = true">All events<span class="count num"> +{{ hiddenCount }}</span></button>
+      <div class="switch" role="group" :aria-label="t('timeline.shown')">
+        <button type="button" :aria-pressed="!showAll" @click="showAll = false">{{ t('timeline.key') }}</button>
+        <button type="button" :aria-pressed="showAll" @click="showAll = true">{{ t('timeline.all') }}<span class="count num"> +{{ hiddenCount }}</span></button>
       </div>
     </div>
 

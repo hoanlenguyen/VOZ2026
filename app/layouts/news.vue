@@ -1,6 +1,8 @@
 <!-- Editorial front page: light "paper" theme, full width. -->
 <script setup lang="ts">
-useHead({ htmlAttrs: { 'data-theme': 'paper' }, meta: [{ name: 'theme-color', content: '#FFFFFF' }] })
+const { t } = useI18n()
+const head = useLocaleHead()
+useHead({ htmlAttrs: { 'data-theme': 'paper', 'lang': () => head.value.htmlAttrs.lang }, meta: [{ name: 'theme-color', content: '#FFFFFF' }] })
 </script>
 
 <template>
@@ -8,7 +10,7 @@ useHead({ htmlAttrs: { 'data-theme': 'paper' }, meta: [{ name: 'theme-color', co
     <NewsSiteHeader />
     <slot />
     <footer class="news-footer">
-      <p>VOZ – My Sports World · Stories on this page are written automatically from official league data (Liiga, football-data.org).</p>
+      <p>{{ t('site.footer') }}</p>
     </footer>
   </div>
 </template>

@@ -5,23 +5,25 @@ import { PhCaretLeft } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news' })
 
+const { t, locale } = useI18n()
+const fmt = useFormat()
 const route = useRoute()
-const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`)
+const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, { query: { lang: locale } })
 const match = computed(() => data.value?.match)
 const finished = computed(() => match.value?.status === 'finished')
 // Football: "Half-time 1–0"; hockey: "Periods 0–1, 0–1, 0–1".
 const periodLine = computed(() => {
   const m = match.value
   if (!m || m.status !== 'finished' || !m.periods.length) return ''
-  if (m.sport === 'football') return `Half-time ${m.periods[0]!.home}–${m.periods[0]!.away}`
-  return `Periods ${m.periods.map(p => `${p.home}–${p.away}`).join(', ')}`
+  if (m.sport === 'football') return t('match.halfTime', { score: `${m.periods[0]!.home}–${m.periods[0]!.away}` })
+  return t('match.periods', { list: m.periods.map(p => `${p.home}–${p.away}`).join(', ') })
 })
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
   title: match.value
-    ? `${match.value.home.shortName} ${finished.value ? formatScore(match.value) : 'vs'} ${match.value.away.shortName} – VOZ`
-    : 'Match – VOZ',
+    ? `${match.value.home.shortName} ${finished.value ? fmt.score(match.value) : t('visual.vs')} ${match.value.away.shortName} – VOZ`
+    : t('match.pageTitle'),
 }))
 </script>
 
@@ -29,27 +31,27 @@ useHead(() => ({
   <main id="main" class="wrap">
     <NuxtLink to="/" class="back">
       <PhCaretLeft :size="14" weight="bold" aria-hidden="true" />
-      Sports
+      {{ t('match.back') }}
     </NuxtLink>
 
-    <p v-if="error" class="notice">Could not load the match ({{ error.statusMessage }}). Try again in a minute.</p>
+    <p v-if="error" class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
 
     <template v-else-if="match && data">
       <header class="hero">
         <p class="kicker">
           <span>{{ data.competition.name }}</span>
           <template v-if="match.round">
-            <span aria-hidden="true">·</span><span>Matchday {{ match.round }}</span>
+            <span aria-hidden="true">·</span><span>{{ t('match.matchday', { n: match.round }) }}</span>
           </template>
-          <span aria-hidden="true">·</span><span class="num">{{ storyStamp(match.start) }}</span>
+          <span aria-hidden="true">·</span><span class="num">{{ fmt.stamp(match.start) }}</span>
         </p>
         <h1 class="title num">
-          {{ match.home.shortName }} {{ finished ? formatScore(match) : 'vs' }} {{ match.away.shortName }}
+          {{ match.home.shortName }} {{ finished ? fmt.score(match) : t('visual.vs') }} {{ match.away.shortName }}
         </h1>
         <p class="meta num">
           <template v-if="periodLine">{{ periodLine }}</template>
           <template v-if="match.venue"><span v-if="periodLine" aria-hidden="true"> · </span>{{ match.venue }}</template>
-          <template v-if="match.attendance"> · {{ match.attendance.toLocaleString('en-GB') }} spectators</template>
+          <template v-if="match.attendance"> · {{ t('match.spectators', { n: fmt.number(match.attendance) }) }}</template>
         </p>
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
@@ -60,7 +62,7 @@ useHead(() => ({
       </section>
 
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
-        <NewsSectionTitle id="timeline-title">Match timeline</NewsSectionTitle>
+        <NewsSectionTitle id="timeline-title">{{ t('match.timeline') }}</NewsSectionTitle>
         <NewsMatchTimeline
           :events="data.extras.timeline"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
@@ -69,21 +71,21 @@ useHead(() => ({
       </section>
 
       <section v-if="data.compare" class="block" aria-labelledby="compare-title">
-        <NewsSectionTitle id="compare-title">Compare</NewsSectionTitle>
+        <NewsSectionTitle id="compare-title">{{ t('match.compare') }}</NewsSectionTitle>
         <NewsStatCompare
           :compare="data.compare"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
           :away="{ name: match.away.shortName, logo: match.away.logo }"
         />
         <p class="source">
-          <template v-if="data.extras">Match stats from {{ data.extras.source.name }}; season numbers counted from official {{ data.competition.name }} results.</template>
-          <template v-else-if="hasMatchStats">Match stats from official {{ data.competition.name }} game data; season numbers counted from official results.</template>
-          <template v-else>Counted from official {{ data.competition.name }} results. Shots, possession and cards are not in our data plan yet.</template>
+          <template v-if="data.extras">{{ t('match.sourceExtras', { source: data.extras.source.name, league: data.competition.name }) }}</template>
+          <template v-else-if="hasMatchStats">{{ t('match.sourceOfficial', { league: data.competition.name }) }}</template>
+          <template v-else>{{ t('match.sourceResults', { league: data.competition.name }) }}</template>
         </p>
       </section>
 
       <section v-if="data.extras?.lineups" class="block" aria-labelledby="lineups-title">
-        <NewsSectionTitle id="lineups-title">Line-ups</NewsSectionTitle>
+        <NewsSectionTitle id="lineups-title">{{ t('match.lineups') }}</NewsSectionTitle>
         <NewsLineups
           :lineups="data.extras.lineups"
           :teams="{ home: { name: match.home.shortName, logo: match.home.logo }, away: { name: match.away.shortName, logo: match.away.logo } }"
@@ -92,12 +94,12 @@ useHead(() => ({
       </section>
 
       <p v-if="data.extras" class="source">
-        <template v-if="data.extras.referee">Referee: {{ data.extras.referee }} · </template>
-        Match data: {{ data.extras.source.name }}. Event labels written by VOZ from the data.
+        <template v-if="data.extras.referee">{{ t('match.referee', { name: data.extras.referee }) }} · </template>
+        {{ t('match.matchData', { source: data.extras.source.name }) }}
       </p>
 
       <section v-if="match.goals.length && !data.extras?.timeline.length" class="block" aria-labelledby="goals-title">
-        <NewsSectionTitle id="goals-title">Goals</NewsSectionTitle>
+        <NewsSectionTitle id="goals-title">{{ t('match.goals') }}</NewsSectionTitle>
         <ol class="goals">
           <li v-for="g in match.goals" :key="g.id" class="goal num" :class="`goal--${g.side}`">
             <span class="clock">{{ g.clockLabel }}</span>
@@ -105,11 +107,11 @@ useHead(() => ({
             <span v-else class="goal-crest goal-crest--text">{{ match[g.side].shortName.slice(0, 3) }}</span>
             <span class="scorer">{{ g.scorer.name }}</span>
             <span class="running">{{ g.homeScore }}–{{ g.awayScore }}</span>
-            <span v-if="g.tags.length" class="tags">{{ g.tags.join(', ') }}</span>
+            <span v-if="g.tags.length" class="tags">{{ g.tags.map(tag => t(`match.tags.${tag}`)).join(', ') }}</span>
           </li>
         </ol>
       </section>
-      <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">Goal scorers are not included in this data plan.</p>
+      <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">{{ t('match.noScorers') }}</p>
 
       <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
     </template>

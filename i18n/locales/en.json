@@ -1,0 +1,145 @@
+{
+  "site": {
+    "tagline": "My Sports World",
+    "logoLabel": "VOZ – My Sports World, front page",
+    "menu": "Menu",
+    "language": "Language",
+    "footer": "VOZ – My Sports World · Stories on this page are written automatically from official league data (Liiga, football-data.org)."
+  },
+  "nav": {
+    "sports": "Sports",
+    "myTeams": "My teams",
+    "status": "Data status",
+    "personalise": "Personalise"
+  },
+  "sport": {
+    "all": "All sports",
+    "hockey": "Ice hockey",
+    "football": "Football"
+  },
+  "time": {
+    "today": "Today",
+    "tomorrow": "Tomorrow"
+  },
+  "home": {
+    "title": "Sports",
+    "pageTitle": "Sports – VOZ",
+    "sections": "Sections",
+    "loadError": "Stories could not be loaded ({reason}). Try again in a minute.",
+    "empty": "No recent stories in this section.",
+    "missing": "Temporarily unavailable: {list}.",
+    "topStories": "Top stories",
+    "moreStories": "More stories",
+    "latest": "Latest",
+    "allAbove": "All of today's stories are above.",
+    "sidebar": "Tables and partners",
+    "sponsored": "Sponsored",
+    "adLabel": "Ad · Local partner",
+    "adText": "Your club's matchday, presented by [LOCAL SPONSOR]"
+  },
+  "story": {
+    "result": "Result",
+    "preview": "Preview",
+    "auto": "Written automatically from official match data"
+  },
+  "table": {
+    "title": "{league} table",
+    "team": "Team",
+    "played": "Played",
+    "playedShort": "P",
+    "points": "Points",
+    "pointsShort": "Pts"
+  },
+  "ticker": {
+    "label": "Upcoming fixtures",
+    "upcoming": "{n} upcoming",
+    "prev": "Previous fixtures",
+    "next": "Next fixtures",
+    "slide": "{i} of {n}",
+    "empty": "No upcoming fixtures",
+    "league": "League: {name}. Change league",
+    "choose": "Choose a league"
+  },
+  "visual": {
+    "final": "Final",
+    "vs": "vs"
+  },
+  "match": {
+    "back": "Sports",
+    "pageTitle": "Match – VOZ",
+    "loadError": "Could not load the match ({reason}). Try again in a minute.",
+    "matchday": "Matchday {n}",
+    "halfTime": "Half-time {score}",
+    "periods": "Periods {list}",
+    "spectators": "{n} spectators",
+    "timeline": "Match timeline",
+    "compare": "Compare",
+    "lineups": "Line-ups",
+    "goals": "Goals",
+    "sourceExtras": "Match stats from {source}; season numbers counted from official {league} results.",
+    "sourceOfficial": "Match stats from official {league} game data; season numbers counted from official results.",
+    "sourceResults": "Counted from official {league} results. Shots, possession and cards are not in our data plan yet.",
+    "referee": "Referee: {name}",
+    "matchData": "Match data: {source}. Event labels written by VOZ from the data.",
+    "noScorers": "Goal scorers are not included in this data plan.",
+    "tags": {
+      "power-play": "power play",
+      "short-handed": "short-handed",
+      "empty-net": "empty net",
+      "penalty": "penalty shot",
+      "own-goal": "own goal",
+      "game-winner": "game-winner"
+    }
+  },
+  "timeline": {
+    "shown": "Events shown",
+    "key": "Key events",
+    "all": "All events",
+    "score": "score {score}"
+  },
+  "lineups": {
+    "starting": "{team} starting line-up, {formation}: {players}",
+    "subs": "Substitutes",
+    "cameOn": "Came on in the",
+    "manager": "Manager",
+    "captain": "captain"
+  },
+  "compare": {
+    "formLabel": "{team}, last five results, oldest first",
+    "form": {
+      "W": "Win",
+      "D": "Draw",
+      "L": "Defeat"
+    },
+    "formLetter": {
+      "W": "W",
+      "D": "D",
+      "L": "L"
+    }
+  },
+  "press": {
+    "title": "What the press says",
+    "before": "Before the match",
+    "after": "After the match",
+    "opens": "(opens {source} in a new tab)",
+    "unavailable": "Press headlines are unavailable right now.",
+    "sourceNote": "Headlines and links from other outlets, found by GNews and matched to this game by date and both team names. VOZ links to the original articles and does not republish them.",
+    "translated": "Translated automatically",
+    "original": "Original headline"
+  },
+  "onboarding": {
+    "title": "Make it your sports world",
+    "note": "Onboarding comes in Phase 4. Pick a league to see its teams.",
+    "league": "League",
+    "loadError": "Could not load teams: {reason}"
+  },
+  "status": {
+    "subtitle": "My Sports World · data layer status",
+    "sources": "Data sources · mode {mode}",
+    "off": "off",
+    "onboarding": "Onboarding →",
+    "latest": "Latest results",
+    "standings": "Standings",
+    "loadError": "Could not load {name}: {reason}"
+  }
+}

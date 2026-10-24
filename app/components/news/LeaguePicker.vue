@@ -9,17 +9,18 @@ type League = LandingData['ticker'][number]
 const props = defineProps<{ leagues: League[] }>()
 const model = defineModel<string>({ required: true })
 
-const SPORT_LABEL: Record<string, string> = { hockey: 'Ice hockey', football: 'Football' }
+const { t } = useI18n()
+const sportLabel = (sport: string) => (sport === 'hockey' || sport === 'football' ? t(`sport.${sport}`) : sport)
 const groups = computed(() => {
   const map = new Map<string, League[]>()
   for (const l of props.leagues) map.set(l.sport, [...(map.get(l.sport) ?? []), l])
-  return [...map].map(([sport, leagues]) => ({ sport, label: SPORT_LABEL[sport] ?? sport, leagues }))
+  return [...map].map(([sport, leagues]) => ({ sport, label: sportLabel(sport), leagues }))
 })
 // Flat order as displayed, for keyboard movement across groups.
 const flat = computed(() => groups.value.flatMap(g => g.leagues))
 const current = computed(() => props.leagues.find(l => l.competitionId === model.value) ?? props.leagues[0]!)
 // Skips missing parts, so a partial or older API response never shows "undefined".
-const subtitle = (l: League) => [SPORT_LABEL[l.sport] ?? l.sport, l.country].filter(Boolean).join(' · ')
+const subtitle = (l: League) => [sportLabel(l.sport), l.country].filter(Boolean).join(' · ')
 
 const open = ref(false)
 const active = ref(0)
@@ -90,7 +91,7 @@ defineExpose({ open })
     <button
       ref="trigger" type="button" class="trigger"
       aria-haspopup="listbox" :aria-expanded="open" aria-controls="league-listbox"
-      :aria-label="`League: ${current.competitionName}. Change league`"
+      :aria-label="t('ticker.league', { name: current.competitionName })"
       @click="open ? hide() : show()" @keydown="onTriggerKey"
     >
       <NewsLeagueBadge :name="current.competitionName" :emblem="current.emblem" :size="40" />
@@ -104,7 +105,7 @@ defineExpose({ open })
     <Transition name="pop">
       <ul
         v-if="open" id="league-listbox" ref="list" class="menu" role="listbox" tabindex="-1"
-        aria-label="Choose a league" :aria-activedescendant="optionId(flat[active]!)" @keydown="onListKey"
+        :aria-label="t('ticker.choose')" :aria-activedescendant="optionId(flat[active]!)" @keydown="onListKey"
       >
         <li v-for="g in groups" :key="g.sport" role="group" :aria-labelledby="`league-group-${g.sport}`">
           <p :id="`league-group-${g.sport}`" class="group" role="presentation">{{ g.label }}</p>
@@ -118,7 +119,7 @@ defineExpose({ open })
               <NewsLeagueBadge :name="l.competitionName" :emblem="l.emblem" :size="28" />
               <span class="option-text">
                 <span class="option-name">{{ l.competitionName }}</span>
-                <span class="option-sub">{{ [l.country, `${l.fixtures.length} upcoming`].filter(Boolean).join(' · ') }}</span>
+                <span class="option-sub">{{ [l.country, t('ticker.upcoming', { n: l.fixtures.length })].filter(Boolean).join(' · ') }}</span>
               </span>
               <PhCheck v-if="l.competitionId === model" :size="16" weight="bold" class="check" aria-hidden="true" />
             </li>

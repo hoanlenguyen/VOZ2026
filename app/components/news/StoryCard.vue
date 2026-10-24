@@ -2,6 +2,8 @@
 import type { Story } from '#shared/types/stories'
 
 withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
+const { t } = useI18n()
+const { stamp } = useFormat()
 </script>
 
 <template>
@@ -13,16 +15,16 @@ withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'r
       <p class="kicker">
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
-        <span>{{ story.kind === 'result' ? 'Result' : 'Preview' }}</span>
+        <span>{{ t(`story.${story.kind}`) }}</span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ story.headline }}</NuxtLink>
       </h3>
-      <p v-if="variant === 'row'" class="stamp num">{{ storyStamp(story.time) }}</p>
+      <p v-if="variant === 'row'" class="stamp num">{{ stamp(story.time) }}</p>
       <p v-if="(variant === 'lead' || variant === 'row') && story.summary" class="summary">{{ story.summary }}</p>
       <p v-if="variant === 'lead'" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
-        Written automatically from official match data
+        {{ t('story.auto') }}
       </p>
     </div>
   </article>
