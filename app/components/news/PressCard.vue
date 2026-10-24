@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { PhArrowUpRight } from '@phosphor-icons/vue'
 import type { NewsCoverage } from '#shared/types/news-coverage'
 
 const props = defineProps<{ competitionId: string, matchId: string, matchStatus?: string, homeScore?: number | null, awayScore?: number | null }>()
@@ -7,6 +8,8 @@ const { data, status, error, refresh } = useLazyFetch<NewsCoverage>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press`,
   { server: false, retry: 0 },
 )
+const matchArticles = computed(() => data.value?.groups.find(group => group.key === 'match')?.articles ?? [])
+const teamGroups = computed(() => data.value?.groups.filter(group => group.key !== 'match' && group.articles.length > 0) ?? [])
 let refreshTimer: ReturnType<typeof setTimeout> | undefined
 function scheduleRefresh() {
   if (refreshTimer) clearTimeout(refreshTimer)
@@ -26,8 +29,8 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
 
 <template>
   <section class="block" aria-labelledby="press-title" :aria-busy="status === 'pending'">
-    <NewsSectionTitle id="press-title">News &amp; insights</NewsSectionTitle>
-    <p class="intro">One match summary when three verified sources are available, plus updates on each team. Open a team headline for its AI summary.</p>
+    <NewsSectionTitle id="press-title">News</NewsSectionTitle>
+    <p class="intro">Match reports and updates on each team. Open a team headline for its AI summary.</p>
     <p v-if="data" class="coverage-status" role="status">{{ data.newsPhase === 'post-match' ? 'Post-match news' : 'Pre-match news' }}<span v-if="data.match.status === 'live'"> · Pre-match sources retained during play. Follow this match page for live updates.</span><span v-else-if="['cancelled', 'postponed'].includes(data.match.status)"> · Match {{ data.match.status }}</span></p>
 
     <ul v-if="!data && (status === 'pending' || status === 'idle')" class="list" aria-hidden="true">
@@ -36,16 +39,22 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
       </li>
     </ul>
 
-    <div v-else-if="data" class="coverage-grid">
-      <section v-for="group in data.groups" :key="group.key" class="coverage-group" :class="{ 'coverage-group--match': group.key === 'match' }" :aria-labelledby="`news-${matchId}-${group.key}`">
-        <h3 :id="`news-${matchId}-${group.key}`" class="group-title">{{ group.title }}</h3>
-        <p v-if="group.key !== 'match'" class="group-subtitle">{{ data.newsPhase === 'post-match' ? 'Post-match' : 'Pre-match' }} coverage · Form, players &amp; injuries</p>
-        <NewsMatchSummary v-if="group.key === 'match'" :competition-id="competitionId" :match-id="matchId" :coverage="data" @coverage-changed="refresh()" />
-        <template v-else>
+    <div v-else-if="data" class="news-content">
+      <ul v-if="matchArticles.length" class="match-reports" aria-label="Match news sources">
+        <li v-for="article in matchArticles" :key="article.id" class="match-report">
+          <a :href="article.link" target="_blank" rel="noopener noreferrer nofollow">{{ article.title }} <PhArrowUpRight :size="14" aria-hidden="true" /><span class="sr-only">(opens original in a new tab)</span></a>
+          <p class="report-meta">{{ article.source }} · <time :datetime="article.publishedAt">{{ storyStamp(article.publishedAt) }}</time></p>
+        </li>
+      </ul>
+      <div v-if="teamGroups.length" class="coverage-grid" :class="{ 'coverage-grid--single': teamGroups.length === 1 }">
+        <section v-for="group in teamGroups" :key="group.key" class="coverage-group" :aria-labelledby="`news-${matchId}-${group.key}`">
+          <h3 :id="`news-${matchId}-${group.key}`" class="group-title">{{ group.title }}</h3>
+          <p class="group-subtitle">{{ data.newsPhase === 'post-match' ? 'Post-match' : 'Pre-match' }} coverage · Form, players &amp; injuries</p>
           <NewsArticleSummary v-for="article in group.articles" :key="`${matchId}-${group.key}-${article.id}-${article.contentHash ?? ''}-${data.match.status}`" :article="article" :panel-id="`summary-${matchId}-${group.key}-${article.id}`" :summary-available="data.summaryAvailable" :paused="data.match.status === 'live'" />
-        </template>
-        <p v-if="group.note" class="empty">{{ group.note }}</p>
-      </section>
+          <p v-if="group.note" class="empty">{{ group.note }}</p>
+        </section>
+      </div>
+      <p v-if="!matchArticles.length && !teamGroups.length" class="empty">No verified news is available for this match yet.</p>
     </div>
     <div v-else-if="error" class="empty" role="alert">
       News is unavailable right now.
@@ -60,8 +69,16 @@ onBeforeUnmount(() => { if (refreshTimer) clearTimeout(refreshTimer); document.r
 .intro { margin: -4px 0 24px; font-size: 14px; line-height: 1.6; color: var(--summary); }
 .coverage-status { margin: -8px 0 24px; color: var(--summary); font-size: 13px; line-height: 1.6; font-weight: 600; }
 .coverage-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+.coverage-grid--single { grid-template-columns: minmax(0, 1fr); }
 .coverage-group { min-width: 0; }
-.coverage-group--match { grid-column: 1 / -1; }
+.match-reports { list-style: none; margin: 0 0 28px; padding: 0; }
+.match-report { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.match-report:first-child { padding-top: 0; }
+.match-report a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--headline); font-size: 17px; line-height: 1.5; font-weight: 600; text-decoration: none; }
+.match-report a svg { flex-shrink: 0; }
+.match-report a:hover { color: var(--link-hover); }
+.match-report a:focus-visible { outline: 2px solid var(--link-hover); outline-offset: 3px; }
+.report-meta { margin: 0; color: var(--meta); font-size: 12px; line-height: 1.5; }
 .group-title { margin: 0; color: var(--headline); font-size: 20px; line-height: 1.3; font-weight: 700; }
 .group-subtitle { margin: 6px 0 0; color: var(--meta); font-size: 12px; }
 .list { list-style: none; margin: 0; padding: 0; }

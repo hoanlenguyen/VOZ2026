@@ -17,9 +17,10 @@ and nothing is published that the data does not support.
   Primeira Liga and Champions League, via [football-data.org](https://www.football-data.org).
 - **Match page** (`/match/:competition/:id`): score, periods/halves, goals (where the data plan
   includes them), xG, attendance.
-- **News & insights** (match page): one automatic match summary synthesized from three verified
-  sources, plus three recent updates per team about form, players, and injuries. Match summaries
-  are labelled Pre-match or Post-match. During play, pre-match links are retained and news
+- **News** (match page): links to three verified match sources, plus up to three recent updates
+  per team about form, players, and injuries. Teams with no qualifying articles are hidden.
+  Combined match summaries are currently disabled in the UI. Coverage is labelled Pre-match or Post-match.
+  During play, pre-match links are retained and news
   discovery/synthesis pauses; the match page handles live updates. Rolling live blogs are excluded.
   Team headlines retain click-to-summarize with a cache of up to 24 hours, invalidated sooner by source changes.
   Three distinct verified publishers are required for the combined summary; missing coverage is
@@ -133,7 +134,7 @@ Publication date plus team matching is a relevance heuristic, not a publisher ma
 
 Run the isolated parser/crawler tests with `npm test`, then `npm run typecheck` and `npm run build`.
 
-### News & insights: team news and AI summaries
+### News: team updates and source links
 
 `GET /api/competitions/:competition/matches/:id/press` returns three groups: match coverage,
 the home team's recent news, and the away team's recent news. Team discovery targets three
@@ -144,9 +145,10 @@ or commercial stories. Sparse or inaccessible coverage is reported explicitly ra
 No article bodies or generated summary paragraphs are sent by this discovery endpoint.
 Background classification metadata can accompany pre-match articles.
 
-The browser automatically requests `POST /api/competitions/:competition/matches/:id/summary`
-to show one combined match summary with its three original source links. It does not require
-opening each match headline. The server resolves the current official status/score and selected
+The page displays the original match source links without a "This match" heading or combined
+AI summary. It does not request match synthesis automatically. The
+`POST /api/competitions/:competition/matches/:id/summary` endpoint remains available for integrations.
+The server resolves the current official status/score and selected
 sources, rather than accepting a client-supplied phase or article URLs. Its prompt writes a
 Pre-match preview for Upcoming and a recap for Post-match. While a match is live, the news
 section retains pre-match links and pauses discovery and summaries. Live-blog URLs are excluded
