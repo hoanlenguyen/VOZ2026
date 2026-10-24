@@ -106,7 +106,9 @@
     "storyPlus": "For subscribers",
     "coverCredit": "Photo: {credit}",
     "previewBanner": "Preview, not published · seen as: {as}",
-    "aiEvidence": "Facts behind the headline"
+    "aiEvidence": "Facts behind the headline",
+    "by": "By {name}",
+    "authorAi": "VOZ AI, from official match data"
   },
   "timeline": {
     "shown": "Events shown",

@@ -16,7 +16,10 @@ const props = withDefaults(defineProps<{
   reader?: boolean
   /** Extra query for the story request (the newsroom's draft preview: draft, as). */
   extraQuery?: Record<string, string>
+  /** The page shows the headline as its title (match page). */
+  hideHeadline?: boolean
 }>(), { length: 'standard', tone: 'neutral' })
+const emit = defineEmits<{ loaded: [story: { headline: string, generatedAt: string }] }>()
 const { t, locale } = useI18n()
 const { number } = useFormat()
 
@@ -34,6 +37,7 @@ const { data, status, error, refresh } = useLazyFetch<StoryResponse>(
 watch(() => [props.length, props.tone], () => (activeSentence.value = null))
 
 const story = computed(() => data.value?.story)
+watch(story, (s) => { if (s) emit('loaded', { headline: s.headline, generatedAt: s.generatedAt }) }, { immediate: true })
 const factIndex = computed(() => new Map((data.value?.facts ?? []).map((f, i) => [f.id, i + 1])))
 const cited = computed(() => new Set(story.value?.sentences.flatMap(s => s.facts) ?? []))
 const highlighted = computed(() => new Set(activeSentence.value === null ? [] : story.value?.sentences[activeSentence.value]?.facts ?? []))
@@ -66,7 +70,7 @@ function toggleSentence(i: number) {
       </div>
 
       <article v-else class="story">
-        <h3 class="headline">{{ story.headline }}</h3>
+        <h3 v-if="!hideHeadline" class="headline">{{ story.headline }}</h3>
         <p v-for="(para, pi) in paragraphs" :key="pi" class="para">
           <template v-for="s in para" :key="s.index">
             <span

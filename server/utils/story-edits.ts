@@ -7,6 +7,8 @@
 import type { H3Event } from 'h3'
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
+import type { MatchDetailExtras } from '#shared/types/match-detail'
+import type { Match } from '#shared/types/sports'
 import type { StoryLength, StoryTone } from '#shared/types/story'
 import type { ArticleAudience, CoverImage, MatchStoryControl, StoryCover, StoryMode } from '#shared/types/stories'
 
@@ -141,4 +143,23 @@ export async function readerContext(event: H3Event, matchKey: string, lang: Lang
     }
   }
   return { entitlements: info.entitlements, control: await matchStoryControl(matchKey, lang), preview: false }
+}
+
+/**
+ * The match story readers get, from what already exists (the newsroom's edit, or a cached or
+ * pre-written AI story in `lang`); never runs the agent. For front-page cards: headline and opening.
+ * `match` / `extras` must be the English mock (the story cache keys use its facts).
+ */
+export async function publishedMatchStory(
+  def: CompetitionDef, match: Match, extras: MatchDetailExtras | null, season: Match[],
+  control: MatchStoryControl | null, lang: Lang,
+): Promise<{ headline: string, text: string, origin: 'ai' | 'newsroom' } | null> {
+  const { mode, length, tone } = controlSettings(control)
+  if (!extras || match.status !== 'finished' || mode === 'hidden') return null
+  if (mode === 'edited' && control) return { headline: control.headline, text: excerpt(control.body), origin: 'newsroom' }
+  const hit = await peekStory({
+    competitionId: def.id, matchId: match.id, length, tone, lang,
+    facts: buildFacts(def, match, extras, season), names: factNames(match, extras),
+  }).catch(() => null)
+  return hit ? { headline: hit.story.headline, text: hit.story.sentences.slice(0, 2).map(x => x.text).join(' '), origin: 'ai' } : null
 }

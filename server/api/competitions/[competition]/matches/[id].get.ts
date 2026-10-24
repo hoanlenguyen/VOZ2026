@@ -37,8 +37,28 @@ export default defineEventHandler(async (event) => {
   const edited = control?.mode === 'edited'
     ? { headline: control.headline, body: control.body, audience, by: control.by, at: control.at }
     : null
+  // Cached AI stories only (memory / KV / pre-written), never an agent run. Facts as the story endpoint
+  // builds them (from the English mock), so the cache keys match.
+  const peek = async (storyLang: typeof lang) => {
+    const source = lang === 'en' ? mock : await findMockMatch(def, id, season ?? [])
+    const m = source?.match ?? match
+    const x = source?.extras ?? extras
+    return peekStory({
+      competitionId: def.id, matchId: match.id, length, tone, lang: storyLang,
+      facts: buildFacts(def, m, x, season ?? []), names: factNames(m, x),
+    }).catch(() => null)
+  }
   // Newsroom accounts also get a hidden story's section (mode 'hidden'), so they can see the state.
-  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, length, tone, edited } : null
+  // The story's headline is the page title, with its date and author below; for the AI story they
+  // come from the cache when it is there (otherwise the page takes them from the story once loaded).
+  const cachedAi = hasStory && !storyLocked && mode === 'ai' ? (await peek(lang))?.story ?? null : null
+  const story: MatchStorySection | null = hasStory && !storyLocked
+    ? {
+        mode, audience, length, tone, edited,
+        headline: edited?.headline ?? cachedAi?.headline ?? null,
+        publishedAt: edited?.at ?? cachedAi?.generatedAt ?? null,
+      }
+    : null
 
   // Locked readers see the opening of the match story, fading into the offer. AI text only from stories that already exist (cache / pre-written),
   // so a free reader never starts the agent.
@@ -48,16 +68,8 @@ export default defineEventHandler(async (event) => {
   }
   else if (storyLocked) {
     // The story in the reader's language when one exists; otherwise the English one, translated.
-    // Facts as the story endpoint builds them (from the English mock), so the cache keys match.
-    const source = lang === 'en' ? mock : await findMockMatch(def, id, season ?? [])
-    const m = source?.match ?? match
-    const x = source?.extras ?? extras
-    const req = {
-      competitionId: def.id, matchId: match.id, length, tone,
-      facts: buildFacts(def, m, x, season ?? []), names: factNames(m, x),
-    }
-    const own = lang === 'en' ? null : await peekStory({ ...req, lang }).catch(() => null)
-    const hit = own ?? await peekStory({ ...req, lang: 'en' }).catch(() => null)
+    const own = lang === 'en' ? null : await peek(lang)
+    const hit = own ?? await peek('en')
     if (hit) {
       const parts = [hit.story.headline, hit.story.sentences.slice(0, 2).map(s => s.text).join(' ')]
       const [headline, text] = own || lang === 'en' ? parts.map(p => ({ text: p, translated: false })) : await translateTexts(parts, lang)

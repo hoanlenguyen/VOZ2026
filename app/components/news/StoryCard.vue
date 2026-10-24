@@ -4,7 +4,9 @@ import type { Story } from '#shared/types/stories'
 const props = withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
 const { t } = useI18n()
 const { stamp } = useFormat()
-const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.story.subtitle)
+const ai = computed(() => props.story.headlineOrigin === 'agent')
+// One title and one short detail (at most two lines): the AI subtitle, else the summary.
+const detail = computed(() => keepScoresTogether((ai.value && props.story.subtitle) || props.story.summary || ''))
 </script>
 
 <template>
@@ -25,9 +27,7 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
       </h3>
       <p v-if="variant === 'row'" class="stamp num">{{ stamp(story.time) }}</p>
-      <p v-if="ai && variant !== 'card'" class="dek">{{ keepScoresTogether(story.subtitle!) }}</p>
-      <!-- Rows show the AI dek instead of the summary; the lead keeps both. -->
-      <p v-if="(variant === 'lead' || (variant === 'row' && !ai)) && story.summary" class="summary">{{ story.summary }}</p>
+      <p v-if="variant !== 'card' && detail" class="detail">{{ detail }}</p>
       <p v-if="variant === 'lead' && !ai" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
         {{ t('story.auto') }}
@@ -50,8 +50,10 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 .headline a { color: inherit; text-decoration: none; transition: color var(--dur-fast) var(--ease-out); }
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }
 .stamp { margin: 0; font-size: 12px; color: var(--meta); }
-.summary { margin: 0; font-size: 14px; line-height: 1.5; color: var(--summary); }
-.dek { margin: 0; font-size: 15px; line-height: 1.45; font-weight: 500; color: var(--text-2); }
+.detail {
+  margin: 0; font-size: 15px; line-height: 1.45; color: var(--summary);
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
 .ai-tag {
   align-self: center; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px;
   font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
@@ -62,9 +64,8 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 .story--lead .body { padding: 0 20px; gap: 10px; }
 .story--lead .headline { font-size: clamp(22px, 2.6vw, 28px); line-height: 1.29; text-align: center; }
 .story--lead .kicker, .story--lead .auto { justify-content: center; }
-.story--lead .summary { text-align: center; font-size: 16px; line-height: 1.56; }
-.story--lead .dek { text-align: center; font-size: 17px; line-height: 1.5; }
-.story--side .dek { font-size: 14px; }
+.story--lead .detail { text-align: center; font-size: 17px; line-height: 1.5; }
+.story--side .detail { font-size: 14px; }
 
 .story--side .headline { font-size: 18px; line-height: 1.22; }
 
@@ -73,10 +74,9 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 .story--row:last-of-type { border-bottom: 0; }
 .story--row .media { flex: 0 0 33%; }
 .story--row .headline { font-size: 17px; line-height: 1.3; }
-.story--row .summary, .story--row .dek { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 @media (min-width: 1360px) { .story--row .headline { font-size: 18px; } }
 @media (max-width: 479px) {
   .story--row .media { flex-basis: 120px; }
-  .story--row .summary, .story--row .dek { display: none; }
+  .story--row .detail { display: none; }
 }
 </style>

@@ -3,7 +3,8 @@
 // parts (the server leaves those out of the response). Illustration drawn here, not borrowed.
 import { PhCheck, PhCheckCircle } from '@phosphor-icons/vue'
 
-defineProps<{ teaser?: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null }>()
+// `hideHeadline`: the match page already shows the teaser's headline as its title.
+defineProps<{ teaser?: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null, hideHeadline?: boolean }>()
 const { t } = useI18n()
 const { account } = useAccount()
 const route = useRoute()
@@ -17,7 +18,7 @@ const BENEFITS = ['unlimited', 'stories', 'stats', 'noAds', 'languages'] as cons
   <!-- The opening of the locked story, fading out into the offer. The rest is never sent to the browser. -->
   <div v-if="teaser" class="teaser">
     <p class="teaser-kicker">{{ teaser.source === 'newsroom' ? t('match.story') : t('paywall.teaserKicker') }}<template v-if="teaser.translated"> · {{ t('press.translated') }}</template></p>
-    <h2 class="teaser-headline">{{ teaser.headline }}</h2>
+    <h2 v-if="!hideHeadline" class="teaser-headline">{{ teaser.headline }}</h2>
     <p class="teaser-text">{{ teaser.text }}</p>
   </div>
   <section class="offer" :class="{ 'offer--after-teaser': teaser }" aria-labelledby="offer-title">

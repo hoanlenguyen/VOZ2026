@@ -103,6 +103,10 @@ export interface MatchStorySection {
   tone: StoryTone
   /** The newsroom's version when mode is 'edited'. */
   edited: EditedMatchStory | null
+  /** The story's headline (the match page title); null when the AI story is not written yet. */
+  headline: string | null
+  /** When the story was written (AI) or published (edited); null until the AI story exists. */
+  publishedAt: string | null
 }
 
 /** A cover image as pages show it. */

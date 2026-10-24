@@ -180,6 +180,9 @@ async function revert() {
           <p class="hint">{{ t('editor.storyLead') }}</p>
           <NewsChoiceCards v-model="storyForm.mode" :legend="t('editor.storyMode')" name="story-mode" :options="modes" />
 
+          <!-- The cover sits above the story, as on the match page. -->
+          <NewsCoverPicker v-model="storyForm.cover" :graphic="data.story" />
+
           <template v-if="storyForm.mode !== 'hidden'">
             <span class="label">{{ storyForm.mode === 'ai' ? t('editor.format.title') : t('editor.format.titleEdited') }}</span>
             <NewsStoryFormat
@@ -236,7 +239,6 @@ async function revert() {
           </div>
 
           <NewsChoiceCards v-model="storyForm.audience" :legend="t('editor.storyAudience')" name="story-audience" :options="audiences" />
-          <NewsCoverPicker v-model="storyForm.cover" :graphic="data.story" />
         </section>
 
         <div class="bar">
