@@ -17,6 +17,11 @@ and nothing is published that the data does not support.
   Primeira Liga and Champions League, via [football-data.org](https://www.football-data.org).
 - **Match page** (`/match/:competition/:id`): score, periods/halves, goals (where the data plan
   includes them), xG, attendance.
+- **AI match stories** (mock match): a single GPT-6 Luna agent writes the story in 3 lengths × 4
+  perspectives (neutral, either team's fans, analyst) from a ledger of verified facts. Every sentence
+  cites its facts and is checked (numbers, names, no quotes or injuries) before it is shown; readers can
+  open the facts behind each sentence and see how the story was made. Stories are cached in memory, in
+  Workers KV, and pre-written into the app for the demo (`npm run warm:stories`).
 - **What the press says** (match page): other outlets' headlines about the game, with source and
   link, found via [GNews](https://gnews.io) and matched by date and both team names. Only headlines and
   links are shown, so VOZ points to the coverage instead of republishing it.
@@ -27,8 +32,8 @@ and nothing is published that the data does not support.
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.
 
-Planned: AI-written match stories with a fact validator, a playoff-odds engine, alerts that fire
-only when something matters, a 60-second audio briefing, and data-driven vertical videos.
+Planned: AI stories for every finished match (and in Finnish), a playoff-odds engine, alerts that
+fire only when something matters, a 60-second audio briefing, and data-driven vertical videos.
 
 ## Quick start
 
@@ -49,6 +54,7 @@ Fill in `.env`:
 | `NUXT_LIIGA_API_KEY` | Liiga stats API key, sent as `x-api-key` |
 | `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token ([free registration](https://www.football-data.org/client/register)) |
 | `NUXT_GNEWS_API_KEY` | [GNews](https://gnews.io) key for "What the press says" (optional) |
+| `NUXT_OPENAI_API_KEY` | OpenAI key for AI match stories (optional: without it the pre-written demo stories are served) |
 | `NUXT_DATA_MODE` | `live` (APIs only), `auto` (APIs, fall back to snapshots) or `snapshot` (offline) |
 
 ```bash
@@ -86,6 +92,7 @@ One-time setup, in the GitHub repository under **Settings → Secrets and variab
 | `NUXT_LIIGA_API_KEY` | Liiga API key |
 | `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token |
 | `NUXT_GNEWS_API_KEY` | GNews API key (press headlines) |
+| `NUXT_OPENAI_API_KEY` | OpenAI API key (AI match stories) |
 
 The API keys are uploaded as encrypted Worker secrets on each deploy. Non-secret settings
 (`NUXT_DATA_MODE`) live in [wrangler.jsonc](wrangler.jsonc). The site is served at
@@ -115,6 +122,8 @@ npm run deploy
 | `npm run preview` | Build and run it locally in the Workers runtime (`wrangler dev`) |
 | `npm run deploy` | Build and deploy to Cloudflare from your machine |
 | `npm run typecheck` | Type check (must pass before committing) |
+| `npm test` | Story checker tests |
+| `npm run warm:stories` | Pre-write the demo's AI stories into `data/stories/` (dev server running) |
 | `npm run snapshot` | Save API responses to `data/snapshots/` |
 
 ## How it works
@@ -136,6 +145,46 @@ football ──┘  (keys, cache,  (raw JSON →     (Match,    └─ /api/comp
 - **`server/utils/stories.ts`** builds headlines and summaries from fixed templates. Every phrase maps
   to a data field.
 
+### AI match stories
+
+A single AI agent writes the match story; a harness around it makes sure only checked text is shown.
+
+```
+match data ─ facts.ts ─ fact list f1…fN ─┐
+                                          ├─ agent (GPT-6 Luna) ── get_facts → write → check_story → submit_story
+                       story-check.ts ────┘        │                                         │
+                                                   └─ harness: 8 turns / 90 s, final check, trace, template fallback
+                                                                                             │
+                              cache: memory → Workers KV → bundled data/stories/ → page ─────┘
+```
+
+- **Fact list** (`server/utils/facts.ts`): every verified statement about the match, numbered
+  (result, goals and assists, cards, VAR, substitutions, stats, last five results, table before and
+  after, head-to-head this season, line-ups, referee). All computed from data.
+- **Agent** (`server/utils/story-agent.ts`): GPT-6 Luna through the OpenAI Responses API
+  (`server/utils/llm.ts`). It can only use three tools: get the facts, check a draft, submit. Every
+  sentence cites the facts it relies on.
+- **Checker** (`shared/utils/story-check.ts`): every number and every person in a sentence must appear
+  in the facts it cites (rounding allowed); no quotes, no "said", no injuries; word range per length.
+  The harness checks again on submit; if the agent cannot pass within 8 turns or 90 seconds, a
+  template story built from the facts is shown instead and labelled as such.
+- **Versions:** 3 lengths (short, standard, long read) × 4 perspectives (neutral, home fans, away
+  fans, analyst) = 12 per match.
+- **Cache** (`server/utils/story-cache.ts`): memory, then Workers KV, then stories pre-written into the
+  app with `npm run warm:stories` (re-checked against today's facts before use), then a live run.
+  Only stories that passed the check are cached.
+- **Cost and speed:** a run takes 3 turns, 6–14 seconds and about 5,000 tokens in / 700 out, roughly
+  $0.001 per version. Cached and pre-written stories load in under 0.2 seconds.
+- **On the page:** length and perspective switches, "Show the facts behind this story" (numbered links
+  from each sentence to its facts) and "How this was made" (the agent's steps, time and tokens).
+
+To refresh the pre-written demo stories after changing facts or the agent's instructions (dev server
+running), then commit `data/stories/`:
+
+```bash
+npm run warm:stories -- --base http://localhost:3000 --match premier-league/2645271
+```
+
 ### API
 
 | Endpoint | Returns |
@@ -147,6 +196,7 @@ football ──┘  (keys, cache,  (raw JSON →     (Match,    └─ /api/comp
 | `GET /api/competitions/:competition/matches?team=&state=finished\|upcoming` | Current-season matches |
 | `GET /api/competitions/:competition/matches/:id` | One match |
 | `GET /api/competitions/:competition/matches/:id/press` | Press headlines about the match |
+| `GET /api/competitions/:competition/matches/:id/story?length=&tone=` | AI match story with its facts (`length`: short, standard, long; `tone`: neutral, home-fan, away-fan, analyst) |
 | `GET /api/health` | Status of each data source |
 
 Every data response carries an `x-voz-data-source: live|snapshot` header.
@@ -164,7 +214,11 @@ The challenge asks that nothing be published as fact unless it is true. What is 
   of inventing them.
 - **No borrowed content:** story text comes only from our data, and images are team crests plus
   data visuals, never photos from other outlets.
-- **Labelling:** generated stories are marked "Written automatically from official match data".
+- **AI stories are checked, not trusted:** each sentence cites numbered facts, and a checker verifies
+  every number and name against them before publishing; failures fall back to a labelled template.
+  Readers can open the facts behind every sentence. Tested with deliberately wrong drafts (`npm test`).
+- **Labelling:** template stories are marked "Written automatically from official match data"; AI
+  stories are marked "AI-written by GPT-6 Luna from official match data · checked against N facts".
 
 ## Data limits
 
@@ -178,10 +232,11 @@ The challenge asks that nothing be published as fact unless it is true. What is 
 
 ```
 app/          pages, layouts, components (news/), composables, utils
-server/       api/ routes, providers/, utils/ (upstream, sports, stories)
-shared/       types and helpers used by both server and scripts
-scripts/      snapshot.ts
-data/         snapshots/ for offline mode
+server/       api/ routes, providers/, utils/ (upstream, sports, stories, facts, story agent, cache)
+shared/       types and helpers used by both server and scripts (incl. the story checker)
+scripts/      snapshot.ts, warm-stories.ts
+tests/        story checker tests (npm test)
+data/         snapshots/ for offline mode, mock/ full-data matches, stories/ pre-written AI stories
 design-system/voz/   design rules (MASTER.md, pages/landing.md)
 ```
 
@@ -197,3 +252,4 @@ in [CLAUDE.md](CLAUDE.md).
 - Liiga stats API – official Finnish ice hockey league data
 - [football-data.org](https://www.football-data.org) – football data (free plan)
 - [GNews](https://gnews.io) – headline search for "What the press says"
+- [OpenAI GPT-6 Luna](https://openai.com/index/introducing-gpt-6-sol-and-luna/) – the model behind AI match stories

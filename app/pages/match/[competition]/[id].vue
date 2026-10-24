@@ -56,6 +56,11 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <section v-if="finished && data.extras" class="block" aria-labelledby="story-title">
+        <NewsSectionTitle id="story-title">Match story</NewsSectionTitle>
+        <NewsMatchStory :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
+      </section>
+
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
         <NewsSectionTitle id="timeline-title">{{ t('match.timeline') }}</NewsSectionTitle>
         <NewsMatchTimeline

@@ -8,6 +8,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `npm run dev` — dev server (stop it before restarting; Nuxt refuses a second instance). After adding a new component, restart if SSR logs "Failed to resolve component".
   Changing `.env` or `nuxt.config.ts` makes the server restart itself; a second dev server of this folder (e.g. an old `--port 3002`) blocks that restart and every request then returns 500 "Another Nuxt dev server is already running".
 - `npm run typecheck` — must pass before committing
+- `npm test` — story checker tests (Node's test runner, plain TS); also run by the deploy workflow
 - `npm run snapshot -- [--only liiga|football-data] [--details] [--competitions PL,BL1]` — save upstream
   responses to `data/snapshots/<provider>/` for offline demos (football: ~6.5 s per request, free-plan limit)
 
@@ -25,6 +26,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `NUXT_GNEWS_API_KEY` — GNews headline search (sent as `apikey` query param, redacted from errors); free plan 100 requests/day, ~1 request/s
 - `NUXT_HF_TOKEN`, `NUXT_HF_MODEL` (default `openai/gpt-oss-120b`) — Hugging Face Inference Providers (`https://router.huggingface.co/v1`, OpenAI-compatible) for the translation agent. Without a token, headlines stay untranslated.
   For Cloudflare, add `NUXT_HF_TOKEN` as a GitHub secret and to the deploy workflow's `secrets:` list and `env:` block (not there yet).
+- `NUXT_OPENAI_API_KEY` — OpenAI Responses API for AI match stories (model `gpt-6-luna`, reasoning effort `low`; `NUXT_OPENAI_MODEL`, `NUXT_STORY_REASONING_EFFORT` override)
 - `NUXT_DATA_MODE=live|auto|snapshot` — upstream only / upstream with snapshot fallback / offline only
 
 ## Architecture
@@ -42,6 +44,16 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
   - `keepsNumbers()` guard: a translation must keep the original's digit groups; otherwise the original is shown and nothing is cached. Any failure returns the originals.
   - UI: `PressArticle.translated` / `originalTitle`; the card shows "Translated automatically" / "Konekäännös" and the original on hover.
   - gpt-oss: send `reasoning_effort: 'low'` (about 3× fewer tokens, under 1 s); the reply has `content` plus a separate `reasoning` field; ask for `{"translations": [...]}` and parse from the first `{`.
+- AI match stories (single agent + harness):
+  - `server/utils/facts.ts` — fact ledger f1…fN for a match (result, timeline, stats, form, table, h2h, context), computed from Match / extras / season results. Name teams as the match does.
+  - `shared/utils/story-check.ts` — checker: every number (rounding allowed) and every person named must appear in the facts a sentence cites; no quotes, speech or injuries; word range per length. Pure TS, tested in `tests/` (`npm test`).
+  - `server/utils/story-agent.ts` — agent with tools `get_facts`, `check_story`, `submit_story` (`tool_choice: required`); harness: 8 turns / 90 s, final re-check, trace, template fallback. `server/utils/llm.ts` — fetch-based Responses API client (one retry on 429/5xx, key never in errors).
+  - `server/utils/story-cache.ts` — memory → KV (`kvcache`) → bundled `data/stories/` (re-checked against today's facts) → agent; in-flight dedupe; only checked agent stories are cached. Key includes a hash of the facts, model and prompt version.
+  - `GET /api/competitions/:competition/matches/:id/story?length=short|standard|long&tone=neutral|home-fan|away-fan|analyst` (`&fresh=1` in dev regenerates). UI: `NewsMatchStory` on match pages with full data.
+  - `npm run warm:stories -- --base http://localhost:3000 --match premier-league/2645271` pre-writes all 12 variants into `data/stories/` for the demo; re-run after changing facts or prompts, then commit.
+  - Rules when changing it: never let the harness publish text that failed `checkStory`; bump `PROMPT_VERSION` in `story-cache.ts` after changing the agent's instructions or tools (it invalidates cached stories); keep facts in the match's own team names and with original capitalisation (the checker matches names case-insensitively, but readers see the fact text); add a test in `tests/` for every new checker rule.
+  - Stories show only on match pages with full data (`data.extras`), i.e. mock matches today. Cost per version ≈ $0.001 (3 turns, ~5k tokens in / 700 out).
+  - Before reading the OpenAI API shape from memory, check the docs: Responses API `/v1/responses`, `tool_choice: required`, function outputs as `function_call_output` items, reasoning/call items passed back verbatim, `store: false`.
 - `server/utils/stories.ts` — deterministic story templates (headline + summary) from Match/StandingRow facts; used by `/api/landing`
 - Pages: `/` news front page (layout `news`, light theme), `/match/:competition/:id`, `/onboarding`, `/status` (data-layer check); app screens use layout `default` (dark)
 - Keys: team `"<competition>:<team>"` (`liiga:karpat`, `premier-league:57`), match `"<competition>:<id>"`
@@ -84,4 +96,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 ## UI work
 - Use the **ui-ux-pro-max** skill for any UI change.
 - Follow `design-system/voz/MASTER.md` (page overrides in `design-system/voz/pages/`, e.g. `landing.md` for the light front page); tokens in `app/assets/css/main.css`, no raw hex in components.
+- `main.css` defines global classes `.app-shell .card .chip .badge .select .eyebrow .muted .display .num .sr-only`.
+  Use them only for their global meaning; never reuse these names for component-specific styles (scoped
+  styles still merge with the global rule; `.card`, `.chip` and `.badge` collisions have each caused layout bugs).
 - Never copy articles or photos from other news sites into the app or mock data; story text comes from our data, images are crests + data visuals.

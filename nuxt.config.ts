@@ -43,6 +43,11 @@ export default defineNuxtConfig({
     footballDataBaseUrl: 'https://api.football-data.org/v4',
     /** GNews headline search for "What the press says" (free plan: 100 requests/day). */
     gnewsApiKey: '',
+    /** AI match stories (OpenAI Responses API). */
+    openaiApiKey: '',
+    openaiModel: 'gpt-6-luna',
+    openaiBaseUrl: 'https://api.openai.com/v1',
+    storyReasoningEffort: 'low',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
     /** Hugging Face Inference Providers (OpenAI-compatible router) for the translation agent. */
     hfToken: '',
@@ -61,6 +66,8 @@ export default defineNuxtConfig({
       { baseName: 'snapshots', dir: '../data/snapshots', ignore: ['liiga/games_2027_*'] },
       // Mock "deep data" matches (data/mock/<competition>/<id>.json), read via useStorage('assets:mocks').
       { baseName: 'mocks', dir: '../data/mock' },
+      // Pre-written AI stories (npm run warm:stories), read via useStorage('assets:stories').
+      { baseName: 'stories', dir: '../data/stories' },
     ],
     // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
     storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },

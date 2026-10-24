@@ -1,0 +1,97 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "standard",
+ "tone": "analyst",
+ "generatedAt": "2026-10-24T09:38:13.479Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1059
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (16 facts cited)",
+   "ms": 5001
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (16 facts cited)",
+   "ms": 3314
+  }
+ ],
+ "usage": {
+  "inputTokens": 5307,
+  "outputTokens": 738,
+  "turns": 3,
+  "ms": 9375
+ },
+ "headline": "Forest’s chance volume outstrips Ipswich in 1–1 draw",
+ "sentences": [
+  {
+   "text": "Ipswich Town and Nottingham Forest shared the points in a 1–1 draw, but the underlying numbers tilted sharply toward the visitors.",
+   "facts": [
+    "f1",
+    "f2",
+    "f17",
+    "f18"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest recorded 2.29 expected goals to Ipswich’s 0.46, alongside a 17–7 advantage in shots and 5–3 in attempts on target.",
+   "facts": [
+    "f17",
+    "f19",
+    "f20"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The visitors also created 2 big chances to Ipswich’s 1 and won 5 corners while Ipswich had none, though possession was nearly even at 50.6% to 49.4%.",
+   "facts": [
+    "f21",
+    "f22",
+    "f16"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, and Julio Enciso levelled for Ipswich in the 41st; neither side scored after the break.",
+   "facts": [
+    "f7",
+    "f8",
+    "f4"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Forest made the stronger threat without turning that advantage into a second goal, while the draw moved Ipswich to 9th on 10 points and Forest to 16th on 6.",
+   "facts": [
+    "f17",
+    "f32",
+    "f34"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Both sides entered with inconsistent recent league runs: Ipswich had taken 6 points from 5 matches, Forest 4 from 5.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 2
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 16
+ },
+ "fallbackReason": null
+}

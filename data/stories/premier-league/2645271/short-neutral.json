@@ -1,0 +1,69 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "short",
+ "tone": "neutral",
+ "generatedAt": "2026-10-24T09:37:16.572Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 33 facts (result, timeline, stats, context)",
+   "ms": 1378
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (7 facts cited)",
+   "ms": 2368
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (7 facts cited)",
+   "ms": 1938
+  }
+ ],
+ "usage": {
+  "inputTokens": 4344,
+  "outputTokens": 350,
+  "turns": 3,
+  "ms": 5684
+ },
+ "headline": "Ipswich and Nottingham Forest share points after 1–1 draw",
+ "sentences": [
+  {
+   "text": "Ipswich Town and Nottingham Forest drew 1–1 in the Premier League, with both goals arriving before half-time.",
+   "facts": [
+    "f1",
+    "f3",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Nottingham Forest ahead in the 13th minute, and Julio Enciso equalised for Ipswich in the 41st.",
+   "facts": [
+    "f7",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Nottingham Forest had 17 shots to Ipswich’s 7, but neither side found a second-half goal.",
+   "facts": [
+    "f19",
+    "f4"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 7
+ },
+ "fallbackReason": null
+}

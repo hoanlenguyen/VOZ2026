@@ -1,0 +1,69 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "short",
+ "tone": "away-fan",
+ "generatedAt": "2026-10-24T09:37:29.939Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 39 facts (result, timeline, stats, form, table, context)",
+   "ms": 965
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (6 facts cited)",
+   "ms": 3693
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (6 facts cited)",
+   "ms": 2071
+  }
+ ],
+ "usage": {
+  "inputTokens": 5089,
+  "outputTokens": 459,
+  "turns": 3,
+  "ms": 6730
+ },
+ "headline": "Forest leave Ipswich with a point after dominant attacking display",
+ "sentences": [
+  {
+   "text": "Nott'm Forest had to settle for a 1–1 draw at Ipswich, but their attacking numbers offered plenty of encouragement.",
+   "facts": [
+    "f1",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, only for Julio Enciso to equalise before half-time; neither side scored after the break.",
+   "facts": [
+    "f7",
+    "f8",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest registered 17 shots and 2.29 expected goals to Ipswich's 7 and 0.46, but could not turn that edge into a winner.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 6
+ },
+ "fallbackReason": null
+}

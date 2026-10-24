@@ -5,6 +5,7 @@
 #   NUXT_LIIGA_API_KEY        Liiga stats API key           -> Worker secret
 #   NUXT_FOOTBALL_DATA_TOKEN  football-data.org token       -> Worker secret
 #   NUXT_GNEWS_API_KEY        GNews API key (press headlines) -> Worker secret
+#   NUXT_OPENAI_API_KEY       OpenAI API key (AI match stories) -> Worker secret
 name: Deploy to Cloudflare
 
 on:
@@ -35,6 +36,9 @@ jobs:
       - name: Typecheck
         run: npm run typecheck
 
+      - name: Tests
+        run: npm test
+
       - name: Build (Nitro preset cloudflare_module)
         run: npm run build
 
@@ -51,7 +55,9 @@ jobs:
             NUXT_LIIGA_API_KEY
             NUXT_FOOTBALL_DATA_TOKEN
             NUXT_GNEWS_API_KEY
+            NUXT_OPENAI_API_KEY
         env:
           NUXT_LIIGA_API_KEY: ${{ secrets.NUXT_LIIGA_API_KEY }}
           NUXT_FOOTBALL_DATA_TOKEN: ${{ secrets.NUXT_FOOTBALL_DATA_TOKEN }}
           NUXT_GNEWS_API_KEY: ${{ secrets.NUXT_GNEWS_API_KEY }}
+          NUXT_OPENAI_API_KEY: ${{ secrets.NUXT_OPENAI_API_KEY }}

@@ -1,0 +1,147 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "long",
+ "tone": "home-fan",
+ "generatedAt": "2026-10-24T09:38:39.467Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 935
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (21 facts cited)",
+   "ms": 7597
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (21 facts cited)",
+   "ms": 5059
+  }
+ ],
+ "usage": {
+  "inputTokens": 5684,
+  "outputTokens": 1313,
+  "turns": 3,
+  "ms": 13591
+ },
+ "headline": "Enciso’s equaliser earns Ipswich a point after Forest make the running",
+ "sentences": [
+  {
+   "text": "Ipswich Town had to recover from an early setback at Portman Road, but Julio Enciso’s 41st-minute equaliser secured a 1–1 draw with Nottingham Forest.",
+   "facts": [
+    "f1",
+    "f7",
+    "f8",
+    "f9",
+    "f6"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, with Daniel Muñoz providing the assist, and the visitors carried that lead into the closing stages of the first half.",
+   "facts": [
+    "f7",
+    "f3"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Enciso restored parity before the break, and neither side found a second-half goal as the points were shared.",
+   "facts": [
+    "f3",
+    "f4",
+    "f8",
+    "f2"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The point was a welcome reward for Ipswich’s resilience, although the balance of the chances favoured Forest.",
+   "facts": [
+    "f2",
+    "f17",
+    "f21"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Forest had 17 shots to Ipswich’s 7, and their expected-goals figure was 2.29 against Ipswich’s 0.46.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "The visitors also won 5 corners to Ipswich’s 0 and created 2 big chances to the hosts’ 1.",
+   "facts": [
+    "f21",
+    "f22"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich had slightly less of the ball, 49.4% to 50.6%, but completed 486 passes compared with Forest’s 480.",
+   "facts": [
+    "f16",
+    "f23"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "The numbers underline what went wrong for the home side: they were outshot and generated fewer clear openings, despite matching Forest on the scoreboard.",
+   "facts": [
+    "f19",
+    "f21",
+    "f1"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich’s goalkeeper made 3 saves, while Forest’s made 2.",
+   "facts": [
+    "f26"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich arrived with 6 points from their previous 5 league matches, including wins over Crystal Palace and Fulham, while Forest had 4 points from their last 5.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 4
+  },
+  {
+   "text": "The draw lifts Ipswich from 10th before kick-off to 9th, with 10 points from 8 matches.",
+   "facts": [
+    "f31",
+    "f32"
+   ],
+   "paragraph": 4
+  },
+  {
+   "text": "Forest move from 19th to 16th and have 6 points; for Ipswich, taking a point after conceding first keeps the night a positive one, even if the performance left room to improve.",
+   "facts": [
+    "f33",
+    "f34",
+    "f2",
+    "f7"
+   ],
+   "paragraph": 4
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 21
+ },
+ "fallbackReason": null
+}
