@@ -552,7 +552,6 @@
     "pause": "Pause: {title}",
     "seek": "Position in {title}",
     "transcript": "Transcript",
-    "made": "AI-written by {model} from {n} verified facts and read by an AI voice.",
     "showFacts": "Show the facts behind it",
     "hideFacts": "Hide the facts",
     "open": "Open the match",

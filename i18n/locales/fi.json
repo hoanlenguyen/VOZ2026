@@ -552,7 +552,6 @@
     "pause": "Tauko: {title}",
     "seek": "Kohta jaksossa {title}",
     "transcript": "Teksti",
-    "made": "Tekoälyn ({model}) kirjoittama {n} vahvistetusta faktasta, tekoälyäänen lukema.",
     "showFacts": "Näytä faktat",
     "hideFacts": "Piilota faktat",
     "open": "Avaa ottelu",

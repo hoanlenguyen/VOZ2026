@@ -48,7 +48,6 @@ const kicker = computed(() => {
   return e.subject.kind === 'league' ? [kind, e.competitionName] : [kind, e.label, e.competitionName]
 })
 const transcript = computed(() => [props.episode.intro, ...props.episode.sentences.map(s => s.text), props.episode.outro].join(' '))
-const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.model), n: props.episode.evidence.length }))
 </script>
 
 <template>
@@ -104,7 +103,6 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
     <details v-if="!episode.locked" class="transcript">
       <summary><PhCaretRight :size="14" weight="bold" class="caret" aria-hidden="true" />{{ t('podcast.transcript') }}</summary>
       <p class="script">{{ transcript }}</p>
-      <p class="made">{{ made }}</p>
       <button v-if="can.newsroom" type="button" class="facts-toggle" :aria-pressed="showFacts" @click="showFacts = !showFacts">
         {{ showFacts ? t('podcast.hideFacts') : t('podcast.showFacts') }}
       </button>
@@ -160,7 +158,6 @@ const made = computed(() => t('podcast.made', { model: modelLabel(props.episode.
 @media (prefers-reduced-motion: reduce) { .caret { transition: none; } }
 .transcript summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .script { margin: 4px 0 8px; font-size: 14px; line-height: 1.55; color: var(--summary); }
-.made { margin: 0 0 8px; font-size: 12px; color: var(--meta); }
 .facts-toggle {
   min-height: 36px; padding: 0 12px; border: 1px solid var(--border-control); border-radius: 999px;
   background: var(--bg); color: var(--headline); font-size: 12px; font-weight: 700; cursor: pointer;
