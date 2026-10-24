@@ -64,4 +64,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 ## UI work
 - Use the **ui-ux-pro-max** skill for any UI change.
 - Follow `design-system/voz/MASTER.md` (page overrides in `design-system/voz/pages/`, e.g. `landing.md` for the light front page); tokens in `app/assets/css/main.css`, no raw hex in components.
+- `main.css` defines global classes `.app-shell .card .chip .badge .select .eyebrow .muted .display .num .sr-only`.
+  Use them only for their global meaning; never reuse these names for component-specific styles (scoped
+  styles still merge with the global rule; `.card`, `.chip` and `.badge` collisions have each caused layout bugs).
 - Never copy articles or photos from other news sites into the app or mock data; story text comes from our data, images are crests + data visuals.
