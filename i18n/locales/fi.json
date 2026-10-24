@@ -36,10 +36,7 @@
     "moreStories": "Lisää juttuja",
     "latest": "Uusimmat",
     "allAbove": "Kaikki päivän jutut ovat yllä.",
-    "sidebar": "Sarjataulukot ja kumppanit",
-    "sponsored": "Sponsoroitu",
-    "adLabel": "Mainos · Paikallinen kumppani",
-    "adText": "Seurasi ottelupäivä, yhteistyössä [PAIKALLINEN SPONSORI]"
+    "sidebar": "Sarjataulukot ja kumppanit"
   },
   "story": {
     "result": "Tulos",
@@ -53,7 +50,12 @@
     "played": "Ottelut",
     "playedShort": "O",
     "points": "Pisteet",
-    "pointsShort": "P"
+    "pointsShort": "P",
+    "movement": "Muutos edellisestä ottelusta",
+    "up": "Noussut {n} sijaa | Noussut {n} sijan | Noussut {n} sijaa",
+    "down": "Laskenut {n} sijaa | Laskenut {n} sijan | Laskenut {n} sijaa",
+    "same": "Ei muutosta",
+    "movementMock": "Demodata: edellisen ottelun tulos puuttuu"
   },
   "ticker": {
     "label": "Tulevat ottelut",
@@ -107,7 +109,9 @@
     "previewBanner": "Esikatselu, ei julkaistu · lukijana: {as}",
     "aiEvidence": "Otsikon taustalla olevat faktat",
     "by": "Teksti: {name}",
-    "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta"
+    "authorAi": "VOZ:n tekoäly, virallisesta otteludatasta",
+    "standings": "Sarjataulukko",
+    "statsTitle": "Ottelutilastot"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -178,7 +182,7 @@
     "demoTitle": "Demotilit",
     "demoHint": "Kaikkien demotilien salasana on \"demo\". Valitse tili kirjautuaksesi.",
     "demo": {
-      "subscriber": "Tilaajatili: kaikki sisältö, ei mainoksia",
+      "subscriber": "Tilaajatili: kaikki sisältö",
       "free": "Maksuton tili: tulokset, sarjataulukot ja jutut, lisäsisältö lukittu",
       "newsroom": "Toimitus: kaikki sisältö ja toimituksen näkymä"
     }
@@ -191,7 +195,6 @@
       "unlimited": "Otteluiden koko sisältö sovelluksessa ja verkossa",
       "stories": "Tekoälyn otteluraportit, jokainen lause tarkistettu",
       "stats": "Tilastovertailu, tapahtumat ja kokoonpanot",
-      "noAds": "Ei mainoksia",
       "languages": "Kaikki suomeksi ja englanniksi"
     },
     "cta": "Tutustu tästä",
@@ -208,7 +211,7 @@
       "since": "Tilaaja {date} alkaen",
       "renews": "Uusiutuu {date}",
       "price": "{price} € / kk",
-      "perks": "Otteluiden koko sisältö, tekoälyn otteluraportit eikä mainoksia."
+      "perks": "Otteluiden koko sisältö ja tekoälyn otteluraportit."
     },
     "free": {
       "perks": "Etusivu, tulokset, sarjataulukot ja automaattiset jutut. Ottelutilastot, tapahtumat, kokoonpanot ja tekoälyn raportit ovat VOZ Plus -tilaajille.",
@@ -434,7 +437,6 @@
     "signIn": "Kirjaudu sisään valitaksesi suosikkijoukkueesi, -sarjasi ja -pelaajasi.",
     "newsroom": "Suosikit ovat lukijatileille. Toimituksen tileillä on toimituksen näkymä.",
     "loadError": "Suosikkejasi ei voitu ladata ({reason}).",
-    "summary": "Seuraat: {teams}, {leagues} ja {players}.",
     "saving": "Tallennetaan…",
     "saved": "Tallennettu",
     "saveError": "Tallennus epäonnistui. Yritä uudelleen.",
@@ -465,9 +467,42 @@
     "notNow": "Ei nyt",
     "close": "Sulje",
     "count": {
-      "teams": "{n} joukkuetta | {n} joukkue | {n} joukkuetta",
-      "leagues": "{n} sarjaa | {n} sarja | {n} sarjaa",
-      "players": "{n} pelaajaa | {n} pelaaja | {n} pelaajaa"
+      "teamsLabel": "Seurattua joukkuetta | Seurattu joukkue | Seurattua joukkuetta",
+      "leaguesLabel": "Seurattua sarjaa | Seurattu sarja | Seurattua sarjaa",
+      "playersLabel": "Suosikkipelaajaa | Suosikkipelaaja | Suosikkipelaajaa"
+    },
+    "statsLabel": "Mitä seuraat"
+  },
+  "ads": {
+    "label": "Mainos",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Varusteet kauteen",
+      "text": "Nappulakengät ja peliasut -20 % tänä viikonloppuna, myymälässä ja verkossa.",
+      "cta": "Katso tarjoukset"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Katso isot pelit yhdessä",
+      "text": "Iso näyttö torilla ottelupäivinä. Vapaa pääsy, ruokaa ja juomaa klo 17 alkaen.",
+      "cta": "Katso ohjelma"
+    },
+    "league": {
+      "sponsor": "Iltavitoset",
+      "title": "Ilmoita joukkueesi",
+      "text": "Viikoittainen vitosfutisliiga tiistai-iltaisin. Kaikki tasot, uusi kausi alkaa marraskuussa.",
+      "cta": "Liity liigaan"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Kävele tunnelista",
+      "text": "Kurkista stadionin kulisseihin: viikonloppukierrokset oppaan kanssa, joka on nähnyt kaiken.",
+      "points": {
+        "tunnel": "Kävele ulos pelaajatunnelista",
+        "dugout": "Istu vaihtopenkillä ja lehdistötilassa",
+        "museum": "Pokaalit ja pelipaidat seuran museossa"
+      },
+      "cta": "Varaa kierros"
     }
   },
   "podcast": {

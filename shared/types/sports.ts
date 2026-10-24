@@ -123,6 +123,10 @@ export interface StandingRow {
   goalsAgainst: number
   /** Football: recent results, e.g. "W,D,L,W,W". */
   form: string | null
+  /** Places gained (+) or lost (-) since the team's last game; set by withMovement() (server). */
+  movement?: number
+  /** True when no result was available and the movement is demo data. */
+  movementMocked?: boolean
   extras: Record<string, number | null>
 }
 

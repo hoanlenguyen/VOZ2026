@@ -34,6 +34,11 @@ const byline = computed(() => {
   const date = s?.publishedAt ?? loadedStory.value?.generatedAt ?? match.value?.start
   return { author, date }
 })
+// The league table beside the article (below it on narrow screens), with this match's teams marked.
+const { data: standings } = useLazyFetch(`/api/competitions/${route.params.competition}/standings`, { query: { lang: locale } })
+const table = computed(() => standings.value?.rows.length
+  ? { competitionId: standings.value.competition.id, competitionName: standings.value.competition.name, rows: standings.value.rows }
+  : null)
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -51,7 +56,8 @@ useHead(() => ({
 
     <p v-if="error" class="notice">{{ t('match.loadError', { reason: error.statusMessage }) }}</p>
 
-    <template v-else-if="match && data">
+    <div v-else-if="match && data" class="layout">
+    <div class="article">
       <header class="hero">
         <!-- The newsroom's cover image replaces the match graphic when one is set. -->
         <figure v-if="data.cover" class="visual cover">
@@ -107,7 +113,7 @@ useHead(() => ({
       </section>
 
       <section v-if="data.compare" class="block" aria-labelledby="compare-title">
-        <NewsSectionTitle id="compare-title">{{ t('match.compare') }}</NewsSectionTitle>
+        <NewsSectionTitle id="compare-title">{{ finished ? t('match.statsTitle') : t('match.compare') }}</NewsSectionTitle>
         <NewsStatCompare
           :compare="data.compare"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
@@ -150,13 +156,42 @@ useHead(() => ({
       <p v-else-if="!data.competition.hasScoringEvents && finished" class="source">{{ t('match.noScorers') }}</p>
 
       <NewsPressCard :competition-id="data.competition.id" :match-id="match.id" />
-    </template>
+    </div>
+    <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
+      <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
+      <!-- Advertisers' posts after the table, for every reader. -->
+      <div v-if="can.ads" class="ads">
+        <NewsAdCard v-for="kind in (['shop', 'event', 'league'] as const)" :key="kind" :kind="kind" />
+      </div>
+    </aside>
+    <!-- The big advertiser's post: left of the article on wide screens, after the other ads otherwise. -->
+    <aside v-if="can.ads" class="left-ad" :aria-label="t('ads.label')">
+      <NewsAdTall />
+    </aside>
+    </div>
   </main>
 </template>
 
 <style scoped>
 .wrap { max-width: calc(760px + 2 * 16px); margin: 0 auto; padding: 0 16px; }
 @media (min-width: 768px) { .wrap { max-width: calc(760px + 2 * 30px); padding: 0 30px; } }
+/* The article stays centred on the screen; the big ad sits to its left and the league table (with
+   the smaller ads) to its right when there is room (columns: ad | article | table); below the
+   article otherwise. */
+.layout { display: grid; gap: 48px; }
+.article { min-width: 0; }
+.sidebar { min-width: 0; }
+.left-ad { min-width: 0; }
+.ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
+@media (min-width: 1400px) {
+  .wrap { max-width: none; }
+  .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }
+  .article { grid-column: 2; grid-row: 1; }
+  .left-ad { grid-column: 1; grid-row: 1; justify-self: end; width: calc(100% - 32px); max-width: 300px; margin-right: 32px; padding-top: 16px; }
+  .sidebar { grid-row: 1; grid-column: 3; width: calc(100% - 32px); max-width: 340px; margin-left: 32px; padding-top: 16px; }
+  .wrap > .back, .wrap > .notice, .wrap > .preview-banner { margin-left: calc(50% - 380px); }
+  .wrap > .notice, .wrap > .preview-banner { max-width: 760px; }
+}
 
 .back {
   display: inline-flex; align-items: center; gap: 6px; min-height: 44px; margin-top: 8px;

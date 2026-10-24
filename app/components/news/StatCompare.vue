@@ -35,7 +35,8 @@ const formLabel = (r: FormResult) => t(`compare.form.${r}`)
     </div>
 
     <section v-for="g in compare.groups" :key="g.id" class="group" :aria-labelledby="`cmp-${g.id}`">
-      <h3 :id="`cmp-${g.id}`" class="group-title">{{ g.title }}</h3>
+      <!-- A single group is already named by the section title (results: "Match stats"). -->
+      <h3 :id="`cmp-${g.id}`" class="group-title" :class="{ 'sr-only': compare.groups.length === 1 }">{{ g.title }}</h3>
 
       <div v-if="g.id === 'form'" class="form-row">
         <ol v-for="side in (['home', 'away'] as const)" :key="side" class="form" :class="`form--${side}`" :aria-label="t('compare.formLabel', { team: side === 'home' ? home.name : away.name })">

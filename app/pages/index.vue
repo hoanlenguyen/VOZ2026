@@ -78,12 +78,18 @@ const latest = computed(() => {
           <NewsStoryCard v-for="s in latest" :key="s.id" :story="s" variant="row" />
           <p v-if="!latest.length" class="notice notice--soft">{{ t('home.allAbove') }}</p>
         </section>
+        <!-- Tables first; on wide screens the advertisers' posts are spread down the rest of the long
+             column (one roughly every screen of the Latest list), never inside the stories. -->
         <aside class="sidebar" :aria-label="t('home.sidebar')">
-          <NewsTableWidget v-for="t in data?.tables" :key="t.competitionId" :table="t" />
-          <aside v-if="can.ads" class="sponsor" :aria-label="t('home.sponsored')">
-            <p class="sponsor-label">{{ t('home.adLabel') }}</p>
-            <p class="sponsor-text">{{ t('home.adText') }}</p>
-          </aside>
+          <div class="tables">
+            <NewsTableWidget v-for="t in data?.tables" :key="t.competitionId" :table="t" />
+          </div>
+          <template v-if="can.ads">
+            <NewsAdCard kind="shop" />
+            <NewsAdTall />
+            <NewsAdCard kind="event" />
+            <NewsAdCard kind="league" />
+          </template>
         </aside>
       </div>
     </div>
@@ -144,8 +150,8 @@ const latest = computed(() => {
 .latest-wrap { display: grid; gap: 30px; margin-top: 50px; }
 @media (min-width: 1024px) { .latest-wrap { grid-template-columns: minmax(0, 1fr) 300px; } }
 .sidebar { display: flex; flex-direction: column; gap: 24px; }
-@media (min-width: 1024px) { .sidebar { align-self: start; } }
-.sponsor { border: 1px dashed var(--border-control); border-radius: 4px; padding: 24px; }
-.sponsor-label { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
-.sponsor-text { margin: 0; font-weight: 600; color: var(--headline); }
+.tables { display: flex; flex-direction: column; gap: 24px; }
+@media (min-width: 1024px) {
+  .sidebar { align-self: stretch; justify-content: space-between; }
+}
 </style>

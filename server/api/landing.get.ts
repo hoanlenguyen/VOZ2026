@@ -51,7 +51,7 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
           away: { name: m.away.shortName, logo: m.away.logo },
         })),
       })
-      if (TABLES.includes(id)) tables.push({ competitionId: def.id, competitionName: name, rows: standings.data })
+      if (TABLES.includes(id)) tables.push({ competitionId: def.id, competitionName: name, rows: withMovement(standings.data, matches.data) })
     }
     catch (err) {
       console.warn(`[landing] ${id}: ${(err as Error).message}`)

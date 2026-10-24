@@ -11,7 +11,7 @@ const route = useRoute()
 const loginLink = computed(() => ({ path: '/login', query: { redirect: route.fullPath } }))
 // Signed-out readers subscribe by signing in (demo); free readers go to their account.
 const offerLink = computed(() => (account.value ? '/account' : loginLink.value))
-const BENEFITS = ['unlimited', 'stories', 'stats', 'noAds', 'languages'] as const
+const BENEFITS = ['unlimited', 'stories', 'stats', 'languages'] as const
 </script>
 
 <template>

@@ -36,10 +36,7 @@
     "moreStories": "More stories",
     "latest": "Latest",
     "allAbove": "All of today's stories are above.",
-    "sidebar": "Tables and partners",
-    "sponsored": "Sponsored",
-    "adLabel": "Ad · Local partner",
-    "adText": "Your club's matchday, presented by [LOCAL SPONSOR]"
+    "sidebar": "Tables and partners"
   },
   "story": {
     "result": "Result",
@@ -53,7 +50,12 @@
     "played": "Played",
     "playedShort": "P",
     "points": "Points",
-    "pointsShort": "Pts"
+    "pointsShort": "Pts",
+    "movement": "Change since last game",
+    "up": "Up {n} places | Up {n} place | Up {n} places",
+    "down": "Down {n} places | Down {n} place | Down {n} places",
+    "same": "No change",
+    "movementMock": "Demo data: no result for the last game"
   },
   "ticker": {
     "label": "Upcoming fixtures",
@@ -107,7 +109,9 @@
     "previewBanner": "Preview, not published · seen as: {as}",
     "aiEvidence": "Facts behind the headline",
     "by": "By {name}",
-    "authorAi": "VOZ AI, from official match data"
+    "authorAi": "VOZ AI, from official match data",
+    "standings": "League table",
+    "statsTitle": "Match stats"
   },
   "timeline": {
     "shown": "Events shown",
@@ -178,7 +182,7 @@
     "demoTitle": "Demo accounts",
     "demoHint": "All demo passwords are \"demo\". Choose an account to sign in.",
     "demo": {
-      "subscriber": "Subscription account: everything, no ads",
+      "subscriber": "Subscription account: everything",
       "free": "Free account: scores, tables and stories, premium parts locked",
       "newsroom": "Newsroom: everything plus the editor dashboard"
     }
@@ -191,7 +195,6 @@
       "unlimited": "Full match pages in the app and on the web",
       "stories": "AI match stories, fact-checked sentence by sentence",
       "stats": "Stats comparison, timelines and line-ups",
-      "noAds": "No ads",
       "languages": "Everything in English and Finnish"
     },
     "cta": "Discover here",
@@ -208,7 +211,7 @@
       "since": "Subscriber since {date}",
       "renews": "Renews on {date}",
       "price": "{price} € / month",
-      "perks": "Full match coverage, AI match stories and no ads."
+      "perks": "Full match coverage and AI match stories."
     },
     "free": {
       "perks": "Front page, scores, tables and automatic stories. Match stats, timelines, line-ups and AI stories are for VOZ Plus subscribers.",
@@ -434,7 +437,6 @@
     "signIn": "Sign in to choose your favourite teams, leagues and players.",
     "newsroom": "Favourites are for reader accounts. Newsroom accounts have the newsroom dashboard.",
     "loadError": "Your favourites could not be loaded ({reason}).",
-    "summary": "Following {teams}, {leagues} and {players}.",
     "saving": "Saving…",
     "saved": "Saved",
     "saveError": "Could not save. Try again.",
@@ -465,9 +467,42 @@
     "notNow": "Not now",
     "close": "Close",
     "count": {
-      "teams": "{n} teams | {n} team | {n} teams",
-      "leagues": "{n} leagues | {n} league | {n} leagues",
-      "players": "{n} players | {n} player | {n} players"
+      "teamsLabel": "Teams followed | Team followed | Teams followed",
+      "leaguesLabel": "Leagues followed | League followed | Leagues followed",
+      "playersLabel": "Favourite players | Favourite player | Favourite players"
+    },
+    "statsLabel": "What you follow"
+  },
+  "ads": {
+    "label": "Ad",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Kit up for the season",
+      "text": "20 % off boots and team shirts this weekend, in store and online.",
+      "cta": "Shop the sale"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Watch the big games together",
+      "text": "Big screen at the market square on matchday. Free entry, food and drinks from 17:00.",
+      "cta": "See the programme"
+    },
+    "league": {
+      "sponsor": "Evening Five-a-side",
+      "title": "Sign up your team",
+      "text": "Weekly five-a-side league on Tuesday evenings. All levels, new season starts in November.",
+      "cta": "Join the league"
+    },
+    "tour": {
+      "sponsor": "Arena Tours",
+      "title": "Walk the tunnel",
+      "text": "Go behind the scenes at the stadium: weekend tours with a guide who has seen it all.",
+      "points": {
+        "tunnel": "Walk out through the players' tunnel",
+        "dugout": "Sit in the dugout and the press room",
+        "museum": "Trophies and shirts in the club museum"
+      },
+      "cta": "Book a tour"
     }
   },
   "podcast": {

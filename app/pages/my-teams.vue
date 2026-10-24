@@ -85,12 +85,14 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: route.ful
     </div>
 
     <template v-else-if="options">
+      <!-- What the reader follows, as stat cards; the save state sits under them. -->
+      <ul class="stats" :aria-label="t('prefs.statsLabel')">
+        <li v-for="k in (['teams', 'leagues', 'players'] as const)" :key="k" class="stat">
+          <span class="stat-n num">{{ prefs[k].length }}</span>
+          <span class="stat-l">{{ t(`prefs.count.${k}Label`, prefs[k].length) }}</span>
+        </li>
+      </ul>
       <p class="summary" role="status" aria-live="polite">
-        {{ t('prefs.summary', {
-          teams: t('prefs.count.teams', { n: prefs.teams.length }, prefs.teams.length),
-          leagues: t('prefs.count.leagues', { n: prefs.leagues.length }, prefs.leagues.length),
-          players: t('prefs.count.players', { n: prefs.players.length }, prefs.players.length),
-        }) }}
         <span v-if="status === 'saving'" class="state">{{ t('prefs.saving') }}</span>
         <span v-else-if="status === 'saved'" class="state state--ok"><PhCheck :size="14" weight="bold" aria-hidden="true" /> {{ t('prefs.saved') }}</span>
         <span v-else-if="status === 'error'" class="state state--error">{{ t('prefs.saveError') }}</span>
@@ -210,7 +212,11 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: route.ful
   min-height: 44px; padding: 0 20px; display: inline-flex; align-items: center; border-radius: 999px;
   background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none;
 }
-.summary { margin: 20px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--summary); }
+.stats { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.stat { padding: 16px; border: 1px solid var(--line-strong); border-radius: 4px; display: flex; flex-direction: column; gap: 4px; }
+.stat-n { font-family: var(--font-display); font-size: 36px; line-height: 1; font-weight: 700; color: var(--headline); }
+.stat-l { font-size: 13px; color: var(--summary); }
+.summary { min-height: 20px; margin: 10px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; font-size: 14px; color: var(--summary); }
 .state { display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: var(--meta); }
 .state--ok { color: var(--win); }
 .state--error { color: var(--loss); }

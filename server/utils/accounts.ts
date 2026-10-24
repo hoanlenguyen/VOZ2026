@@ -17,7 +17,8 @@ const hex = (buf: ArrayBuffer) => [...new Uint8Array(buf)].map(b => b.toString(1
 export function entitlements(plan: Plan | null): Entitlements {
   return {
     premium: plan === 'subscriber' || plan === 'newsroom',
-    ads: plan !== 'subscriber' && plan !== 'newsroom',
+    // Advertisers' posts show for every reader (subscriptions do not remove them).
+    ads: true,
     newsroom: plan === 'newsroom',
   }
 }
