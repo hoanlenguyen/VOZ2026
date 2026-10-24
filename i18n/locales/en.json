@@ -99,7 +99,14 @@
     },
     "article": "From the newsroom",
     "articleBy": "By {name} · {time}",
-    "articlePlus": "For subscribers"
+    "articlePlus": "For subscribers",
+    "story": "Match story",
+    "storyHidden": "Hidden from readers by the newsroom. Only newsroom accounts see this section.",
+    "storyEdited": "Edited by {name} · {time}",
+    "deskLabel": "Newsroom",
+    "deskState": "Article: {article} · Match story: {story}",
+    "deskNone": "none",
+    "deskEdit": "Edit coverage"
   },
   "timeline": {
     "shown": "Events shown",
@@ -237,7 +244,8 @@
     "loadError": "The newsroom data could not be loaded ({reason}).",
     "edit": "Edit",
     "editedBadge": "Edited",
-    "plusBadge": "Subscribers"
+    "plusBadge": "Subscribers",
+    "storyBadge": "Story: {mode}"
   },
   "editor": {
     "pageTitle": "Edit story – VOZ Newsroom",
@@ -269,12 +277,35 @@
     "publish": "Publish",
     "revert": "Revert to automatic",
     "view": "View match page",
-    "saved": {
-      "everyone": "Published for everyone.",
-      "subscribers": "Published for subscribers."
-    },
+    "saved": "Published.",
     "reverted": "Reverted: readers see the automatic story again.",
     "saveError": "Could not publish ({reason}).",
-    "loadError": "The story could not be loaded ({reason})."
+    "loadError": "The story could not be loaded ({reason}).",
+    "partFront": "Front page and article",
+    "partStory": "Match story",
+    "storyLead": "The story section on the match page. By default readers with a subscription get the AI story, checked against the match facts.",
+    "storyMode": "What readers get",
+    "modes": {
+      "ai": {
+        "label": "AI story",
+        "text": "Written by the agent and checked against the facts."
+      },
+      "edited": {
+        "label": "Edited version",
+        "text": "The newsroom's text replaces the AI story."
+      },
+      "hidden": {
+        "label": "Hidden",
+        "text": "No match story for readers."
+      }
+    },
+    "aiPreview": "AI story readers get",
+    "aiLoading": "Loading the AI story… the first time takes about 10 seconds.",
+    "aiError": "The AI story could not be loaded.",
+    "storyHeadline": "Story headline",
+    "startFromAi": "Start from the AI story",
+    "storyBody": "Story text",
+    "storyBodyHint": "Your edit is not checked against the facts: check every number and name before publishing.",
+    "storyAudience": "Who can read the match story"
   }
 }

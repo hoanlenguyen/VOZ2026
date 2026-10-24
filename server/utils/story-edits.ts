@@ -1,13 +1,13 @@
-// Newsroom edits of front-page stories: headline, summary and an article body written in the
-// TinyMCE editor on /newsroom/stories/:id. One map per language in "kvcache" (Workers KV in
-// production, memory in dev), like the hidden-story list in moderation.ts.
-// - The body is sanitised here on save (allowlist below), never trusted from the browser; the match
-//   page renders it with v-html.
-// - `audience` decides who reads the article on the match page: 'everyone' (free and signed-out
-//   readers too) or 'subscribers' (premium; others get it in the paywall teaser).
+// Newsroom edits, made on /newsroom/stories/:id. One map per language in "kvcache" (Workers KV in
+// production, memory in dev), like the hidden-story list in moderation.ts:
+// - front-page story edits (headline, summary, and the "From the newsroom" article), by story id;
+// - match story controls (AI story / edited version / hidden, and its audience), by match key.
+// HTML bodies are sanitised here on save (allowlist below), never trusted from the browser; the match
+// page renders them with v-html. `audience` decides who reads them: 'everyone' (free and signed-out
+// readers too) or 'subscribers' (premium; others get the opening as the paywall teaser).
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
-import type { ArticleAudience, NewsroomArticle, StoryEdit } from '#shared/types/stories'
+import type { ArticleAudience, MatchStoryControl, NewsroomArticle, StoryEdit, StoryMode } from '#shared/types/stories'
 
 const key = (lang: Lang) => `newsroom:story-edits:${lang}`
 export const STORY_ID = /^[rp]-[\w-]+:\w+$/
@@ -40,6 +40,14 @@ export function plainText(htmlText: string): string {
     .trim()
 }
 
+/** The opening two sentences of an HTML body's paragraphs (headings and lists left out). */
+export function excerpt(htmlText: string): string {
+  const text = [...htmlText.matchAll(/<p>(.*?)<\/p>/gs)].map(m => plainText(m[1]!)).join(' ')
+  const sentences = text.match(/[^.!?]+[.!?]+/g)
+  return sentences ? sentences.slice(0, 2).join('').trim() : text.slice(0, 240)
+}
+
+const audienceOf = (v: unknown): ArticleAudience => (v === 'subscribers' ? 'subscribers' : 'everyone')
 const line = (v: unknown, max: number) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim().slice(0, max) : '')
 
 /** Validates and cleans an edit sent by the browser; throws 400 on a missing headline. */
@@ -47,8 +55,7 @@ export function cleanEdit(input: Record<string, unknown> | undefined, by: string
   const headline = line(input?.headline, 160)
   if (!headline) throw createError({ statusCode: 400, statusMessage: 'Headline is required' })
   const body = sanitizeArticle(typeof input?.body === 'string' ? input.body.slice(0, 40_000) : '')
-  const audience: ArticleAudience = input?.audience === 'subscribers' ? 'subscribers' : 'everyone'
-  return { headline, summary: line(input?.summary, 600), body, audience, by, at: new Date().toISOString() }
+  return { headline, summary: line(input?.summary, 600), body, audience: audienceOf(input?.audience), by, at: new Date().toISOString() }
 }
 
 export async function storyEdits(lang: Lang): Promise<Record<string, StoryEdit>> {
@@ -69,4 +76,36 @@ export async function articleForMatch(matchKey: string, lang: Lang): Promise<New
   const edit = map[`r-${matchKey}`] ?? map[`p-${matchKey}`]
   if (!edit?.body) return null
   return { headline: edit.headline, body: edit.body, audience: edit.audience, by: edit.by, at: edit.at }
+}
+
+/** Readers' default when the newsroom has not touched a match story. */
+export const DEFAULT_STORY_CONTROL: Pick<MatchStoryControl, 'mode' | 'audience'> = { mode: 'ai', audience: 'subscribers' }
+const MODES: StoryMode[] = ['ai', 'edited', 'hidden']
+const controlKey = (lang: Lang) => `newsroom:match-stories:${lang}`
+
+/** Validates a match story control; the edited version needs a headline and text. */
+export function cleanStoryControl(input: Record<string, unknown> | undefined, by: string): MatchStoryControl {
+  const mode = MODES.includes(input?.mode as StoryMode) ? input!.mode as StoryMode : 'ai'
+  const headline = line(input?.headline, 160)
+  const body = sanitizeArticle(typeof input?.body === 'string' ? input.body.slice(0, 40_000) : '')
+  if (mode === 'edited' && (!headline || !plainText(body))) {
+    throw createError({ statusCode: 400, statusMessage: 'The edited match story needs a headline and text' })
+  }
+  return { mode, audience: audienceOf(input?.audience), headline, body, by, at: new Date().toISOString() }
+}
+
+export async function storyControls(lang: Lang): Promise<Record<string, MatchStoryControl>> {
+  const map = await useStorage('kvcache').getItem<Record<string, MatchStoryControl>>(controlKey(lang)).catch(() => null)
+  return map && typeof map === 'object' ? map : {}
+}
+
+export async function matchStoryControl(matchKey: string, lang: Lang): Promise<MatchStoryControl | null> {
+  return (await storyControls(lang))[matchKey] ?? null
+}
+
+export async function saveMatchStoryControl(lang: Lang, matchKey: string, control: MatchStoryControl | null) {
+  const map = await storyControls(lang)
+  if (control) map[matchKey] = control
+  else delete map[matchKey]
+  await useStorage('kvcache').setItem(controlKey(lang), map)
 }

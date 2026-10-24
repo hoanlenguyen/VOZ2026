@@ -1,3 +1,5 @@
+import type { MatchStorySection } from '#shared/types/stories'
+
 export default defineEventHandler(async (event) => {
   const lang = requestLang(event)
   const { def, provider } = competitionParam(event)
@@ -23,19 +25,31 @@ export default defineEventHandler(async (event) => {
   const compare = season ? buildCompare(def, match, season, lang) : null
   const extras = mock?.extras ?? null
   setResponseHeader(event, 'cache-control', 'private, no-store')
-  // Locked readers see the AI story's headline and opening two sentences, fading into the offer.
-  // Only from stories that already exist (cache / pre-written), so a free reader never starts the agent.
-  let teaser: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null = null
-  // The newsroom's article: open to everyone or to subscribers only, as the editor chose.
-  const article = await articleForMatch(match.key, lang)
+  const finished = match.status === 'finished'
+  // Newsroom controls (per language): the "From the newsroom" article, and whether the match story
+  // is the AI version, the newsroom's edit or hidden, each for everyone or for subscribers only.
+  const [article, control] = await Promise.all([articleForMatch(match.key, lang), matchStoryControl(match.key, lang)])
   const articleLocked = article?.audience === 'subscribers' && !entitlements.premium
+  const { mode, audience } = control ?? DEFAULT_STORY_CONTROL
+  const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
+  const storyLocked = hasStory && audience === 'subscribers' && !entitlements.premium
+  const edited = control?.mode === 'edited'
+    ? { headline: control.headline, body: control.body, audience, by: control.by, at: control.at }
+    : null
+  // Newsroom accounts also get a hidden story's section (mode 'hidden'), so they can see the state.
+  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, edited } : null
+
+  // Locked readers see the opening of what is locked (the newsroom's article first, then the match
+  // story), fading into the offer. AI text only from stories that already exist (cache / pre-written),
+  // so a free reader never starts the agent.
+  let teaser: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null = null
   if (articleLocked) {
-    // Opening two sentences of the article's paragraphs (headings and list items left out).
-    const text = [...article.body.matchAll(/<p>(.*?)<\/p>/gs)].map(m => plainText(m[1]!)).join(' ')
-    const sentences = text.match(/[^.!?]+[.!?]+/g)
-    teaser = { headline: article.headline, text: sentences ? sentences.slice(0, 2).join('').trim() : text.slice(0, 240), translated: false, source: 'newsroom' }
+    teaser = { headline: article.headline, text: excerpt(article.body), translated: false, source: 'newsroom' }
   }
-  if (!teaser && !entitlements.premium && extras && match.status === 'finished') {
+  else if (storyLocked && mode === 'edited' && edited) {
+    teaser = { headline: edited.headline, text: excerpt(edited.body), translated: false, source: 'newsroom' }
+  }
+  else if (storyLocked) {
     const hit = await peekStory({
       competitionId: def.id, matchId: match.id, length: 'standard', tone: 'neutral',
       facts: buildFacts(def, match, extras, season ?? []), names: factNames(match, extras),
@@ -50,6 +64,7 @@ export default defineEventHandler(async (event) => {
   return {
     teaser,
     article: articleLocked ? null : article,
+    story,
     competition: describeCompetition(def, lang),
     match,
     compare: entitlements.premium ? compare : null,
@@ -59,7 +74,7 @@ export default defineEventHandler(async (event) => {
       ? []
       : [
           ...(articleLocked ? ['article' as const] : []),
-          ...(extras && match.status === 'finished' ? ['story' as const] : []),
+          ...(storyLocked ? ['story' as const] : []),
           ...(compare ? ['compare' as const] : []),
           ...(extras?.timeline.length ? ['timeline' as const] : []),
           ...(extras?.lineups ? ['lineups' as const] : []),

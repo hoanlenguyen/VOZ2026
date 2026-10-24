@@ -68,6 +68,9 @@ async function toggle(id: string, hidden: boolean) {
                 <span class="badge-s" :class="s.hidden ? 'badge-s--hidden' : 'badge-s--live'">{{ s.hidden ? t('newsroom.hiddenBadge') : t('newsroom.liveBadge') }}</span>
                 <span v-if="s.edited" class="badge-s badge-s--edited">{{ t('newsroom.editedBadge') }}</span>
                 <span v-if="s.edited?.audience === 'subscribers'" class="badge-s badge-s--plus">{{ t('newsroom.plusBadge') }}</span>
+                <span v-if="s.storyControl" class="badge-s badge-s--edited">
+                  {{ t('newsroom.storyBadge', { mode: t(`editor.modes.${s.storyControl.mode}.label`) }) }}<template v-if="s.storyControl.mode !== 'hidden'"> · {{ t(`editor.audiences.${s.storyControl.audience}.label`) }}</template>
+                </span>
               </p>
               <p class="headline">{{ s.headline }}</p>
             </div>

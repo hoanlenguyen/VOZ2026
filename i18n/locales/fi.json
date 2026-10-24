@@ -99,7 +99,14 @@
     },
     "article": "Toimitukselta",
     "articleBy": "{name} · {time}",
-    "articlePlus": "Tilaajille"
+    "articlePlus": "Tilaajille",
+    "story": "Otteluraportti",
+    "storyHidden": "Toimitus on piilottanut tämän lukijoilta. Vain toimituksen tunnukset näkevät osion.",
+    "storyEdited": "Muokannut {name} · {time}",
+    "deskLabel": "Toimitus",
+    "deskState": "Artikkeli: {article} · Otteluraportti: {story}",
+    "deskNone": "ei",
+    "deskEdit": "Muokkaa sisältöä"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -237,7 +244,8 @@
     "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
     "edit": "Muokkaa",
     "editedBadge": "Muokattu",
-    "plusBadge": "Tilaajat"
+    "plusBadge": "Tilaajat",
+    "storyBadge": "Raportti: {mode}"
   },
   "editor": {
     "pageTitle": "Muokkaa juttua – VOZ-toimitus",
@@ -269,12 +277,35 @@
     "publish": "Julkaise",
     "revert": "Palauta automaattinen",
     "view": "Näytä ottelusivu",
-    "saved": {
-      "everyone": "Julkaistu kaikille.",
-      "subscribers": "Julkaistu tilaajille."
-    },
+    "saved": "Julkaistu.",
     "reverted": "Palautettu: lukijat näkevät taas automaattisen jutun.",
     "saveError": "Julkaisu epäonnistui ({reason}).",
-    "loadError": "Juttua ei voitu ladata ({reason})."
+    "loadError": "Juttua ei voitu ladata ({reason}).",
+    "partFront": "Etusivu ja artikkeli",
+    "partStory": "Otteluraportti",
+    "storyLead": "Ottelusivun raporttiosio. Oletuksena tilaajat näkevät tekoälyn raportin, joka on tarkistettu ottelun faktoja vasten.",
+    "storyMode": "Mitä lukijat näkevät",
+    "modes": {
+      "ai": {
+        "label": "Tekoälyn raportti",
+        "text": "Agentin kirjoittama ja faktoja vasten tarkistettu."
+      },
+      "edited": {
+        "label": "Muokattu versio",
+        "text": "Toimituksen teksti korvaa tekoälyn raportin."
+      },
+      "hidden": {
+        "label": "Piilotettu",
+        "text": "Ei otteluraporttia lukijoille."
+      }
+    },
+    "aiPreview": "Lukijoiden näkemä tekoälyn raportti",
+    "aiLoading": "Ladataan tekoälyn raporttia… ensimmäinen kerta kestää noin 10 sekuntia.",
+    "aiError": "Tekoälyn raporttia ei voitu ladata.",
+    "storyHeadline": "Raportin otsikko",
+    "startFromAi": "Aloita tekoälyn raportista",
+    "storyBody": "Raportin teksti",
+    "storyBodyHint": "Muokkaustasi ei tarkisteta faktoja vasten: tarkista jokainen luku ja nimi ennen julkaisua.",
+    "storyAudience": "Kuka voi lukea otteluraportin"
   }
 }

@@ -9,6 +9,7 @@ const props = defineProps<{ competitionId: string, matchId: string, home: string
 // Readers get the story itself (standard, neutral). The format switches and the evidence
 // (AI label, facts behind each sentence, "How this was made") are newsroom tools.
 const { can } = useAccount()
+const { locale } = useI18n()
 const editor = computed(() => can.value.newsroom)
 const length = ref<StoryLength>('standard')
 const tone = ref<StoryTone>('neutral')
@@ -30,7 +31,7 @@ const tones = computed<Array<{ id: StoryTone, label: string }>>(() => [
 // Loaded in the browser: the first view of a version may take ~10 s while the agent writes it.
 const { data, status, error, refresh } = useLazyFetch<StoryResponse>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/story`,
-  { query: { length, tone }, server: false },
+  { query: { length, tone, lang: locale }, server: false },
 )
 watch([length, tone], () => (activeSentence.value = null))
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Match page: scoreboard, then a side-by-side comparison counted from the season's results.
 // The AI match story is built in Phase 2.
-import { PhCaretLeft } from '@phosphor-icons/vue'
+import { PhCaretLeft, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news' })
 
@@ -18,6 +18,9 @@ const periodLine = computed(() => {
   if (m.sport === 'football') return t('match.halfTime', { score: `${m.periods[0]!.home}–${m.periods[0]!.away}` })
   return t('match.periods', { list: m.periods.map(p => `${p.home}–${p.away}`).join(', ') })
 })
+const { can } = useAccount()
+// The newsroom editor for this match's coverage (front-page story id: result or preview).
+const editLink = computed(() => match.value && `/newsroom/stories/${encodeURIComponent(`${finished.value ? 'r' : 'p'}-${match.value.key}`)}`)
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -56,6 +59,17 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
+      <aside v-if="can.newsroom && editLink" class="desk" :aria-label="t('match.deskLabel')">
+        <span>
+          <strong>{{ t('match.deskLabel') }}</strong>
+          {{ t('match.deskState', {
+            article: data.article ? t(`editor.audiences.${data.article.audience}.label`) : t('match.deskNone'),
+            story: data.story ? t(`editor.modes.${data.story.mode}.label`) + (data.story.mode === 'hidden' ? '' : ` · ${t(`editor.audiences.${data.story.audience}.label`)}`) : t('match.deskNone'),
+          }) }}
+        </span>
+        <NuxtLink :to="editLink" class="desk-edit"><PhPencilSimple :size="16" weight="bold" aria-hidden="true" /> {{ t('match.deskEdit') }}</NuxtLink>
+      </aside>
+
       <!-- The newsroom's article (sanitised on save, server/utils/story-edits.ts); subscriber-only
            articles reach other readers only as the paywall teaser. -->
       <article v-if="data.article" class="block article" aria-labelledby="article-title">
@@ -71,9 +85,21 @@ useHead(() => ({
 
       <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" />
 
-      <section v-if="finished && data.extras" class="block" aria-labelledby="story-title">
-        <NewsSectionTitle id="story-title">Match story</NewsSectionTitle>
-        <NewsMatchStory :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
+      <!-- Match story as the newsroom set it: the AI story, the newsroom's edited version, or (newsroom
+           accounts only) a note that it is hidden from readers. -->
+      <section v-if="data.story" class="block" aria-labelledby="story-title">
+        <NewsSectionTitle id="story-title">{{ t('match.story') }}</NewsSectionTitle>
+        <p v-if="data.story.mode === 'hidden'" class="notice">{{ t('match.storyHidden') }}</p>
+        <article v-else-if="data.story.edited">
+          <p class="article-kicker">
+            <span v-if="data.story.audience === 'subscribers'" class="plus">{{ t('match.articlePlus') }} · </span>
+            {{ t('match.storyEdited', { name: data.story.edited.by, time: fmt.stamp(data.story.edited.at) }) }}
+          </p>
+          <h3 class="article-headline">{{ data.story.edited.headline }}</h3>
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div class="article-body" v-html="data.story.edited.body" />
+        </article>
+        <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
       </section>
 
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
@@ -159,6 +185,17 @@ useHead(() => ({
 .block { margin-top: 50px; }
 .source { margin: 16px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
 
+.desk {
+  margin-top: 24px; padding: 10px 10px 10px 16px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px;
+  border-radius: 4px; background: var(--surface); font-size: 14px; color: var(--summary);
+}
+.desk strong { margin-right: 6px; color: var(--headline); }
+.desk-edit {
+  min-height: 44px; padding: 0 16px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  background: var(--headline); color: var(--bg); font-weight: 700; text-decoration: none;
+}
+.desk-edit:hover { background: var(--link-hover); }
+.desk-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .article-kicker { margin: 0; font-size: 13px; color: var(--meta); }
 .plus { font-weight: 700; color: var(--accent-ink); }
 .article-headline { margin: 6px 0 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.29; font-weight: 700; color: var(--headline); }

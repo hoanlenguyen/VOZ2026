@@ -68,3 +68,26 @@ export interface LandingData {
   /** Competitions that failed to load (rate limit, offline without snapshot). */
   missing: string[]
 }
+
+/** What readers get in a match's "Match story" section: the checked AI story, the newsroom's
+ *  edited version, or nothing. */
+export type StoryMode = 'ai' | 'edited' | 'hidden'
+
+/** Newsroom control of a match story, per language. Without one: the AI story, for subscribers. */
+export interface MatchStoryControl {
+  mode: StoryMode
+  audience: ArticleAudience
+  /** The edited version (mode 'edited'); `body` is sanitised HTML. Kept when switching modes. */
+  headline: string
+  body: string
+  by: string
+  at: string
+}
+
+/** The story section as the match API sends it to this reader (null: no section). */
+export interface MatchStorySection {
+  mode: StoryMode
+  audience: ArticleAudience
+  /** The newsroom's version when mode is 'edited'. */
+  edited: NewsroomArticle | null
+}
