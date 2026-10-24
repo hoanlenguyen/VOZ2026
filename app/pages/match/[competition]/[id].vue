@@ -156,6 +156,10 @@ useHead(() => ({
     </div>
     <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
       <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
+      <!-- Ads after the table, for readers who get ads (free and signed-out). -->
+      <div v-if="can.ads" class="ads">
+        <NewsAdCard v-for="kind in (['shop', 'event', 'league'] as const)" :key="kind" :kind="kind" />
+      </div>
     </aside>
     </div>
   </main>
@@ -169,6 +173,7 @@ useHead(() => ({
 .layout { display: grid; gap: 48px; }
 .article { min-width: 0; }
 .sidebar { min-width: 0; }
+.ads { margin-top: 24px; display: flex; flex-direction: column; gap: 16px; }
 @media (min-width: 1400px) {
   .wrap { max-width: none; }
   .layout { grid-template-columns: minmax(0, 1fr) minmax(0, 760px) minmax(0, 1fr); gap: 0; align-items: start; }

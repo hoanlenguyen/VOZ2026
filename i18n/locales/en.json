@@ -475,5 +475,26 @@
       "playersLabel": "Favourite players | Favourite player | Favourite players"
     },
     "statsLabel": "What you follow"
+  },
+  "ads": {
+    "label": "Ad",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Kit up for the season",
+      "text": "20 % off boots and team shirts this weekend, in store and online.",
+      "cta": "Shop the sale"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Watch the big games together",
+      "text": "Big screen at the market square on matchday. Free entry, food and drinks from 17:00.",
+      "cta": "See the programme"
+    },
+    "league": {
+      "sponsor": "Evening Five-a-side",
+      "title": "Sign up your team",
+      "text": "Weekly five-a-side league on Tuesday evenings. All levels, new season starts in November.",
+      "cta": "Join the league"
+    }
   }
 }

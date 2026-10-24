@@ -475,5 +475,26 @@
       "playersLabel": "Suosikkipelaajaa | Suosikkipelaaja | Suosikkipelaajaa"
     },
     "statsLabel": "Mitä seuraat"
+  },
+  "ads": {
+    "label": "Mainos",
+    "shop": {
+      "sponsor": "Matchday Sports",
+      "title": "Varusteet kauteen",
+      "text": "Nappulakengät ja peliasut -20 % tänä viikonloppuna, myymälässä ja verkossa.",
+      "cta": "Katso tarjoukset"
+    },
+    "event": {
+      "sponsor": "City Fan Zone",
+      "title": "Katso isot pelit yhdessä",
+      "text": "Iso näyttö torilla ottelupäivinä. Vapaa pääsy, ruokaa ja juomaa klo 17 alkaen.",
+      "cta": "Katso ohjelma"
+    },
+    "league": {
+      "sponsor": "Iltavitoset",
+      "title": "Ilmoita joukkueesi",
+      "text": "Viikoittainen vitosfutisliiga tiistai-iltaisin. Kaikki tasot, uusi kausi alkaa marraskuussa.",
+      "cta": "Liity liigaan"
+    }
   }
 }
