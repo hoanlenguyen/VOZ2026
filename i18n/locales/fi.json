@@ -36,10 +36,7 @@
     "moreStories": "Lisää juttuja",
     "latest": "Uusimmat",
     "allAbove": "Kaikki päivän jutut ovat yllä.",
-    "sidebar": "Sarjataulukot ja kumppanit",
-    "sponsored": "Sponsoroitu",
-    "adLabel": "Mainos · Paikallinen kumppani",
-    "adText": "Seurasi ottelupäivä, yhteistyössä [PAIKALLINEN SPONSORI]"
+    "sidebar": "Sarjataulukot ja kumppanit"
   },
   "story": {
     "result": "Tulos",

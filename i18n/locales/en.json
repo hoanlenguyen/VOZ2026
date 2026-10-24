@@ -36,10 +36,7 @@
     "moreStories": "More stories",
     "latest": "Latest",
     "allAbove": "All of today's stories are above.",
-    "sidebar": "Tables and partners",
-    "sponsored": "Sponsored",
-    "adLabel": "Ad · Local partner",
-    "adText": "Your club's matchday, presented by [LOCAL SPONSOR]"
+    "sidebar": "Tables and partners"
   },
   "story": {
     "result": "Result",
