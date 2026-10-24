@@ -125,5 +125,5 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `main.css` defines global classes `.app-shell .card .chip .badge .select .eyebrow .muted .display .num .sr-only`.
   Use them only for their global meaning; never reuse these names for component-specific styles (scoped
   styles still merge with the global rule; `.card`, `.chip` and `.badge` collisions have each caused layout bugs).
-- Brand mark: `NewsLogoMark` (tokens `--board`, `--accent`, `--away`, `--board-text`) and `public/favicon.svg` share one drawing (gold arm = your team crossing the blue arm = opponent, ball between). After changing it, regenerate `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, full-bleed), `icon-192/512.png`.
+- Brand mark: `NewsLogoMark` (tokens `--board`, `--accent`) and `public/favicon.svg` share one drawing ("voz" = voice: a gold speech bubble with the V cut out, on the dark square). After changing it, regenerate `favicon.ico` (16/32/48), `apple-touch-icon.png` (180, full-bleed), `icon-192/512.png`.
 - Never copy articles or photos from other news sites into the app or mock data; story text comes from our data, images are crests + data visuals.

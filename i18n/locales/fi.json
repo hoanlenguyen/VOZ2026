@@ -434,7 +434,6 @@
     "signIn": "Kirjaudu sisään valitaksesi suosikkijoukkueesi, -sarjasi ja -pelaajasi.",
     "newsroom": "Suosikit ovat lukijatileille. Toimituksen tileillä on toimituksen näkymä.",
     "loadError": "Suosikkejasi ei voitu ladata ({reason}).",
-    "summary": "Seuraat: {teams}, {leagues} ja {players}.",
     "saving": "Tallennetaan…",
     "saved": "Tallennettu",
     "saveError": "Tallennus epäonnistui. Yritä uudelleen.",
@@ -465,9 +464,10 @@
     "notNow": "Ei nyt",
     "close": "Sulje",
     "count": {
-      "teams": "{n} joukkuetta | {n} joukkue | {n} joukkuetta",
-      "leagues": "{n} sarjaa | {n} sarja | {n} sarjaa",
-      "players": "{n} pelaajaa | {n} pelaaja | {n} pelaajaa"
-    }
+      "teamsLabel": "Seurattua joukkuetta | Seurattu joukkue | Seurattua joukkuetta",
+      "leaguesLabel": "Seurattua sarjaa | Seurattu sarja | Seurattua sarjaa",
+      "playersLabel": "Suosikkipelaajaa | Suosikkipelaaja | Suosikkipelaajaa"
+    },
+    "statsLabel": "Mitä seuraat"
   }
 }

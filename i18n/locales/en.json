@@ -434,7 +434,6 @@
     "signIn": "Sign in to choose your favourite teams, leagues and players.",
     "newsroom": "Favourites are for reader accounts. Newsroom accounts have the newsroom dashboard.",
     "loadError": "Your favourites could not be loaded ({reason}).",
-    "summary": "Following {teams}, {leagues} and {players}.",
     "saving": "Saving…",
     "saved": "Saved",
     "saveError": "Could not save. Try again.",
@@ -465,9 +464,10 @@
     "notNow": "Not now",
     "close": "Close",
     "count": {
-      "teams": "{n} teams | {n} team | {n} teams",
-      "leagues": "{n} leagues | {n} league | {n} leagues",
-      "players": "{n} players | {n} player | {n} players"
-    }
+      "teamsLabel": "Teams followed | Team followed | Teams followed",
+      "leaguesLabel": "Leagues followed | League followed | Leagues followed",
+      "playersLabel": "Favourite players | Favourite player | Favourite players"
+    },
+    "statsLabel": "What you follow"
   }
 }
