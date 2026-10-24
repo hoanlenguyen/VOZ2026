@@ -17,10 +17,7 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
-        <template v-if="ai && variant !== 'lead'">
-          <span aria-hidden="true">·</span>
-          <span class="ai-tag">{{ t('story.aiTag') }}</span>
-        </template>
+        <span v-if="ai && variant !== 'lead'" class="ai-tag">{{ t('story.aiTag') }}</span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
@@ -52,7 +49,10 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 .stamp { margin: 0; font-size: 12px; color: var(--meta); }
 .summary { margin: 0; font-size: 14px; line-height: 1.5; color: var(--summary); }
 .dek { margin: 0; font-size: 15px; line-height: 1.45; font-weight: 500; color: var(--text-2); }
-.ai-tag { color: var(--link-hover); }
+.ai-tag {
+  align-self: center; padding: 0 4px; border: 1px solid currentColor; border-radius: 3px;
+  font-size: 9px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--link-hover);
+}
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
 
 .story--lead { gap: 15px; }

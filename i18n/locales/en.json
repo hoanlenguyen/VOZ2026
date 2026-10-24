@@ -41,7 +41,7 @@
     "result": "Result",
     "preview": "Preview",
     "auto": "Written automatically from official match data",
-    "aiTag": "AI headline",
+    "aiTag": "AI content",
     "aiAuto": "Headline and summary line written by AI and checked against official match data"
   },
   "table": {
