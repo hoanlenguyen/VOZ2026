@@ -668,7 +668,7 @@
     "ops": {
       "generate": {
         "summary": "Simuloi 1–2 uutta ottelua",
-        "description": "Ottaa sarjan uusimmat pelatut ottelut, joita ei ole vielä simuloitu."
+        "description": "Ottaa sarjan uusimmat pelatut ottelut, joita ei ole vielä simuloitu, ja palauttaa niiden täydet ottelutiedostot."
       },
       "list": {
         "summary": "Simuloidut ottelut",

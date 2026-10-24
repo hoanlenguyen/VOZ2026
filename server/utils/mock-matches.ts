@@ -17,7 +17,7 @@ interface MockLineup { formation?: string, formationRows?: string[][], manager?:
 type Pair = { home: number, away: number }
 
 interface MockFile {
-  source: { name: string, url?: string, note?: string }
+  source: { name: string, url?: string | null, note?: string }
   matchInfo: {
     matchId: string
     matchWeek?: number

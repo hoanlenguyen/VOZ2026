@@ -361,7 +361,7 @@ export function simulateMatch(f: SimFixture, seed: string, now = new Date()): Ma
   const k = local(kickoff, f.timezone)
   const [y1, y2] = f.season.split('/')
   return {
-    source: { name: SIMULATOR_NAME, scrapedAt: now.toISOString(), note: SIMULATED_NOTE, simulated: true, seed },
+    source: { name: SIMULATOR_NAME, url: null, scrapedAt: now.toISOString(), note: SIMULATED_NOTE, simulated: true, seed },
     matchInfo: {
       matchId: String(f.id),
       competition: f.competition,

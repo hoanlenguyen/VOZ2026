@@ -47,9 +47,10 @@ function summaryOf(c: CompetitionDef, file: MatchFile, kickoff: string, fixtureI
 
 /**
  * Simulates `count` new matches: the newest finished fixtures of the competition that have no
- * simulated or bundled match yet. Returns what was made (fewer when the season runs out).
+ * simulated or bundled match yet. Returns the new match files, in the structure of
+ * data/mock/<competition>/<id>.json (fewer when the season runs out).
  */
-export async function generateMockMatches(c: CompetitionDef, count: number): Promise<MockSportsMatchSummary[]> {
+export async function generateMockMatches(c: CompetitionDef, count: number): Promise<MatchFile[]> {
   const [{ data: m }, { data: t }] = await Promise.all([
     upstream<{ matches: FdFixture[] }>('football-data', `competitions/${c.providerCode}/matches`),
     upstream<{ teams: FdTeam[] }>('football-data', `competitions/${c.providerCode}/teams`),
@@ -62,7 +63,7 @@ export async function generateMockMatches(c: CompetitionDef, count: number): Pro
     .sort((a, b) => b.utcDate.localeCompare(a.utcDate))
     .map(x => fixtureFromFootballData(x, t.teams, { name: c.name, code: c.providerCode }))
     .filter(f => f !== null)
-  const made: MockSportsMatchSummary[] = []
+  const made: MatchFile[] = []
   for (const f of fixtures) {
     if (made.length >= count) break
     const now = Date.now()
@@ -72,7 +73,7 @@ export async function generateMockMatches(c: CompetitionDef, count: number): Pro
     // INSERT OR IGNORE: two clicks at once cannot store the same match twice.
     const { meta } = await d.prepare('INSERT OR IGNORE INTO mock_sports_matches (id, competition, kickoff, created_at, summary, body) VALUES (?,?,?,?,?,?)')
       .bind(summary.id, c.id, Date.parse(f.utcDate), now, JSON.stringify(summary), JSON.stringify(file)).run()
-    if (meta.changes) made.push(summary)
+    if (meta.changes) made.push(file)
   }
   return made
 }

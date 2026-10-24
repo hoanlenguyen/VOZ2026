@@ -70,8 +70,8 @@ async function execute(op: Op) {
     try { pretty = JSON.stringify(JSON.parse(text), null, 2) }
     catch { /* not JSON: show as is */ }
     results[op.id] = { url, status: res.status, body: pretty }
-    // Prefill the id fields with the newest match the server returned.
-    const id = /"id": "(\d+)"/.exec(pretty)?.[1]
+    // Prefill the id fields with the newest match the server returned (match files carry matchId).
+    const id = /"(?:matchId|id)": "(\d+)"/.exec(pretty)?.[1]
     if (id && (op.id === 'generate' || op.id === 'list')) for (const o of ['one', 'remove']) values[o]!.id ||= id
   }
   catch (err) {

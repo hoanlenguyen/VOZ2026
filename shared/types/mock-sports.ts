@@ -55,7 +55,7 @@ export interface MatchFileEvent { minute: string, type: string, team: string | n
 export interface MatchFile {
   source: {
     name: string
-    url?: string
+    url?: string | null
     scrapedAt?: string
     note?: string
     /** Set on generated files: everything but the result is made up. */

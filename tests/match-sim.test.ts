@@ -95,3 +95,23 @@ test('unfinished or extra-time fixtures are not simulated', () => {
   const done = matches.find(x => x.status === 'FINISHED')!
   assert.equal(fixtureFromFootballData({ ...done, score: { ...done.score, duration: 'PENALTY_SHOOTOUT' } }, teams, competition), null)
 })
+
+test('a simulated match file has every field of the bundled demo match (data/mock/premier-league/2645261.json)', () => {
+  const sample = JSON.parse(readFileSync(new URL('../data/mock/premier-league/2645261.json', import.meta.url), 'utf8'))
+  // Key paths with their JSON types; arrays are checked through their items.
+  const paths = (o: unknown, p = '', out = new Map<string, string>()) => {
+    if (Array.isArray(o)) for (const v of o) paths(v, `${p}[]`, out)
+    else if (o && typeof o === 'object') for (const [k, v] of Object.entries(o)) paths(v, `${p}.${k}`, out)
+    else if (!out.has(p) || o !== null) out.set(p, o === null ? 'null' : typeof o)
+    return out
+  }
+  const want = paths(sample)
+  for (const seed of ['a', 'b']) {
+    const got = new Map<string, string>()
+    for (const f of fixtures.slice(0, 20)) paths(simulateMatch(f, seed), '', got)
+    for (const [p, type] of want) {
+      assert.ok(got.has(p), `missing ${p}`)
+      if (type !== 'null') assert.equal(got.get(p), type, `type of ${p}`)
+    }
+  }
+})

@@ -668,7 +668,7 @@
     "ops": {
       "generate": {
         "summary": "Simulate 1–2 new matches",
-        "description": "Takes the newest finished fixtures of the competition that have not been simulated yet."
+        "description": "Takes the newest finished fixtures of the competition that have not been simulated yet and returns their full match files."
       },
       "list": {
         "summary": "List simulated matches",
