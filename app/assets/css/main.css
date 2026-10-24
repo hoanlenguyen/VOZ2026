@@ -22,6 +22,26 @@
   --board: #0E0F11;
   --board-text: #F2F2F0;
   --board-muted: #A3A6AD;
+  /* line art on the scoreboard (pitch / rink); low contrast on purpose, it sits behind the score */
+  --board-stripe: rgba(255, 255, 255, 0.025);
+  --board-line: rgba(255, 255, 255, 0.11);
+  --board-rink-red: rgba(230, 57, 70, 0.22);
+  --board-rink-blue: rgba(110, 168, 254, 0.2);
+  /* editorial (news) roles; the paper theme gives them their light values */
+  --headline: var(--text);
+  --link-hover: #6EA8FE;
+  --meta: var(--muted);
+  --summary: var(--text-3);
+  --line-strong: var(--border);
+  --section-bar: linear-gradient(180deg, #FE9739 6%, #DB2F6F 57%);
+  --page-max: 1100px;
+  /* stat comparison bars: the stronger side and the other side */
+  --stat-lead: #F5C518;
+  --stat-trail: #3A3F47;
+  /* form pills, white text on each: 5.2 / 4.9 / 5.6 */
+  --win: #1E7B3A;
+  --draw: #6B7079;
+  --loss: #C62828;
 
   --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
   --font-body: Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -44,14 +64,16 @@
 }
 
 /* Light editorial theme ("paper") for the news front page. Contrast on #FFF: ink 18.7, ink-2 10.3,
-   muted 6.2, control border 5.0, accent-ink 6.3. Gold stays a fill colour only (1.6:1 as text). */
+   muted 6.2, control border 5.0, accent-ink 6.3. Gold stays a fill colour only (1.6:1 as text).
+   Editorial colours, spacing and type scale follow a classic Vietnamese sports-section layout. */
 [data-theme="paper"] {
   --bg: #FFFFFF;
   --surface: #F4F5F7;
   --surface-2: #EBEDF0;
-  --line: #E3E5E8;
-  --line-soft: #EEF0F2;
-  --border: #E3E5E8;
+  --line: #EEEEEE;
+  --line-soft: #F0F0F0;
+  --line-strong: #DDDDDD;
+  --border: #E5E5E5;
   --border-control: #6B7079;
   --text: #111214;
   --text-2: #3D4148;
@@ -60,6 +82,12 @@
   --dim: #6B7079;
   --accent-ink: #7A5C00;
   --accent-hover: #5C4500;
+  --headline: #333333;  /* 12.6 */
+  --link-hover: #006BA0; /* 5.9 */
+  --meta: #767676;      /* 4.5 */
+  --summary: #666666;   /* 5.7 */
+  --stat-lead: #DB2F6F; /* 4.6, end colour of the section bar */
+  --stat-trail: #D6D6D6;
   /* the scoreboard panels keep the dark VOZ look */
   --board: #0E0F11;
   --board-text: #F2F2F0;

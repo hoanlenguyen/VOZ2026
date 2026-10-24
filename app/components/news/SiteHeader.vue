@@ -45,11 +45,11 @@ watch(() => route.fullPath, () => (open.value = false))
 <style scoped>
 .site-header {
   position: sticky; top: 0; z-index: var(--z-sticky);
-  background: var(--bg); border-bottom: 1px solid var(--line);
+  background: var(--bg); border-bottom: 1px solid var(--line-strong);
   padding-top: env(safe-area-inset-top);
 }
 .bar {
-  max-width: 1200px; margin: 0 auto; height: 64px; padding: 0 8px 0 4px;
+  max-width: calc(var(--page-max) + 2 * 50px); margin: 0 auto; height: 52px; padding: 0 8px 0 4px;
   display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 8px;
 }
 .icon-btn {
@@ -71,11 +71,11 @@ watch(() => route.fullPath, () => (open.value = false))
 }
 .cta:hover { color: var(--on-accent); filter: brightness(0.95); }
 .desktop-nav { display: none; }
-.menu { max-width: 1200px; margin: 0 auto; padding: 4px 16px 12px; display: flex; flex-direction: column; }
+.menu { max-width: calc(var(--page-max) + 2 * 50px); margin: 0 auto; padding: 4px 16px 12px; display: flex; flex-direction: column; }
 .menu-link { padding: 12px 0; border-top: 1px solid var(--line-soft); color: var(--text); font-weight: 600; text-decoration: none; }
 
 @media (min-width: 1024px) {
-  .bar { grid-template-columns: auto auto 1fr auto; padding: 0 16px; }
+  .bar { grid-template-columns: auto auto 1fr auto; padding: 0 30px; }
   .icon-btn { display: none; }
   .logo { justify-self: start; }
   .desktop-nav { display: flex; gap: 4px; margin-left: 24px; }
@@ -83,7 +83,7 @@ watch(() => route.fullPath, () => (open.value = false))
     min-height: 44px; padding: 0 12px; display: inline-flex; align-items: center;
     color: var(--text-2); font-weight: 600; font-size: 14px; text-decoration: none; border-radius: 8px;
   }
-  .nav-link:hover { background: var(--surface); color: var(--text); }
+  .nav-link:hover { background: transparent; color: var(--link-hover); }
   .nav-link.router-link-exact-active { color: var(--text); box-shadow: inset 0 -3px 0 var(--accent); border-radius: 0; }
   .cta { justify-self: end; }
   .menu { display: none !important; }

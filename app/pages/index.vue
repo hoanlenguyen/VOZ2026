@@ -60,7 +60,7 @@ const latest = computed(() => {
       <section v-if="lead" class="top" aria-label="Top stories">
         <NewsStoryCard :story="lead" variant="lead" class="lead" />
         <div v-if="side.length" class="side">
-          <NewsStoryCard v-for="s in side" :key="s.id" :story="s" />
+          <NewsStoryCard v-for="s in side" :key="s.id" :story="s" variant="side" />
         </div>
       </section>
 
@@ -70,7 +70,7 @@ const latest = computed(() => {
 
       <div v-if="latest.length || data?.tables.length" class="latest-wrap">
         <section class="latest" aria-labelledby="latest-title">
-          <h2 id="latest-title" class="block-title"><span class="bar" aria-hidden="true" />Latest</h2>
+          <NewsSectionTitle id="latest-title">Latest</NewsSectionTitle>
           <NewsStoryCard v-for="s in latest" :key="s.id" :story="s" variant="row" />
           <p v-if="!latest.length" class="notice notice--soft">All of today's stories are above.</p>
         </section>
@@ -87,49 +87,54 @@ const latest = computed(() => {
 </template>
 
 <style scoped>
-.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+/* Metrics: 1100 px content, 2/3 + 1/3 featured block, 4-up row, 300 px sidebar, 50 px between sections */
+.wrap { max-width: calc(var(--page-max) + 2 * 50px); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 768px) { .wrap { padding: 0 30px; } }
+@media (min-width: 1280px) { .wrap { padding: 0 50px; } }
 .page-title {
-  margin: 40px 0 20px; text-align: center; font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(48px, 9vw, 88px); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase;
+  margin: 32px 0 16px; text-align: center; font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(44px, 8vw, 72px); line-height: 1; letter-spacing: 0.02em; text-transform: uppercase;
 }
 .sections {
-  display: flex; gap: 4px; overflow-x: auto; border-top: 3px solid var(--text); border-bottom: 1px solid var(--line);
-  scrollbar-width: thin; margin-bottom: 24px;
+  display: flex; gap: 4px; overflow-x: auto; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong);
+  scrollbar-width: thin; margin-bottom: 30px;
 }
 .section-tab {
-  flex: 0 0 auto; min-height: 48px; padding: 0 14px; border: 0; background: transparent; color: var(--text-2);
-  font-size: 14px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+  flex: 0 0 auto; min-height: 44px; padding: 0 14px; border: 0; background: transparent; color: var(--meta);
+  font-size: 13px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
   box-shadow: inset 0 0 0 transparent; transition: box-shadow var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
 }
-.section-tab:hover { color: var(--text); }
-.section-tab[aria-pressed="true"] { color: var(--text); box-shadow: inset 0 -3px 0 var(--accent); }
+.section-tab:hover { color: var(--link-hover); }
+.section-tab[aria-pressed="true"] { color: var(--headline); box-shadow: inset 0 -3px 0 var(--accent); }
 @media (min-width: 1024px) { .sections { justify-content: center; } }
 
-.notice { margin: 0 0 24px; padding: 14px 16px; border-radius: 8px; background: var(--surface); color: var(--text-2); }
-.notice--soft { background: transparent; border: 1px dashed var(--border); color: var(--muted); font-size: 14px; }
+.notice { margin: 0 0 24px; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--text-2); }
+.notice--soft { background: transparent; border: 1px dashed var(--border); color: var(--meta); font-size: 14px; }
 
-.top { display: grid; gap: 24px; }
-.side { display: grid; gap: 24px; }
-@media (min-width: 640px) and (max-width: 1023px) { .side { grid-template-columns: 1fr 1fr; } }
+.top { display: grid; gap: 20px; }
+.side { display: grid; }
+.side > * { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.side > :first-child { padding-top: 0; }
+.side > :last-child { border-bottom: 0; }
+@media (min-width: 640px) and (max-width: 1023px) {
+  .side { grid-template-columns: 1fr 1fr; gap: 20px; }
+  .side > * { padding: 0; border: 0; }
+}
 @media (min-width: 1024px) {
-  .top { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 32px; }
-  .side { border-left: 1px solid var(--line); padding-left: 32px; align-content: start; }
+  .top { grid-template-columns: minmax(0, 66fr) minmax(0, 34fr); gap: 0; }
+  .lead { padding-right: 3%; padding-bottom: 20px; }
+  .side { border-left: 1px solid var(--line); padding-left: 3%; align-content: start; }
 }
 
-.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--line); }
-@media (min-width: 1024px) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; } }
+.cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--line); }
+@media (min-width: 1024px) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.6%; } }
 @media (max-width: 379px) { .cards { grid-template-columns: 1fr; } }
 
-.latest-wrap { display: grid; gap: 32px; margin-top: 48px; }
-@media (min-width: 1024px) { .latest-wrap { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); } }
-.block-title {
-  display: flex; align-items: center; gap: 10px; margin: 0 0 8px;
-  font-family: var(--font-display); font-size: 32px; font-weight: 700; text-transform: uppercase;
-}
-.bar { width: 6px; height: 28px; background: var(--accent); transform: skewX(-14deg); border-radius: 1px; }
+.latest-wrap { display: grid; gap: 30px; margin-top: 50px; }
+@media (min-width: 1024px) { .latest-wrap { grid-template-columns: minmax(0, 1fr) 300px; } }
 .sidebar { display: flex; flex-direction: column; gap: 24px; }
-@media (min-width: 1024px) { .sidebar { position: sticky; top: 88px; align-self: start; } }
-.sponsor { border: 1px dashed var(--border-control); border-radius: 8px; padding: 16px; }
-.sponsor-label { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
-.sponsor-text { margin: 0; font-weight: 600; }
+@media (min-width: 1024px) { .sidebar { align-self: start; } }
+.sponsor { border: 1px dashed var(--border-control); border-radius: 4px; padding: 24px; }
+.sponsor-label { margin: 0 0 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
+.sponsor-text { margin: 0; font-weight: 600; color: var(--headline); }
 </style>

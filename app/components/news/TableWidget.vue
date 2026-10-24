@@ -28,16 +28,17 @@ const rows = computed(() => props.table.rows.slice(0, props.limit))
 </template>
 
 <style scoped>
-.widget { border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
-.widget-title {
-  margin: 0 0 8px; font-family: var(--font-display); font-size: 20px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.02em;
+.widget { border: 1px solid var(--line-soft); border-radius: 4px; padding: 24px; }
+.widget-title { margin: 0 0 16px; font-size: 20px; line-height: 24px; font-weight: 700; color: var(--headline); }
+.widget-title::before {
+  content: '#'; margin-right: 4px; background: var(--section-bar);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 table { width: 100%; border-collapse: collapse; font-size: 14px; }
-th { text-align: left; font-size: 12px; font-weight: 600; color: var(--muted); padding: 6px 4px; }
+th { text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--meta); padding: 0 4px 8px; }
 th:nth-child(n+3), td:nth-child(n+3) { text-align: right; width: 40px; }
-td { padding: 7px 4px; border-top: 1px solid var(--line-soft); }
-.rank { color: var(--muted); width: 24px; }
+td { padding: 8px 4px; border-top: 1px solid var(--line); color: var(--headline); }
+.rank { color: var(--meta) !important; width: 24px; }
 .team { display: flex; align-items: center; gap: 8px; min-width: 0; }
 .team img { object-fit: contain; flex-shrink: 0; }
 .team span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
