@@ -6,7 +6,7 @@ export type Plan = 'free' | 'subscriber' | 'newsroom'
 export interface Entitlements {
   /** AI match stories, comparison, timeline and line-ups. */
   premium: boolean
-  /** Sponsor slots. */
+  /** Advertisers' posts and sponsor slots: shown to every reader today. */
   ads: boolean
   /** /newsroom dashboard and moderation. */
   newsroom: boolean

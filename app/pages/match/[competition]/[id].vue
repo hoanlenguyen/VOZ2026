@@ -156,7 +156,7 @@ useHead(() => ({
     </div>
     <aside v-if="table" class="sidebar" :aria-label="t('match.standings')">
       <NewsTableWidget :table="table" :limit="table.rows.length" :highlight="[match.home.key, match.away.key]" />
-      <!-- Ads after the table, for readers who get ads (free and signed-out). -->
+      <!-- Advertisers' posts after the table, for every reader. -->
       <div v-if="can.ads" class="ads">
         <NewsAdCard v-for="kind in (['shop', 'event', 'league'] as const)" :key="kind" :kind="kind" />
       </div>

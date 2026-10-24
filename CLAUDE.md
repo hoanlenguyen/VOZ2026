@@ -91,7 +91,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - Demo accounts in `data/accounts/accounts.json` (server asset `accounts`), passwords as PBKDF2-SHA256 hashes; all three use the password `demo`:
   `subscription@demo.com` (plan `subscriber`), `free@demo.com` (`free`), `newsroom@demo.com` (`newsroom`).
 - `server/utils/accounts.ts`: `verifyLogin`, signed session cookie `voz_session` (HMAC with `NUXT_SESSION_SECRET`, demo secret when empty; httpOnly, 7 days), `sessionInfo(event)`, `requireEntitlement(event, 'premium' | 'newsroom')`.
-  Entitlements: subscriber and newsroom = premium, no ads; newsroom also gets `/newsroom`.
+  Entitlements: subscriber and newsroom = premium; newsroom also gets `/newsroom`. Ads (`entitlements.ads`) show to every reader: advertisers' posts (`NewsAdCard`: shop, event, league) under the league table on match pages and the front-page sponsor slot.
 - API: `POST /api/auth/login`, `POST /api/auth/logout`, `GET /api/auth/me`; client state via `useAccount()` (plugin `app/plugins/session.ts` loads it once; login/logout call `refreshNuxtData()`).
 - The paywall is enforced on the server: for free and signed-out readers the match API sends `compare: null`, `extras: null`, `locked: [...]` (nothing when the newsroom opened the match to everyone) and a `teaser` (headline + two sentences of an already cached or pre-written AI story via `peekStory()`, never a new agent run; translated for fi). The story endpoint answers 401/403 (unless published for everyone).
   `NewsPaywall` shows the teaser fading into the subscription offer.

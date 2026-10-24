@@ -184,7 +184,7 @@
     "demoTitle": "Demo accounts",
     "demoHint": "All demo passwords are \"demo\". Choose an account to sign in.",
     "demo": {
-      "subscriber": "Subscription account: everything, no ads",
+      "subscriber": "Subscription account: everything",
       "free": "Free account: scores, tables and stories, premium parts locked",
       "newsroom": "Newsroom: everything plus the editor dashboard"
     }
@@ -197,7 +197,6 @@
       "unlimited": "Full match pages in the app and on the web",
       "stories": "AI match stories, fact-checked sentence by sentence",
       "stats": "Stats comparison, timelines and line-ups",
-      "noAds": "No ads",
       "languages": "Everything in English and Finnish"
     },
     "cta": "Discover here",
@@ -214,7 +213,7 @@
       "since": "Subscriber since {date}",
       "renews": "Renews on {date}",
       "price": "{price} € / month",
-      "perks": "Full match coverage, AI match stories and no ads."
+      "perks": "Full match coverage and AI match stories."
     },
     "free": {
       "perks": "Front page, scores, tables and automatic stories. Match stats, timelines, line-ups and AI stories are for VOZ Plus subscribers.",

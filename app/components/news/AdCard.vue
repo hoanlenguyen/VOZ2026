@@ -1,6 +1,5 @@
 <script setup lang="ts">
-// Demo advertisement for readers who get ads (free and signed-out): a sports shop, a fan event or a
-// local league. Advertisers are fictional; illustrations are drawn here with the colour tokens.
+// Demo advertiser's post (shown to every reader): a sports shop, a fan event or a local league. Advertisers are fictional; illustrations are drawn here with the colour tokens.
 // The call to action is not a link (demo), so it never leads nowhere.
 defineProps<{ kind: 'shop' | 'event' | 'league' }>()
 const { t } = useI18n()

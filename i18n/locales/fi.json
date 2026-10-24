@@ -184,7 +184,7 @@
     "demoTitle": "Demotilit",
     "demoHint": "Kaikkien demotilien salasana on \"demo\". Valitse tili kirjautuaksesi.",
     "demo": {
-      "subscriber": "Tilaajatili: kaikki sisältö, ei mainoksia",
+      "subscriber": "Tilaajatili: kaikki sisältö",
       "free": "Maksuton tili: tulokset, sarjataulukot ja jutut, lisäsisältö lukittu",
       "newsroom": "Toimitus: kaikki sisältö ja toimituksen näkymä"
     }
@@ -197,7 +197,6 @@
       "unlimited": "Otteluiden koko sisältö sovelluksessa ja verkossa",
       "stories": "Tekoälyn otteluraportit, jokainen lause tarkistettu",
       "stats": "Tilastovertailu, tapahtumat ja kokoonpanot",
-      "noAds": "Ei mainoksia",
       "languages": "Kaikki suomeksi ja englanniksi"
     },
     "cta": "Tutustu tästä",
@@ -214,7 +213,7 @@
       "since": "Tilaaja {date} alkaen",
       "renews": "Uusiutuu {date}",
       "price": "{price} € / kk",
-      "perks": "Otteluiden koko sisältö, tekoälyn otteluraportit eikä mainoksia."
+      "perks": "Otteluiden koko sisältö ja tekoälyn otteluraportit."
     },
     "free": {
       "perks": "Etusivu, tulokset, sarjataulukot ja automaattiset jutut. Ottelutilastot, tapahtumat, kokoonpanot ja tekoälyn raportit ovat VOZ Plus -tilaajille.",
