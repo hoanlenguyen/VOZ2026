@@ -3,24 +3,29 @@
  "lang": "fi",
  "state": "ft-1-1-regulation",
  "headline": "Ipswich ja Nott'm Forest jakavat pisteet",
- "subtitle": "Julio Enciso tasoitti 41. minuutilla, mutta Nott'm Forest vei maaliodottaman 2.29–0.46. Ottelu päättyi 1–1.",
+ "subtitle": "Nott'm Forest osui ensin, mutta Julio Enciso tasoitti 41. minuutilla. Maaleja ei enää nähty toisella puoliajalla.",
  "evidence": [
   {
-   "id": "f1",
+   "id": "f2",
    "section": "result",
-   "text": "Premier League matchweek 8: Ipswich Town 1–1 Nottingham Forest (full time)."
+   "text": "The match was a draw; Ipswich and Nott'm Forest took a point each."
+  },
+  {
+   "id": "f4",
+   "section": "result",
+   "text": "No goals were scored in the second half."
+  },
+  {
+   "id": "f7",
+   "section": "timeline",
+   "text": "13' Nott'm Forest goal: Neco Williams (assist: Daniel Muñoz), making it 0–1."
   },
   {
    "id": "f8",
    "section": "timeline",
    "text": "41' Ipswich goal: Julio Enciso, making it 1–1."
-  },
-  {
-   "id": "f17",
-   "section": "stats",
-   "text": "Expected goals (xG): Ipswich 0.46, Nott'm Forest 2.29."
   }
  ],
  "model": "gpt-6-luna",
- "generatedAt": "2026-10-24T11:32:35.256Z"
+ "generatedAt": "2026-10-24T11:46:32.143Z"
 }

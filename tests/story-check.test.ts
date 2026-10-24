@@ -1,7 +1,7 @@
 // Run with: npm test
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { checkEdit, checkStory, numbersIn, sentencesOf } from '../shared/utils/story-check.ts'
+import { checkEdit, checkStory, numbersIn, pointDecimal, sentencesOf } from '../shared/utils/story-check.ts'
 import type { Fact } from '../shared/types/story.ts'
 
 const facts: Fact[] = [
@@ -100,4 +100,15 @@ test('Finnish stories use the Finnish word ranges', () => {
   const draft = { headline: 'Tasapeli Ipswichissä', sentences: [{ text, facts: ['f1'], paragraph: 1 }] }
   assert.match(checkStory(draft, ctx).issues.join(' '), /words/)
   assert.equal(checkStory(draft, { ...ctx, lang: 'fi' }).passed, true, checkStory(draft, { ...ctx, lang: 'fi' }).issues.join('\n'))
+})
+
+test('Finnish decimals need a comma; clock times and dates are fine', () => {
+  assert.equal(pointDecimal('maaliodottama 2.29–0.46'), '2.29')
+  assert.equal(pointDecimal('maaliodottama 2,29–0,46'), null)
+  assert.equal(pointDecimal('klo 19.30 lauantaina 24.10.'), null)
+  const fi = { ...ctx, lang: 'fi' as const }
+  const draft = (text: string) => ({ headline: 'Forest hallitsi', sentences: [{ text: `${text} ${filler}`, facts: ['f4'], paragraph: 1 }] })
+  assert.match(checkStory(draft('Forest voitti maaliodottaman 2.29–0.46.'), fi).issues.join(' '), /decimals use a comma/)
+  assert.doesNotMatch(checkStory(draft('Forest voitti maaliodottaman 2,29–0,46.'), fi).issues.join(' '), /decimals/)
+  assert.doesNotMatch(checkStory(draft('Forest had 2.29 xG to 0.46.'), ctx).issues.join(' '), /decimals/)
 })

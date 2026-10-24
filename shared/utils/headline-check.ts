@@ -4,7 +4,7 @@
 
 import type { Fact, StoryCheck } from '../types/story.ts'
 import type { HeadlineDraft } from '../types/headline.ts'
-import { numbersIn } from './story-check.ts'
+import { numbersIn, pointDecimal } from './story-check.ts'
 
 export interface HeadlineContext {
   facts: Fact[]
@@ -100,6 +100,8 @@ export function checkHeadline(draft: HeadlineDraft, ctx: HeadlineContext): Story
     issues.push(`Name at least one team exactly as written: ${[...new Set(ctx.teams)].join(', ')}.`)
   }
 
+  const decimal = ctx.lang === 'fi' ? pointDecimal(both) : null
+  if (decimal) issues.push(`It writes "${decimal}"; Finnish decimals use a comma ("${decimal.replace('.', ',')}").`)
   for (const [re, why] of BANNED) if (re.test(both)) issues.push(`It ${why}.`)
   for (const c of CLAIMS) {
     if (c.re.test(both) && !(c.needs && c.needs.test(citedText))) {

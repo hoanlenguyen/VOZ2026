@@ -46,6 +46,14 @@ export function numbersIn(text: string): string[] {
   return out
 }
 
+/**
+ * Finnish writes decimals with a comma ("2,29"); a point there reads as a time or a date. Returns the
+ * first decimal written with a point, ignoring clock times after "klo"/"kello" and dates ("24.10.").
+ */
+export function pointDecimal(text: string): string | null {
+  return text.match(/(?<![\d.]|klo |kello )\d+\.\d+(?![\d.])/i)?.[0] ?? null
+}
+
 /** A story number matches a fact number exactly or as a rounding of it (49.4 -> "49"). */
 function supported(n: string, factNumbers: string[]): boolean {
   const decimals = n.includes('.') ? n.split('.')[1]!.length : 0
@@ -86,6 +94,9 @@ export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
   for (const n of numbersIn(draft.headline)) {
     if (!supported(n, allNumbers)) issues.push(`The headline uses "${n}", which no fact contains.`)
   }
+  const decimal = (text: string) => ctx.lang === 'fi' ? pointDecimal(text) : null
+  const hd = decimal(draft.headline)
+  if (hd) issues.push(`The headline writes "${hd}"; Finnish decimals use a comma ("${hd.replace('.', ',')}").`)
   for (const p of people) {
     const h = fold(draft.headline)
     if (p.forms.some(f => mentions(h, f)) && !p.forms.some(f => mentions(allFactText, f))) {
@@ -120,6 +131,8 @@ export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
     for (const [re, why] of BANNED) {
       if (re.test(s.text)) issues.push(`${label} ${why}.`)
     }
+    const d = decimal(s.text)
+    if (d) issues.push(`${label} writes "${d}"; Finnish decimals use a comma ("${d.replace('.', ',')}").`)
   })
 
   const words = draft.sentences.reduce((n, s) => n + s.text.trim().split(/\s+/).length, 0)
