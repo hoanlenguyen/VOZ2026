@@ -68,16 +68,6 @@ is enforced on the server, and the newsroom can open any match to everyone.
 - **No borrowed content:** story text comes only from our data; images are team crests, data
   graphics or the newsroom's own covers.
 
-### Tools behind the scenes
-
-- **SportWorld API** (`/sportworld`): a mock sports server standing in for a paid deep-data feed.
-  It keeps real results and simulates line-ups, events and stats, with Swagger-style docs and a
-  try-it page.
-- **Match news as JSON:** verified publisher coverage of a match as JSON, from a CLI or an API, plus
-  background monitoring of publishers before kick-off.
-- **Offline demo mode:** saved data snapshots keep the app running without network; `/status`
-  checks each data source.
-
 ## Planned
 
 - **Notifications for subscribers** about their teams and matches, firing only when something
