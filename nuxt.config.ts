@@ -23,6 +23,11 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#0E0F11' },
       ],
       link: [
+        // VOZ mark (public/): SVG for modern browsers, ICO fallback, home-screen and install icons.
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        { rel: 'manifest', href: '/site.webmanifest' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
