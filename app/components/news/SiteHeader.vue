@@ -1,10 +1,11 @@
 <script setup lang="ts">
 const { t, locale, locales, setLocale } = useI18n()
 const open = ref(false)
+// "My teams" is for readers; newsroom accounts have the newsroom instead.
+const { can } = useAccount()
 const links = computed(() => [
   { to: '/', label: t('nav.sports') },
-  { to: '/onboarding', label: t('nav.myTeams') },
-  { to: '/status', label: t('nav.status') },
+  ...(can.value.newsroom ? [] : [{ to: '/my-teams', label: t('nav.myTeams') }]),
 ])
 const route = useRoute()
 watch(() => route.fullPath, () => (open.value = false))

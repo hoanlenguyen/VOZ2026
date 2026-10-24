@@ -7,8 +7,10 @@
 import type { H3Event } from 'h3'
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
+import type { MatchDetailExtras } from '#shared/types/match-detail'
+import type { Match } from '#shared/types/sports'
 import type { StoryLength, StoryTone } from '#shared/types/story'
-import type { ArticleAudience, CoverImage, MatchStoryControl, StoryCover, StoryMode } from '#shared/types/stories'
+import type { ArticleAudience, CoverImage, MatchStoryControl, PendingEdit, StoryCover, StoryMode, StoryStatus } from '#shared/types/stories'
 
 export const STORY_ID = /^[rp]-[\w-]+:\w+$/
 
@@ -134,11 +136,65 @@ export async function saveDraft(matchKey: string, control: MatchStoryControl): P
 export async function readerContext(event: H3Event, matchKey: string, lang: Lang) {
   const info = await sessionInfo(event)
   const q = getQuery(event)
+  const as = entitlements(q.as === 'free' ? 'free' : 'subscriber')
+  // ?draft=pending: the saved draft / review version (a shareable preview link for other editors).
+  if (info.entitlements.newsroom && q.draft === 'pending') {
+    const pending = (await pendingEdits(lang))[matchKey]
+    if (pending) return { entitlements: as, control: pending.control, preview: true }
+  }
   if (info.entitlements.newsroom && typeof q.draft === 'string' && DRAFT_ID.test(q.draft)) {
     const draft = await useStorage('kvcache').getItem<{ matchKey: string, control: MatchStoryControl }>(draftKey(q.draft)).catch(() => null)
     if (draft?.matchKey === matchKey) {
-      return { entitlements: entitlements(q.as === 'free' ? 'free' : 'subscriber'), control: draft.control, preview: true }
+      return { entitlements: as, control: draft.control, preview: true }
     }
   }
   return { entitlements: info.entitlements, control: await matchStoryControl(matchKey, lang), preview: false }
+}
+
+/**
+ * The match story readers get, from what already exists (the newsroom's edit, or a cached or
+ * pre-written AI story in `lang`); never runs the agent. For front-page cards: headline and opening.
+ * `match` / `extras` must be the English mock (the story cache keys use its facts).
+ */
+export async function publishedMatchStory(
+  def: CompetitionDef, match: Match, extras: MatchDetailExtras | null, season: Match[],
+  control: MatchStoryControl | null, lang: Lang,
+): Promise<{ headline: string, text: string, origin: 'ai' | 'newsroom' } | null> {
+  const { mode, length, tone } = controlSettings(control)
+  if (!extras || match.status !== 'finished' || mode === 'hidden') return null
+  if (mode === 'edited' && control) return { headline: control.headline, text: excerpt(control.body), origin: 'newsroom' }
+  const hit = await peekStory({
+    competitionId: def.id, matchId: match.id, length, tone, lang,
+    facts: buildFacts(def, match, extras, season), names: factNames(match, extras),
+  }).catch(() => null)
+  return hit ? { headline: hit.story.headline, text: hit.story.sentences.slice(0, 2).map(x => x.text).join(' '), origin: 'ai' } : null
+}
+
+// Saved, unpublished editor changes (status draft / preview): one map per language, by match key.
+// Publishing or discarding removes the entry; readers keep the published version meanwhile.
+const pendingKey = (lang: Lang) => `newsroom:pending:${lang}`
+
+export async function pendingEdits(lang: Lang): Promise<Record<string, PendingEdit>> {
+  const map = await useStorage('kvcache').getItem<Record<string, PendingEdit>>(pendingKey(lang)).catch(() => null)
+  return map && typeof map === 'object' ? map : {}
+}
+
+export async function savePending(lang: Lang, matchKey: string, edit: PendingEdit | null) {
+  const map = await pendingEdits(lang)
+  if (edit) map[matchKey] = edit
+  else delete map[matchKey]
+  await useStorage('kvcache').setItem(pendingKey(lang), map)
+}
+
+/** Hidden wins, then preview (ready for review), then draft; otherwise live. */
+export function storyStatus(hidden: boolean, pending: PendingEdit | undefined): StoryStatus {
+  if (hidden) return 'hidden'
+  if (pending) return pending.state === 'review' ? 'preview' : 'draft'
+  return 'live'
+}
+
+/** Whether an editor hid this match's front-page story (result or preview), which also hides its match story. */
+export async function isMatchHidden(matchKey: string): Promise<boolean> {
+  const hidden = await hiddenStories()
+  return hidden.has(`r-${matchKey}`) || hidden.has(`p-${matchKey}`)
 }

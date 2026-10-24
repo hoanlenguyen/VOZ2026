@@ -84,15 +84,26 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
   const [hidden, controls] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang)])
 
+  // Matches with a match story lead with it, as their match page does: the story's headline and
+  // opening lines (the published version, from the cache only), no AI subtitle. Cover images the
+  // newsroom set replace the cards' data visual.
+  const shown = await Promise.all(ranked.filter(s => !hidden.has(s.id)).map(async (s) => {
+    const key = s.id.slice(2)
+    const control = controls[key] ?? null
+    const cover = coverOf(control)
+    const input = s.kind === 'result' ? headlineInputs.get(s.id) : undefined
+    const published = input?.extras ? await publishedMatchStory(input.competition, input.match, input.extras, input.season, control, lang) : null
+    return {
+      ...s,
+      ...(published && { headline: published.headline, summary: published.text, subtitle: undefined, headlineOrigin: published.origin === 'ai' ? 'agent' as const : 'template' as const }),
+      ...(cover && { cover: { src: cover.src, alt: cover.alt } }),
+    }
+  }))
   const order = (id: string) => FRONT_PAGE.indexOf(id)
   setDataSource(event, ...sources)
   return {
     generatedAt: new Date().toISOString(),
-    // Cover images the newsroom set on match stories replace the cards' data visual.
-    stories: ranked.filter(s => !hidden.has(s.id)).map((s) => {
-      const cover = coverOf(controls[s.id.slice(2)] ?? null)
-      return cover ? { ...s, cover: { src: cover.src, alt: cover.alt } } : s
-    }),
+    stories: shown,
     ticker: ticker.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     tables: tables.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     missing,

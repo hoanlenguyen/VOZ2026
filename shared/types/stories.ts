@@ -103,7 +103,24 @@ export interface MatchStorySection {
   tone: StoryTone
   /** The newsroom's version when mode is 'edited'. */
   edited: EditedMatchStory | null
+  /** The story's headline (the match page title); null when the AI story is not written yet. */
+  headline: string | null
+  /** When the story was written (AI) or published (edited); null until the AI story exists. */
+  publishedAt: string | null
 }
 
 /** A cover image as pages show it. */
 export interface CoverImage { src: string, alt: string, credit: string }
+
+/** A story's newsroom status: unpublished changes saved (draft), ready for review (preview),
+ *  published or automatic (live), or taken off the front page and match page (hidden). */
+export type StoryStatus = 'live' | 'preview' | 'draft' | 'hidden'
+
+/** Unpublished editor changes to a match story, per language. */
+export interface PendingEdit {
+  control: MatchStoryControl
+  /** 'draft': work in progress; 'review': ready for review (status "preview"). */
+  state: 'draft' | 'review'
+  by: string
+  at: string
+}
