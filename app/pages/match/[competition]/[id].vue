@@ -16,7 +16,7 @@ const periodLine = computed(() => {
   if (m.sport === 'football') return `Half-time ${m.periods[0]!.home}–${m.periods[0]!.away}`
   return `Periods ${m.periods.map(p => `${p.home}–${p.away}`).join(', ')}`
 })
-const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
+const hasMatchStats = computed(() => data.value?.compare?.matchStats === 'official')
 
 useHead(() => ({
   title: match.value
@@ -54,8 +54,15 @@ useHead(() => ({
         <NewsMatchVisual :story="{ competitionName: data.competition.name, match }" size="lg" class="visual" />
       </header>
 
-      <section v-if="data.compare" class="block" aria-labelledby="compare-title">
-        <NewsSectionTitle id="compare-title">Compare</NewsSectionTitle>
+      <section v-if="data.commentary" class="block" aria-label="Live commentary">
+        <NewsLiveCommentary
+          :commentary="data.commentary"
+          :home="{ name: match.home.shortName, logo: match.home.logo }"
+          :away="{ name: match.away.shortName, logo: match.away.logo }"
+        />
+      </section>
+
+      <section v-if="data.compare" class="block" aria-label="Compare">
         <NewsStatCompare
           :compare="data.compare"
           :home="{ name: match.home.shortName, logo: match.home.logo }"
@@ -63,6 +70,7 @@ useHead(() => ({
         />
         <p class="source">
           <template v-if="hasMatchStats">Match stats from official {{ data.competition.name }} game data; season numbers counted from official results.</template>
+          <template v-else-if="data.compare.matchStats === 'sample'">Goals and season numbers counted from official {{ data.competition.name }} results.</template>
           <template v-else>Counted from official {{ data.competition.name }} results. Shots, possession and cards are not in our data plan yet.</template>
         </p>
       </section>

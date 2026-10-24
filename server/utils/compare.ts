@@ -138,6 +138,64 @@ function matchStats(m: Match): CompareGroup | null {
   }
 }
 
+// Seeded PRNG (mulberry32): the same match always gets the same sample numbers.
+function seeded(seed: number) {
+  let a = seed >>> 0
+  return () => {
+    a = (a + 0x6D2B79F5) >>> 0
+    let t = a
+    t = Math.imul(t ^ (t >>> 15), t | 1)
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+/**
+ * Demo-only football match stats for when the provider has none (football-data free plan).
+ * Bounded to typical top-flight ranges and kept consistent with the real score
+ * (shots on target >= goals, shots > shots on target). Marked `sample` so the UI labels it.
+ */
+function sampleFootballStats(m: Match): CompareGroup | null {
+  if (m.sport !== 'football' || m.status !== 'finished' || m.home.score === null || m.away.score === null) return null
+  const rand = seeded(Number(m.id) || m.id.length)
+  const int = (lo: number, hi: number) => lo + Math.floor(rand() * (hi - lo + 1))
+  const possession = int(35, 65)
+  const side = (goals: number, share: number) => {
+    const onTarget = goals + int(1, 5)
+    const passes = Math.round((share / 100) * int(820, 1000))
+    return {
+      shots: onTarget + int(3, 9),
+      onTarget,
+      corners: int(1, 9),
+      fouls: int(7, 16),
+      yellow: int(0, 4),
+      red: rand() < 0.07 ? 1 : 0,
+      offsides: int(0, 4),
+      passes,
+      accuracy: Math.round(Math.min(92, 70 + share / 5 + int(-3, 3))),
+    }
+  }
+  const h = side(m.home.score, possession)
+  const a = side(m.away.score, 100 - possession)
+  return {
+    id: 'stats',
+    title: 'Match stats',
+    note: 'Sample stats are demo numbers: our football data plan has no match stats yet. Not used in stories.',
+    rows: [
+      row('possession', 'Possession', possession, 100 - possession, 'higher', 0, '%'),
+      row('shots', 'Shots', h.shots, a.shots),
+      row('on-target', 'Shots on target', h.onTarget, a.onTarget),
+      row('corners', 'Corners', h.corners, a.corners),
+      row('passes', 'Passes', h.passes, a.passes),
+      row('pass-accuracy', 'Pass accuracy', h.accuracy, a.accuracy, 'higher', 0, '%'),
+      row('fouls', 'Fouls', h.fouls, a.fouls, 'lower'),
+      row('yellow', 'Yellow cards', h.yellow, a.yellow, 'lower'),
+      row('red', 'Red cards', h.red, a.red, 'lower'),
+      row('offsides', 'Offsides', h.offsides, a.offsides, 'lower'),
+    ].map(r => ({ ...r, sample: true })),
+  }
+}
+
 function beforeKickOff(c: CompetitionDef, h: TeamRecord, a: TeamRecord): CompareGroup {
   const start = c.sport === 'hockey' ? 'puck drop' : 'kick-off'
   const games = c.sport === 'hockey' ? 'games' : 'matches'
@@ -194,7 +252,20 @@ function meetings(season: Match[], m: Match): CompareGroup | null {
 export function buildCompare(c: CompetitionDef, m: Match, season: Match[]): MatchCompare | null {
   const h = record(season, m.home.key, m.start, 'home')
   const a = record(season, m.away.key, m.start, 'away')
-  const groups = [thisMatch(m), matchStats(m), beforeKickOff(c, h, a), lastFive(h, a), meetings(season, m)]
+  // Goals and in-game stats form one "This match" group; a live game has stats but no final score yet.
+  const official = matchStats(m)
+  const stats = official ?? sampleFootballStats(m)
+  let match = thisMatch(m)
+  if (stats) {
+    match = match
+      ? { ...match, rows: [...match.rows, ...stats.rows], note: [match.note, stats.note].filter(Boolean).join(' ') || null }
+      : { ...stats, id: 'match', title: 'This match' }
+  }
+  const groups = [match, beforeKickOff(c, h, a), lastFive(h, a), meetings(season, m)]
     .filter((g): g is CompareGroup => g !== null)
-  return { groups, form: { home: h.results.slice(-5), away: a.results.slice(-5) } }
+  return {
+    groups,
+    matchStats: official ? 'official' : stats ? 'sample' : null,
+    form: { home: h.results.slice(-5), away: a.results.slice(-5) },
+  }
 }

@@ -14,6 +14,8 @@ export interface CompareRow {
   unit: string
   /** Which side of the comparison is the stronger one; 'none' for neutral numbers (distance skated). */
   better: 'higher' | 'lower' | 'none'
+  /** Invented demo number (football match stats the free plan lacks). Never feed these to stories. */
+  sample?: boolean
 }
 
 export interface CompareGroup {
@@ -25,6 +27,8 @@ export interface CompareGroup {
 
 export interface MatchCompare {
   groups: CompareGroup[]
+  /** Where the in-game stats in the "This match" group come from, if there are any. */
+  matchStats: 'official' | 'sample' | null
   /** Last five results before kick-off, oldest first. Hockey has no draws: overtime results count as W / L. */
   form: { home: FormResult[], away: FormResult[] }
 }

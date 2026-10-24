@@ -1,10 +1,12 @@
 <script setup lang="ts">
 // Two-sided stat bars: each side grows from the centre, scaled to the larger value of the row.
 // The stronger side (more goals, fewer conceded, ...) gets the accent colour.
+// Groups are an accordion: only "This match" starts open, the rest start collapsed.
+import { PhCaretDown } from '@phosphor-icons/vue'
 import type { CompareRow, FormResult, MatchCompare } from '#shared/types/compare'
 
 type Side = { name: string, logo: string | null }
-defineProps<{ compare: MatchCompare, home: Side, away: Side }>()
+const props = defineProps<{ compare: MatchCompare, home: Side, away: Side }>()
 
 function bars(r: CompareRow) {
   const max = Math.max(r.home, r.away)
@@ -16,6 +18,8 @@ function bars(r: CompareRow) {
   }
 }
 const fmt = (v: number, r: CompareRow) => `${v.toFixed(r.decimals)}${r.unit}`
+// Before kick-off there is no "This match" group; then the first group starts open instead.
+const openId = computed(() => props.compare.groups.find(g => g.id === 'match')?.id ?? props.compare.groups[0]?.id)
 const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat' }
 </script>
 
@@ -32,8 +36,11 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
       </span>
     </div>
 
-    <section v-for="g in compare.groups" :key="g.id" class="group" :aria-labelledby="`cmp-${g.id}`">
-      <h3 :id="`cmp-${g.id}`" class="group-title">{{ g.title }}</h3>
+    <details v-for="g in compare.groups" :key="g.id" class="group" :open="g.id === openId">
+      <summary class="group-title">
+        <h3 class="group-heading">{{ g.title }}</h3>
+        <PhCaretDown :size="14" weight="bold" class="caret" aria-hidden="true" />
+      </summary>
 
       <div v-if="g.id === 'form'" class="form-row">
         <ol v-for="side in (['home', 'away'] as const)" :key="side" class="form" :class="`form--${side}`" :aria-label="`${side === 'home' ? home.name : away.name}, last five results, oldest first`">
@@ -44,7 +51,8 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
       </div>
 
       <ul class="rows">
-        <li v-for="r in g.rows" :key="r.id" class="row">
+        <li v-for="(r, i) in g.rows" :key="r.id" class="row" :class="{ 'row--first-sample': r.sample && !g.rows[i - 1]?.sample }">
+          <p v-if="r.sample && !g.rows[i - 1]?.sample" class="divider"><span class="sample">Sample stats</span></p>
           <p class="values num">
             <span class="value" :class="{ 'value--lead': bars(r).lead === 'home' }"><span class="sr-only">{{ home.name }}</span> {{ fmt(r.home, r) }}</span>
             <span class="label">{{ r.label }}</span>
@@ -57,7 +65,7 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
         </li>
       </ul>
       <p v-if="g.note" class="note">{{ g.note }}</p>
-    </section>
+    </details>
   </div>
 </template>
 
@@ -69,12 +77,28 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
 .team { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 700; color: var(--headline); min-width: 0; }
 .team img { object-fit: contain; flex-shrink: 0; }
 
-.group { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.group { border-bottom: 1px solid var(--line); }
 .group:last-child { border-bottom: 0; }
+.group[open] { padding-bottom: 20px; }
 .group-title {
-  margin: 0 0 14px; text-align: center; font-size: 11px; line-height: 16px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta);
+  min-height: 52px; display: flex; align-items: center; justify-content: center; gap: 6px;
+  list-style: none; cursor: pointer; color: var(--meta); border-radius: 4px;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+.group-title::-webkit-details-marker { display: none; }
+.group-title:hover { color: var(--link-hover); }
+.group-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.group-heading { margin: 0; font-size: 11px; line-height: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: inherit; }
+.row--first-sample { margin-top: 10px; }
+.divider { margin: 0 0 14px; display: flex; align-items: center; gap: 10px; }
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.sample {
+  font-size: 10px; line-height: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 0 6px; border: 1px solid var(--border-control); border-radius: 999px; color: var(--summary);
+}
+.caret { transition: transform var(--dur-fast) var(--ease-out); }
+.group[open] .caret { transform: rotate(180deg); }
+.group[open] .group-title { margin-bottom: 6px; }
 
 .rows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
 .values { margin: 0 0 6px; display: grid; grid-template-columns: minmax(56px, auto) 1fr minmax(56px, auto); align-items: baseline; gap: 8px; }
@@ -102,7 +126,7 @@ const FORM_LABEL: Record<FormResult, string> = { W: 'Win', D: 'Draw', L: 'Defeat
 
 .note { margin: 14px 0 0; text-align: center; font-size: 13px; color: var(--meta); }
 
-@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .fill, .caret { transition: none; } }
 @media (max-width: 479px) {
   .values { grid-template-columns: minmax(44px, auto) 1fr minmax(44px, auto); }
   .label { font-size: 12px; }
