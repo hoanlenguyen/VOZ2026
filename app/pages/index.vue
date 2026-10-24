@@ -4,10 +4,10 @@
 import type { Story } from '#shared/types/stories'
 
 definePageMeta({ layout: 'news' })
-const { t } = useI18n()
+const { t, locale } = useI18n()
 useHead({ title: () => t('home.pageTitle') })
 
-const { data, error, status } = await useFetch('/api/landing')
+const { data, error, status } = await useFetch('/api/landing', { query: { lang: locale } })
 
 type Filter = { id: string, label: string, match: (s: Story) => boolean }
 const filters = computed<Filter[]>(() => {

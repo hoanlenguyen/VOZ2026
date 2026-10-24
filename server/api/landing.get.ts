@@ -5,6 +5,7 @@ const FRONT_PAGE = ['liiga', 'premier-league', 'champions-league', 'la-liga', 'b
 const TABLES = ['liiga', 'premier-league']
 
 export default defineEventHandler(async (event): Promise<LandingData> => {
+  const lang = requestLang(event)
   const sources: DataSource[] = []
   const missing: string[] = []
   const stories: Story[] = []
@@ -14,7 +15,8 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   await Promise.all(FRONT_PAGE.map(async (id) => {
     const def = findCompetition(id)!
     const provider = providerFor(def)
-    if (provider.unavailableReason(def)) return missing.push(def.name)
+    const name = competitionName(def, lang)
+    if (provider.unavailableReason(def)) return missing.push(name)
     try {
       const [matches, standings] = await Promise.all([provider.matches(def, {}), provider.standings(def)])
       sources.push(matches.source, standings.source)
@@ -22,15 +24,15 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       // page regardless of age (demo), and lead their league: they are the richest coverage we have.
       const mocks = await mockMatchesFor(def, matches.data)
       const twins = new Set(mocks.map(m => m.providerId).filter(Boolean))
-      stories.push(...buildStories(def, matches.data.filter(m => !twins.has(m.id)), standings.data))
-      for (const s of buildStories(def, mocks.map(m => m.match), standings.data, 3650)) {
+      stories.push(...buildStories(def, matches.data.filter(m => !twins.has(m.id)), standings.data, 4, lang))
+      for (const s of buildStories(def, mocks.map(m => m.match), standings.data, 3650, lang)) {
         stories.push({ ...s, weight: Math.max(s.weight, 0) + 40 })
       }
       ticker.push({
         competitionId: def.id,
-        competitionName: def.name,
+        competitionName: name,
         sport: def.sport,
-        country: def.country,
+        country: competitionCountry(def, lang),
         emblem: provider.emblem(def),
         fixtures: matches.data.filter(m => m.status === 'scheduled').slice(0, 12).map(m => ({
           key: m.key,
@@ -40,11 +42,11 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
           away: { name: m.away.shortName, logo: m.away.logo },
         })),
       })
-      if (TABLES.includes(id)) tables.push({ competitionId: def.id, competitionName: def.name, rows: standings.data })
+      if (TABLES.includes(id)) tables.push({ competitionId: def.id, competitionName: name, rows: standings.data })
     }
     catch (err) {
       console.warn(`[landing] ${id}: ${(err as Error).message}`)
-      missing.push(def.name)
+      missing.push(name)
     }
   }))
 

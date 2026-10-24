@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     setDataSource(event, res.source)
   }
   return {
-    competition: describeCompetition(def),
+    competition: describeCompetition(def, requestLang(event)),
     match,
     compare: season ? buildCompare(def, match, season) : null,
     extras: mock?.extras ?? null,

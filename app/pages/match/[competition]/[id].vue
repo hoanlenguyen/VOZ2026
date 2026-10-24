@@ -5,10 +5,10 @@ import { PhCaretLeft } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news' })
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const fmt = useFormat()
 const route = useRoute()
-const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`)
+const { data, error } = await useFetch(`/api/competitions/${route.params.competition}/matches/${route.params.id}`, { query: { lang: locale } })
 const match = computed(() => data.value?.match)
 const finished = computed(() => match.value?.status === 'finished')
 // Football: "Half-time 1–0"; hockey: "Periods 0–1, 0–1, 0–1".
