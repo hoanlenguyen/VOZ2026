@@ -235,16 +235,25 @@
     "ok": "OK",
     "down": "Poissa",
     "storiesTitle": "Etusivun jutut",
-    "storiesLead": "Muokkaa-painikkeella valitset otteluraportin: tekoälyn version, toimituksen muokkaaman version tai piilotuksen, kuka sen voi lukea ja kansikuvan. Piilotettu juttu katoaa etusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
+    "storiesLead": "Julkaistu: lukijoiden nähtävillä. Esikatselu: valmis tarkistettavaksi. Luonnos: tallennettu, ei julkaistu (lukijat näkevät julkaistun version). Piilotettu: poissa etusivulta ja ottelusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
     "hide": "Piilota",
     "show": "Näytä",
-    "hiddenBadge": "Piilotettu",
-    "liveBadge": "Näkyvissä",
     "open": "Avaa",
     "missing": "Ei saatavilla: {list}",
     "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
     "edit": "Muokkaa",
-    "storyBadge": "Raportti: {mode}"
+    "status": {
+      "live": "Julkaistu",
+      "preview": "Esikatselu",
+      "draft": "Luonnos",
+      "hidden": "Piilotettu"
+    },
+    "filter": "Näytä jutut",
+    "all": "Kaikki",
+    "noneWithStatus": "Ei juttuja tällä tilalla.",
+    "author": "Tekijä: {name}",
+    "noStory": "Ei otteluraporttia",
+    "pendingBy": "Julkaisemattomia muutoksia: {name}, {time}"
   },
   "editor": {
     "pageTitle": "Muokkaa otteluraporttia – VOZ-toimitus",
@@ -365,6 +374,19 @@
       "loading": "Valmistellaan esikatselua…",
       "error": "Esikatselua ei voitu valmistella ({reason}).",
       "frameTitle": "Ottelusivun esikatselu: {as}"
+    },
+    "saveDraft": "Tallenna luonnos",
+    "readyForReview": "Valmis tarkistettavaksi",
+    "discardDraft": "Hylkää luonnos",
+    "copyPreview": "Kopioi esikatselulinkki",
+    "draftSaved": "Luonnos tallennettu. Lukijat näkevät yhä julkaistun version.",
+    "reviewSaved": "Valmis tarkistettavaksi: muut toimittajat voivat avata esikatselulinkin.",
+    "draftDiscarded": "Luonnos hylätty.",
+    "previewCopied": "Esikatselulinkki kopioitu (vain toimituksen tileille).",
+    "hiddenNote": "Piilotettu lukijoilta toimituksen näkymässä.",
+    "pendingNote": {
+      "draft": "Luonnos: {name}, {time}; ei julkaistu.",
+      "review": "Valmis tarkistettavaksi: {name}, {time}; ei julkaistu."
     }
   },
   "matchStory": {

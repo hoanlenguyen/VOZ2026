@@ -9,14 +9,16 @@ export default defineEventHandler(async (event) => {
   const id = decodeURIComponent(getRouterParam(event, 'id') ?? '')
   if (!STORY_ID.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid story id' })
   const lang = requestLang(event)
-  const [landing, control] = await Promise.all([
+  const [landing, control, pending, hidden] = await Promise.all([
     event.$fetch<LandingData>('/api/landing', { query: { lang, moderation: 'all' } }),
     matchStoryControl(id.slice(2), lang),
+    pendingEdits(lang).then(m => m[id.slice(2)] ?? null),
+    hiddenStories().then(h => h.has(id)),
   ])
   const story = landing.stories.find(s => s.id === id)
   if (!story) throw createError({ statusCode: 404, statusMessage: 'Story is not on the front page' })
   // The match API decides whether the page has a story section (finished match with full data).
   const page = await event.$fetch<{ story: MatchStorySection | null }>(`/api/competitions/${story.competitionId}/matches/${story.href.split('/').pop()}`, { query: { lang } })
     .catch(() => ({ story: null }))
-  return { story, matchStory: { available: page.story !== null, control } }
+  return { story, matchStory: { available: page.story !== null, control }, pending, hidden, status: storyStatus(hidden, pending ?? undefined) }
 })

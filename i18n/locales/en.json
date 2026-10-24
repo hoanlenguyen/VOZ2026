@@ -235,16 +235,25 @@
     "ok": "OK",
     "down": "Down",
     "storiesTitle": "Front-page stories",
-    "storiesLead": "Edit sets a match story: the AI version, the newsroom's edited version or hidden, who can read it and its cover image. Hidden stories disappear from the front page for every reader; Show puts them back.",
+    "storiesLead": "Live: published. Preview: ready for review. Draft: changes saved, not published (readers see the live version). Hidden: off the front page and the match page for every reader; Show puts it back.",
     "hide": "Hide",
     "show": "Show",
-    "hiddenBadge": "Hidden",
-    "liveBadge": "Live",
     "open": "Open",
     "missing": "Unavailable leagues: {list}",
     "loadError": "The newsroom data could not be loaded ({reason}).",
     "edit": "Edit",
-    "storyBadge": "Story: {mode}"
+    "status": {
+      "live": "Live",
+      "preview": "Preview",
+      "draft": "Draft",
+      "hidden": "Hidden"
+    },
+    "filter": "Show stories",
+    "all": "All",
+    "noneWithStatus": "No stories with this status.",
+    "author": "Author: {name}",
+    "noStory": "No match story",
+    "pendingBy": "Unpublished changes by {name}, {time}"
   },
   "editor": {
     "pageTitle": "Edit match story – VOZ Newsroom",
@@ -365,6 +374,19 @@
       "loading": "Preparing the preview…",
       "error": "The preview could not be prepared ({reason}).",
       "frameTitle": "Match page preview as {as}"
+    },
+    "saveDraft": "Save draft",
+    "readyForReview": "Ready for review",
+    "discardDraft": "Discard draft",
+    "copyPreview": "Copy preview link",
+    "draftSaved": "Draft saved. Readers still see the live version.",
+    "reviewSaved": "Ready for review: other editors can open the preview link.",
+    "draftDiscarded": "Draft discarded.",
+    "previewCopied": "Preview link copied (newsroom accounts only).",
+    "hiddenNote": "Hidden from readers in the newsroom dashboard.",
+    "pendingNote": {
+      "draft": "Draft by {name}, {time}; not published.",
+      "review": "Ready for review, by {name}, {time}; not published."
     }
   },
   "matchStory": {

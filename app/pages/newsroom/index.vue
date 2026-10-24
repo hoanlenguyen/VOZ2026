@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// Newsroom dashboard (newsroom accounts): today's front-page stories with hide / show, data-source
-// health and the AI caches. Hiding a story removes it from the front page for every reader;
-// "Edit" opens the match story editor (/newsroom/stories/:id).
+// Newsroom dashboard (newsroom accounts): today's front-page stories with their status (live,
+// preview = ready for review, draft, hidden), who can read them and who wrote them; hide / show,
+// data-source health and the AI caches. Hiding a story removes it from the front page and its match
+// page for every reader; "Edit" opens the match story editor (/newsroom/stories/:id).
 import { PhArrowSquareOut, PhEye, PhEyeSlash, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news', middleware: 'newsroom' })
@@ -13,12 +14,21 @@ const { data, error } = await useFetch('/api/newsroom/overview', { query: { lang
 const busy = ref<string | null>(null)
 const hiddenCount = computed(() => data.value?.stories.filter(s => s.hidden).length ?? 0)
 
+type Status = 'live' | 'preview' | 'draft' | 'hidden'
+const STATUSES: Status[] = ['live', 'preview', 'draft', 'hidden']
+const filter = ref<'all' | Status>('all')
+const counts = computed(() => Object.fromEntries(STATUSES.map(st => [st, data.value?.stories.filter(s => s.status === st).length ?? 0])))
+const shown = computed(() => (data.value?.stories ?? []).filter(s => filter.value === 'all' || s.status === filter.value))
+
 async function toggle(id: string, hidden: boolean) {
   busy.value = id
   try {
     await $fetch(`/api/newsroom/stories/${encodeURIComponent(id)}`, { method: 'POST', body: { hidden } })
     const story = data.value?.stories.find(s => s.id === id)
-    if (story) story.hidden = hidden
+    if (story) {
+      story.hidden = hidden
+      story.status = hidden ? 'hidden' : story.pending ? (story.status === 'preview' ? 'preview' : 'draft') : 'live'
+    }
   }
   finally {
     busy.value = null
@@ -58,19 +68,36 @@ async function toggle(id: string, hidden: boolean) {
       <section class="block" aria-labelledby="stories-title">
         <NewsSectionTitle id="stories-title">{{ t('newsroom.storiesTitle') }}</NewsSectionTitle>
         <p class="meta">{{ t('newsroom.storiesLead') }}</p>
+        <fieldset class="filters">
+          <legend class="sr-only">{{ t('newsroom.filter') }}</legend>
+          <label class="filter">
+            <input v-model="filter" type="radio" name="status-filter" value="all">
+            <span>{{ t('newsroom.all') }} <span class="count num">{{ data.stories.length }}</span></span>
+          </label>
+          <label v-for="st in STATUSES" :key="st" class="filter">
+            <input v-model="filter" type="radio" name="status-filter" :value="st">
+            <span><span class="dot-s" :class="`dot-s--${st}`" aria-hidden="true" />{{ t(`newsroom.status.${st}`) }} <span class="count num">{{ counts[st] }}</span></span>
+          </label>
+        </fieldset>
+        <p v-if="!shown.length" class="meta">{{ t('newsroom.noneWithStatus') }}</p>
         <ol class="stories">
-          <li v-for="s in data.stories" :key="s.id" class="story" :class="{ 'story--hidden': s.hidden }">
+          <li v-for="s in shown" :key="s.id" class="story" :class="{ 'story--hidden': s.hidden }">
             <div class="story-body">
               <p class="kicker">
                 <span>{{ s.competitionName }}</span><span aria-hidden="true">·</span>
                 <span>{{ t(`story.${s.kind}`) }}</span><span aria-hidden="true">·</span>
                 <span class="num">{{ stamp(s.time) }}</span>
-                <span class="badge-s" :class="s.hidden ? 'badge-s--hidden' : 'badge-s--live'">{{ s.hidden ? t('newsroom.hiddenBadge') : t('newsroom.liveBadge') }}</span>
-                <span v-if="s.storyControl" class="badge-s badge-s--edited">
-                  {{ t('newsroom.storyBadge', { mode: t(`editor.modes.${s.storyControl.mode}.label`) }) }}<template v-if="s.storyControl.mode !== 'hidden'"> · {{ t(`editor.audiences.${s.storyControl.audience}.label`) }}</template>
-                </span>
               </p>
               <p class="headline">{{ s.headline }}</p>
+              <!-- Status, who can read it, who wrote it. -->
+              <p class="tags">
+                <span class="tag tag--status" :class="`tag--${s.status}`">{{ t(`newsroom.status.${s.status}`) }}</span>
+                <span class="tag">{{ t(`editor.audiences.${s.storyControl?.audience ?? 'subscribers'}.label`) }}</span>
+                <span v-if="s.storyControl?.by" class="tag">{{ t('newsroom.author', { name: s.storyControl.by }) }}</span>
+                <span v-else-if="s.storyControl?.mode === 'hidden'" class="tag">{{ t('newsroom.noStory') }}</span>
+                <span v-else class="tag tag--ai">{{ t('story.aiTag') }}</span>
+                <span v-if="s.pending" class="pending">{{ t('newsroom.pendingBy', { name: s.pending.by, time: stamp(s.pending.at) }) }}</span>
+              </p>
             </div>
             <div class="actions">
               <NuxtLink :to="`/newsroom/stories/${encodeURIComponent(s.id)}`" class="edit">
@@ -118,16 +145,35 @@ async function toggle(id: string, hidden: boolean) {
 .story--hidden .headline { color: var(--meta); text-decoration: line-through; }
 .kicker { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--meta); }
 .headline { margin: 4px 0 0; font-size: 16px; font-weight: 700; line-height: 1.35; color: var(--headline); }
-.badge-s { margin-left: 4px; padding: 1px 8px; border-radius: 999px; font-size: 10px; }
-.badge-s--live { background: var(--win); color: var(--board-text); }
-.badge-s--hidden { background: var(--loss); color: var(--board-text); }
-.badge-s--edited { margin-left: 0; background: var(--surface-2); color: var(--headline); }
 .edit {
   min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
   font-size: 13px; font-weight: 700; color: var(--headline); text-decoration: none;
 }
 .edit:hover { background: var(--surface); color: var(--link-hover); }
 .edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.filters { margin: 0 0 12px; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.filter { position: relative; }
+.filter input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.filter > span {
+  min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  border: 1px solid var(--line-strong); font-size: 13px; font-weight: 700; color: var(--summary);
+}
+.filter input:checked + span { background: var(--headline); border-color: var(--headline); color: var(--bg); }
+.filter input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.count { font-weight: 600; opacity: 0.7; }
+.dot-s { width: 8px; height: 8px; border-radius: 50%; }
+.dot-s--live, .tag--live { background: var(--win); }
+.dot-s--preview, .tag--preview { background: var(--link-hover); }
+.dot-s--draft, .tag--draft { background: var(--draw); }
+.dot-s--hidden, .tag--hidden { background: var(--loss); }
+.tags { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tag {
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--summary);
+}
+.tag--status { border-color: transparent; color: var(--board-text); }
+.tag--ai { border-color: var(--link-hover); color: var(--link-hover); }
+.pending { font-size: 12px; color: var(--meta); }
 .actions { flex: 0 0 auto; display: flex; align-items: center; gap: 6px; }
 .icon-btn { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 4px; color: var(--summary); }
 .icon-btn:hover { background: var(--surface); color: var(--link-hover); }
@@ -142,6 +188,29 @@ async function toggle(id: string, hidden: boolean) {
 .icon-btn:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 @media (max-width: 559px) {
   .story { flex-direction: column; align-items: stretch; gap: 8px; }
-  .actions { justify-content: flex-end; }
+  .filters { margin: 0 0 12px; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.filter { position: relative; }
+.filter input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.filter > span {
+  min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
+  border: 1px solid var(--line-strong); font-size: 13px; font-weight: 700; color: var(--summary);
+}
+.filter input:checked + span { background: var(--headline); border-color: var(--headline); color: var(--bg); }
+.filter input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.count { font-weight: 600; opacity: 0.7; }
+.dot-s { width: 8px; height: 8px; border-radius: 50%; }
+.dot-s--live, .tag--live { background: var(--win); }
+.dot-s--preview, .tag--preview { background: var(--link-hover); }
+.dot-s--draft, .tag--draft { background: var(--draw); }
+.dot-s--hidden, .tag--hidden { background: var(--loss); }
+.tags { margin: 6px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.tag {
+  padding: 2px 8px; border-radius: 999px; border: 1px solid var(--line-strong); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--summary);
+}
+.tag--status { border-color: transparent; color: var(--board-text); }
+.tag--ai { border-color: var(--link-hover); color: var(--link-hover); }
+.pending { font-size: 12px; color: var(--meta); }
+.actions { justify-content: flex-end; }
 }
 </style>

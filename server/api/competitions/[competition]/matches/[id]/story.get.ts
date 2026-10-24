@@ -26,7 +26,8 @@ export default defineEventHandler(async (event): Promise<StoryResponse> => {
   const reader = await readerContext(event, match.key, requestLang(event))
   const { entitlements } = reader
   const published = controlSettings(reader.control)
-  const { mode, audience } = published
+  const { audience } = published
+  const mode = (await isMatchHidden(match.key)) ? 'hidden' : published.mode
   if (!entitlements.newsroom) {
     if (mode !== 'ai') throw createError({ statusCode: 404, statusMessage: 'No AI story for this match' })
     if (audience === 'subscribers' && !entitlements.premium) {

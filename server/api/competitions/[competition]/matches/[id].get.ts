@@ -30,7 +30,10 @@ export default defineEventHandler(async (event) => {
   // to free and signed-out readers, 'subscribers' (the default) keeps them premium.
   // (A newsroom preview of a draft: the draft, seen as a subscriber or a free reader.)
   const { entitlements, control } = await readerContext(event, match.key, lang)
-  const { mode, audience, length, tone } = controlSettings(control)
+  const settings = controlSettings(control)
+  // A story hidden in the newsroom is off the match page too (newsroom accounts see the note).
+  const mode = (await isMatchHidden(match.key)) ? 'hidden' as const : settings.mode
+  const { audience, length, tone } = settings
   const open = entitlements.premium || audience === 'everyone'
   const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
   const storyLocked = hasStory && !open

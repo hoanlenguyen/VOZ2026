@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
   setResponseHeader(event, 'cache-control', 'private, no-store')
   const lang = requestLang(event)
   // The same stories readers get, before moderation; event.$fetch forwards this editor's cookie.
-  const [hidden, controls] = await Promise.all([hiddenStories(), storyControls(lang)])
+  const [hidden, controls, pending] = await Promise.all([hiddenStories(), storyControls(lang), pendingEdits(lang)])
   const [landing, health] = await Promise.all([
     event.$fetch<LandingData>('/api/landing', { query: { lang, moderation: 'all' } }),
     event.$fetch<{ mode: string, providers: Record<string, { ok: boolean, source: string | null, error: string | null }> }>('/api/health'),
@@ -21,7 +21,14 @@ export default defineEventHandler(async (event) => {
     editor: account!,
     stories: landing.stories.map((s) => {
       const c = controls[s.id.slice(2)]
-      return { ...s, hidden: hidden.has(s.id), storyControl: c ? { mode: c.mode, audience: c.audience } : null }
+      const p = pending[s.id.slice(2)]
+      return {
+        ...s,
+        hidden: hidden.has(s.id),
+        status: storyStatus(hidden.has(s.id), p),
+        pending: p ? { by: p.by, at: p.at } : null,
+        storyControl: c ? { mode: c.mode, audience: c.audience, by: c.mode === 'edited' ? c.by : null } : null,
+      }
     }),
     missing: landing.missing,
     health,

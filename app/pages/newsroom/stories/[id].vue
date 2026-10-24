@@ -24,13 +24,14 @@ const storyForm = reactive({
   mode: 'ai' as StoryMode, audience: 'subscribers' as ArticleAudience, length: 'standard' as StoryLength, tone: 'neutral' as StoryTone,
   headline: '', body: '', cover: null as StoryCover | null,
 })
-const status = ref<'idle' | 'saving' | 'saved' | 'reverted' | 'error'>('idle')
+const status = ref<'idle' | 'saving' | 'saved' | 'drafted' | 'review' | 'discarded' | 'reverted' | 'copied' | 'error'>('idle')
 const message = ref('')
 
 function load() {
   const d = data.value
   if (!d) return
-  const c = d.matchStory.control
+  // A saved draft (status draft / preview) is what the editor continues from; else the live version.
+  const c = d.pending?.control ?? d.matchStory.control
   Object.assign(storyForm, {
     mode: c?.mode ?? 'ai', audience: c?.audience ?? 'subscribers', length: c?.length ?? 'standard', tone: c?.tone ?? 'neutral',
     headline: c?.headline ?? '', body: c?.body ?? '',
@@ -134,6 +135,41 @@ async function publish() {
   }
 }
 
+// Save without publishing: 'draft' (work in progress) or 'review' (ready for review, status preview).
+async function saveDraft(state: 'draft' | 'review') {
+  status.value = 'saving'
+  try {
+    await $fetch(`${url.value}/pending`, { method: 'PUT', query: { lang: locale.value }, body: { ...storyForm, state } })
+    await refresh()
+    status.value = state === 'review' ? 'review' : 'drafted'
+  }
+  catch (err) {
+    status.value = 'error'
+    message.value = (err as { statusMessage?: string }).statusMessage ?? ''
+  }
+}
+
+async function discardDraft() {
+  status.value = 'saving'
+  try {
+    await $fetch(`${url.value}/pending`, { method: 'DELETE', query: { lang: locale.value } })
+    await refresh()
+    load()
+    status.value = 'discarded'
+  }
+  catch (err) {
+    status.value = 'error'
+    message.value = (err as { statusMessage?: string }).statusMessage ?? ''
+  }
+}
+
+// Shareable preview of the saved draft for other editors (newsroom accounts only).
+async function copyPreviewLink() {
+  if (!data.value) return
+  await navigator.clipboard.writeText(`${location.origin}${data.value.story.href}?draft=pending&as=subscriber`).catch(() => {})
+  status.value = 'copied'
+}
+
 async function revert() {
   status.value = 'saving'
   try {
@@ -170,6 +206,11 @@ async function revert() {
         {{ t('editor.language', { lang: t(`editor.langName.${locale}`) }) }}
         <template v-if="data.matchStory.control"> {{ t('editor.lastSaved', { name: data.matchStory.control.by, time: stamp(data.matchStory.control.at) }) }}</template>
         <template v-else> {{ t('editor.automatic') }}</template>
+      </p>
+      <p class="state-line">
+        <span class="tag" :class="`tag--${data.status}`">{{ t(`newsroom.status.${data.status}`) }}</span>
+        <span v-if="data.pending">{{ t(`editor.pendingNote.${data.pending.state}`, { name: data.pending.by, time: stamp(data.pending.at) }) }}</span>
+        <span v-else-if="data.status === 'hidden'">{{ t('editor.hiddenNote') }}</span>
       </p>
 
       <p v-if="!data.matchStory.available" class="notice">{{ t('editor.noStory') }}</p>
@@ -243,9 +284,13 @@ async function revert() {
 
         <div class="bar">
           <button type="submit" class="primary" :disabled="status === 'saving' || !!(storyForm.cover && !storyForm.cover.alt.trim())">{{ t('editor.publish') }}</button>
+          <button type="button" class="secondary" :disabled="status === 'saving'" @click="saveDraft('draft')">{{ t('editor.saveDraft') }}</button>
+          <button type="button" class="secondary" :disabled="status === 'saving'" @click="saveDraft('review')">{{ t('editor.readyForReview') }}</button>
           <button type="button" class="secondary" @click="openPreview">
             <PhEye :size="16" weight="bold" aria-hidden="true" /> {{ t('editor.preview.open') }}
           </button>
+          <button v-if="data.pending" type="button" class="secondary" @click="copyPreviewLink">{{ t('editor.copyPreview') }}</button>
+          <button v-if="data.pending" type="button" class="secondary" :disabled="status === 'saving'" @click="discardDraft">{{ t('editor.discardDraft') }}</button>
           <button v-if="data.matchStory.control" type="button" class="secondary" :disabled="status === 'saving'" @click="revert">{{ t('editor.revert') }}</button>
           <NuxtLink :to="data.story.href" class="view" target="_blank">
             {{ t('editor.view') }} <PhArrowSquareOut :size="16" weight="bold" aria-hidden="true" />
@@ -254,6 +299,10 @@ async function revert() {
         <p class="status" role="status" :class="{ 'status--error': status === 'error' }">
           <template v-if="status === 'saved'">{{ t('editor.saved') }}</template>
           <template v-else-if="status === 'reverted'">{{ t('editor.reverted') }}</template>
+          <template v-else-if="status === 'drafted'">{{ t('editor.draftSaved') }}</template>
+          <template v-else-if="status === 'review'">{{ t('editor.reviewSaved') }}</template>
+          <template v-else-if="status === 'discarded'">{{ t('editor.draftDiscarded') }}</template>
+          <template v-else-if="status === 'copied'">{{ t('editor.previewCopied') }}</template>
           <template v-else-if="status === 'error'">{{ t('editor.saveError', { reason: message }) }}</template>
         </p>
       </form>
@@ -309,6 +358,15 @@ async function revert() {
 }
 .title { margin: 6px 0 0; font-size: 32px; line-height: 1.2; font-weight: 700; color: var(--headline); }
 .lead { margin: 8px 0 0; color: var(--summary); }
+.state-line { margin: 10px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 13px; color: var(--meta); }
+.tag {
+  padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; color: var(--board-text);
+}
+.tag--live { background: var(--win); }
+.tag--preview { background: var(--link-hover); }
+.tag--draft { background: var(--draw); }
+.tag--hidden { background: var(--loss); }
 .match-name { font-weight: 700; color: var(--headline); }
 
 .form { margin-top: 24px; display: flex; flex-direction: column; gap: 6px; }
