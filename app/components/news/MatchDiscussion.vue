@@ -106,7 +106,6 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
     <!-- Mock social-media posts (demo): everyone sees them, each with the platform it "came from". -->
     <section v-if="social?.posts.length" class="social" aria-labelledby="social-title">
       <h3 id="social-title" class="social-title">{{ t('social.title') }}</h3>
-      <p class="social-note">{{ t('social.mockNote') }}</p>
       <ol class="social-list">
         <li v-for="p in social.posts" :key="p.id" class="social-post">
           <NewsSocialIcon :platform="p.platform" :size="36" />
@@ -202,7 +201,6 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: `${route.
 .share-slot { margin-left: auto; }
 .social { margin: 0 0 24px; padding: 16px; border: 1px solid var(--line-strong); border-radius: 8px; }
 .social-title { margin: 0; font-size: 16px; font-weight: 700; color: var(--headline); }
-.social-note { margin: 2px 0 8px; font-size: 12px; color: var(--meta); }
 .social-list { list-style: none; margin: 0; padding: 0; }
 .social-post { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
 .social-post:first-child { border-top: 0; }

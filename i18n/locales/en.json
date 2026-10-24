@@ -797,7 +797,6 @@
   },
   "social": {
     "title": "On social media",
-    "mockNote": "Mock posts for the demo: invented fans and handles, not real accounts.",
     "via": "via {platform}"
   },
   "notify": {
