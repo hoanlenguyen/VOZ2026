@@ -21,6 +21,11 @@ interface UpstreamDef {
   minGapMs?: number
   /** Wait before the single retry (e.g. after a 429). */
   retryDelayMs?: number
+  /**
+   * Cache in the "kvcache" storage (Workers KV) shared by all Worker instances, instead of per-instance
+   * memory. For APIs with per-token quotas. Mind KV's free-plan write budget (1000/day) when setting maxAge.
+   */
+  sharedCache?: boolean
   transform?: (raw: unknown) => unknown
 }
 
@@ -40,8 +45,10 @@ const UPSTREAMS: Record<UpstreamId, UpstreamDef> = {
       const token = useRuntimeConfig().footballDataToken
       return token ? { 'X-Auth-Token': token } : {}
     },
-    maxAge: 300,
+    // 30 min: ~12 cached responses x 48 refreshes/day stays inside KV's free write budget.
+    maxAge: 1800,
     perMinute: 10,
+    sharedCache: true,
   },
   // Headline search for "What the press says". Free plan: 100 requests/day, so cache for 6 hours.
   'gnews': {
@@ -52,6 +59,7 @@ const UPSTREAMS: Record<UpstreamId, UpstreamDef> = {
     perMinute: 30,
     minGapMs: 1_100,
     retryDelayMs: 2_000,
+    sharedCache: true,
   },
 }
 
@@ -121,7 +129,13 @@ const fetchCached = Object.fromEntries(
     provider,
     defineCachedFunction(
       (path: string, query: UpstreamQuery) => fetchLive(provider, path, query),
-      { name: `upstream-${provider}`, maxAge: UPSTREAMS[provider].maxAge, swr: true, getKey: snapshotKey },
+      {
+        name: `upstream-${provider}`,
+        maxAge: UPSTREAMS[provider].maxAge,
+        swr: true,
+        getKey: snapshotKey,
+        ...(UPSTREAMS[provider].sharedCache ? { base: 'kvcache' } : {}),
+      },
     ),
   ]),
 ) as Record<UpstreamId, (path: string, query: UpstreamQuery) => Promise<unknown>>

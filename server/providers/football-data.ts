@@ -213,6 +213,11 @@ export const footballDataProvider: SportProvider = {
   },
 
   async match(c, id) {
+    // The cached season list carries the same fields on the free plan; a per-match request would
+    // spend the 10-requests/minute quota on every page view.
+    const list = await footballDataProvider.matches(c, {})
+    const hit = list.data.find(m => m.id === id)
+    if (hit) return { data: hit, source: list.source }
     const { data, source } = await upstream<RawMatch>('football-data', `matches/${id}`)
     return { data: normalizeMatch(c, data), source }
   },

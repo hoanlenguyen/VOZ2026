@@ -43,5 +43,8 @@ export default defineNuxtConfig({
     // Snapshots are bundled into the Worker (no filesystem there) and read via useStorage('assets:snapshots').
     // Per-game Liiga files (~28 MB) stay out of the bundle.
     serverAssets: [{ baseName: 'snapshots', dir: '../data/snapshots', ignore: ['liiga/games_2027_*'] }],
+    // Shared upstream cache for quota-limited APIs: Workers KV in production, memory in dev.
+    storage: { kvcache: { driver: 'cloudflare-kv-binding', binding: 'VOZ_CACHE' } },
+    devStorage: { kvcache: { driver: 'memory' } },
   },
 })
