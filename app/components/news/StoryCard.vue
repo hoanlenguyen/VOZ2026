@@ -17,7 +17,7 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
-        <span v-if="ai && variant !== 'lead'" class="ai-tag">{{ t('story.aiTag') }}</span>
+        <span v-if="ai" class="ai-tag">{{ t('story.aiTag') }}</span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
@@ -26,9 +26,9 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
       <p v-if="ai && variant !== 'card'" class="dek">{{ keepScoresTogether(story.subtitle!) }}</p>
       <!-- Rows show the AI dek instead of the summary; the lead keeps both. -->
       <p v-if="(variant === 'lead' || (variant === 'row' && !ai)) && story.summary" class="summary">{{ story.summary }}</p>
-      <p v-if="variant === 'lead'" class="auto">
+      <p v-if="variant === 'lead' && !ai" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
-        {{ ai ? t('story.aiAuto') : t('story.auto') }}
+        {{ t('story.auto') }}
       </p>
     </div>
   </article>

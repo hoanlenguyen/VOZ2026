@@ -41,8 +41,7 @@
     "result": "Result",
     "preview": "Preview",
     "auto": "Written automatically from official match data",
-    "aiTag": "AI content",
-    "aiAuto": "Headline and summary line written by AI and checked against official match data"
+    "aiTag": "AI content"
   },
   "table": {
     "title": "{league} table",

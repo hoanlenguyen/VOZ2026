@@ -41,8 +41,7 @@
     "result": "Tulos",
     "preview": "Ennakko",
     "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
-    "aiTag": "Tekoälysisältö",
-    "aiAuto": "Otsikon ja ingressin kirjoitti tekoäly, ja ne on tarkistettu virallisesta otteludatasta"
+    "aiTag": "Tekoälysisältö"
   },
   "table": {
     "title": "{league} – sarjataulukko",
