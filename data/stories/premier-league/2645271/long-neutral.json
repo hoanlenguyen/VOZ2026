@@ -2,134 +2,129 @@
  "matchKey": "premier-league:2645271",
  "length": "long",
  "tone": "neutral",
- "generatedAt": "2026-10-24T09:38:25.856Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:31:36.156Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
    "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
-   "ms": 1406
+   "ms": 2124
   },
   {
    "turn": 2,
    "tool": "check_story",
-   "summary": "Draft checked: passed (26 facts cited)",
-   "ms": 6475
+   "summary": "Draft checked: passed (20 facts cited)",
+   "ms": 7701
   },
   {
    "turn": 3,
    "tool": "submit_story",
-   "summary": "Submitted: passed the final check (26 facts cited)",
-   "ms": 4466
+   "summary": "Submitted: passed the final check (20 facts cited)",
+   "ms": 5515
   }
  ],
  "usage": {
-  "inputTokens": 5604,
-  "outputTokens": 1214,
+  "inputTokens": 5596,
+  "outputTokens": 1162,
   "turns": 3,
-  "ms": 12347
+  "ms": 15340
  },
- "headline": "Ipswich and Forest share points after first-half goals",
+ "headline": "Ipswich and Nott'm Forest share points after first-half goals",
  "sentences": [
   {
-   "text": "Ipswich Town and Nottingham Forest drew 1–1 in the Premier League at Portman Road, with both goals arriving before half-time.",
+   "text": "Ipswich Town and Nott'm Forest drew 1–1 in Premier League matchweek 8 at Portman Road, with both goals arriving before half-time.",
    "facts": [
     "f1",
     "f3",
-    "f4",
     "f6"
    ],
    "paragraph": 1
   },
   {
-   "text": "Forest took the lead in the 13th minute when Neco Williams scored from Daniel Muñoz’s assist.",
+   "text": "Neco Williams put Forest ahead in the 13th minute, assisted by Daniel Muñoz.",
    "facts": [
     "f7"
    ],
    "paragraph": 1
   },
   {
-   "text": "Ipswich levelled in the 41st minute through Julio Enciso, and the score remained unchanged after the interval.",
+   "text": "Ipswich responded through Julio Enciso, who equalised in the 41st minute to make it 1–1.",
    "facts": [
     "f8",
-    "f9",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The score remained unchanged after the break, and the sides took a point each.",
+   "facts": [
+    "f2",
     "f4"
    ],
    "paragraph": 1
   },
   {
-   "text": "The second half included a VAR review involving Ipswich’s Issa Diop, who was later booked, while Forest’s Murillo Santiago Costa dos Santos also received a yellow card.",
+   "text": "The match statistics reflected a more forceful attacking output from Forest, who had 17 shots to Ipswich's 7.",
    "facts": [
-    "f10",
-    "f11",
-    "f12"
+    "f19"
    ],
    "paragraph": 2
   },
   {
-   "text": "Ipswich made 5 substitutions and Forest made 3 as both sides changed personnel during the game.",
+   "text": "Forest also led 5–3 in shots on target and 5–0 in corners, while Ipswich recorded 3 goalkeeper saves to Forest's 2.",
    "facts": [
-    "f13",
-    "f14"
+    "f20",
+    "f22",
+    "f26"
    ],
    "paragraph": 2
   },
   {
-   "text": "The possession split was nearly even, with Ipswich at 49.4% and Forest at 50.6%.",
+   "text": "The clearest gap was in expected goals: Forest registered 2.29 to Ipswich's 0.46.",
+   "facts": [
+    "f17"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Possession was nearly even, with Forest at 50.6% and Ipswich at 49.4%.",
    "facts": [
     "f16"
    ],
    "paragraph": 2
   },
   {
-   "text": "But Forest had the greater attacking volume, recording 17 shots to Ipswich’s 7 and 5 shots on target to 3.",
-   "facts": [
-    "f19",
-    "f20"
-   ],
-   "paragraph": 3
-  },
-  {
-   "text": "The expected-goals figures also favoured Forest, at 2.29 to Ipswich’s 0.46, while Forest had 5 corners to none.",
-   "facts": [
-    "f17",
-    "f22"
-   ],
-   "paragraph": 3
-  },
-  {
-   "text": "Ipswich completed 486 passes at 79% accuracy, compared with Forest’s 480 passes at 80%.",
-   "facts": [
-    "f23",
-    "f24"
-   ],
-   "paragraph": 3
-  },
-  {
-   "text": "The draw extended Ipswich’s run of mixed results: they had collected 6 points from their previous 5 league matches, while Forest had taken 4 from their last 5.",
+   "text": "The draw followed contrasting recent runs: Ipswich had collected 6 points from their previous 5 league matches, while Forest had taken 4 from their last 5.",
    "facts": [
     "f29",
-    "f30",
-    "f2"
+    "f30"
    ],
-   "paragraph": 4
+   "paragraph": 3
   },
   {
-   "text": "Ipswich moved from 10th before kick-off to 9th, reaching 10 points after 8 matches.",
+   "text": "Ipswich's sequence included 2 wins and 3 defeats; Forest had 1 win, 1 draw and 3 losses.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich moved from 10th before kick-off to 9th with 10 points from 8 matches.",
    "facts": [
     "f31",
     "f32"
    ],
-   "paragraph": 4
+   "paragraph": 3
   },
   {
-   "text": "Forest climbed from 19th to 16th and now have 6 points from 8 matches, with each side taking a point from the stalemate.",
+   "text": "Forest climbed from 19th to 16th, now on 6 points after 8 matches.",
    "facts": [
     "f33",
-    "f34",
-    "f2"
+    "f34"
    ],
-   "paragraph": 4
+   "paragraph": 3
   }
  ],
  "origin": "agent",
@@ -137,7 +132,7 @@
  "check": {
   "passed": true,
   "issues": [],
-  "factsUsed": 26
+  "factsUsed": 20
  },
  "fallbackReason": null
 }

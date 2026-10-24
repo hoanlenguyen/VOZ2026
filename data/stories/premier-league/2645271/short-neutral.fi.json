@@ -1,0 +1,68 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "short",
+ "tone": "neutral",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:32:40.813Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 33 facts (result, timeline, stats, context)",
+   "ms": 1246
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (6 facts cited)",
+   "ms": 2220
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (6 facts cited)",
+   "ms": 2072
+  }
+ ],
+ "usage": {
+  "inputTokens": 4547,
+  "outputTokens": 384,
+  "turns": 3,
+  "ms": 5538
+ },
+ "headline": "Ipswich ja Nottingham Forest jakoivat pisteet",
+ "sentences": [
+  {
+   "text": "Ipswich Town ja Nottingham Forest pelasivat Premier Leaguen 8. ottelukierroksella 1–1-tasapelin, joten molemmat saivat pisteen.",
+   "facts": [
+    "f1",
+    "f2"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams vei Nottingham Forestin johtoon 13. minuutilla, ja Julio Enciso tasoitti Ipswich Townille 41. minuutilla.",
+   "facts": [
+    "f7",
+    "f8"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Toisella puoliajalla ei syntynyt maaleja, vaikka Nottingham Forest laukoi 17 kertaa Ipswich Townin 7 laukausta vastaan.",
+   "facts": [
+    "f4",
+    "f19"
+   ],
+   "paragraph": 1
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 6
+ },
+ "fallbackReason": null
+}

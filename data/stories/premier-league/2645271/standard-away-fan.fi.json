@@ -1,0 +1,95 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "standard",
+ "tone": "away-fan",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:33:24.549Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 1260
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (12 facts cited)",
+   "ms": 3895
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (12 facts cited)",
+   "ms": 3475
+  }
+ ],
+ "usage": {
+  "inputTokens": 5500,
+  "outputTokens": 746,
+  "turns": 3,
+  "ms": 8630
+ },
+ "headline": "Forestin piste jäi laihaksi: hallinta ei riittänyt voittoon",
+ "sentences": [
+  {
+   "text": "Nottingham Forest lähti Portman Roadilta 1–1-tasapelin ja yhden pisteen kanssa, vaikka ottelun numerot lupaavat enemmän.",
+   "facts": [
+    "f1",
+    "f2",
+    "f6",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams vei Forestin johtoon 13. minuutilla Daniel Muñozin syötöstä, mutta Julio Enciso tasoitti Ipswich Townille 41. minuutilla.",
+   "facts": [
+    "f7",
+    "f8"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Tauolle mentiin 1–1-tilanteessa, eikä toisella puoliajalla nähty maaleja.",
+   "facts": [
+    "f3",
+    "f4"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest laukoi 17 kertaa Ipswich Townin 7:ää vastaan ja kirjautti odotetuiksi maaleiksi 2,29, kun kotijoukkueen lukema oli 0,46.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Silti pisteet jaettiin: Forest osui maalia kohti 5 kertaa, Ipswich Town 3 kertaa, ja maalivahdit torjuivat vastaavasti 3 ja 2 laukausta.",
+   "facts": [
+    "f2",
+    "f20",
+    "f26"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Tasapeli jätti Forestille 6 pistettä 8 ottelun jälkeen, ja joukkue nousi sarjataulukossa 16:nneksi.",
+   "facts": [
+    "f34"
+   ],
+   "paragraph": 2
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 12
+ },
+ "fallbackReason": null
+}

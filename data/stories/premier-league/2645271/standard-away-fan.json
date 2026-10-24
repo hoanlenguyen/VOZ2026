@@ -2,84 +2,89 @@
  "matchKey": "premier-league:2645271",
  "length": "standard",
  "tone": "away-fan",
- "generatedAt": "2026-10-24T09:38:04.055Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:31:10.341Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
    "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
-   "ms": 1156
+   "ms": 1837
   },
   {
    "turn": 2,
    "tool": "check_story",
-   "summary": "Draft checked: passed (14 facts cited)",
-   "ms": 6159
+   "summary": "Draft checked: 1 problems",
+   "ms": 5034
   },
   {
    "turn": 3,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (14 facts cited)",
+   "ms": 3391
+  },
+  {
+   "turn": 4,
    "tool": "submit_story",
    "summary": "Submitted: passed the final check (14 facts cited)",
-   "ms": 3217
+   "ms": 3054
   }
  ],
  "usage": {
-  "inputTokens": 5385,
-  "outputTokens": 798,
-  "turns": 3,
-  "ms": 10532
+  "inputTokens": 8267,
+  "outputTokens": 1056,
+  "turns": 4,
+  "ms": 13316
  },
- "headline": "Forest leave Ipswich with a point after dominant chance creation",
+ "headline": "Forest Leave Portman Road With a Point, but Chances Go Begging",
  "sentences": [
   {
-   "text": "Nott'm Forest left Portman Road with a point after a 1–1 draw, but their attacking numbers suggest there was an opportunity for more.",
+   "text": "Nott'm Forest will leave Portman Road frustrated by a 1–1 draw after creating enough to take more from Ipswich Town.",
    "facts": [
     "f1",
-    "f2",
     "f6",
-    "f17"
+    "f17",
+    "f19"
    ],
    "paragraph": 1
   },
   {
-   "text": "Neco Williams put Forest ahead in the 13th minute, assisted by Daniel Muñoz, before Julio Enciso equalised for Ipswich in the 41st.",
+   "text": "Neco Williams put Forest ahead in the 13th minute, assisted by Daniel Muñoz, but Julio Enciso levelled for Ipswich in the 41st.",
    "facts": [
     "f7",
-    "f8",
-    "f9"
+    "f8"
    ],
    "paragraph": 1
   },
   {
-   "text": "The sides went in level and neither found a second-half goal, so Forest had to settle for a share of the points.",
+   "text": "The sides went in level at half-time, and neither could find a second-half winner.",
    "facts": [
     "f3",
-    "f4",
-    "f2"
+    "f4"
    ],
    "paragraph": 1
   },
   {
-   "text": "Forest had 17 shots to Ipswich's 7 and registered 2.29 expected goals against 0.46, while possession was almost even at 50.6% to 49.4%.",
+   "text": "Forest had 17 shots to Ipswich’s 7 and an xG of 2.29 against 0.46, a clear measure of the attacking opportunity that went unrewarded.",
    "facts": [
     "f17",
-    "f19",
-    "f16"
+    "f19"
    ],
    "paragraph": 2
   },
   {
-   "text": "That attacking edge makes the draw a frustrating result for Forest, especially with 5 corners to Ipswich's 0, though the scoreline stayed level after the break.",
+   "text": "They also registered 5 shots on target and 5 corners, while Ipswich had 3 shots on target and no corners.",
    "facts": [
-    "f22",
-    "f4",
-    "f1"
+    "f20",
+    "f22"
    ],
    "paragraph": 2
   },
   {
-   "text": "The point lifts Nott'm Forest from 19th before kick-off to 16th, with 6 points from 8 matches.",
+   "text": "The point lifts Nott'm Forest from 19th to 16th, leaving them on 6 points after 8 matches; Ipswich move to 9th on 10 points.",
    "facts": [
+    "f31",
+    "f32",
     "f33",
     "f34"
    ],

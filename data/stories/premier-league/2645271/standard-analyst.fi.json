@@ -1,0 +1,95 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "standard",
+ "tone": "analyst",
+ "lang": "fi",
+ "generatedAt": "2026-10-24T11:33:36.444Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 39 facts (result, timeline, stats, form, table, context)",
+   "ms": 950
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (15 facts cited)",
+   "ms": 7129
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (15 facts cited)",
+   "ms": 3798
+  }
+ ],
+ "usage": {
+  "inputTokens": 5619,
+  "outputTokens": 1048,
+  "turns": 3,
+  "ms": 11878
+ },
+ "headline": "Ipswich Town ja Nottingham Forest jakoivat pisteet, vaikka maalipaikkatilasto suosi vieraita",
+ "sentences": [
+  {
+   "text": "Ipswich Town ja Nott'm Forest päätyivät 1–1-tasapeliin: Neco Williams vei vieraat johtoon 13. minuutilla, ja Julio Enciso tasoitti 41. minuutilla.",
+   "facts": [
+    "f1",
+    "f7",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Toisen jakson maalittomuus jätti tuloksen ennalleen, vaikka Nottingham Forest vei laukaukset 17–7 ja maaliodottaman 2,29–0,46.",
+   "facts": [
+    "f4",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Hallinta jakautui lähes tasan, 49,4–50,6 prosenttia, mutta vieraat loivat myös enemmän isoja maalipaikkoja, 2–1.",
+   "facts": [
+    "f16",
+    "f21"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Tilastojen valossa tasapeli tuotti Ipswich Townille niukasti tulokseen nähden, sillä Nottingham Forestin maaliodottama oli 1,83 suurempi.",
+   "facts": [
+    "f2",
+    "f18"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich Town nousi ottelun jälkeen 9:nneksi 10 pisteellä, kun taas Nottingham Forest on 16:ntena 6 pisteessä.",
+   "facts": [
+    "f32",
+    "f34"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Lähtöasetelmassa joukkueiden edellisten 5 liigaottelun pistekertymä oli Ipswich Townilla 6 ja Nottingham Forestilla 4, joten pistejako jatkoi niiden varsin erilaista virekuvaa.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 2
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 15
+ },
+ "fallbackReason": null
+}

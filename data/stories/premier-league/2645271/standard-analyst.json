@@ -2,83 +2,90 @@
  "matchKey": "premier-league:2645271",
  "length": "standard",
  "tone": "analyst",
- "generatedAt": "2026-10-24T09:38:13.479Z",
+ "lang": "en",
+ "generatedAt": "2026-10-24T11:31:20.792Z",
  "trace": [
   {
    "turn": 1,
    "tool": "get_facts",
    "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
-   "ms": 1059
+   "ms": 1033
   },
   {
    "turn": 2,
    "tool": "check_story",
-   "summary": "Draft checked: passed (16 facts cited)",
-   "ms": 5001
+   "summary": "Draft checked: passed (18 facts cited)",
+   "ms": 5712
   },
   {
    "turn": 3,
    "tool": "submit_story",
-   "summary": "Submitted: passed the final check (16 facts cited)",
-   "ms": 3314
+   "summary": "Submitted: passed the final check (18 facts cited)",
+   "ms": 3685
   }
  ],
  "usage": {
-  "inputTokens": 5307,
-  "outputTokens": 738,
+  "inputTokens": 5393,
+  "outputTokens": 866,
   "turns": 3,
-  "ms": 9375
+  "ms": 10430
  },
- "headline": "Forest’s chance volume outstrips Ipswich in 1–1 draw",
+ "headline": "Forest’s chance volume goes unrewarded in Ipswich draw",
  "sentences": [
   {
-   "text": "Ipswich Town and Nottingham Forest shared the points in a 1–1 draw, but the underlying numbers tilted sharply toward the visitors.",
+   "text": "Ipswich Town and Nottingham Forest shared a 1–1 draw, with both goals arriving before half-time and neither side scoring after the break.",
    "facts": [
     "f1",
-    "f2",
-    "f17",
-    "f18"
+    "f4"
    ],
    "paragraph": 1
   },
   {
-   "text": "Forest recorded 2.29 expected goals to Ipswich’s 0.46, alongside a 17–7 advantage in shots and 5–3 in attempts on target.",
-   "facts": [
-    "f17",
-    "f19",
-    "f20"
-   ],
-   "paragraph": 1
-  },
-  {
-   "text": "The visitors also created 2 big chances to Ipswich’s 1 and won 5 corners while Ipswich had none, though possession was nearly even at 50.6% to 49.4%.",
-   "facts": [
-    "f21",
-    "f22",
-    "f16"
-   ],
-   "paragraph": 1
-  },
-  {
-   "text": "Neco Williams put Forest ahead in the 13th minute, and Julio Enciso levelled for Ipswich in the 41st; neither side scored after the break.",
+   "text": "Neco Williams put Nottingham Forest ahead in the 13th minute, and Julio Enciso equalised for Ipswich in the 41st.",
    "facts": [
     "f7",
     "f8",
-    "f4"
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The underlying numbers strongly favoured Forest: they recorded 2.29 expected goals to Ipswich’s 0.46 and outshot the hosts 17–7.",
+   "facts": [
+    "f17",
+    "f19"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Forest also had 5 shots on target to Ipswich’s 3, created 2 big chances to 1 and won 5 corners while Ipswich had none.",
+   "facts": [
+    "f20",
+    "f21",
+    "f22"
    ],
    "paragraph": 2
   },
   {
-   "text": "Forest made the stronger threat without turning that advantage into a second goal, while the draw moved Ipswich to 9th on 10 points and Forest to 16th on 6.",
+   "text": "Possession was nearly even, at 50.6% for Forest and 49.4% for Ipswich, while pass totals were similarly close at 480 and 486 respectively.",
    "facts": [
-    "f17",
+    "f16",
+    "f23"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Ipswich’s 4-2-3-1 faced Forest’s 3-4-2-1, and the point moved Ipswich to 9th on 10 points while Forest rose to 16th on 6.",
+   "facts": [
+    "f37",
+    "f39",
     "f32",
     "f34"
    ],
    "paragraph": 2
   },
   {
-   "text": "Both sides entered with inconsistent recent league runs: Ipswich had taken 6 points from 5 matches, Forest 4 from 5.",
+   "text": "The result extends a mixed five-game run for both: Ipswich had taken 6 points from their preceding 5 league matches, and Forest 4.",
    "facts": [
     "f29",
     "f30"
@@ -91,7 +98,7 @@
  "check": {
   "passed": true,
   "issues": [],
-  "factsUsed": 16
+  "factsUsed": 18
  },
  "fallbackReason": null
 }
