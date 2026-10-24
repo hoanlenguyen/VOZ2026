@@ -257,11 +257,11 @@
     "audiences": {
       "everyone": {
         "label": "Kaikki",
-        "text": "Myös maksuttomat ja kirjautumattomat lukijat."
+        "text": "Koko ottelusivu on maksuton: raportti, tapahtumat, vertailu ja kokoonpanot myös maksuttomille ja kirjautumattomille lukijoille."
       },
       "subscribers": {
         "label": "Vain tilaajat",
-        "text": "Muut näkevät alun ja tilaustarjouksen."
+        "text": "Muut näkevät raportin alun ja tilaustarjouksen; tapahtumat, vertailu ja kokoonpanot vain tilaajille."
       }
     },
     "publish": "Julkaise",
@@ -293,7 +293,7 @@
     "startFromAi": "Aloita tekoälyn raportista",
     "storyBody": "Raportin teksti",
     "storyBodyHint": "Muokkauksesi ei viittaa faktoihin: editorin vieressä oleva tarkistus näyttää luvut ja nimet, joita faktoissa ei ole.",
-    "storyAudience": "Kuka voi lukea otteluraportin",
+    "storyAudience": "Kuka voi lukea tämän ottelusivun",
     "factsTitle": "Ottelun faktat",
     "factsSearch": "Hae faktoista",
     "factsUsed": "Korostettu: tekstisi käyttää {n}/{total} faktaa.",

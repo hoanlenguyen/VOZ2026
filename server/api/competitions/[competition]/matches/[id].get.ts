@@ -26,12 +26,14 @@ export default defineEventHandler(async (event) => {
   setResponseHeader(event, 'cache-control', 'private, no-store')
   const finished = match.status === 'finished'
   // Newsroom control (per language): the match story is the AI version, the newsroom's edit or
-  // hidden, for everyone or for subscribers only.
+  // hidden; audience 'everyone' opens the whole match page (story, comparison, timeline, line-ups)
+  // to free and signed-out readers, 'subscribers' (the default) keeps them premium.
   // (A newsroom preview of a draft: the draft, seen as a subscriber or a free reader.)
   const { entitlements, control } = await readerContext(event, match.key, lang)
   const { mode, audience, length, tone } = controlSettings(control)
+  const open = entitlements.premium || audience === 'everyone'
   const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
-  const storyLocked = hasStory && audience === 'subscribers' && !entitlements.premium
+  const storyLocked = hasStory && !open
   const edited = control?.mode === 'edited'
     ? { headline: control.headline, body: control.body, audience, by: control.by, at: control.at }
     : null
@@ -63,10 +65,10 @@ export default defineEventHandler(async (event) => {
     cover: coverOf(control),
     competition: describeCompetition(def, lang),
     match,
-    compare: entitlements.premium ? compare : null,
-    extras: entitlements.premium ? extras : null,
+    compare: open ? compare : null,
+    extras: open ? extras : null,
     /** Premium parts this reader would see with a subscription (empty when nothing is locked). */
-    locked: entitlements.premium
+    locked: open
       ? []
       : [
           ...(storyLocked ? ['story' as const] : []),

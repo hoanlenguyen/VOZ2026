@@ -257,11 +257,11 @@
     "audiences": {
       "everyone": {
         "label": "Everyone",
-        "text": "Free and signed-out readers included."
+        "text": "The whole match page is free: story, timeline, comparison and line-ups, for free and signed-out readers too."
       },
       "subscribers": {
         "label": "Subscribers only",
-        "text": "Others see the opening lines and the subscription offer."
+        "text": "Others see the story's opening lines and the subscription offer; timeline, comparison and line-ups stay for subscribers."
       }
     },
     "publish": "Publish",
@@ -293,7 +293,7 @@
     "startFromAi": "Start from the AI story",
     "storyBody": "Story text",
     "storyBodyHint": "Your edit cites no facts: the check next to the editor flags numbers and names that are not in them.",
-    "storyAudience": "Who can read the match story",
+    "storyAudience": "Who can read this match page",
     "factsTitle": "Match facts",
     "factsSearch": "Search the facts",
     "factsUsed": "Highlighted: {n} of {total} facts your text uses.",

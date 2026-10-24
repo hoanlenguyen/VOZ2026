@@ -235,10 +235,7 @@ async function revert() {
             </aside>
           </div>
 
-          <NewsChoiceCards
-            v-if="storyForm.mode !== 'hidden'" v-model="storyForm.audience"
-            :legend="t('editor.storyAudience')" name="story-audience" :options="audiences"
-          />
+          <NewsChoiceCards v-model="storyForm.audience" :legend="t('editor.storyAudience')" name="story-audience" :options="audiences" />
           <NewsCoverPicker v-model="storyForm.cover" :graphic="data.story" />
         </section>
 
