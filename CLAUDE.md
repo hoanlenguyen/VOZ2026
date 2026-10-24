@@ -8,6 +8,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - `npm run dev` — dev server (stop it before restarting; Nuxt refuses a second instance). After adding a new component, restart if SSR logs "Failed to resolve component".
   Changing `.env` or `nuxt.config.ts` makes the server restart itself; a second dev server of this folder (e.g. an old `--port 3002`) blocks that restart and every request then returns 500 "Another Nuxt dev server is already running".
 - `npm run typecheck` — must pass before committing
+- Never hand-edit or prune `package-lock.json`: CI runs `npm ci` on Linux, which fails if optional/peer entries (e.g. `@emnapi/*` for sharp's wasm build) are missing even though a Windows install works. Regenerate with `npm install --package-lock-only` and check with `npm ci` in a clean folder.
 - `npm test` — story checker tests (Node's test runner, plain TS); also run by the deploy workflow
 - `npm run snapshot -- [--only liiga|football-data] [--details] [--competitions PL,BL1]` — save upstream
   responses to `data/snapshots/<provider>/` for offline demos (football: ~6.5 s per request, free-plan limit)
