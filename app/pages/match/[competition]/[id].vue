@@ -121,6 +121,12 @@ useHead(() => ({
         :engagement="engagement" @engagement="liveEngagement = $event"
       />
 
+      <!-- Before the match: AI preview from the trusted outlets' articles and VOZ facts. -->
+      <NewsMatchPaper
+        v-if="!finished && !preview" :competition-id="data.competition.id" :match-id="match.id"
+        :home="match.home.shortName" :away="match.away.shortName"
+      />
+
       <!-- AI podcast of this match (subscribers listen; others see it locked); the newsroom makes it here. -->
       <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
 

@@ -784,5 +784,24 @@
     "facts": "Match facts ({n})",
     "pressNote": "Attached as links only; the story uses none of their text.",
     "howMade": "How this was made ({turns} turns, {s} s)"
+  },
+  "paper": {
+    "breaking": "Breaking",
+    "writing": "Reading the articles and writing the preview… the first time takes about a minute.",
+    "meta": "Analysis of {n} outlets’ reporting · {time} | Analysis of {n} outlet’s reporting · {time} | Analysis of {n} outlets’ reporting · {time}",
+    "sections": {
+      "team-news": "Team news and injuries",
+      "team": "{team}: strengths and weaknesses",
+      "press": "Press talking points",
+      "insight": "Insights"
+    },
+    "sourceLink": "Source {n}: {outlet} (opens the article)",
+    "disclaimer": "Written by AI from VOZ summaries of trusted outlets’ articles and VOZ match data; injury and team news are the outlets’ reports.",
+    "seePress": "Sources: {section}",
+    "how": "How this was made",
+    "howText": "An AI agent ({model}) read {read} articles, checked every sentence against them and the match data, and fixed its draft until it passed.",
+    "lockedTitle": "Read the full preview with VOZ Plus",
+    "lockedFree": "Subscribers get the full analysis: team news and injuries, each side’s strengths and weaknesses, what the press says and our insights.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to read the full match preview."
   }
 }

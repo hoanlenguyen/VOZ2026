@@ -784,5 +784,24 @@
     "facts": "Ottelun faktat ({n})",
     "pressNote": "Liitetty vain linkkeinä; juttu ei käytä niiden tekstiä.",
     "howMade": "Näin tämä tehtiin ({turns} kierrosta, {s} s)"
+  },
+  "paper": {
+    "breaking": "Tuoreet",
+    "writing": "Luetaan artikkeleita ja kirjoitetaan ennakkoa… ensimmäinen kerta kestää noin minuutin.",
+    "meta": "Analyysi {n} median uutisoinnista · {time} | Analyysi {n} median uutisoinnista · {time} | Analyysi {n} median uutisoinnista · {time}",
+    "sections": {
+      "team-news": "Kokoonpanot ja loukkaantumiset",
+      "team": "{team}: vahvuudet ja heikkoudet",
+      "press": "Mediassa puhuttaa",
+      "insight": "Näkemykset"
+    },
+    "sourceLink": "Lähde {n}: {outlet} (avaa artikkelin)",
+    "disclaimer": "Tekoälyn kirjoittama VOZ:n tiivistelmistä luotettujen medioiden artikkeleista ja VOZ:n otteludatasta; loukkaantumis- ja kokoonpanotiedot ovat medioiden raportteja.",
+    "seePress": "Lähteet: {section}",
+    "how": "Näin tämä tehtiin",
+    "howText": "Tekoälyagentti ({model}) luki {read} artikkelia, tarkisti jokaisen lauseen niitä ja otteludataa vasten ja korjasi luonnosta, kunnes se läpäisi tarkistuksen.",
+    "lockedTitle": "Lue koko ennakko VOZ Plus -tilauksella",
+    "lockedFree": "Tilaajat lukevat koko analyysin: kokoonpanot ja loukkaantumiset, joukkueiden vahvuudet ja heikkoudet, median puheenaiheet ja näkemyksemme.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi koko otteluennakon."
   }
 }
