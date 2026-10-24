@@ -1,0 +1,143 @@
+{
+ "matchKey": "premier-league:2645271",
+ "length": "long",
+ "tone": "away-fan",
+ "generatedAt": "2026-10-24T09:38:52.787Z",
+ "trace": [
+  {
+   "turn": 1,
+   "tool": "get_facts",
+   "summary": "Read 41 facts (result, timeline, stats, form, table, h2h, context)",
+   "ms": 969
+  },
+  {
+   "turn": 2,
+   "tool": "check_story",
+   "summary": "Draft checked: passed (20 facts cited)",
+   "ms": 7377
+  },
+  {
+   "turn": 3,
+   "tool": "submit_story",
+   "summary": "Submitted: passed the final check (20 facts cited)",
+   "ms": 4955
+  }
+ ],
+ "usage": {
+  "inputTokens": 5669,
+  "outputTokens": 1273,
+  "turns": 3,
+  "ms": 13301
+ },
+ "headline": "Nott'm Forest leave Portman Road with a point and plenty to build on",
+ "sentences": [
+  {
+   "text": "Nott'm Forest had to settle for a 1–1 draw at Ipswich Town, a result that brought a point but left the visitors with a sense of what might have been.",
+   "facts": [
+    "f1",
+    "f2",
+    "f17"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Neco Williams put Forest ahead in the 13th minute, finishing a move assisted by Daniel Muñoz and giving the away side an early reward.",
+   "facts": [
+    "f7"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "Ipswich responded before the break, with Julio Enciso levelling in the 41st minute to send the teams in at 1–1.",
+   "facts": [
+    "f3",
+    "f8",
+    "f9"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "There was no second-half breakthrough, despite Forest’s pressure and a match that remained finely balanced in possession.",
+   "facts": [
+    "f4",
+    "f16"
+   ],
+   "paragraph": 1
+  },
+  {
+   "text": "The numbers underline the frustration for Forest: they had 17 shots to Ipswich’s 7 and registered 5 shots on target to 3.",
+   "facts": [
+    "f19",
+    "f20"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Their expected-goals total was 2.29 against Ipswich’s 0.46, while Forest also created 2 big chances to the hosts’ 1.",
+   "facts": [
+    "f17",
+    "f21"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Forest had 5 corners, compared with none for Ipswich, and made 3 saves; the home goalkeeper made 3.",
+   "facts": [
+    "f22",
+    "f26"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "Yet the visitors could not turn that greater attacking output into a winning goal, and the score stayed level after the interval.",
+   "facts": [
+    "f4",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 2
+  },
+  {
+   "text": "The point interrupts a difficult run for Forest, whose previous 5 league results brought 4 points, including 3 consecutive defeats before this trip.",
+   "facts": [
+    "f30"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich arrived with 6 points from their previous 5 matches, a stronger return than Forest’s.",
+   "facts": [
+    "f29",
+    "f30"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Forest had started the evening 19th with 5 points from 7 games and finish it 16th on 6 points from 8.",
+   "facts": [
+    "f33",
+    "f34"
+   ],
+   "paragraph": 3
+  },
+  {
+   "text": "Ipswich move from 10th to 9th, now on 10 points, while Forest can take encouragement from the performance even as the table leaves work to do.",
+   "facts": [
+    "f31",
+    "f32",
+    "f34",
+    "f17",
+    "f19"
+   ],
+   "paragraph": 3
+  }
+ ],
+ "origin": "agent",
+ "model": "gpt-6-luna",
+ "check": {
+  "passed": true,
+  "issues": [],
+  "factsUsed": 20
+ },
+ "fallbackReason": null
+}
