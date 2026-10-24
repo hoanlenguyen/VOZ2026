@@ -39,6 +39,11 @@ const { data: standings } = useLazyFetch(`/api/competitions/${route.params.compe
 const table = computed(() => standings.value?.rows.length
   ? { competitionId: standings.value.competition.id, competitionName: standings.value.competition.name, rows: standings.value.rows }
   : null)
+// Discussion totals (public): from the match API, then live from the discussion as readers act.
+// Matches with a story have a discussion, also when the story is locked for this reader.
+const hasDiscussion = computed(() => !preview.value && !!(data.value?.story || data.value?.locked?.includes('story')))
+const liveEngagement = ref<{ comments: number, likes: number } | null>(null)
+const engagement = computed(() => liveEngagement.value ?? data.value?.engagement ?? { comments: 0, likes: 0 })
 const hasMatchStats = computed(() => data.value?.compare?.groups.some(g => g.id === 'stats') ?? false)
 
 useHead(() => ({
@@ -73,6 +78,10 @@ useHead(() => ({
           <template v-if="byline.author">
             <span aria-hidden="true">·</span><span>{{ t('match.by', { name: byline.author }) }}</span>
           </template>
+          <template v-if="hasDiscussion">
+            <span aria-hidden="true">·</span>
+            <a href="#discussion" class="byline-link">{{ t('discussion.comments', { n: engagement.comments }, engagement.comments) }} · {{ t('discussion.likes', { n: engagement.likes }, engagement.likes) }}</a>
+          </template>
         </p>
       </header>
 
@@ -99,6 +108,12 @@ useHead(() => ({
           :reader="!!preview" :extra-query="preview ?? undefined" hide-headline @loaded="loadedStory = $event"
         />
       </section>
+
+      <!-- Discussion: totals for everyone; comments and likes for subscribers and the newsroom. -->
+      <NewsMatchDiscussion
+        v-if="hasDiscussion" :competition-id="data.competition.id" :match-id="match.id"
+        :engagement="engagement" @engagement="liveEngagement = $event"
+      />
 
       <!-- AI podcast of this match (free for every reader); the newsroom makes it here. -->
       <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
@@ -203,6 +218,8 @@ useHead(() => ({
 .notice { margin: 24px 0; padding: 14px 16px; border-radius: 4px; background: var(--surface); color: var(--text-2); }
 
 .hero { text-align: center; padding: 16px 0 0; }
+.byline-link { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.byline-link:hover { color: var(--link-hover); }
 .byline {
   margin: 12px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px;
   font-size: 13px; color: var(--meta);

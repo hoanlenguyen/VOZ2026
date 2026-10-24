@@ -26,6 +26,8 @@ export interface Story {
   weight: number
   /** Cover image the newsroom set for the match story; cards show the data visual without one. */
   cover?: { src: string, alt: string }
+  /** Public discussion totals (comments, story likes), when the match has a discussion. */
+  engagement?: { comments: number, likes: number }
 }
 
 /** Who may read a match story: everyone, or subscribers (premium) only. */

@@ -82,7 +82,7 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   // Stories an editor hid in the newsroom dashboard are left out for readers. The dashboard itself
   // asks with ?moderation=all to see them too (newsroom accounts only).
   const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
-  const [hidden, controls] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang)])
+  const [hidden, controls, engagement] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang), engagementMap()])
 
   // Matches with a match story lead with it, as their match page does: the story's headline and
   // opening lines (the published version, from the cache only), no AI subtitle. Cover images the
@@ -97,6 +97,7 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
       ...s,
       ...(published && { headline: published.headline, summary: published.text, subtitle: undefined, headlineOrigin: published.origin === 'ai' ? 'agent' as const : 'template' as const }),
       ...(cover && { cover: { src: cover.src, alt: cover.alt } }),
+      ...(engagement[key] && { engagement: engagement[key] }),
     }
   }))
   const order = (id: string) => FRONT_PAGE.indexOf(id)

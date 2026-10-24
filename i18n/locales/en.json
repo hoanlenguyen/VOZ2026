@@ -560,5 +560,35 @@
         "failed": "failed"
       }
     }
+  },
+  "discussion": {
+    "title": "Discussion",
+    "comments": "{n} comments | {n} comment | {n} comments",
+    "likes": "{n} likes | {n} like | {n} likes",
+    "likeStory": "Like this story",
+    "likeComment": "Like the comment by {name}",
+    "write": "Write a comment",
+    "placeholder": "Share your view on the match, {name}",
+    "post": "Post",
+    "posted": "Posted.",
+    "reply": "Reply",
+    "replyTo": "Reply to {name}",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "hide": "Hide",
+    "show": "Show",
+    "newsroomBadge": "VOZ newsroom",
+    "hiddenTag": "Hidden from readers",
+    "loading": "Loading comments…",
+    "empty": "No comments yet. Start the discussion.",
+    "lockedTitle": "Join the discussion with VOZ Plus",
+    "lockedFree": "Subscribers read the comments, share their view and like stories and comments.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to read the comments and join the discussion.",
+    "subscribe": "See VOZ Plus",
+    "errors": {
+      "wait": "Wait a moment before posting again.",
+      "length": "Comments are 2–1000 characters.",
+      "failed": "Something went wrong. Try again."
+    }
   }
 }

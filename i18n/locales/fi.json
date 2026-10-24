@@ -560,5 +560,35 @@
         "failed": "epäonnistui"
       }
     }
+  },
+  "discussion": {
+    "title": "Keskustelu",
+    "comments": "{n} kommenttia | {n} kommentti | {n} kommenttia",
+    "likes": "{n} tykkäystä | {n} tykkäys | {n} tykkäystä",
+    "likeStory": "Tykkää jutusta",
+    "likeComment": "Tykkää käyttäjän {name} kommentista",
+    "write": "Kirjoita kommentti",
+    "placeholder": "Kerro näkemyksesi ottelusta, {name}",
+    "post": "Lähetä",
+    "posted": "Lähetetty.",
+    "reply": "Vastaa",
+    "replyTo": "Vastaa: {name}",
+    "cancel": "Peruuta",
+    "delete": "Poista",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "newsroomBadge": "VOZ-toimitus",
+    "hiddenTag": "Piilotettu lukijoilta",
+    "loading": "Ladataan kommentteja…",
+    "empty": "Ei vielä kommentteja. Aloita keskustelu.",
+    "lockedTitle": "Liity keskusteluun VOZ Plus -tilauksella",
+    "lockedFree": "Tilaajat lukevat kommentit, kertovat näkemyksensä ja tykkäävät jutuista ja kommenteista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi kommentit ja osallistuaksesi keskusteluun.",
+    "subscribe": "Katso VOZ Plus",
+    "errors": {
+      "wait": "Odota hetki ennen seuraavaa kommenttia.",
+      "length": "Kommentin pituus on 2–1000 merkkiä.",
+      "failed": "Jokin meni vikaan. Yritä uudelleen."
+    }
   }
 }
