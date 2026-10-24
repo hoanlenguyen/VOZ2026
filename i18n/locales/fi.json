@@ -7,14 +7,16 @@
     "footer": "VOZ – Oma urheilumaailmani · Tämän sivun jutut kirjoitetaan automaattisesti virallisesta sarjadatasta (Liiga, football-data.org)."
   },
   "nav": {
-    "sports": "Urheilu",
     "myTeams": "Omat joukkueet",
     "personalise": "Personoi",
     "signIn": "Kirjaudu",
     "account": "Oma tili",
     "newsroom": "Toimitus",
     "signOut": "Kirjaudu ulos",
-    "accountMenu": "Tilivalikko"
+    "accountMenu": "Tilivalikko",
+    "news": "Uutiset",
+    "favourites": "Omat suosikit",
+    "lockedHint": "VOZ Plus -tilaajille"
   },
   "sport": {
     "all": "Kaikki lajit",
@@ -72,7 +74,7 @@
     "vs": "vs."
   },
   "match": {
-    "back": "Urheilu",
+    "back": "Uutiset",
     "pageTitle": "Ottelu – VOZ",
     "loadError": "Ottelua ei voitu ladata ({reason}). Yritä hetken päästä uudelleen.",
     "matchday": "{n}. kierros",
@@ -559,6 +561,56 @@
         "unchanged": "ei uusia faktoja",
         "failed": "epäonnistui"
       }
-    }
+    },
+    "lockedPlay": "{title}: VOZ Plus -tilaajille",
+    "lockedTitle": "Podcastit kuuluvat VOZ Plus -tilaukseen",
+    "lockedFree": "Tilaa ja kuuntele päivittäiset ottelu-, joukkue- ja sarjapodcastit sekä lue niiden tekstit.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä kuunnellaksesi podcasteja.",
+    "lockedNote": "VOZ Plus"
+  },
+  "discussion": {
+    "title": "Keskustelu",
+    "comments": "{n} kommenttia | {n} kommentti | {n} kommenttia",
+    "likes": "{n} tykkäystä | {n} tykkäys | {n} tykkäystä",
+    "likeStory": "Tykkää jutusta",
+    "likeComment": "Tykkää käyttäjän {name} kommentista",
+    "write": "Kirjoita kommentti",
+    "placeholder": "Kerro näkemyksesi ottelusta, {name}",
+    "post": "Lähetä",
+    "posted": "Lähetetty.",
+    "reply": "Vastaa",
+    "replyTo": "Vastaa: {name}",
+    "cancel": "Peruuta",
+    "delete": "Poista",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "newsroomBadge": "VOZ-toimitus",
+    "hiddenTag": "Piilotettu lukijoilta",
+    "loading": "Ladataan kommentteja…",
+    "empty": "Ei vielä kommentteja. Aloita keskustelu.",
+    "lockedTitle": "Liity keskusteluun VOZ Plus -tilauksella",
+    "lockedFree": "Tilaajat lukevat kaikki kommentit, kertovat näkemyksensä ja tykkäävät jutuista ja kommenteista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi kaikki kommentit ja osallistuaksesi keskusteluun.",
+    "subscribe": "Katso VOZ Plus",
+    "errors": {
+      "wait": "Odota hetki ennen seuraavaa kommenttia.",
+      "length": "Kommentin pituus on 2–1000 merkkiä.",
+      "failed": "Jokin meni vikaan. Yritä uudelleen."
+    },
+    "preview": "Uusimmat kommentit (esikatselu)"
+  },
+  "favourites": {
+    "pageTitle": "Omat suosikit – VOZ",
+    "title": "Omat suosikit",
+    "lead": "Uutiset seuraamistasi joukkueista, sarjoista ja pelaajista.",
+    "edit": "Muokkaa: Omat joukkueet",
+    "all": "Kaikki suosikit",
+    "newsroom": "Suosikit ovat lukijatileille.",
+    "none": "Et seuraa vielä mitään.",
+    "choose": "Valitse suosikit",
+    "empty": "Ei tuoreita juttuja suosikeistasi.",
+    "lockedTitle": "Omat suosikit kuuluvat VOZ Plus -tilaukseen",
+    "lockedText": "Tilaa ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista."
   }
 }

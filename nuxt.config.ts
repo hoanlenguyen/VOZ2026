@@ -81,6 +81,8 @@ export default defineNuxtConfig({
       { baseName: 'headlines', dir: '../data/headlines' },
       // Pre-generated demo podcast episodes (npm run warm:podcasts); their MP3s are in public/podcasts/.
       { baseName: 'podcasts', dir: '../data/podcasts' },
+      // Demo discussion threads (data/comments/<competition>-<id>.json), read via useStorage('assets:comments').
+      { baseName: 'comments', dir: '../data/comments' },
     ],
     // Daily AI podcasts (server/tasks/podcasts/daily.ts). On Workers the cron trigger in wrangler.jsonc
     // fires the scheduled handler, which runs the tasks mapped to that cron here; keep both in step

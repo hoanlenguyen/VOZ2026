@@ -1,0 +1,795 @@
+{
+  "source": {
+    "name": "VOZ demo data (generated)",
+    "url": null,
+    "note": "Generated for the demo from the real fixture, kick-off and final score. Line-ups, scorers, minutes, cards, substitutions, stats and events are invented."
+  },
+  "matchInfo": {
+    "matchId": "2645266",
+    "competition": "Premier League",
+    "season": "Season 2026/2027",
+    "matchWeek": 7,
+    "kickoff": "2026-10-18 14:00:00",
+    "kickoffTimezone": "Europe/London",
+    "venue": "Vitality Stadium, Bournemouth",
+    "attendance": 11050,
+    "status": "FullTime",
+    "resultType": "NormalResult",
+    "homeTeam": {
+      "id": "91",
+      "name": "AFC Bournemouth",
+      "shortName": "Bournemouth",
+      "abbr": "BOU",
+      "score": 2,
+      "halfTimeScore": 1,
+      "redCards": 0
+    },
+    "awayTeam": {
+      "id": "56",
+      "name": "Sunderland",
+      "shortName": "Sunderland",
+      "abbr": "SUN",
+      "score": 0,
+      "halfTimeScore": 0,
+      "redCards": 0
+    },
+    "officials": [
+      {
+        "role": "Referee",
+        "name": "Robert Jones"
+      },
+      {
+        "role": "Fourth official",
+        "name": "Peter Bankes"
+      }
+    ]
+  },
+  "keyEvents": {
+    "home": {
+      "team": "AFC Bournemouth",
+      "goals": [
+        {
+          "goalType": "Goal",
+          "period": "FirstHalf",
+          "time": "38",
+          "timestamp": "20261018T143800+0100",
+          "player": "Evanilson",
+          "assist": "Adrien Truffert"
+        },
+        {
+          "goalType": "Penalty",
+          "period": "SecondHalf",
+          "time": "65",
+          "timestamp": "20261018T152000+0100",
+          "player": "Antoine Semenyo"
+        }
+      ],
+      "cards": [],
+      "substitutions": [
+        {
+          "time": "60",
+          "playerOn": "James Hill",
+          "playerOff": "Evanilson"
+        },
+        {
+          "time": "74",
+          "playerOn": "Lewis Cook",
+          "playerOff": "Tyler Adams"
+        },
+        {
+          "time": "78",
+          "playerOn": "Ryan Christie",
+          "playerOff": "Alex Scott"
+        }
+      ]
+    },
+    "away": {
+      "team": "Sunderland",
+      "goals": [],
+      "cards": [
+        {
+          "period": "FirstHalf",
+          "time": "44",
+          "type": "Yellow",
+          "player": "Simon Adingra"
+        },
+        {
+          "period": "SecondHalf",
+          "time": "69",
+          "type": "Yellow",
+          "player": "Enzo Le Fée"
+        }
+      ],
+      "substitutions": [
+        {
+          "time": "64",
+          "playerOn": "Habib Diarra",
+          "playerOff": "Wilson Isidor"
+        },
+        {
+          "time": "79",
+          "playerOn": "Bertrand Traoré",
+          "playerOff": "Chemsdine Talbi"
+        },
+        {
+          "time": "88",
+          "playerOn": "Luke O'Nien",
+          "playerOff": "Reinildo Mandava"
+        }
+      ]
+    }
+  },
+  "lineups": {
+    "home": {
+      "team": "AFC Bournemouth",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Đorđe Petrović"
+        ],
+        [
+          "Adam Smith",
+          "Marcos Senesi",
+          "Bafodé Diakité",
+          "Adrien Truffert"
+        ],
+        [
+          "Tyler Adams",
+          "Alex Scott"
+        ],
+        [
+          "Antoine Semenyo",
+          "Marcus Tavernier",
+          "David Brooks"
+        ],
+        [
+          "Evanilson"
+        ]
+      ],
+      "manager": "Andoni Iraola",
+      "startingXI": [
+        {
+          "name": "Đorđe Petrović",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Adam Smith",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": true
+        },
+        {
+          "name": "Marcos Senesi",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Bafodé Diakité",
+          "shirtNumber": 18,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Adrien Truffert",
+          "shirtNumber": 3,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Tyler Adams",
+          "shirtNumber": 12,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Alex Scott",
+          "shirtNumber": 8,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Antoine Semenyo",
+          "shirtNumber": 24,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Marcus Tavernier",
+          "shirtNumber": 16,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "David Brooks",
+          "shirtNumber": 7,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Evanilson",
+          "shirtNumber": 9,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Fraser Forster",
+          "shirtNumber": 13,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "James Hill",
+          "shirtNumber": 23,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Álex Jiménez",
+          "shirtNumber": 20,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Lewis Cook",
+          "shirtNumber": 4,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Ryan Christie",
+          "shirtNumber": 10,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Justin Kluivert",
+          "shirtNumber": 19,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Eli Junior Kroupi",
+          "shirtNumber": 22,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    },
+    "away": {
+      "team": "Sunderland",
+      "formation": "4-2-3-1",
+      "formationRows": [
+        [
+          "Robin Roefs"
+        ],
+        [
+          "Trai Hume",
+          "Dan Ballard",
+          "Omar Alderete",
+          "Reinildo Mandava"
+        ],
+        [
+          "Granit Xhaka",
+          "Noah Sadiki"
+        ],
+        [
+          "Chemsdine Talbi",
+          "Enzo Le Fée",
+          "Simon Adingra"
+        ],
+        [
+          "Wilson Isidor"
+        ]
+      ],
+      "manager": "Régis Le Bris",
+      "startingXI": [
+        {
+          "name": "Robin Roefs",
+          "shirtNumber": 22,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Trai Hume",
+          "shirtNumber": 32,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Dan Ballard",
+          "shirtNumber": 5,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Omar Alderete",
+          "shirtNumber": 15,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Reinildo Mandava",
+          "shirtNumber": 17,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Granit Xhaka",
+          "shirtNumber": 34,
+          "position": "Midfielder",
+          "isCaptain": true
+        },
+        {
+          "name": "Noah Sadiki",
+          "shirtNumber": 27,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Chemsdine Talbi",
+          "shirtNumber": 7,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Enzo Le Fée",
+          "shirtNumber": 28,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Simon Adingra",
+          "shirtNumber": 24,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Wilson Isidor",
+          "shirtNumber": 18,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ],
+      "substitutes": [
+        {
+          "name": "Anthony Patterson",
+          "shirtNumber": 1,
+          "position": "Goalkeeper",
+          "isCaptain": false
+        },
+        {
+          "name": "Luke O'Nien",
+          "shirtNumber": 13,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Nordi Mukiele",
+          "shirtNumber": 20,
+          "position": "Defender",
+          "isCaptain": false
+        },
+        {
+          "name": "Habib Diarra",
+          "shirtNumber": 19,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Chris Rigg",
+          "shirtNumber": 11,
+          "position": "Midfielder",
+          "isCaptain": false
+        },
+        {
+          "name": "Bertrand Traoré",
+          "shirtNumber": 25,
+          "position": "Forward",
+          "isCaptain": false
+        },
+        {
+          "name": "Eliezer Mayenda",
+          "shirtNumber": 12,
+          "position": "Forward",
+          "isCaptain": false
+        }
+      ]
+    }
+  },
+  "stats": {
+    "summary": {
+      "possession_%": {
+        "home": 56.3,
+        "away": 43.7
+      },
+      "xG": {
+        "home": 2.96,
+        "away": 0.79
+      },
+      "shots": {
+        "home": 15,
+        "away": 12
+      },
+      "shots_on_target": {
+        "home": 3,
+        "away": 3
+      },
+      "shots_off_target": {
+        "home": 10,
+        "away": 9
+      },
+      "shots_blocked": {
+        "home": 2,
+        "away": 0
+      },
+      "big_chances_created": {
+        "home": 3,
+        "away": 2
+      },
+      "passes": {
+        "home": 533,
+        "away": 430
+      },
+      "accurate_passes": {
+        "home": 411,
+        "away": 367
+      },
+      "tackles": {
+        "home": 18,
+        "away": 15
+      },
+      "saves": {
+        "home": 3,
+        "away": 1
+      },
+      "fouls": {
+        "home": 14,
+        "away": 10
+      },
+      "offsides": {
+        "home": 1,
+        "away": 0
+      },
+      "yellow_cards": {
+        "home": 0,
+        "away": 2
+      },
+      "red_cards": {
+        "home": 0,
+        "away": 0
+      }
+    },
+    "extra": {
+      "home": {
+        "wonCorners": 8,
+        "lostCorners": 9
+      },
+      "away": {
+        "wonCorners": 9,
+        "lostCorners": 8
+      }
+    }
+  },
+  "events": [
+    {
+      "minute": "2'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Trai Hume",
+      "player2": null
+    },
+    {
+      "minute": "4'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Đorđe Petrović",
+      "player2": null
+    },
+    {
+      "minute": "6'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Adam Smith",
+      "player2": null
+    },
+    {
+      "minute": "9'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Alex Scott",
+      "player2": null
+    },
+    {
+      "minute": "12'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Adrien Truffert",
+      "player2": null
+    },
+    {
+      "minute": "13'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Antoine Semenyo",
+      "player2": "Tyler Adams"
+    },
+    {
+      "minute": "14'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Chemsdine Talbi",
+      "player2": null
+    },
+    {
+      "minute": "17'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Trai Hume",
+      "player2": null
+    },
+    {
+      "minute": "21'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "David Brooks",
+      "player2": "Antoine Semenyo"
+    },
+    {
+      "minute": "23'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Enzo Le Fée",
+      "player2": "Dan Ballard"
+    },
+    {
+      "minute": "27'",
+      "type": "attempt saved",
+      "team": "Sunderland",
+      "player1": "Wilson Isidor",
+      "player2": "Noah Sadiki"
+    },
+    {
+      "minute": "29'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Đorđe Petrović",
+      "player2": null
+    },
+    {
+      "minute": "30'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Marcus Tavernier",
+      "player2": null
+    },
+    {
+      "minute": "31'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Marcos Senesi",
+      "player2": null
+    },
+    {
+      "minute": "38'",
+      "type": "attempt saved",
+      "team": "Sunderland",
+      "player1": "Wilson Isidor",
+      "player2": "Enzo Le Fée"
+    },
+    {
+      "minute": "44'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Evanilson",
+      "player2": null
+    },
+    {
+      "minute": "46'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Reinildo Mandava",
+      "player2": null
+    },
+    {
+      "minute": "47'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Chemsdine Talbi",
+      "player2": "Omar Alderete"
+    },
+    {
+      "minute": "48'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Marcos Senesi",
+      "player2": null
+    },
+    {
+      "minute": "51'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Chemsdine Talbi",
+      "player2": "Reinildo Mandava"
+    },
+    {
+      "minute": "51'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Adam Smith",
+      "player2": null
+    },
+    {
+      "minute": "55'",
+      "type": "offside",
+      "team": "AFC Bournemouth",
+      "player1": "Antoine Semenyo",
+      "player2": "Tyler Adams"
+    },
+    {
+      "minute": "56'",
+      "type": "attempt saved",
+      "team": "Sunderland",
+      "player1": "Reinildo Mandava",
+      "player2": "Enzo Le Fée"
+    },
+    {
+      "minute": "57'",
+      "type": "attempt blocked",
+      "team": "AFC Bournemouth",
+      "player1": "Tyler Adams",
+      "player2": "Marcus Tavernier"
+    },
+    {
+      "minute": "57'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Đorđe Petrović",
+      "player2": null
+    },
+    {
+      "minute": "59'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Enzo Le Fée",
+      "player2": null
+    },
+    {
+      "minute": "65'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Marcus Tavernier",
+      "player2": "Adam Smith"
+    },
+    {
+      "minute": "73'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Robin Roefs",
+      "player2": null
+    },
+    {
+      "minute": "73'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Chemsdine Talbi",
+      "player2": "Noah Sadiki"
+    },
+    {
+      "minute": "74'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Lewis Cook",
+      "player2": null
+    },
+    {
+      "minute": "77'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Dan Ballard",
+      "player2": null
+    },
+    {
+      "minute": "77'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Enzo Le Fée",
+      "player2": null
+    },
+    {
+      "minute": "78'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Marcus Tavernier",
+      "player2": null
+    },
+    {
+      "minute": "78'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Lewis Cook",
+      "player2": "James Hill"
+    },
+    {
+      "minute": "79'",
+      "type": "miss",
+      "team": "AFC Bournemouth",
+      "player1": "Antoine Semenyo",
+      "player2": "David Brooks"
+    },
+    {
+      "minute": "79'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Reinildo Mandava",
+      "player2": null
+    },
+    {
+      "minute": "80'",
+      "type": "corner",
+      "team": "AFC Bournemouth",
+      "player1": "Adam Smith",
+      "player2": null
+    },
+    {
+      "minute": "84'",
+      "type": "attempt saved",
+      "team": "AFC Bournemouth",
+      "player1": "Antoine Semenyo",
+      "player2": null
+    },
+    {
+      "minute": "88'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Luke O'Nien",
+      "player2": null
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Bertrand Traoré",
+      "player2": "Luke O'Nien"
+    },
+    {
+      "minute": "88'",
+      "type": "miss",
+      "team": "Sunderland",
+      "player1": "Simon Adingra",
+      "player2": null
+    },
+    {
+      "minute": "89'",
+      "type": "attempt blocked",
+      "team": "AFC Bournemouth",
+      "player1": "David Brooks",
+      "player2": "Lewis Cook"
+    },
+    {
+      "minute": "89'",
+      "type": "corner",
+      "team": "Sunderland",
+      "player1": "Trai Hume",
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 1",
+      "team": null,
+      "player1": null,
+      "player2": null
+    },
+    {
+      "minute": null,
+      "type": "end 2",
+      "team": null,
+      "player1": null,
+      "player2": null
+    }
+  ]
+}
