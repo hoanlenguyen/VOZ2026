@@ -7,6 +7,8 @@
 //      context: up to 3 articles about the fixture and 2 recent updates per team, as headline, source
 //      and link. It never feeds the facts or the text.
 //   4. stored in D1 (ai_posts) as "pending"; nothing reaches readers until the newsroom approves.
+// Steps 2 and 3 run at the same time (every language and the publisher lookup), and so do the posts
+// of a run: a run takes as long as its slowest story, not the sum.
 // Runs from the cron (AGENT_CRON, task newsroom:agent) when the newsroom's interval has passed,
 // or at once from "Run now".
 
@@ -124,11 +126,13 @@ async function writePost(competition: string, matchId: string, settings: AgentSe
     base.match.start = match.start
     base.facts = facts
     base.names = names
-    // Languages one after another: the story agent has its own rate limit and time budget.
-    for (const lang of settings.langs) {
-      base.stories[lang] = await runStoryAgent({ match, competitionName: def.name, facts, names, length: 'standard', tone: 'neutral', lang })
-    }
-    const { press, note } = await pressFor(match)
+    // Every language and the publisher lookup at the same time: they only share the facts, so the
+    // post takes as long as its slowest part (each story agent keeps its own turn and time budget).
+    const [stories, { press, note }] = await Promise.all([
+      Promise.all(settings.langs.map(lang => runStoryAgent({ match, competitionName: def.name, facts, names, length: 'standard', tone: 'neutral', lang }))),
+      pressFor(match),
+    ])
+    settings.langs.forEach((lang, i) => { base.stories[lang] = stories[i]! })
     base.press = press
     base.pressNote = note
     base.status = 'pending'
@@ -144,13 +148,13 @@ async function writePost(competition: string, matchId: string, settings: AgentSe
 
 let running: Promise<AgentRun> | null = null
 
-/** One run: the oldest waiting SportWorld matches (AGENT_MATCHES_PER_RUN), one after another. */
+/** One run: the oldest waiting SportWorld matches (AGENT_MATCHES_PER_RUN), written at the same time. */
 export function runNewsroomAgent(trigger: AgentTrigger): Promise<AgentRun> {
   // A run already going (cron and "Run now" together) is shared, not doubled.
   running ??= (async () => {
     const settings = await agentSettings()
-    const results: AgentRunResult[] = []
-    for (const m of await waitingMatches(AGENT_MATCHES_PER_RUN)) results.push(await writePost(m.competition, m.id, settings, trigger))
+    // Each post is claimed atomically, so writing them side by side never doubles one.
+    const results: AgentRunResult[] = await Promise.all((await waitingMatches(AGENT_MATCHES_PER_RUN)).map(m => writePost(m.competition, m.id, settings, trigger)))
     const run: AgentRun = { at: new Date().toISOString(), trigger, results, waiting: (await waitingMatches(100)).length }
     await kv().setItem('newsroom:agent:lastrun', run).catch(() => undefined)
     return run
