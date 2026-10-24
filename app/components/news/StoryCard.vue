@@ -4,7 +4,10 @@ import type { Story } from '#shared/types/stories'
 const props = withDefaults(defineProps<{ story: Story, variant?: 'lead' | 'side' | 'card' | 'row' }>(), { variant: 'card' })
 const { t } = useI18n()
 const { stamp } = useFormat()
+const { can } = useAccount()
 const ai = computed(() => props.story.headlineOrigin === 'agent')
+// The "AI content" tag is a newsroom tool (which headlines the agent wrote); readers don't see it.
+const showAiTag = computed(() => ai.value && can.value.newsroom)
 // One title and one short detail (at most two lines): the AI subtitle, else the summary.
 const detail = computed(() => keepScoresTogether((ai.value && props.story.subtitle) || props.story.summary || ''))
 </script>
@@ -21,7 +24,7 @@ const detail = computed(() => keepScoresTogether((ai.value && props.story.subtit
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
-        <span v-if="ai" class="ai-tag">{{ t('story.aiTag') }}</span>
+        <span v-if="showAiTag" class="ai-tag">{{ t('story.aiTag') }}</span>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ keepScoresTogether(story.headline) }}</NuxtLink>
