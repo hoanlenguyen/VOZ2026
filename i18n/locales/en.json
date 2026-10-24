@@ -560,5 +560,54 @@
         "failed": "failed"
       }
     }
+  },
+  "sportworld": {
+    "link": "SportWorld API",
+    "linkLead": "Mock sports server with simulated match data for the AI newsroom agent",
+    "pageTitle": "SportWorld API – VOZ",
+    "title": "SportWorld API",
+    "badge": "Simulated match data (demo)",
+    "base": "Base URL",
+    "noKey": "No API key needed",
+    "lead": "Mock sports server standing in for a paid deep-data feed. Each generated match keeps a real finished fixture's final and half-time score from football-data.org; line-ups, scorers, events and stats are simulated from the clubs' squads.",
+    "params": "Parameters",
+    "body": "Request body",
+    "noParams": "No parameters",
+    "required": "required",
+    "any": "(any)",
+    "random": "random (1 or 2)",
+    "execute": "Execute",
+    "executing": "Executing…",
+    "requestUrl": "Request URL",
+    "response": "Response",
+    "ops": {
+      "generate": {
+        "summary": "Simulate 1–2 new matches",
+        "description": "Takes the newest finished fixtures of the competition that have not been simulated yet."
+      },
+      "list": {
+        "summary": "List simulated matches",
+        "description": "Newest first. Use since to poll for matches generated after a time."
+      },
+      "one": {
+        "summary": "Get one match file",
+        "description": "The full match: info, key events, line-ups, stats and the event list, in the structure of the bundled demo match."
+      },
+      "remove": {
+        "summary": "Delete a simulated match",
+        "description": "The fixture can then be simulated again (same result, same details)."
+      },
+      "info": {
+        "summary": "API info",
+        "description": "Name, competitions and endpoints."
+      }
+    },
+    "p": {
+      "competition": "Competition id",
+      "count": "How many matches",
+      "since": "ISO time, e.g. 2026-10-24T00:00:00Z",
+      "limit": "At most 100",
+      "id": "Match id (football-data fixture id)"
+    }
   }
 }

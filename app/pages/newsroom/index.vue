@@ -66,6 +66,11 @@ async function toggle(id: string, hidden: boolean) {
         <p v-if="data.missing.length" class="meta">{{ t('newsroom.missing', { list: data.missing.join(', ') }) }}</p>
       </section>
 
+      <NuxtLink to="/sportworld" class="tool-link">
+        <span><strong>{{ t('sportworld.link') }}</strong><span class="meta">{{ t('sportworld.linkLead') }}</span></span>
+        <PhArrowSquareOut :size="18" weight="bold" aria-hidden="true" />
+      </NuxtLink>
+
       <NewsPodcastDesk />
 
       <section class="block" aria-labelledby="stories-title">
@@ -142,6 +147,14 @@ async function toggle(id: string, hidden: boolean) {
 .dot { width: 10px; height: 10px; border-radius: 50%; }
 .dot--ok { background: var(--win); }
 .dot--down { background: var(--loss); }
+.tool-link {
+  margin-top: 24px; min-height: 56px; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  border: 1px solid var(--line-strong); border-radius: 4px; color: var(--headline); text-decoration: none;
+}
+.tool-link > span { display: flex; flex-direction: column; gap: 2px; }
+.tool-link .meta { margin: 0; }
+.tool-link:hover { border-color: var(--link-hover); color: var(--link-hover); }
+.tool-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .stories { list-style: none; margin: 0; padding: 0; }
 .story { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); }
 .story-body { flex: 1 1 auto; min-width: 0; }

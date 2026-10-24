@@ -24,7 +24,7 @@
   "kv_namespaces": [
     { "binding": "VOZ_CACHE", "id": "18009bda6a954a67b6adecd715d3dda5" }
   ],
-  // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY, NUXT_OPENAI_API_KEY),
+  // Non-secret settings. API keys are Worker secrets (NUXT_LIIGA_API_KEY, NUXT_FOOTBALL_DATA_TOKEN, NUXT_GNEWS_API_KEY, NUXT_OPENAI_API_KEY, NUXT_HF_TOKEN),
   // set by the deploy workflow from GitHub secrets; locally they come from .dev.vars.
   "vars": {
     "NUXT_DATA_MODE": "auto",

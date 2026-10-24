@@ -560,5 +560,54 @@
         "failed": "epäonnistui"
       }
     }
+  },
+  "sportworld": {
+    "link": "SportWorld-rajapinta",
+    "linkLead": "Urheilun testipalvelin, simuloitua otteludataa tekoälytoimittajalle",
+    "pageTitle": "SportWorld-rajapinta – VOZ",
+    "title": "SportWorld-rajapinta",
+    "badge": "Simuloitu otteludata (demo)",
+    "base": "Perusosoite",
+    "noKey": "Ei API-avainta",
+    "lead": "Urheilun testipalvelin maksullisen syvädatan syötteen tilalla. Jokainen luotu ottelu käyttää todellisen pelatun ottelun loppu- ja puoliajan tulosta football-data.orgista; kokoonpanot, maalintekijät, tapahtumat ja tilastot simuloidaan seurojen pelaajistoista.",
+    "params": "Parametrit",
+    "body": "Pyynnön runko",
+    "noParams": "Ei parametreja",
+    "required": "pakollinen",
+    "any": "(kaikki)",
+    "random": "satunnainen (1 tai 2)",
+    "execute": "Suorita",
+    "executing": "Suoritetaan…",
+    "requestUrl": "Pyynnön osoite",
+    "response": "Vastaus",
+    "ops": {
+      "generate": {
+        "summary": "Simuloi 1–2 uutta ottelua",
+        "description": "Ottaa sarjan uusimmat pelatut ottelut, joita ei ole vielä simuloitu."
+      },
+      "list": {
+        "summary": "Simuloidut ottelut",
+        "description": "Uusimmat ensin. since-parametrilla saa tietyn ajan jälkeen luodut ottelut."
+      },
+      "one": {
+        "summary": "Yksi otteluaineisto",
+        "description": "Koko ottelu: tiedot, avaintapahtumat, kokoonpanot, tilastot ja tapahtumalista samassa rakenteessa kuin demo-ottelu."
+      },
+      "remove": {
+        "summary": "Poista simuloitu ottelu",
+        "description": "Ottelun voi sitten simuloida uudelleen (sama tulos, samat tiedot)."
+      },
+      "info": {
+        "summary": "Rajapinnan tiedot",
+        "description": "Nimi, sarjat ja osoitteet."
+      }
+    },
+    "p": {
+      "competition": "Sarjan tunnus",
+      "count": "Montako ottelua",
+      "since": "ISO-aika, esim. 2026-10-24T00:00:00Z",
+      "limit": "Enintään 100",
+      "id": "Ottelun tunnus (football-datan ottelutunnus)"
+    }
   }
 }

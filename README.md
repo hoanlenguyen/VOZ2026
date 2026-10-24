@@ -35,6 +35,12 @@ and nothing is published that the data does not support.
 - **Full match data demo** (mock): Ipswich Town 1–1 Nottingham Forest (Premier League, 23 Oct 2026)
   with an event timeline, line-ups on a pitch, possession/xG/shots and officials. It shows what VOZ does
   with a richer data feed than the free football plan. Add more in `data/mock/<competition>/<id>.json`.
+- **SportWorld API** (mock sports server, `/sportworld/api`, open, no key; Swagger-style docs and
+  try-it page at `/sportworld`): a stand-in for a paid deep-data feed, labelled "Simulated match data
+  (demo)". `POST /sportworld/api/generate` simulates 1–2 matches: the newest finished fixtures not yet
+  generated keep their real final and half-time score from football-data.org; line-ups, scorers, events
+  and stats are simulated from the clubs' squads, in the same JSON structure as the full-data demo match.
+  Stored in D1.
 - **Onboarding** (`/onboarding`): pick a league and see its teams (first version).
 - **Offline demo mode:** saved API snapshots keep the app running without network.
 - **Data status** (`/status`): live check of each data source.

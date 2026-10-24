@@ -6,6 +6,7 @@
 #   NUXT_FOOTBALL_DATA_TOKEN  football-data.org token       -> Worker secret
 #   NUXT_GNEWS_API_KEY        GNews API key (press headlines) -> Worker secret
 #   NUXT_OPENAI_API_KEY       OpenAI API key (AI match stories) -> Worker secret
+#   NUXT_HF_TOKEN             Hugging Face token (optional news summaries) -> Worker secret
 name: Deploy to Cloudflare
 
 on:
