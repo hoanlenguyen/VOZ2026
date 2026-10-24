@@ -56,10 +56,10 @@ function nameForms(name: string): string[] {
 
 const mentions = (text: string, form: string) => new RegExp(`(^|[^a-z])${form.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}([^a-z]|$)`).test(text)
 
-const BANNED: Array<[RegExp, string]> = [
-  [/["“”]/, 'contains a quotation; quotes are not allowed'],
-  [/\b(said|says|told|according to|admitted|claimed)\b/i, 'attributes speech to someone; we have no quotes'],
-  [/\binjur/i, 'mentions an injury; injuries are not in the facts'],
+const BANNED: Array<[RegExp, string, 'quote' | 'speech' | 'injury']> = [
+  [/["“”]/, 'contains a quotation; quotes are not allowed', 'quote'],
+  [/\b(said|says|told|according to|admitted|claimed)\b/i, 'attributes speech to someone; we have no quotes', 'speech'],
+  [/\binjur/i, 'mentions an injury; injuries are not in the facts', 'injury'],
 ]
 
 export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
@@ -117,4 +117,61 @@ export function checkStory(draft: StoryDraft, ctx: CheckContext): StoryCheck {
     issues.push(`The story has ${words} words; the ${ctx.length} length needs ${min}–${max}.`)
   }
   return { passed: issues.length === 0, issues, factsUsed: cited.size }
+}
+
+/** One problem in a newsroom edit; `sentence` 0 is the headline, then 1, 2, ... */
+export interface EditIssue {
+  kind: 'number' | 'name' | 'quote' | 'speech' | 'injury'
+  sentence: number
+  /** The number or person concerned (number / name issues). */
+  value?: string
+}
+
+export interface EditCheck {
+  issues: EditIssue[]
+  /** Facts the text appears to use: they share a person, or a number of two or more characters. */
+  factIds: string[]
+}
+
+/** Splits plain text into sentences (for edit checks and their messages). */
+export function sentencesOf(text: string): string[] {
+  return text.split(/(?<=[.!?])\s+/).map(s => s.trim()).filter(Boolean)
+}
+
+/**
+ * Checks text a newsroom editor wrote in place of the AI story. It cites no facts, so every number
+ * and every person named must appear somewhere in the match facts; quotes, speech and injuries are
+ * flagged as in checkStory. Advisory: the editor sees the issues while writing.
+ */
+export function checkEdit(headline: string, sentences: string[], ctx: Pick<CheckContext, 'facts' | 'names'>): EditCheck {
+  const issues: EditIssue[] = []
+  const allNumbers = numbersIn(ctx.facts.map(f => f.text).join(' '))
+  const allFactText = fold(ctx.facts.map(f => f.text).join(' \n '))
+  const people = ctx.names.map(n => ({ name: n, forms: nameForms(n) }))
+  const usedNumbers = new Set<string>()
+  const usedPeople = new Set<string>()
+
+  ;[headline, ...sentences].forEach((text, sentence) => {
+    for (const n of new Set(numbersIn(text))) {
+      if (supported(n, allNumbers)) usedNumbers.add(n)
+      else issues.push({ kind: 'number', sentence, value: n })
+    }
+    const folded = fold(text)
+    for (const p of people) {
+      if (!p.forms.some(f => mentions(folded, f))) continue
+      if (p.forms.some(f => mentions(allFactText, f))) usedPeople.add(p.name)
+      else issues.push({ kind: 'name', sentence, value: p.name })
+    }
+    for (const [re, , kind] of BANNED) {
+      if (re.test(text)) issues.push({ kind, sentence })
+    }
+  })
+
+  const distinctive = [...usedNumbers].filter(n => n.length >= 2)
+  const factIds = ctx.facts.filter((f) => {
+    const text = fold(f.text)
+    return [...usedPeople].some(name => nameForms(name).some(form => mentions(text, form)))
+      || distinctive.some(n => numbersIn(f.text).some(x => Number(x) === Number(n)))
+  }).map(f => f.id)
+  return { issues, factIds }
 }

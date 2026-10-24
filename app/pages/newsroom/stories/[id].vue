@@ -1,13 +1,12 @@
 <script setup lang="ts">
-// Newsroom story editor, per language (the one the editor is browsing in):
-// 1. Front page and article: the story's headline and summary, and the "From the newsroom" article
-//    for the match page (TinyMCE), for everyone or subscribers only.
-// 2. Match story (matches with full data): readers get the AI story, the newsroom's edited version
-//    (TinyMCE, can start from the AI text) or nothing, for everyone or subscribers only.
-// "Revert to automatic" drops both: the generated story and the AI story for subscribers come back.
-import { PhArrowSquareOut, PhCaretLeft, PhEyeSlash, PhGlobeHemisphereWest, PhLockSimple, PhPencilSimpleLine, PhSparkle } from '@phosphor-icons/vue'
+// Newsroom match story editor, per language (the one the editor is browsing in), for matches with
+// full data: readers get the AI story, the newsroom's edited version (TinyMCE, written next to the
+// match facts and a live check) or nothing, for everyone or subscribers only, with an optional
+// cover image. "Revert to automatic" brings back the AI story for subscribers, without a cover.
+import { PhArrowSquareOut, PhCaretLeft, PhCheckCircle, PhEyeSlash, PhGlobeHemisphereWest, PhLockSimple, PhPencilSimpleLine, PhSparkle, PhWarning } from '@phosphor-icons/vue'
+import { checkEdit, sentencesOf } from '#shared/utils/story-check'
 import type { StoryResponse } from '#shared/types/story'
-import type { ArticleAudience, StoryMode } from '#shared/types/stories'
+import type { ArticleAudience, StoryCover, StoryMode } from '#shared/types/stories'
 
 definePageMeta({ layout: 'news', middleware: 'newsroom' })
 const { t, locale } = useI18n()
@@ -19,22 +18,18 @@ useHead({ title: () => t('editor.pageTitle') })
 
 const { data, error, refresh } = await useFetch(() => `/api/newsroom/stories/${encodeURIComponent(id.value)}`, { query: { lang: locale } })
 
-const form = reactive({ headline: '', summary: '', body: '', audience: 'everyone' as ArticleAudience })
-const storyForm = reactive({ mode: 'ai' as StoryMode, audience: 'subscribers' as ArticleAudience, headline: '', body: '' })
+const storyForm = reactive({ mode: 'ai' as StoryMode, audience: 'subscribers' as ArticleAudience, headline: '', body: '', cover: null as StoryCover | null })
 const status = ref<'idle' | 'saving' | 'saved' | 'reverted' | 'error'>('idle')
 const message = ref('')
 
 function load() {
   const d = data.value
   if (!d) return
-  Object.assign(form, {
-    headline: d.edit?.headline ?? d.story.headline,
-    summary: d.edit?.summary ?? d.story.summary,
-    body: d.edit?.body ?? '',
-    audience: d.edit?.audience ?? 'everyone',
-  })
   const c = d.matchStory.control
-  Object.assign(storyForm, { mode: c?.mode ?? 'ai', audience: c?.audience ?? 'subscribers', headline: c?.headline ?? '', body: c?.body ?? '' })
+  Object.assign(storyForm, {
+    mode: c?.mode ?? 'ai', audience: c?.audience ?? 'subscribers', headline: c?.headline ?? '', body: c?.body ?? '',
+    cover: c?.cover ? { ...c.cover } : null,
+  })
 }
 watch(data, load, { immediate: true })
 
@@ -64,6 +59,28 @@ watch(() => storyForm.mode, (mode) => {
   if (mode === 'edited' && !storyForm.body && ai.value) startFromAi()
 })
 
+// Live check of the edited version against the match facts (shared/utils/story-check.ts checkEdit):
+// index 0 is the headline, then the body's sentences, block by block.
+const editText = computed(() => {
+  const blocks = storyForm.body
+    .replace(/<\/(p|h2|h3|li|blockquote)>|<br\s*\/?>/g, '\n')
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&')
+    .split('\n')
+  return [storyForm.headline, ...blocks.flatMap(b => sentencesOf(b))]
+})
+const editCheck = computed(() => ai.value
+  ? checkEdit(editText.value[0] ?? '', editText.value.slice(1), { facts: ai.value.facts, names: ai.value.names })
+  : { issues: [], factIds: [] })
+const usedFacts = computed(() => new Set(editCheck.value.factIds))
+const factQuery = ref('')
+const shownFacts = computed(() => {
+  const q = factQuery.value.trim().toLowerCase()
+  return (ai.value?.facts ?? []).filter(f => !q || f.text.toLowerCase().includes(q))
+})
+const where = (i: number) => (i === 0 ? t('editor.check.headline') : t('editor.check.sentence', { n: i }))
+const clip = (s: string) => (s.length > 70 ? `${s.slice(0, 68)}…` : s)
+
 const audiences = computed(() => (['everyone', 'subscribers'] as const).map(value => ({
   value, icon: value === 'everyone' ? PhGlobeHemisphereWest : PhLockSimple,
   label: t(`editor.audiences.${value}.label`), text: t(`editor.audiences.${value}.text`),
@@ -73,18 +90,9 @@ const modes = computed(() => ([['ai', PhSparkle], ['edited', PhPencilSimpleLine]
 })))
 
 async function publish() {
-  const d = data.value
-  if (!d) return
   status.value = 'saving'
-  // Unchanged parts are sent as null, so they stay automatic (no "Edited" label).
-  const frontChanged = form.headline.trim() !== d.story.headline || form.summary.trim() !== d.story.summary || !!form.body.trim()
-  const storyChanged = d.matchStory.available
-    && (storyForm.mode !== 'ai' || storyForm.audience !== 'subscribers' || !!d.matchStory.control)
   try {
-    await $fetch(url.value, {
-      method: 'PUT', query: { lang: locale.value },
-      body: { front: frontChanged ? { ...form } : null, story: storyChanged ? { ...storyForm } : null },
-    })
+    await $fetch(url.value, { method: 'PUT', query: { lang: locale.value }, body: { ...storyForm } })
     await refresh()
     status.value = 'saved'
   }
@@ -126,30 +134,17 @@ async function revert() {
       </p>
       <h1 class="title">{{ t('editor.title') }}</h1>
       <p class="lead">
+        <span class="match-name">{{ data.story.match.home.shortName }} – {{ data.story.match.away.shortName }}.</span>
         {{ t('editor.language', { lang: t(`editor.langName.${locale}`) }) }}
-        <template v-if="data.edit"> {{ t('editor.lastSaved', { name: data.edit.by, time: stamp(data.edit.at) }) }}</template>
+        <template v-if="data.matchStory.control"> {{ t('editor.lastSaved', { name: data.matchStory.control.by, time: stamp(data.matchStory.control.at) }) }}</template>
         <template v-else> {{ t('editor.automatic') }}</template>
       </p>
 
-      <form class="form" @submit.prevent="publish">
-        <section class="part" aria-labelledby="part-front">
-          <h2 id="part-front" class="part-title">{{ t('editor.partFront') }}</h2>
-          <label for="ed-headline">{{ t('editor.headline') }}</label>
-          <input id="ed-headline" v-model="form.headline" type="text" maxlength="160" required>
+      <p v-if="!data.matchStory.available" class="notice">{{ t('editor.noStory') }}</p>
 
-          <label for="ed-summary">{{ t('editor.summary') }}</label>
-          <p id="ed-summary-hint" class="hint">{{ t('editor.summaryHint') }}</p>
-          <textarea id="ed-summary" v-model="form.summary" rows="4" maxlength="600" aria-describedby="ed-summary-hint" />
-
-          <span class="label">{{ t('editor.body') }}</span>
-          <p class="hint">{{ t('editor.bodyHint') }}</p>
-          <NewsRichEditor v-model="form.body" :label="t('editor.body')" :lang="locale" />
-
-          <NewsChoiceCards v-model="form.audience" :legend="t('editor.audience')" name="audience" :options="audiences" />
-        </section>
-
+      <form v-if="data.matchStory.available" class="form" @submit.prevent="publish">
         <section v-if="data.matchStory.available" class="part" aria-labelledby="part-story">
-          <h2 id="part-story" class="part-title">{{ t('editor.partStory') }}</h2>
+          <h2 id="part-story" class="sr-only">{{ t('editor.partStory') }}</h2>
           <p class="hint">{{ t('editor.storyLead') }}</p>
           <NewsChoiceCards v-model="storyForm.mode" :legend="t('editor.storyMode')" name="story-mode" :options="modes" />
 
@@ -161,26 +156,54 @@ async function revert() {
             />
           </div>
 
-          <template v-if="storyForm.mode === 'edited'">
-            <div class="row">
-              <label for="ed-story-headline">{{ t('editor.storyHeadline') }}</label>
-              <button v-if="ai" type="button" class="link-btn" @click="startFromAi">{{ t('editor.startFromAi') }}</button>
+          <!-- Edited version: the editor writes next to the match facts and a live check of the text. -->
+          <div v-if="storyForm.mode === 'edited'" class="workbench">
+            <div class="workbench-main">
+              <div class="row">
+                <label for="ed-story-headline">{{ t('editor.storyHeadline') }}</label>
+                <button v-if="ai" type="button" class="link-btn" @click="startFromAi">{{ t('editor.startFromAi') }}</button>
+              </div>
+              <input id="ed-story-headline" v-model="storyForm.headline" type="text" maxlength="160">
+              <span class="label">{{ t('editor.storyBody') }}</span>
+              <p class="hint">{{ t('editor.storyBodyHint') }}</p>
+              <NewsRichEditor v-model="storyForm.body" :label="t('editor.storyBody')" :lang="locale" />
             </div>
-            <input id="ed-story-headline" v-model="storyForm.headline" type="text" maxlength="160">
-            <span class="label">{{ t('editor.storyBody') }}</span>
-            <p class="hint">{{ t('editor.storyBodyHint') }}</p>
-            <NewsRichEditor v-model="storyForm.body" :label="t('editor.storyBody')" :lang="locale" />
-          </template>
 
-          <NewsChoiceCards
-            v-if="storyForm.mode !== 'hidden'" v-model="storyForm.audience"
-            :legend="t('editor.storyAudience')" name="story-audience" :options="audiences"
-          />
+            <aside v-if="ai" class="factsheet" aria-labelledby="facts-title">
+              <h3 id="facts-title" class="factsheet-title">{{ t('editor.factsTitle') }}</h3>
+              <div class="check" :class="editCheck.issues.length ? 'check--warn' : 'check--ok'" aria-live="polite">
+                <p class="check-head">
+                  <component :is="editCheck.issues.length ? PhWarning : PhCheckCircle" :size="16" weight="fill" aria-hidden="true" />
+                  {{ editCheck.issues.length ? t('editor.check.issues', { n: editCheck.issues.length }, editCheck.issues.length) : t('editor.check.ok') }}
+                </p>
+                <ul v-if="editCheck.issues.length" class="issues">
+                  <li v-for="(issue, i) in editCheck.issues" :key="i">
+                    <strong>{{ where(issue.sentence) }}:</strong> {{ t(`editor.check.${issue.kind}`, { value: issue.value ?? '' }) }}
+                    <span class="issue-text">“{{ clip(editText[issue.sentence] ?? '') }}”</span>
+                  </li>
+                </ul>
+              </div>
+              <label class="sr-only" for="facts-search">{{ t('editor.factsSearch') }}</label>
+              <input id="facts-search" v-model="factQuery" type="search" class="facts-search" :placeholder="t('editor.factsSearch')">
+              <ol class="fact-list">
+                <li v-for="f in shownFacts" :key="f.id" class="fact" :class="{ 'fact--used': usedFacts.has(f.id) }">
+                  <span class="fact-section">{{ t(`editor.sections.${f.section}`) }}</span>
+                  {{ f.text }}
+                </li>
+              </ol>
+              <p class="hint">{{ t('editor.factsUsed', { n: usedFacts.size, total: ai.facts.length }) }}</p>
+            </aside>
+          </div>
+
+          <template v-if="storyForm.mode !== 'hidden'">
+            <NewsCoverPicker v-model="storyForm.cover" />
+            <NewsChoiceCards v-model="storyForm.audience" :legend="t('editor.storyAudience')" name="story-audience" :options="audiences" />
+          </template>
         </section>
 
         <div class="bar">
-          <button type="submit" class="primary" :disabled="status === 'saving' || !form.headline.trim()">{{ t('editor.publish') }}</button>
-          <button v-if="data.edit || data.matchStory.control" type="button" class="secondary" :disabled="status === 'saving'" @click="revert">{{ t('editor.revert') }}</button>
+          <button type="submit" class="primary" :disabled="status === 'saving' || !!(storyForm.cover && !storyForm.cover.alt.trim())">{{ t('editor.publish') }}</button>
+          <button v-if="data.matchStory.control" type="button" class="secondary" :disabled="status === 'saving'" @click="revert">{{ t('editor.revert') }}</button>
           <NuxtLink :to="data.story.href" class="view" target="_blank">
             {{ t('editor.view') }} <PhArrowSquareOut :size="16" weight="bold" aria-hidden="true" />
           </NuxtLink>
@@ -211,6 +234,7 @@ async function revert() {
 }
 .title { margin: 6px 0 0; font-size: 32px; line-height: 1.2; font-weight: 700; color: var(--headline); }
 .lead { margin: 8px 0 0; color: var(--summary); }
+.match-name { font-weight: 700; color: var(--headline); }
 
 .form { margin-top: 24px; display: flex; flex-direction: column; gap: 6px; }
 .form > label, .label { margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--headline); }
@@ -235,6 +259,41 @@ async function revert() {
 .preview { margin-top: 16px; padding: 16px 18px; border-radius: 4px; background: var(--surface); }
 .preview-label { margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
 .preview :deep(.headline) { font-size: 20px; }
+.workbench { display: grid; gap: 20px; }
+@media (min-width: 1200px) {
+  /* Breaks out of the 760px column: editor and facts side by side. */
+  .workbench {
+    width: min(1180px, calc(100vw - 60px)); position: relative; left: 50%; transform: translateX(-50%);
+    grid-template-columns: minmax(0, 1fr) 360px; align-items: start;
+  }
+}
+.workbench-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.workbench-main input[type="text"] {
+  min-height: 48px; padding: 12px 14px; border: 1px solid var(--border-control); border-radius: 4px;
+  background: var(--bg); color: var(--headline); font: inherit; font-size: 18px; font-weight: 700;
+}
+.factsheet {
+  margin-top: 18px; padding: 16px; border-radius: 4px; background: var(--surface);
+  display: flex; flex-direction: column; gap: 10px; min-width: 0;
+}
+@media (min-width: 1200px) { .factsheet { position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow: auto; } }
+.factsheet-title { margin: 0; font-size: 16px; font-weight: 700; color: var(--headline); }
+.check { padding: 10px 12px; border-radius: 4px; background: var(--bg); font-size: 13px; color: var(--summary); border-left: 3px solid var(--win); }
+.check--warn { border-left-color: var(--loss); }
+.check-head { margin: 0; display: flex; align-items: center; gap: 6px; font-weight: 700; color: var(--headline); }
+.check--ok .check-head :deep(svg) { color: var(--win); }
+.check--warn .check-head :deep(svg) { color: var(--loss); }
+.issues { margin: 8px 0 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.issue-text { display: block; color: var(--meta); }
+.facts-search {
+  min-height: 40px; padding: 0 12px; border: 1px solid var(--border-control); border-radius: 4px;
+  background: var(--bg); color: var(--headline); font: inherit; font-size: 14px;
+}
+.facts-search:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.fact-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 1.45; color: var(--summary); }
+.fact { padding: 6px 8px; border-radius: 4px; }
+.fact--used { background: rgb(245 197 24 / 0.28); color: var(--headline); }
+.fact-section { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--meta); }
 .bar { margin-top: 24px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .primary, .secondary {
   min-height: 48px; padding: 0 22px; border-radius: 999px; font-weight: 700; font-size: 15px;

@@ -16,26 +16,15 @@ export interface Story {
   match: Pick<Match, 'sport' | 'home' | 'away' | 'shootout' | 'finishType' | 'status' | 'start'>
   /** Ordering weight: higher is more prominent. */
   weight: number
-  /** Set when a newsroom editor rewrote the story (headline / summary come from the edit). */
-  edited?: { by: string, at: string, audience: ArticleAudience }
+  /** Cover image the newsroom set for the match story; cards show the data visual without one. */
+  cover?: { src: string, alt: string }
 }
 
-/** Who may read a newsroom article on the match page: everyone, or subscribers (premium) only. */
+/** Who may read a match story: everyone, or subscribers (premium) only. */
 export type ArticleAudience = 'everyone' | 'subscribers'
 
-/** A newsroom editor's version of a front-page story, per language. `body` is sanitised HTML. */
-export interface StoryEdit {
-  headline: string
-  summary: string
-  body: string
-  audience: ArticleAudience
-  /** Editor's display name. */
-  by: string
-  at: string
-}
-
-/** The editor's article as the match page shows it. */
-export interface NewsroomArticle {
+/** The newsroom's edited match story as the match page shows it. `body` is sanitised HTML. */
+export interface EditedMatchStory {
   headline: string
   body: string
   audience: ArticleAudience
@@ -80,8 +69,17 @@ export interface MatchStoryControl {
   /** The edited version (mode 'edited'); `body` is sanitised HTML. Kept when switching modes. */
   headline: string
   body: string
+  /** Cover image (uploaded to the newsroom image store), shown with the AI or edited story. */
+  cover: StoryCover | null
   by: string
   at: string
+}
+
+export interface StoryCover {
+  /** Image id in the newsroom image store; served at /api/images/:id. */
+  id: string
+  alt: string
+  credit: string
 }
 
 /** The story section as the match API sends it to this reader (null: no section). */
@@ -89,5 +87,6 @@ export interface MatchStorySection {
   mode: StoryMode
   audience: ArticleAudience
   /** The newsroom's version when mode is 'edited'. */
-  edited: NewsroomArticle | null
+  edited: EditedMatchStory | null
+  cover: { src: string, alt: string, credit: string } | null
 }

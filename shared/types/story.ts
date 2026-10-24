@@ -57,5 +57,7 @@ export interface MatchStory extends StoryDraft {
 export interface StoryResponse {
   story: MatchStory
   facts: Fact[]
+  /** People and places the checker watches for (players, managers, referee, venue). */
+  names: string[]
   cached: boolean
 }

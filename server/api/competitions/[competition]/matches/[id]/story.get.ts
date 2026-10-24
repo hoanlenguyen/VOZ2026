@@ -44,5 +44,5 @@ export default defineEventHandler(async (event): Promise<StoryResponse> => {
     fresh: import.meta.dev && q.fresh === '1',
     generate: () => runStoryAgent({ match, competitionName: def.name, facts, names, length, tone }),
   })
-  return { story, facts, cached: cached !== false }
+  return { story, facts, names, cached: cached !== false }
 })

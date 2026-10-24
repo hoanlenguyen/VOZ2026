@@ -1,5 +1,5 @@
-// One front-page story for the editor, in the requested language: the generated version, the
-// newsroom's edit (if any), and the match story control when the match page has a story section.
+// One front-page story for the match story editor, in the requested language: the story (for its
+// match), the newsroom's control of the match story, and whether the match page has a story section.
 // Newsroom accounts only.
 import type { LandingData, MatchStorySection } from '#shared/types/stories'
 
@@ -9,9 +9,8 @@ export default defineEventHandler(async (event) => {
   const id = decodeURIComponent(getRouterParam(event, 'id') ?? '')
   if (!STORY_ID.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid story id' })
   const lang = requestLang(event)
-  const [landing, edits, control] = await Promise.all([
-    event.$fetch<LandingData>('/api/landing', { query: { lang, moderation: 'all', edits: 'off' } }),
-    storyEdits(lang),
+  const [landing, control] = await Promise.all([
+    event.$fetch<LandingData>('/api/landing', { query: { lang, moderation: 'all' } }),
     matchStoryControl(id.slice(2), lang),
   ])
   const story = landing.stories.find(s => s.id === id)
@@ -19,6 +18,5 @@ export default defineEventHandler(async (event) => {
   // The match API decides whether the page has a story section (finished match with full data).
   const page = await event.$fetch<{ story: MatchStorySection | null }>(`/api/competitions/${story.competitionId}/matches/${story.href.split('/').pop()}`, { query: { lang } })
     .catch(() => ({ story: null }))
-  // `story` is the generated version (what "Revert to automatic" brings back).
-  return { story, edit: edits[id] ?? null, matchStory: { available: page.story !== null, control } }
+  return { story, matchStory: { available: page.story !== null, control } }
 })

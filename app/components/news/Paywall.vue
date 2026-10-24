@@ -16,7 +16,7 @@ const BENEFITS = ['unlimited', 'stories', 'stats', 'noAds', 'languages'] as cons
 <template>
   <!-- The opening of the locked story, fading out into the offer. The rest is never sent to the browser. -->
   <div v-if="teaser" class="teaser">
-    <p class="teaser-kicker">{{ teaser.source === 'newsroom' ? t('match.article') : t('paywall.teaserKicker') }}<template v-if="teaser.translated"> · {{ t('press.translated') }}</template></p>
+    <p class="teaser-kicker">{{ teaser.source === 'newsroom' ? t('match.story') : t('paywall.teaserKicker') }}<template v-if="teaser.translated"> · {{ t('press.translated') }}</template></p>
     <h2 class="teaser-headline">{{ teaser.headline }}</h2>
     <p class="teaser-text">{{ teaser.text }}</p>
   </div>

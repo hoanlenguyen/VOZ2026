@@ -45,9 +45,7 @@
   "story": {
     "result": "Tulos",
     "preview": "Ennakko",
-    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta",
-    "edited": "VOZ:n toimituksen muokkaama",
-    "plus": "Plus"
+    "auto": "Kirjoitettu automaattisesti virallisesta otteludatasta"
   },
   "table": {
     "title": "{league} – sarjataulukko",
@@ -97,16 +95,15 @@
       "own-goal": "oma maali",
       "game-winner": "voittomaali"
     },
-    "article": "Toimitukselta",
-    "articleBy": "{name} · {time}",
-    "articlePlus": "Tilaajille",
     "story": "Otteluraportti",
     "storyHidden": "Toimitus on piilottanut tämän lukijoilta. Vain toimituksen tunnukset näkevät osion.",
     "storyEdited": "Muokannut {name} · {time}",
     "deskLabel": "Toimitus",
-    "deskState": "Artikkeli: {article} · Otteluraportti: {story}",
+    "deskState": "Otteluraportti: {story}",
     "deskNone": "ei",
-    "deskEdit": "Muokkaa sisältöä"
+    "deskEdit": "Muokkaa sisältöä",
+    "storyPlus": "Tilaajille",
+    "coverCredit": "Kuva: {credit}"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -234,7 +231,7 @@
     "ok": "OK",
     "down": "Poissa",
     "storiesTitle": "Etusivun jutut",
-    "storiesLead": "Muokkaa-painikkeella kirjoitat jutun ja sen ottelusivun artikkelin kaikille tai vain tilaajille. Piilotettu juttu katoaa etusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
+    "storiesLead": "Muokkaa-painikkeella valitset otteluraportin: tekoälyn version, toimituksen muokkaaman version tai piilotuksen, kuka sen voi lukea ja kansikuvan. Piilotettu juttu katoaa etusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
     "hide": "Piilota",
     "show": "Näytä",
     "hiddenBadge": "Piilotettu",
@@ -243,27 +240,19 @@
     "missing": "Ei saatavilla: {list}",
     "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
     "edit": "Muokkaa",
-    "editedBadge": "Muokattu",
-    "plusBadge": "Tilaajat",
     "storyBadge": "Raportti: {mode}"
   },
   "editor": {
-    "pageTitle": "Muokkaa juttua – VOZ-toimitus",
+    "pageTitle": "Muokkaa otteluraporttia – VOZ-toimitus",
     "back": "Toimitus",
-    "title": "Muokkaa juttua",
+    "title": "Otteluraportti",
     "langName": {
       "en": "englanninkielistä",
       "fi": "suomenkielistä"
     },
     "language": "Muokkaat {lang} versiota.",
     "lastSaved": "Viimeksi julkaissut {name}, {time}.",
-    "automatic": "Nyt näkyvissä otteludatasta kirjoitettu automaattinen juttu.",
-    "headline": "Otsikko",
-    "summary": "Etusivun tiivistelmä",
-    "summaryHint": "Näkyy otsikon alla etusivulla. Pelkkää tekstiä.",
-    "body": "Artikkeli",
-    "bodyHint": "Näkyy ottelusivulla tulostaulun alla. Jätä tyhjäksi, jos artikkelia ei tarvita.",
-    "audience": "Kuka voi lukea artikkelin",
+    "automatic": "Tilaajat näkevät nyt tekoälyn raportin.",
     "audiences": {
       "everyone": {
         "label": "Kaikki",
@@ -278,10 +267,9 @@
     "revert": "Palauta automaattinen",
     "view": "Näytä ottelusivu",
     "saved": "Julkaistu.",
-    "reverted": "Palautettu: lukijat näkevät taas automaattisen jutun.",
+    "reverted": "Palautettu: tilaajat näkevät taas tekoälyn raportin.",
     "saveError": "Julkaisu epäonnistui ({reason}).",
     "loadError": "Juttua ei voitu ladata ({reason}).",
-    "partFront": "Etusivu ja artikkeli",
     "partStory": "Otteluraportti",
     "storyLead": "Ottelusivun raporttiosio. Oletuksena tilaajat näkevät tekoälyn raportin, joka on tarkistettu ottelun faktoja vasten.",
     "storyMode": "Mitä lukijat näkevät",
@@ -303,7 +291,46 @@
     "storyHeadline": "Raportin otsikko",
     "startFromAi": "Aloita tekoälyn raportista",
     "storyBody": "Raportin teksti",
-    "storyBodyHint": "Muokkaustasi ei tarkisteta faktoja vasten: tarkista jokainen luku ja nimi ennen julkaisua.",
-    "storyAudience": "Kuka voi lukea otteluraportin"
+    "storyBodyHint": "Muokkauksesi ei viittaa faktoihin: editorin vieressä oleva tarkistus näyttää luvut ja nimet, joita faktoissa ei ole.",
+    "storyAudience": "Kuka voi lukea otteluraportin",
+    "factsTitle": "Ottelun faktat",
+    "factsSearch": "Hae faktoista",
+    "factsUsed": "Korostettu: tekstisi käyttää {n}/{total} faktaa.",
+    "sections": {
+      "result": "Tulos",
+      "timeline": "Tapahtumat",
+      "stats": "Tilastot",
+      "form": "Vire",
+      "table": "Sarjataulukko",
+      "h2h": "Keskinäiset",
+      "context": "Tausta"
+    },
+    "check": {
+      "ok": "Jokainen luku ja nimi löytyy faktoista.",
+      "issues": "{n} tarkistettava kohta | {n} tarkistettavaa kohtaa",
+      "headline": "Otsikko",
+      "sentence": "Lause {n}",
+      "number": "”{value}” ei löydy faktoista.",
+      "name": "{value} ei löydy faktoista.",
+      "quote": "sisältää lainauksen; lainauksia ei ole.",
+      "speech": "esittää jonkun puhetta; lainauksia ei ole.",
+      "injury": "mainitsee loukkaantumisen; niitä ei ole faktoissa."
+    },
+    "noStory": "Tällä ottelulla ei ole otteluraporttia: raportit kirjoitetaan päättyneistä otteluista, joista on täysi otteludata.",
+    "cover": {
+      "title": "Kansikuva",
+      "hint": "Näkyy raportin yläpuolella ja etusivun kortissa. Käytä vain kuvia, jotka VOZ omistaa tai joihin sillä on oikeudet.",
+      "add": "Lisää kansikuva",
+      "formats": "JPEG, PNG tai WebP, enintään 2 Mt",
+      "uploading": "Ladataan…",
+      "replace": "Vaihda",
+      "remove": "Poista",
+      "alt": "Vaihtoehtoinen teksti",
+      "altHint": "Kuvaile kuva lukijoille, jotka eivät näe sitä.",
+      "credit": "Kuvaaja",
+      "creditPlaceholder": "Kuvaaja / toimisto",
+      "tooLarge": "Kuva on yli 2 Mt.",
+      "uploadError": "Kuvaa ei voitu ladata ({reason})."
+    }
   }
 }

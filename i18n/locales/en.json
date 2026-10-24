@@ -45,9 +45,7 @@
   "story": {
     "result": "Result",
     "preview": "Preview",
-    "auto": "Written automatically from official match data",
-    "edited": "Edited by the VOZ newsroom",
-    "plus": "Plus"
+    "auto": "Written automatically from official match data"
   },
   "table": {
     "title": "{league} table",
@@ -97,16 +95,15 @@
       "own-goal": "own goal",
       "game-winner": "game-winner"
     },
-    "article": "From the newsroom",
-    "articleBy": "By {name} · {time}",
-    "articlePlus": "For subscribers",
     "story": "Match story",
     "storyHidden": "Hidden from readers by the newsroom. Only newsroom accounts see this section.",
     "storyEdited": "Edited by {name} · {time}",
     "deskLabel": "Newsroom",
-    "deskState": "Article: {article} · Match story: {story}",
+    "deskState": "Match story: {story}",
     "deskNone": "none",
-    "deskEdit": "Edit coverage"
+    "deskEdit": "Edit coverage",
+    "storyPlus": "For subscribers",
+    "coverCredit": "Photo: {credit}"
   },
   "timeline": {
     "shown": "Events shown",
@@ -234,7 +231,7 @@
     "ok": "OK",
     "down": "Down",
     "storiesTitle": "Front-page stories",
-    "storiesLead": "Edit rewrites a story and its match-page article, for everyone or for subscribers only. Hidden stories disappear from the front page for every reader; Show puts them back.",
+    "storiesLead": "Edit sets a match story: the AI version, the newsroom's edited version or hidden, who can read it and its cover image. Hidden stories disappear from the front page for every reader; Show puts them back.",
     "hide": "Hide",
     "show": "Show",
     "hiddenBadge": "Hidden",
@@ -243,27 +240,19 @@
     "missing": "Unavailable leagues: {list}",
     "loadError": "The newsroom data could not be loaded ({reason}).",
     "edit": "Edit",
-    "editedBadge": "Edited",
-    "plusBadge": "Subscribers",
     "storyBadge": "Story: {mode}"
   },
   "editor": {
-    "pageTitle": "Edit story – VOZ Newsroom",
+    "pageTitle": "Edit match story – VOZ Newsroom",
     "back": "Newsroom",
-    "title": "Edit story",
+    "title": "Match story",
     "langName": {
       "en": "English",
       "fi": "Finnish"
     },
     "language": "You are editing the {lang} version.",
     "lastSaved": "Last published by {name}, {time}.",
-    "automatic": "Currently the automatic story from match data.",
-    "headline": "Headline",
-    "summary": "Front-page summary",
-    "summaryHint": "Shown under the headline on the front page. Plain text.",
-    "body": "Article",
-    "bodyHint": "Shown on the match page under the scoreboard. Leave empty for no article.",
-    "audience": "Who can read the article",
+    "automatic": "Readers with a subscription currently get the AI story.",
     "audiences": {
       "everyone": {
         "label": "Everyone",
@@ -278,10 +267,9 @@
     "revert": "Revert to automatic",
     "view": "View match page",
     "saved": "Published.",
-    "reverted": "Reverted: readers see the automatic story again.",
+    "reverted": "Reverted: subscribers get the AI story again.",
     "saveError": "Could not publish ({reason}).",
     "loadError": "The story could not be loaded ({reason}).",
-    "partFront": "Front page and article",
     "partStory": "Match story",
     "storyLead": "The story section on the match page. By default readers with a subscription get the AI story, checked against the match facts.",
     "storyMode": "What readers get",
@@ -303,7 +291,46 @@
     "storyHeadline": "Story headline",
     "startFromAi": "Start from the AI story",
     "storyBody": "Story text",
-    "storyBodyHint": "Your edit is not checked against the facts: check every number and name before publishing.",
-    "storyAudience": "Who can read the match story"
+    "storyBodyHint": "Your edit cites no facts: the check next to the editor flags numbers and names that are not in them.",
+    "storyAudience": "Who can read the match story",
+    "factsTitle": "Match facts",
+    "factsSearch": "Search the facts",
+    "factsUsed": "Highlighted: {n} of {total} facts your text uses.",
+    "sections": {
+      "result": "Result",
+      "timeline": "Timeline",
+      "stats": "Stats",
+      "form": "Form",
+      "table": "Table",
+      "h2h": "Head to head",
+      "context": "Context"
+    },
+    "check": {
+      "ok": "Every number and name is in the facts.",
+      "issues": "{n} thing to check | {n} things to check",
+      "headline": "Headline",
+      "sentence": "Sentence {n}",
+      "number": "“{value}” is not in any fact.",
+      "name": "{value} is not in the facts.",
+      "quote": "contains a quotation; we have no quotes.",
+      "speech": "attributes speech to someone; we have no quotes.",
+      "injury": "mentions an injury; injuries are not in the facts."
+    },
+    "noStory": "This match has no match story: stories are written for finished matches with full match data.",
+    "cover": {
+      "title": "Cover image",
+      "hint": "Shown above the story and on the front-page card. Use only photos VOZ owns or has the rights to.",
+      "add": "Add a cover image",
+      "formats": "JPEG, PNG or WebP, up to 2 MB",
+      "uploading": "Uploading…",
+      "replace": "Replace",
+      "remove": "Remove",
+      "alt": "Alt text",
+      "altHint": "Describe the image for readers who cannot see it.",
+      "credit": "Credit",
+      "creditPlaceholder": "Photographer / agency",
+      "tooLarge": "The image is larger than 2 MB.",
+      "uploadError": "The image could not be uploaded ({reason})."
+    }
   }
 }

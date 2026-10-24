@@ -9,24 +9,22 @@ const { stamp } = useFormat()
 <template>
   <article class="story" :class="`story--${variant}`">
     <NuxtLink :to="story.href" class="media" tabindex="-1" aria-hidden="true">
-      <NewsMatchVisual :story="story" :size="variant === 'lead' ? 'lg' : variant === 'row' ? 'sm' : 'md'" />
+      <!-- The newsroom's cover image when it set one, otherwise the data visual. -->
+      <img v-if="story.cover" :src="story.cover.src" :alt="story.cover.alt" class="cover" loading="lazy">
+      <NewsMatchVisual v-else :story="story" :size="variant === 'lead' ? 'lg' : variant === 'row' ? 'sm' : 'md'" />
     </NuxtLink>
     <div class="body">
       <p class="kicker">
         <span>{{ story.competitionName }}</span>
         <span aria-hidden="true">·</span>
         <span>{{ t(`story.${story.kind}`) }}</span>
-        <template v-if="story.edited?.audience === 'subscribers'">
-          <span aria-hidden="true">·</span><span class="plus">{{ t('story.plus') }}</span>
-        </template>
       </p>
       <h3 class="headline">
         <NuxtLink :to="story.href">{{ story.headline }}</NuxtLink>
       </h3>
       <p v-if="variant === 'row'" class="stamp num">{{ stamp(story.time) }}</p>
       <p v-if="(variant === 'lead' || variant === 'row') && story.summary" class="summary">{{ story.summary }}</p>
-      <p v-if="variant === 'lead' && story.edited" class="auto">{{ t('story.edited') }}</p>
-      <p v-else-if="variant === 'lead'" class="auto">
+      <p v-if="variant === 'lead'" class="auto">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5" /></svg>
         {{ t('story.auto') }}
       </p>
@@ -38,6 +36,7 @@ const { stamp } = useFormat()
 .story { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .media { display: block; border-radius: 4px; color: inherit; text-decoration: none; }
 .media:focus-visible { outline: none; }
+.cover { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
 .body { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .kicker {
   margin: 0; display: flex; gap: 6px; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
@@ -48,7 +47,6 @@ const { stamp } = useFormat()
 .headline a:hover, .story:has(.media:hover) .headline a { color: var(--link-hover); }
 .stamp { margin: 0; font-size: 12px; color: var(--meta); }
 .summary { margin: 0; font-size: 14px; line-height: 1.5; color: var(--summary); }
-.plus { color: var(--accent-ink); }
 .auto { margin: 4px 0 0; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--meta); }
 
 .story--lead { gap: 15px; }

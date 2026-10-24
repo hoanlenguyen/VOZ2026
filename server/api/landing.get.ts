@@ -1,5 +1,5 @@
 // Front page: auto-generated stories, fixture ticker and mini tables across sports.
-import type { LandingData, Story, StoryEdit } from '#shared/types/stories'
+import type { LandingData, Story } from '#shared/types/stories'
 
 const FRONT_PAGE = ['liiga', 'premier-league', 'champions-league', 'la-liga', 'bundesliga', 'serie-a']
 const TABLES = ['liiga', 'premier-league']
@@ -61,17 +61,15 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   // Stories an editor hid in the newsroom dashboard are left out for readers. The dashboard itself
   // asks with ?moderation=all to see them too (newsroom accounts only).
   const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
-  // The story editor also asks with ?edits=off for the generated text it can revert to.
-  const raw = showAll && getQuery(event).edits === 'off'
-  const [hidden, edits] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), raw ? {} as Record<string, StoryEdit> : storyEdits(lang)])
+  const [hidden, controls] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang)])
   const order = (id: string) => FRONT_PAGE.indexOf(id)
   setDataSource(event, ...sources)
   return {
     generatedAt: new Date().toISOString(),
-    // Newsroom edits replace the generated headline and summary (per language).
+    // Cover images the newsroom set on match stories replace the cards' data visual.
     stories: ranked.filter(s => !hidden.has(s.id)).map((s) => {
-      const e = edits[s.id]
-      return e ? { ...s, headline: e.headline, summary: e.summary || s.summary, edited: { by: e.by, at: e.at, audience: e.audience } } : s
+      const cover = coverOf(controls[s.id.slice(2)] ?? null)
+      return cover ? { ...s, cover: { src: cover.src, alt: cover.alt } } : s
     }),
     ticker: ticker.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     tables: tables.sort((a, b) => order(a.competitionId) - order(b.competitionId)),

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Newsroom dashboard (newsroom accounts): today's front-page stories with hide / show, data-source
 // health and the AI caches. Hiding a story removes it from the front page for every reader;
-// "Edit" opens the story editor (/newsroom/stories/:id).
+// "Edit" opens the match story editor (/newsroom/stories/:id).
 import { PhArrowSquareOut, PhEye, PhEyeSlash, PhPencilSimple } from '@phosphor-icons/vue'
 
 definePageMeta({ layout: 'news', middleware: 'newsroom' })
@@ -66,8 +66,6 @@ async function toggle(id: string, hidden: boolean) {
                 <span>{{ t(`story.${s.kind}`) }}</span><span aria-hidden="true">·</span>
                 <span class="num">{{ stamp(s.time) }}</span>
                 <span class="badge-s" :class="s.hidden ? 'badge-s--hidden' : 'badge-s--live'">{{ s.hidden ? t('newsroom.hiddenBadge') : t('newsroom.liveBadge') }}</span>
-                <span v-if="s.edited" class="badge-s badge-s--edited">{{ t('newsroom.editedBadge') }}</span>
-                <span v-if="s.edited?.audience === 'subscribers'" class="badge-s badge-s--plus">{{ t('newsroom.plusBadge') }}</span>
                 <span v-if="s.storyControl" class="badge-s badge-s--edited">
                   {{ t('newsroom.storyBadge', { mode: t(`editor.modes.${s.storyControl.mode}.label`) }) }}<template v-if="s.storyControl.mode !== 'hidden'"> · {{ t(`editor.audiences.${s.storyControl.audience}.label`) }}</template>
                 </span>
@@ -124,7 +122,6 @@ async function toggle(id: string, hidden: boolean) {
 .badge-s--live { background: var(--win); color: var(--board-text); }
 .badge-s--hidden { background: var(--loss); color: var(--board-text); }
 .badge-s--edited { margin-left: 0; background: var(--surface-2); color: var(--headline); }
-.badge-s--plus { margin-left: 0; background: var(--accent); color: var(--on-accent); }
 .edit {
   min-height: 44px; padding: 0 14px; display: inline-flex; align-items: center; gap: 6px; border-radius: 999px;
   font-size: 13px; font-weight: 700; color: var(--headline); text-decoration: none;

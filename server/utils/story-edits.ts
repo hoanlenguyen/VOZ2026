@@ -1,15 +1,13 @@
-// Newsroom edits, made on /newsroom/stories/:id. One map per language in "kvcache" (Workers KV in
-// production, memory in dev), like the hidden-story list in moderation.ts:
-// - front-page story edits (headline, summary, and the "From the newsroom" article), by story id;
-// - match story controls (AI story / edited version / hidden, and its audience), by match key.
-// HTML bodies are sanitised here on save (allowlist below), never trusted from the browser; the match
+// Newsroom control of match stories, made on /newsroom/stories/:id: the AI story, the newsroom's
+// edited version or hidden, and its audience. One map per language in "kvcache" (Workers KV in
+// production, memory in dev), by match key, like the hidden-story list in moderation.ts.
+// Edited bodies are sanitised here on save (allowlist below), never trusted from the browser; the match
 // page renders them with v-html. `audience` decides who reads them: 'everyone' (free and signed-out
 // readers too) or 'subscribers' (premium; others get the opening as the paywall teaser).
 import { FilterXSS } from 'xss'
 import type { Lang } from '#shared/utils/format'
-import type { ArticleAudience, MatchStoryControl, NewsroomArticle, StoryEdit, StoryMode } from '#shared/types/stories'
+import type { ArticleAudience, MatchStoryControl, StoryCover, StoryMode } from '#shared/types/stories'
 
-const key = (lang: Lang) => `newsroom:story-edits:${lang}`
 export const STORY_ID = /^[rp]-[\w-]+:\w+$/
 
 // Tags the editor toolbar can produce (blocks, inline marks, lists, links); everything else is
@@ -50,34 +48,6 @@ export function excerpt(htmlText: string): string {
 const audienceOf = (v: unknown): ArticleAudience => (v === 'subscribers' ? 'subscribers' : 'everyone')
 const line = (v: unknown, max: number) => (typeof v === 'string' ? v.replace(/\s+/g, ' ').trim().slice(0, max) : '')
 
-/** Validates and cleans an edit sent by the browser; throws 400 on a missing headline. */
-export function cleanEdit(input: Record<string, unknown> | undefined, by: string): StoryEdit {
-  const headline = line(input?.headline, 160)
-  if (!headline) throw createError({ statusCode: 400, statusMessage: 'Headline is required' })
-  const body = sanitizeArticle(typeof input?.body === 'string' ? input.body.slice(0, 40_000) : '')
-  return { headline, summary: line(input?.summary, 600), body, audience: audienceOf(input?.audience), by, at: new Date().toISOString() }
-}
-
-export async function storyEdits(lang: Lang): Promise<Record<string, StoryEdit>> {
-  const map = await useStorage('kvcache').getItem<Record<string, StoryEdit>>(key(lang)).catch(() => null)
-  return map && typeof map === 'object' ? map : {}
-}
-
-export async function saveStoryEdit(lang: Lang, id: string, edit: StoryEdit | null) {
-  const map = await storyEdits(lang)
-  if (edit) map[id] = edit
-  else delete map[id]
-  await useStorage('kvcache').setItem(key(lang), map)
-}
-
-/** The newsroom article for a match (result story first, then preview), or null. */
-export async function articleForMatch(matchKey: string, lang: Lang): Promise<NewsroomArticle | null> {
-  const map = await storyEdits(lang)
-  const edit = map[`r-${matchKey}`] ?? map[`p-${matchKey}`]
-  if (!edit?.body) return null
-  return { headline: edit.headline, body: edit.body, audience: edit.audience, by: edit.by, at: edit.at }
-}
-
 /** Readers' default when the newsroom has not touched a match story. */
 export const DEFAULT_STORY_CONTROL: Pick<MatchStoryControl, 'mode' | 'audience'> = { mode: 'ai', audience: 'subscribers' }
 const MODES: StoryMode[] = ['ai', 'edited', 'hidden']
@@ -91,7 +61,22 @@ export function cleanStoryControl(input: Record<string, unknown> | undefined, by
   if (mode === 'edited' && (!headline || !plainText(body))) {
     throw createError({ statusCode: 400, statusMessage: 'The edited match story needs a headline and text' })
   }
-  return { mode, audience: audienceOf(input?.audience), headline, body, by, at: new Date().toISOString() }
+  return { mode, audience: audienceOf(input?.audience), headline, body, cover: cleanCover(input?.cover), by, at: new Date().toISOString() }
+}
+
+/** A cover needs a stored image id and alt text; the PUT handler checks the image exists. */
+function cleanCover(input: unknown): StoryCover | null {
+  const c = input as Record<string, unknown> | null | undefined
+  if (!c || typeof c.id !== 'string' || !IMAGE_ID.test(c.id)) return null
+  const alt = line(c.alt, 200)
+  if (!alt) throw createError({ statusCode: 400, statusMessage: 'The cover image needs alt text' })
+  return { id: c.id, alt, credit: line(c.credit, 120) }
+}
+
+/** The cover as pages show it (null when the story is hidden). */
+export function coverOf(control: MatchStoryControl | null) {
+  const c = control?.mode !== 'hidden' ? control?.cover : null
+  return c ? { src: imageUrl(c.id), alt: c.alt, credit: c.credit } : null
 }
 
 export async function storyControls(lang: Lang): Promise<Record<string, MatchStoryControl>> {

@@ -26,10 +26,9 @@ export default defineEventHandler(async (event) => {
   const extras = mock?.extras ?? null
   setResponseHeader(event, 'cache-control', 'private, no-store')
   const finished = match.status === 'finished'
-  // Newsroom controls (per language): the "From the newsroom" article, and whether the match story
-  // is the AI version, the newsroom's edit or hidden, each for everyone or for subscribers only.
-  const [article, control] = await Promise.all([articleForMatch(match.key, lang), matchStoryControl(match.key, lang)])
-  const articleLocked = article?.audience === 'subscribers' && !entitlements.premium
+  // Newsroom control (per language): the match story is the AI version, the newsroom's edit or
+  // hidden, for everyone or for subscribers only.
+  const control = await matchStoryControl(match.key, lang)
   const { mode, audience } = control ?? DEFAULT_STORY_CONTROL
   const hasStory = !!extras && finished && (mode !== 'hidden' || entitlements.newsroom)
   const storyLocked = hasStory && audience === 'subscribers' && !entitlements.premium
@@ -37,16 +36,12 @@ export default defineEventHandler(async (event) => {
     ? { headline: control.headline, body: control.body, audience, by: control.by, at: control.at }
     : null
   // Newsroom accounts also get a hidden story's section (mode 'hidden'), so they can see the state.
-  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, edited } : null
+  const story: MatchStorySection | null = hasStory && !storyLocked ? { mode, audience, edited, cover: coverOf(control) } : null
 
-  // Locked readers see the opening of what is locked (the newsroom's article first, then the match
-  // story), fading into the offer. AI text only from stories that already exist (cache / pre-written),
+  // Locked readers see the opening of the match story, fading into the offer. AI text only from stories that already exist (cache / pre-written),
   // so a free reader never starts the agent.
   let teaser: { headline: string, text: string, translated: boolean, source: 'ai' | 'newsroom' } | null = null
-  if (articleLocked) {
-    teaser = { headline: article.headline, text: excerpt(article.body), translated: false, source: 'newsroom' }
-  }
-  else if (storyLocked && mode === 'edited' && edited) {
+  if (storyLocked && mode === 'edited' && edited) {
     teaser = { headline: edited.headline, text: excerpt(edited.body), translated: false, source: 'newsroom' }
   }
   else if (storyLocked) {
@@ -63,7 +58,6 @@ export default defineEventHandler(async (event) => {
   }
   return {
     teaser,
-    article: articleLocked ? null : article,
     story,
     competition: describeCompetition(def, lang),
     match,
@@ -73,7 +67,6 @@ export default defineEventHandler(async (event) => {
     locked: entitlements.premium
       ? []
       : [
-          ...(articleLocked ? ['article' as const] : []),
           ...(storyLocked ? ['story' as const] : []),
           ...(compare ? ['compare' as const] : []),
           ...(extras?.timeline.length ? ['timeline' as const] : []),

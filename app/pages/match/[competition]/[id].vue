@@ -63,43 +63,35 @@ useHead(() => ({
         <span>
           <strong>{{ t('match.deskLabel') }}</strong>
           {{ t('match.deskState', {
-            article: data.article ? t(`editor.audiences.${data.article.audience}.label`) : t('match.deskNone'),
             story: data.story ? t(`editor.modes.${data.story.mode}.label`) + (data.story.mode === 'hidden' ? '' : ` · ${t(`editor.audiences.${data.story.audience}.label`)}`) : t('match.deskNone'),
           }) }}
         </span>
         <NuxtLink :to="editLink" class="desk-edit"><PhPencilSimple :size="16" weight="bold" aria-hidden="true" /> {{ t('match.deskEdit') }}</NuxtLink>
       </aside>
 
-      <!-- The newsroom's article (sanitised on save, server/utils/story-edits.ts); subscriber-only
-           articles reach other readers only as the paywall teaser. -->
-      <article v-if="data.article" class="block article" aria-labelledby="article-title">
-        <NewsSectionTitle id="article-title">{{ t('match.article') }}</NewsSectionTitle>
-        <p class="article-kicker">
-          <span v-if="data.article.audience === 'subscribers'" class="plus">{{ t('match.articlePlus') }} · </span>
-          {{ t('match.articleBy', { name: data.article.by, time: fmt.stamp(data.article.at) }) }}
-        </p>
-        <h2 class="article-headline">{{ data.article.headline }}</h2>
-        <!-- eslint-disable-next-line vue/no-v-html -->
-        <div class="article-body" v-html="data.article.body" />
-      </article>
-
       <NewsPaywall v-if="data.locked?.length" :teaser="data.teaser" />
 
-      <!-- Match story as the newsroom set it: the AI story, the newsroom's edited version, or (newsroom
-           accounts only) a note that it is hidden from readers. -->
+      <!-- Match story as the newsroom set it: the AI story or the newsroom's edited version, with its
+           cover image, or (newsroom accounts only) a note that it is hidden from readers. -->
       <section v-if="data.story" class="block" aria-labelledby="story-title">
         <NewsSectionTitle id="story-title">{{ t('match.story') }}</NewsSectionTitle>
         <p v-if="data.story.mode === 'hidden'" class="notice">{{ t('match.storyHidden') }}</p>
-        <article v-else-if="data.story.edited">
-          <p class="article-kicker">
-            <span v-if="data.story.audience === 'subscribers'" class="plus">{{ t('match.articlePlus') }} · </span>
-            {{ t('match.storyEdited', { name: data.story.edited.by, time: fmt.stamp(data.story.edited.at) }) }}
-          </p>
-          <h3 class="article-headline">{{ data.story.edited.headline }}</h3>
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <div class="article-body" v-html="data.story.edited.body" />
-        </article>
-        <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
+        <template v-else>
+          <figure v-if="data.story.cover" class="cover">
+            <img :src="data.story.cover.src" :alt="data.story.cover.alt">
+            <figcaption v-if="data.story.cover.credit">{{ t('match.coverCredit', { credit: data.story.cover.credit }) }}</figcaption>
+          </figure>
+          <article v-if="data.story.edited">
+            <p class="article-kicker">
+              <span v-if="data.story.audience === 'subscribers'" class="plus">{{ t('match.storyPlus') }} · </span>
+              {{ t('match.storyEdited', { name: data.story.edited.by, time: fmt.stamp(data.story.edited.at) }) }}
+            </p>
+            <h3 class="article-headline">{{ data.story.edited.headline }}</h3>
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div class="article-body" v-html="data.story.edited.body" />
+          </article>
+          <NewsMatchStory v-else :competition-id="data.competition.id" :match-id="match.id" :home="match.home.shortName" :away="match.away.shortName" />
+        </template>
       </section>
 
       <section v-if="data.extras?.timeline.length" class="block" aria-labelledby="timeline-title">
@@ -196,6 +188,9 @@ useHead(() => ({
 }
 .desk-edit:hover { background: var(--link-hover); }
 .desk-edit:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cover { margin: 0 0 20px; }
+.cover img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
+.cover figcaption { margin-top: 6px; font-size: 12px; color: var(--meta); }
 .article-kicker { margin: 0; font-size: 13px; color: var(--meta); }
 .plus { font-weight: 700; color: var(--accent-ink); }
 .article-headline { margin: 6px 0 0; font-size: clamp(22px, 3vw, 28px); line-height: 1.29; font-weight: 700; color: var(--headline); }
