@@ -7,14 +7,16 @@
     "footer": "VOZ – My Sports World · Stories on this page are written automatically from official league data (Liiga, football-data.org)."
   },
   "nav": {
-    "sports": "Sports",
     "myTeams": "My teams",
     "personalise": "Personalise",
     "signIn": "Sign in",
     "account": "My account",
     "newsroom": "Newsroom",
     "signOut": "Sign out",
-    "accountMenu": "Account menu"
+    "accountMenu": "Account menu",
+    "news": "News",
+    "favourites": "My favourites",
+    "lockedHint": "For VOZ Plus subscribers"
   },
   "sport": {
     "all": "All sports",
@@ -72,7 +74,7 @@
     "vs": "vs"
   },
   "match": {
-    "back": "Sports",
+    "back": "News",
     "pageTitle": "Match – VOZ",
     "loadError": "Could not load the match ({reason}). Try again in a minute.",
     "matchday": "Matchday {n}",
@@ -596,5 +598,19 @@
       "failed": "Something went wrong. Try again."
     },
     "preview": "Latest comments (preview)"
+  },
+  "favourites": {
+    "pageTitle": "My favourites – VOZ",
+    "title": "My favourites",
+    "lead": "News from the teams, leagues and players you follow.",
+    "edit": "Edit in My teams",
+    "all": "All favourites",
+    "newsroom": "Favourites are for reader accounts.",
+    "none": "You are not following anything yet.",
+    "choose": "Choose favourites",
+    "empty": "No recent stories from your favourites.",
+    "lockedTitle": "My favourites is part of VOZ Plus",
+    "lockedText": "Subscribe to get one page with the news of the teams, leagues and players you follow.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to get the news of the teams, leagues and players you follow on one page."
   }
 }

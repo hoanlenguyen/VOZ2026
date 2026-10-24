@@ -1,11 +1,19 @@
 <script setup lang="ts">
+import { PhLockSimple } from '@phosphor-icons/vue'
 const { t, locale, locales, setLocale } = useI18n()
 const open = ref(false)
-// "My teams" is for readers; newsroom accounts have the newsroom instead.
+// "My favourites" and "My teams" are for readers; newsroom accounts have the newsroom instead.
+// "My favourites" is a VOZ Plus feature: free and signed-out readers see it locked and not
+// clickable (the page itself also shows the invitation if opened directly).
 const { can } = useAccount()
 const links = computed(() => [
-  { to: '/', label: t('nav.sports') },
-  ...(can.value.newsroom ? [] : [{ to: '/my-teams', label: t('nav.myTeams') }]),
+  { to: '/', label: t('nav.news'), locked: false },
+  ...(can.value.newsroom
+    ? []
+    : [
+        { to: '/favourites', label: t('nav.favourites'), locked: !can.value.premium },
+        { to: '/my-teams', label: t('nav.myTeams'), locked: false },
+      ]),
 ])
 const route = useRoute()
 watch(() => route.fullPath, () => (open.value = false))
@@ -32,7 +40,13 @@ watch(() => route.fullPath, () => (open.value = false))
       </NuxtLink>
 
       <nav class="desktop-nav" aria-label="Main">
-        <NuxtLink v-for="l in links" :key="l.to" :to="l.to" class="nav-link">{{ l.label }}</NuxtLink>
+        <template v-for="l in links" :key="l.to">
+          <!-- Locked (VOZ Plus): shown but not a link. -->
+          <span v-if="l.locked" class="nav-link nav-link--locked" role="link" aria-disabled="true" :title="t('nav.lockedHint')">
+            <PhLockSimple :size="14" weight="bold" aria-hidden="true" />{{ l.label }}<span class="sr-only"> ({{ t('nav.lockedHint') }})</span>
+          </span>
+          <NuxtLink v-else :to="l.to" class="nav-link">{{ l.label }}</NuxtLink>
+        </template>
       </nav>
 
       <div class="lang lang--bar" role="group" :aria-label="t('site.language')">
@@ -48,7 +62,12 @@ watch(() => route.fullPath, () => (open.value = false))
     </div>
 
     <nav v-show="open" id="site-menu" class="menu" aria-label="Main">
-      <NuxtLink v-for="l in links" :key="l.to" :to="l.to" class="menu-link">{{ l.label }}</NuxtLink>
+      <template v-for="l in links" :key="l.to">
+        <span v-if="l.locked" class="menu-link nav-link--locked" role="link" aria-disabled="true" :title="t('nav.lockedHint')">
+          <PhLockSimple :size="14" weight="bold" aria-hidden="true" />{{ l.label }}<span class="sr-only"> ({{ t('nav.lockedHint') }})</span>
+        </span>
+        <NuxtLink v-else :to="l.to" class="menu-link">{{ l.label }}</NuxtLink>
+      </template>
       <div class="lang lang--menu" role="group" :aria-label="t('site.language')">
         <button
           v-for="l in locales" :key="l.code" type="button" class="lang-btn" :lang="l.code"
@@ -96,6 +115,7 @@ watch(() => route.fullPath, () => (open.value = false))
 .lang--menu { align-self: flex-start; margin-top: 12px; }
 .lang--menu .lang-btn { min-height: 44px; padding: 0 16px; letter-spacing: 0; }
 .menu { max-width: calc(var(--page-max) + 2 * 50px); margin: 0 auto; padding: 4px 16px 12px; display: flex; flex-direction: column; }
+.nav-link--locked { display: inline-flex; align-items: center; gap: 5px; opacity: 0.55; cursor: not-allowed; }
 .menu-link { padding: 12px 0; border-top: 1px solid var(--line-soft); color: var(--text); font-weight: 600; text-decoration: none; }
 
 @media (min-width: 1024px) {
