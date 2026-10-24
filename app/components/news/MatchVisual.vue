@@ -6,15 +6,20 @@ import type { Story } from '#shared/types/stories'
 const props = withDefaults(defineProps<{ story: Pick<Story, 'competitionName' | 'match'>, size?: 'lg' | 'md' | 'sm' }>(), { size: 'md' })
 const m = computed(() => props.story.match)
 const finished = computed(() => m.value.status === 'finished')
-// formatScore gives "4–3 SO" / "1–1, 5–4 pens": big number first, the rest goes in the chip.
+const { t } = useI18n()
+const fmt = useFormat()
+// The score reads "4–3 SO" / "1–1, 5–4 pens" (fi "4–3 vl", "1–1, rp. 5–4"): big number first, the rest goes in the chip.
 const score = computed(() => {
-  const [main = '', ...rest] = formatScore(m.value).split(/,? /)
+  const [main = '', ...rest] = fmt.score(m.value).split(/,? /)
   return { main, extra: rest.join(' ') }
 })
-const when = computed(() => fixtureTime(m.value.start).split(', '))
+const when = computed(() => {
+  const f = fmt.fixture(m.value.start)
+  return [f.time, f.day]
+})
 const label = computed(() => (finished.value
-  ? `${m.value.home.shortName} ${formatScore(m.value)} ${m.value.away.shortName}`
-  : `${m.value.home.shortName} vs ${m.value.away.shortName}, ${fixtureTime(m.value.start)}`))
+  ? `${m.value.home.shortName} ${fmt.score(m.value)} ${m.value.away.shortName}`
+  : `${m.value.home.shortName} ${t('visual.vs')} ${m.value.away.shortName}, ${fmt.fixtureLabel(m.value.start)}`))
 </script>
 
 <template>
@@ -54,7 +59,7 @@ const label = computed(() => (finished.value
       <div class="centre">
         <template v-if="finished">
           <span class="score display num">{{ score.main }}</span>
-          <span class="score-chip">{{ score.extra || 'Final' }}</span>
+          <span class="score-chip">{{ score.extra || t('visual.final') }}</span>
         </template>
         <template v-else>
           <span class="score score--time display num">{{ when[0] }}</span>

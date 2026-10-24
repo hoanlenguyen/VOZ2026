@@ -3,14 +3,15 @@ import type { LandingData } from '#shared/types/stories'
 
 const props = withDefaults(defineProps<{ table: LandingData['tables'][number], limit?: number }>(), { limit: 8 })
 const rows = computed(() => props.table.rows.slice(0, props.limit))
+const { t } = useI18n()
 </script>
 
 <template>
   <section class="widget" :aria-labelledby="`table-${table.competitionId}`">
-    <h2 :id="`table-${table.competitionId}`" class="widget-title">{{ table.competitionName }} table</h2>
+    <h2 :id="`table-${table.competitionId}`" class="widget-title">{{ t('table.title', { league: table.competitionName }) }}</h2>
     <table class="num">
       <thead>
-        <tr><th scope="col">#</th><th scope="col">Team</th><th scope="col"><abbr title="Played">P</abbr></th><th scope="col"><abbr title="Points">Pts</abbr></th></tr>
+        <tr><th scope="col">#</th><th scope="col">{{ t('table.team') }}</th><th scope="col"><abbr :title="t('table.played')">{{ t('table.playedShort') }}</abbr></th><th scope="col"><abbr :title="t('table.points')">{{ t('table.pointsShort') }}</abbr></th></tr>
       </thead>
       <tbody>
         <tr v-for="r in rows" :key="r.teamKey">

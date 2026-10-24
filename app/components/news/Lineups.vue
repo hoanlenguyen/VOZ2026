@@ -10,6 +10,8 @@ const props = defineProps<{
   timeline: TimelineEvent[]
 }>()
 
+const { t } = useI18n()
+
 interface Marks { goals: number, yellow: boolean, red: boolean, off: string | null, on: string | null }
 
 // Markers per player name, from the official events in the timeline.
@@ -40,7 +42,7 @@ const byName = (l: TeamLineup) => new Map(l.starters.map(p => [p.name, p]))
 const pitchRows = (l: TeamLineup) => [...l.rows].reverse()
 const sides = ['home', 'away'] as const
 const playerLabel = (p: LineupPlayer | undefined, name: string) =>
-  [p?.number != null ? `${p.number}` : null, name, p?.captain ? 'captain' : null].filter(Boolean).join(', ')
+  [p?.number != null ? `${p.number}` : null, name, p?.captain ? t('lineups.captain') : null].filter(Boolean).join(', ')
 </script>
 
 <template>
@@ -52,7 +54,7 @@ const playerLabel = (p: LineupPlayer | undefined, name: string) =>
         <span v-if="lineups[side].formation" class="formation num">{{ lineups[side].formation }}</span>
       </header>
 
-      <div class="pitch" role="img" :aria-label="`${teams[side].name} starting line-up, ${lineups[side].formation ?? ''}: ${lineups[side].starters.map(p => p.name).join(', ')}`">
+      <div class="pitch" role="img" :aria-label="t('lineups.starting', { team: teams[side].name, formation: lineups[side].formation ?? '', players: lineups[side].starters.map(p => p.name).join(', ') })">
         <svg class="lines" viewBox="0 0 100 120" preserveAspectRatio="none" aria-hidden="true">
           <rect x="4" y="4" width="92" height="112" />
           <line x1="4" y1="4" x2="96" y2="4" />
@@ -76,16 +78,16 @@ const playerLabel = (p: LineupPlayer | undefined, name: string) =>
         </div>
       </div>
 
-      <h4 class="sub-title">Substitutes</h4>
+      <h4 class="sub-title">{{ t('lineups.subs') }}</h4>
       <ul class="subs">
         <li v-for="p in lineups[side].substitutes" :key="p.name" class="sub" :class="{ 'sub--used': marks.get(p.name)?.on }">
           <span class="sub-num num">{{ p.number ?? '' }}</span>
           <span class="sub-name">{{ p.name }}</span>
-          <span v-if="marks.get(p.name)?.on" class="sub-on num"><PhArrowUp :size="12" weight="bold" aria-hidden="true" /><span class="sr-only">Came on in the </span>{{ marks.get(p.name)?.on }}</span>
+          <span v-if="marks.get(p.name)?.on" class="sub-on num"><PhArrowUp :size="12" weight="bold" aria-hidden="true" /><span class="sr-only">{{ t('lineups.cameOn') }} </span>{{ marks.get(p.name)?.on }}</span>
           <span v-else class="sub-pos">{{ p.position }}</span>
         </li>
       </ul>
-      <p v-if="lineups[side].manager" class="manager"><span>Manager</span> {{ lineups[side].manager }}</p>
+      <p v-if="lineups[side].manager" class="manager"><span>{{ t('lineups.manager') }}</span> {{ lineups[side].manager }}</p>
       <ul class="sr-only">
         <li v-for="p in lineups[side].starters" :key="p.name">{{ playerLabel(p, p.name) }}</li>
       </ul>

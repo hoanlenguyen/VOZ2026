@@ -12,6 +12,7 @@
     "deploy": "nuxt build && wrangler deploy"
   },
   "dependencies": {
+    "@nuxtjs/i18n": "^10.6.0",
     "@phosphor-icons/vue": "^2.2.1",
     "nuxt": "^4.6.2",
     "vue": "^3.5.0",

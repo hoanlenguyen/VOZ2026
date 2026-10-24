@@ -11,12 +11,13 @@ const { data, status } = useLazyFetch<PressResult>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press`,
   { server: false },
 )
-const timingLabel = { before: 'Before the match', after: 'After the match' } as const
+const { t } = useI18n()
+const { stamp } = useFormat()
 </script>
 
 <template>
   <section class="block" aria-labelledby="press-title" :aria-busy="status === 'pending'">
-    <NewsSectionTitle id="press-title">What the press says</NewsSectionTitle>
+    <NewsSectionTitle id="press-title">{{ t('press.title') }}</NewsSectionTitle>
 
     <ul v-if="status === 'pending' || status === 'idle'" class="list" aria-hidden="true">
       <li v-for="i in 3" :key="i" class="item skeleton">
@@ -29,23 +30,22 @@ const timingLabel = { before: 'Before the match', after: 'After the match' } as 
         <a :href="a.url" target="_blank" rel="noopener noreferrer nofollow" class="headline">
           {{ a.title }}
           <PhArrowUpRight :size="14" weight="bold" class="ext" aria-hidden="true" />
-          <span class="sr-only">(opens {{ a.source }} in a new tab)</span>
+          <span class="sr-only">{{ t('press.opens', { source: a.source }) }}</span>
         </a>
         <p class="meta">
           <span class="source">{{ a.source }}</span>
           <span aria-hidden="true">·</span>
-          <span>{{ timingLabel[a.timing] }}</span>
+          <span>{{ t(`press.${a.timing}`) }}</span>
           <span aria-hidden="true">·</span>
-          <span class="num">{{ storyStamp(a.publishedAt) }}</span>
+          <span class="num">{{ stamp(a.publishedAt) }}</span>
         </p>
       </li>
     </ul>
 
-    <p v-else class="empty">{{ data?.note ?? 'Press headlines are unavailable right now.' }}</p>
+    <p v-else class="empty">{{ data?.note ?? t('press.unavailable') }}</p>
 
     <p class="source-note">
-      Headlines and links from other outlets, found by GNews and matched to this game by date and both team names.
-      VOZ links to the original articles and does not republish them.
+      {{ t('press.sourceNote') }}
     </p>
   </section>
 </template>
