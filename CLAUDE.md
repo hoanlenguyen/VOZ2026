@@ -46,6 +46,13 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 4. Add its competitions to `shared/utils/competitions.ts`
 5. Check that goals reconcile with final scores across a full season before trusting the data
 
+## Languages (English + Finnish)
+- `@nuxtjs/i18n`, strategy `no_prefix`: same URLs, language from the browser on first visit, then the `voz_lang` cookie; EN | FI switcher in the header.
+- Interface text: `i18n/locales/en.json` + `fi.json` (keep the same keys). Use `t()`; dates, scores and numbers via `useFormat()`.
+- Server text (stories, compare labels, timeline, press notes) is written per language: APIs take `?lang=en|fi` (`requestLang`), pages fetch with the current locale.
+- Stories: `server/utils/stories.ts` picks the facts, `server/utils/story-text/{en,fi}.ts` words them. Finnish keeps team names in the basic form (no case endings): "HIFK voittoon: K-Espoo–HIFK 0–3".
+- Code never reads display labels: use structured fields (`TimelineEvent.goalType`, `assist`, `playerOff`).
+
 ## Score semantics (important for the fact ledger)
 - `MatchTeam.score` = goals scored in play (regulation + overtime/extra time). Never shootout goals.
 - `Match.shootout` records who won a hockey shootout / football penalty shootout (tallies when known).

@@ -20,13 +20,12 @@ const marks = computed(() => {
   const get = (name: string) => m.get(name) ?? m.set(name, { goals: 0, yellow: false, red: false, off: null, on: null }).get(name)!
   for (const e of props.timeline) {
     if (!e.player) continue
-    if (e.kind === 'goal' && e.label !== 'Own goal') get(e.player).goals++
+    if (e.kind === 'goal' && e.goalType !== 'own') get(e.player).goals++
     if (e.kind === 'yellow') get(e.player).yellow = true
     if (e.kind === 'red') get(e.player).red = true
     if (e.kind === 'sub') {
       get(e.player).on = e.minute
-      const off = e.detail?.replace('Off: ', '')
-      if (off) get(off).off = e.minute
+      if (e.playerOff) get(e.playerOff).off = e.minute
     }
   }
   return m

@@ -7,11 +7,11 @@ import { PhArrowUpRight } from '@phosphor-icons/vue'
 import type { PressResult } from '#shared/types/press'
 
 const props = defineProps<{ competitionId: string, matchId: string }>()
+const { t, locale } = useI18n()
 const { data, status } = useLazyFetch<PressResult>(
   () => `/api/competitions/${props.competitionId}/matches/${props.matchId}/press`,
-  { server: false },
+  { server: false, query: { lang: locale } },
 )
-const { t } = useI18n()
 const { stamp } = useFormat()
 </script>
 

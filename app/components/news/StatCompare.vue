@@ -15,7 +15,8 @@ function bars(r: CompareRow) {
     lead,
   }
 }
-const fmt = (v: number, r: CompareRow) => `${v.toFixed(r.decimals)}${r.unit}`
+const { number } = useFormat()
+const fmt = (v: number, r: CompareRow) => `${number(v, { minimumFractionDigits: r.decimals, maximumFractionDigits: r.decimals })}${r.unit}`
 const { t } = useI18n()
 const formLabel = (r: FormResult) => t(`compare.form.${r}`)
 </script>

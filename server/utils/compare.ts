@@ -5,6 +5,10 @@
 
 import type { CompetitionDef } from '#shared/utils/competitions'
 import type { CompareGroup, CompareRow, FormResult, MatchCompare } from '#shared/types/compare'
+import type { Lang } from '#shared/utils/format'
+import { COMPARE_TEXT } from './compare-text'
+
+type Text = (typeof COMPARE_TEXT)[Lang]
 
 interface TeamRecord {
   played: number
@@ -78,50 +82,46 @@ const row = (id: string, label: string, home: number, away: number, better: Comp
   ({ id, label, home, away, better, decimals, unit })
 const sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0)
 
-const PERIOD_LABELS = {
-  football: ['1st half goals', '2nd half goals', 'Extra-time goals'],
-  hockey: ['1st period goals', '2nd period goals', '3rd period goals', 'Overtime goals'],
-}
-
-function thisMatch(m: Match): CompareGroup | null {
+function thisMatch(m: Match, tx: Text): CompareGroup | null {
   if (m.status !== 'finished' || m.home.score === null || m.away.score === null) return null
-  const rows = [row('goals', 'Goals', m.home.score, m.away.score)]
+  const rows = [row('goals', tx.goals, m.home.score, m.away.score)]
   m.periods.forEach((p, i) => {
-    const label = PERIOD_LABELS[m.sport][i]
+    const label = tx.periods[m.sport][i]
     if (label) rows.push(row(`period-${i + 1}`, label, p.home, p.away))
   })
-  if (m.shootout?.home != null && m.shootout.away != null) rows.push(row('penalties', 'Penalty shootout', m.shootout.home, m.shootout.away))
+  if (m.shootout?.home != null && m.shootout.away != null) rows.push(row('penalties', tx.penalties, m.shootout.home, m.shootout.away))
   const winner = m.shootout ? m[m.shootout.winner].shortName : null
-  const note = winner ? `${winner} won the ${m.sport === 'hockey' ? 'shootout' : 'penalty shootout'}.` : null
-  return { id: 'match', title: 'This match', note, rows }
+  const note = winner ? tx.shootoutWon(winner, m.sport) : null
+  return { id: 'match', title: tx.thisMatch, note, rows }
 }
 
 /** MatchTeam.stats keys we know how to show, in display order. */
-const STAT_ROWS: Array<{ key: string, label: string, better?: CompareRow['better'], decimals?: number, unit?: string }> = [
-  { key: 'possessionPct', label: 'Possession', decimals: 0, unit: '%' },
-  { key: 'xg', label: 'Expected goals (xG)', decimals: 2 },
-  { key: 'shots', label: 'Shots' },
-  { key: 'shotsOnTarget', label: 'Shots on target' },
-  { key: 'bigChances', label: 'Big chances created' },
-  { key: 'corners', label: 'Corners' },
-  { key: 'blockedShots', label: 'Blocked shots' },
-  { key: 'faceoffWins', label: 'Faceoffs won' },
-  { key: 'passes', label: 'Passes' },
-  { key: 'tackles', label: 'Tackles' },
-  { key: 'saves', label: 'Saves' },
-  { key: 'fouls', label: 'Fouls', better: 'lower' },
-  { key: 'offsides', label: 'Offsides', better: 'none' },
-  { key: 'yellowCards', label: 'Yellow cards', better: 'lower' },
-  { key: 'powerplayGoals', label: 'Power-play goals' },
-  { key: 'powerplayChances', label: 'Power plays' },
-  { key: 'shortHandedGoals', label: 'Short-handed goals' },
-  { key: 'penaltyMinutes', label: 'Penalty minutes', better: 'lower' },
-  { key: 'distanceKm', label: 'Distance skated', better: 'none', decimals: 1, unit: ' km' },
+// Labels per language are in compare-text.ts, by the same key.
+const STAT_ROWS: Array<{ key: string, better?: CompareRow['better'], decimals?: number, unit?: string }> = [
+  { key: 'possessionPct', decimals: 0, unit: '%' },
+  { key: 'xg', decimals: 2 },
+  { key: 'shots' },
+  { key: 'shotsOnTarget' },
+  { key: 'bigChances' },
+  { key: 'corners' },
+  { key: 'blockedShots' },
+  { key: 'faceoffWins' },
+  { key: 'passes' },
+  { key: 'tackles' },
+  { key: 'saves' },
+  { key: 'fouls', better: 'lower' },
+  { key: 'offsides', better: 'none' },
+  { key: 'yellowCards', better: 'lower' },
+  { key: 'powerplayGoals' },
+  { key: 'powerplayChances' },
+  { key: 'shortHandedGoals' },
+  { key: 'penaltyMinutes', better: 'lower' },
+  { key: 'distanceKm', better: 'none', decimals: 1, unit: ' km' },
 ]
 
 const share = (x: number, y: number) => (x + y ? (x / (x + y)) * 100 : 0)
 
-function matchStats(m: Match): CompareGroup | null {
+function matchStats(m: Match, tx: Text): CompareGroup | null {
   // Before puck drop the stats endpoint answers with zeros.
   if (m.status === 'scheduled') return null
   const h = m.home.stats
@@ -130,56 +130,53 @@ function matchStats(m: Match): CompareGroup | null {
   const rows: CompareRow[] = []
   // Derived shares go first: they read like the possession / accuracy bars of a TV graphic.
   if (both('puckControlSeconds')) {
-    rows.push(row('puck-control', 'Puck control', share(h.puckControlSeconds!, a.puckControlSeconds!), share(a.puckControlSeconds!, h.puckControlSeconds!), 'higher', 0, '%'))
+    rows.push(row('puck-control', tx.rows['puck-control']!, share(h.puckControlSeconds!, a.puckControlSeconds!), share(a.puckControlSeconds!, h.puckControlSeconds!), 'higher', 0, '%'))
   }
   for (const s of STAT_ROWS) {
-    if (both(s.key)) rows.push(row(s.key, s.label, h[s.key]!, a[s.key]!, s.better, s.decimals, s.unit))
+    if (both(s.key)) rows.push(row(s.key, tx.rows[s.key] ?? s.key, h[s.key]!, a[s.key]!, s.better, s.decimals, s.unit))
     if (s.key === 'passes' && both('passes') && both('passesCompleted') && h.passes && a.passes) {
-      rows.push(row('pass-accuracy', 'Pass accuracy', (h.passesCompleted! / h.passes!) * 100, (a.passesCompleted! / a.passes!) * 100, 'higher', 0, '%'))
+      rows.push(row('pass-accuracy', tx.rows['pass-accuracy']!, (h.passesCompleted! / h.passes!) * 100, (a.passesCompleted! / a.passes!) * 100, 'higher', 0, '%'))
     }
   }
   if (!rows.length) return null
   return {
     id: 'stats',
-    title: 'Match stats',
-    note: both('puckControlSeconds') ? 'Puck control leaves out time when neither team had the puck.' : null,
+    title: tx.matchStats,
+    note: both('puckControlSeconds') ? tx.puckNote : null,
     rows,
   }
 }
 
-function beforeKickOff(c: CompetitionDef, h: TeamRecord, a: TeamRecord): CompareGroup {
-  const start = c.sport === 'hockey' ? 'puck drop' : 'kick-off'
-  const games = c.sport === 'hockey' ? 'games' : 'matches'
-  const note = !h.played && !a.played
-    ? `Neither team had played in ${c.name} yet this season.`
-    : `${c.name} ${games} this season before ${start}: ${h.played} and ${a.played} played.`
+function beforeKickOff(c: CompetitionDef, h: TeamRecord, a: TeamRecord, tx: Text, league: string): CompareGroup {
+  const note = !h.played && !a.played ? tx.noGamesYet(league) : tx.gamesBefore(league, c.sport, h.played, a.played)
+  const r = tx.rows
   const rows = [
-    row('points', 'Points', sum(h.points), sum(a.points)),
-    row('ppg', 'Points per game', perGame(sum(h.points), h.played), perGame(sum(a.points), a.played), 'higher', 2),
-    row('venue-ppg', 'Points per game home / away', perGame(h.venuePoints, h.venuePlayed), perGame(a.venuePoints, a.venuePlayed), 'higher', 2),
-    row('won', 'Wins', h.won, a.won),
-    row('lost', 'Defeats', h.lost, a.lost, 'lower'),
-    row('scored', 'Goals scored', h.goalsFor, a.goalsFor),
-    row('conceded', 'Goals conceded', h.goalsAgainst, a.goalsAgainst, 'lower'),
-    row('gpg', 'Goals per game', perGame(h.goalsFor, h.played), perGame(a.goalsFor, a.played), 'higher', 2),
-    row('clean-sheets', c.sport === 'hockey' ? 'Shutouts' : 'Clean sheets', h.cleanSheets, a.cleanSheets),
-    row('failed-to-score', c.sport === 'hockey' ? 'Shut out' : 'Failed to score', h.failedToScore, a.failedToScore, 'lower'),
+    row('points', r.points!, sum(h.points), sum(a.points)),
+    row('ppg', r.ppg!, perGame(sum(h.points), h.played), perGame(sum(a.points), a.played), 'higher', 2),
+    row('venue-ppg', r['venue-ppg']!, perGame(h.venuePoints, h.venuePlayed), perGame(a.venuePoints, a.venuePlayed), 'higher', 2),
+    row('won', r.won!, h.won, a.won),
+    row('lost', r.lost!, h.lost, a.lost, 'lower'),
+    row('scored', r.scored!, h.goalsFor, a.goalsFor),
+    row('conceded', r.conceded!, h.goalsAgainst, a.goalsAgainst, 'lower'),
+    row('gpg', r.gpg!, perGame(h.goalsFor, h.played), perGame(a.goalsFor, a.played), 'higher', 2),
+    row('clean-sheets', tx.cleanSheets(c.sport), h.cleanSheets, a.cleanSheets),
+    row('failed-to-score', tx.failedToScore(c.sport), h.failedToScore, a.failedToScore, 'lower'),
   ]
-  return { id: 'season', title: `Before ${start}`, note, rows }
+  return { id: 'season', title: tx.beforeStart(c.sport), note, rows }
 }
 
-function lastFive(h: TeamRecord, a: TeamRecord): CompareGroup | null {
+function lastFive(h: TeamRecord, a: TeamRecord, tx: Text): CompareGroup | null {
   if (!h.played && !a.played) return null
   return {
     id: 'form',
-    title: 'Last five matches',
+    title: tx.lastFive,
     note: null,
-    rows: [row('form-points', 'Points from last 5', sum(h.points.slice(-5)), sum(a.points.slice(-5)))],
+    rows: [row('form-points', tx.rows['form-points']!, sum(h.points.slice(-5)), sum(a.points.slice(-5)))],
   }
 }
 
 /** Earlier meetings of the two teams in this competition and season. */
-function meetings(season: Match[], m: Match): CompareGroup | null {
+function meetings(season: Match[], m: Match, tx: Text): CompareGroup | null {
   const earlier = season.filter(x => x.status === 'finished' && x.start < m.start && x.home.score !== null && x.away.score !== null
     && ((x.home.key === m.home.key && x.away.key === m.away.key) || (x.home.key === m.away.key && x.away.key === m.home.key)))
   if (!earlier.length) return null
@@ -194,16 +191,17 @@ function meetings(season: Match[], m: Match): CompareGroup | null {
   }
   return {
     id: 'meetings',
-    title: 'Earlier meetings this season',
-    note: `${earlier.length} match${earlier.length === 1 ? '' : 'es'}${drawn ? `, ${drawn} drawn` : ''}.`,
-    rows: [row('meetings-won', 'Wins', home, away)],
+    title: tx.meetings,
+    note: tx.meetingsNote(earlier.length, drawn),
+    rows: [row('meetings-won', tx.rows['meetings-won']!, home, away)],
   }
 }
 
-export function buildCompare(c: CompetitionDef, m: Match, season: Match[]): MatchCompare | null {
+export function buildCompare(c: CompetitionDef, m: Match, season: Match[], lang: Lang = 'en'): MatchCompare | null {
+  const tx = COMPARE_TEXT[lang]
   const h = record(season, m.home.key, m.start, 'home')
   const a = record(season, m.away.key, m.start, 'away')
-  const groups = [thisMatch(m), matchStats(m), beforeKickOff(c, h, a), lastFive(h, a), meetings(season, m)]
+  const groups = [thisMatch(m, tx), matchStats(m, tx), beforeKickOff(c, h, a, tx, competitionName(c, lang)), lastFive(h, a, tx), meetings(season, m, tx)]
     .filter((g): g is CompareGroup => g !== null)
   return { groups, form: { home: h.results.slice(-5), away: a.results.slice(-5) } }
 }

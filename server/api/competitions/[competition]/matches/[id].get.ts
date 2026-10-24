@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  const lang = requestLang(event)
   const { def, provider } = competitionParam(event)
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })
@@ -7,7 +8,7 @@ export default defineEventHandler(async (event) => {
 
   // A mock "deep data" match (by its own id or the provider's id of the same game) wins over the
   // provider's thinner record and adds the timeline and line-ups.
-  const mock = await findMockMatch(def, id, season ?? [])
+  const mock = await findMockMatch(def, id, season ?? [], lang)
   let match: Match
   if (mock) {
     match = mock.match
@@ -18,9 +19,9 @@ export default defineEventHandler(async (event) => {
     setDataSource(event, res.source)
   }
   return {
-    competition: describeCompetition(def, requestLang(event)),
+    competition: describeCompetition(def, lang),
     match,
-    compare: season ? buildCompare(def, match, season) : null,
+    compare: season ? buildCompare(def, match, season, lang) : null,
     extras: mock?.extras ?? null,
   }
 })

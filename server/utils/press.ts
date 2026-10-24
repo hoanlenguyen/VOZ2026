@@ -2,6 +2,7 @@
 // Article descriptions are used only to decide whether an article is about this game; the
 // response carries headline, source and link only.
 
+import type { Lang } from '#shared/utils/format'
 import type { PressArticle, PressResult } from '#shared/types/press'
 
 interface RawArticle {
@@ -52,16 +53,32 @@ function buildQuery(home: string[], away: string[]): string {
 
 const mentions = (text: string, names: string[]) => names.some(n => text.includes(n.toLowerCase()))
 
-export async function pressForMatch(match: Match): Promise<PressResult> {
+const NOTES: Record<Lang, { off: string, notYet: string, down: string, none: (h: string, a: string) => string }> = {
+  en: {
+    off: 'Press search is not configured.',
+    notYet: 'No press coverage yet.',
+    down: 'Press headlines are unavailable right now.',
+    none: (h, a) => `No headlines naming both ${h} and ${a} were found around this game.`,
+  },
+  fi: {
+    off: 'Mediahakua ei ole otettu käyttöön.',
+    notYet: 'Ottelusta ei ole vielä juttuja.',
+    down: 'Mediaotsikot eivät ole juuri nyt saatavilla.',
+    none: (h, a) => `Ottelun ajalta ei löytynyt otsikoita, joissa mainitaan sekä ${h} että ${a}.`,
+  },
+}
+
+export async function pressForMatch(match: Match, lang: Lang = 'en'): Promise<PressResult> {
+  const notes = NOTES[lang]
   if (!useRuntimeConfig().gnewsApiKey) {
-    return { status: 'unavailable', articles: [], note: 'Press search is not configured.' }
+    return { status: 'unavailable', articles: [], note: notes.off }
   }
   const home = teamVariants(match.home)
   const away = teamVariants(match.away)
   const start = Date.parse(match.start)
   const from = new Date(start - 3 * DAY)
   const to = new Date(Math.min(Date.now(), start + 3 * DAY))
-  if (to <= from) return { status: 'none', articles: [], note: 'No press coverage yet.' }
+  if (to <= from) return { status: 'none', articles: [], note: notes.notYet }
 
   const search = (lang?: string) => upstream<{ articles?: RawArticle[] }>('gnews', 'search', {
     q: buildQuery(home, away),
@@ -75,18 +92,19 @@ export async function pressForMatch(match: Match): Promise<PressResult> {
 
   let articles: PressArticle[]
   try {
-    // English first (the UI language); any language only when English has nothing about this game.
-    articles = pick(await search('en'), home, away, start)
+    // The reader's language first; any language only when that has nothing about this game.
+    // At most two searches per match and language, both cached (free plan: 100 requests/day).
+    articles = pick(await search(lang), home, away, start)
     if (!articles.length) articles = pick(await search(), home, away, start)
   }
   catch (err) {
     console.warn(`[press] ${match.key}: ${(err as Error).message}`)
-    return { status: 'unavailable', articles: [], note: 'Press headlines are unavailable right now.' }
+    return { status: 'unavailable', articles: [], note: notes.down }
   }
 
   return articles.length
     ? { status: 'ok', articles, note: null }
-    : { status: 'none', articles, note: `No headlines naming both ${match.home.shortName} and ${match.away.shortName} were found around this game.` }
+    : { status: 'none', articles, note: notes.none(match.home.shortName, match.away.shortName) }
 }
 
 /** Articles whose headline or description names both teams (the search alone is too loose), post-match first. */
