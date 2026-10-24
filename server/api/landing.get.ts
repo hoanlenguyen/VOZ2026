@@ -79,11 +79,20 @@ export default defineEventHandler(async (event): Promise<LandingData> => {
   }))
   warmHeadlines(event, missingHeadlines.filter(Boolean), lang)
 
+  // Stories an editor hid in the newsroom dashboard are left out for readers. The dashboard itself
+  // asks with ?moderation=all to see them too (newsroom accounts only).
+  const showAll = getQuery(event).moderation === 'all' && (await sessionInfo(event)).entitlements.newsroom
+  const [hidden, controls] = await Promise.all([showAll ? new Set<string>() : hiddenStories(), storyControls(lang)])
+
   const order = (id: string) => FRONT_PAGE.indexOf(id)
   setDataSource(event, ...sources)
   return {
     generatedAt: new Date().toISOString(),
-    stories: ranked,
+    // Cover images the newsroom set on match stories replace the cards' data visual.
+    stories: ranked.filter(s => !hidden.has(s.id)).map((s) => {
+      const cover = coverOf(controls[s.id.slice(2)] ?? null)
+      return cover ? { ...s, cover: { src: cover.src, alt: cover.alt } } : s
+    }),
     ticker: ticker.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     tables: tables.sort((a, b) => order(a.competitionId) - order(b.competitionId)),
     missing,

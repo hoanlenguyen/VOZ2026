@@ -51,6 +51,8 @@ export default defineNuxtConfig({
     storyReasoningEffort: 'low',
     gnewsBaseUrl: 'https://gnews.io/api/v4',
     dataMode: 'auto',
+    /** Signs the session cookie (NUXT_SESSION_SECRET); a demo secret is used when empty. */
+    sessionSecret: '',
   },
 
   nitro: {
@@ -63,6 +65,8 @@ export default defineNuxtConfig({
       { baseName: 'snapshots', dir: '../data/snapshots', ignore: ['liiga/games_2027_*'] },
       // Mock "deep data" matches (data/mock/<competition>/<id>.json), read via useStorage('assets:mocks').
       { baseName: 'mocks', dir: '../data/mock' },
+      // Demo accounts (data/accounts/accounts.json, PBKDF2 password hashes), read via useStorage('assets:accounts').
+      { baseName: 'accounts', dir: '../data/accounts' },
       // Pre-written AI stories (npm run warm:stories), read via useStorage('assets:stories').
       { baseName: 'stories', dir: '../data/stories' },
       // Pre-written AI headlines (npm run warm:stories), read via useStorage('assets:headlines').

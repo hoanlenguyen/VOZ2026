@@ -1,7 +1,7 @@
 // Run with: npm test
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { checkStory, numbersIn } from '../shared/utils/story-check.ts'
+import { checkEdit, checkStory, numbersIn, sentencesOf } from '../shared/utils/story-check.ts'
 import type { Fact } from '../shared/types/story.ts'
 
 const facts: Fact[] = [
@@ -66,6 +66,23 @@ test('length outside the range fails', () => {
   const r = checkStory({ headline: 'Draw', sentences: [{ text: 'Forest drew.', facts: ['f1'], paragraph: 1 }] }, ctx)
   assert.equal(r.passed, false)
   assert.match(r.issues.join(' '), /words/)
+})
+
+test('an edit backed by the facts passes and marks the facts it uses', () => {
+  const sentences = sentencesOf('Neco Williams scored after 13 minutes. Julio Enciso made it 1–1. Forest had 2.29 xG.')
+  const r = checkEdit('Ipswich and Forest draw 1–1', sentences, ctx)
+  assert.deepEqual(r.issues, [])
+  assert.deepEqual(r.factIds.sort(), ['f2', 'f3', 'f4'])
+})
+
+test('an edit flags numbers and people missing from the facts, and quotes', () => {
+  const r = checkEdit('Forest win 3–1', ['Chris Wood scored twice.', 'Williams said "great game".'], ctx)
+  assert.deepEqual(r.issues, [
+    { kind: 'number', sentence: 0, value: '3' },
+    { kind: 'name', sentence: 1, value: 'Chris Wood' },
+    { kind: 'quote', sentence: 2 },
+    { kind: 'speech', sentence: 2 },
+  ])
 })
 
 test('Finnish: number words, speech and injuries are checked', () => {

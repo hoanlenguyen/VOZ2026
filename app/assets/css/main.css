@@ -43,6 +43,18 @@
   --stat-lead: #F5C518;
   --stat-trail: #3A3F47;
   /* form pills, white text on each: 5.2 / 4.9 / 5.6 */
+  /* subscription offer panel (paywall): cream paper, brown ink; brown on cream 5.0, white on brown 5.9 */
+  --offer-bg: #FBEBDD;
+  --offer-ink: #9C4A15;
+  --offer-ink-hover: #7E3A0F;
+  --offer-text: #1F1A17;
+  --offer-sun: #F5D85A;
+  --offer-hill: #B9BFA4;
+  --offer-hill-2: #8E9A6B;
+  --offer-ground: #D9B48F;
+  --offer-leaf: #D9A63A;
+  --offer-leaf-2: #C4652A;
+  --offer-trunk: #6E5A48;
   --win: #1E7B3A;
   --draw: #6B7079;
   --loss: #C62828;

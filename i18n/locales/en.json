@@ -10,7 +10,12 @@
     "sports": "Sports",
     "myTeams": "My teams",
     "status": "Data status",
-    "personalise": "Personalise"
+    "personalise": "Personalise",
+    "signIn": "Sign in",
+    "account": "My account",
+    "newsroom": "Newsroom",
+    "signOut": "Sign out",
+    "accountMenu": "Account menu"
   },
   "sport": {
     "all": "All sports",
@@ -73,7 +78,6 @@
     "halfTime": "Half-time {score}",
     "periods": "Periods {list}",
     "spectators": "{n} spectators",
-    "aiEvidence": "Facts behind the headline",
     "timeline": "Match timeline",
     "compare": "Compare",
     "lineups": "Line-ups",
@@ -91,7 +95,18 @@
       "penalty": "penalty shot",
       "own-goal": "own goal",
       "game-winner": "game-winner"
-    }
+    },
+    "story": "Match story",
+    "storyHidden": "Hidden from readers by the newsroom. Only newsroom accounts see this section.",
+    "storyEdited": "Edited by {name} · {time}",
+    "deskLabel": "Newsroom",
+    "deskState": "Match story: {story}",
+    "deskNone": "none",
+    "deskEdit": "Edit coverage",
+    "storyPlus": "For subscribers",
+    "coverCredit": "Photo: {credit}",
+    "previewBanner": "Preview, not published · seen as: {as}",
+    "aiEvidence": "Facts behind the headline"
   },
   "timeline": {
     "shown": "Events shown",
@@ -143,6 +158,213 @@
     "latest": "Latest results",
     "standings": "Standings",
     "loadError": "Could not load {name}: {reason}"
+  },
+  "plan": {
+    "free": "Free",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Newsroom"
+  },
+  "login": {
+    "pageTitle": "Sign in – VOZ",
+    "title": "Sign in",
+    "lead": "Sign in to read the full match coverage.",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "busy": "Signing in…",
+    "error": "Wrong email or password.",
+    "failed": "Signing in failed. Try again in a minute.",
+    "demoTitle": "Demo accounts",
+    "demoHint": "All demo passwords are \"demo\". Choose an account to sign in.",
+    "demo": {
+      "subscriber": "Subscription account: everything, no ads",
+      "free": "Free account: scores, tables and stories, premium parts locked",
+      "newsroom": "Newsroom: everything plus the editor dashboard"
+    }
+  },
+  "paywall": {
+    "title": "Autumn offer, for you!",
+    "subBefore": "The first 2 months of VOZ Plus",
+    "subPrice": "only €9.90",
+    "benefits": {
+      "unlimited": "Full match pages in the app and on the web",
+      "stories": "AI match stories, fact-checked sentence by sentence",
+      "stats": "Stats comparison, timelines and line-ups",
+      "noAds": "No ads",
+      "languages": "Everything in English and Finnish"
+    },
+    "cta": "Discover here",
+    "manage": "You can conveniently manage your subscription in your account.",
+    "already": "Already a subscriber?",
+    "logIn": "Log in.",
+    "teaserKicker": "AI match story"
+  },
+  "account": {
+    "pageTitle": "My account – VOZ",
+    "title": "My account",
+    "plan": "Plan",
+    "subscriber": {
+      "since": "Subscriber since {date}",
+      "renews": "Renews on {date}",
+      "price": "{price} € / month",
+      "perks": "Full match coverage, AI match stories and no ads."
+    },
+    "free": {
+      "perks": "Front page, scores, tables and automatic stories. Match stats, timelines, line-ups and AI stories are for VOZ Plus subscribers.",
+      "upgradeDemo": "Upgrading is not part of the demo: sign in as subscription{'@'}demo.com to see VOZ Plus."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Full coverage plus the editor dashboard.",
+      "open": "Open the newsroom dashboard"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Newsroom – VOZ",
+    "title": "Newsroom",
+    "editor": "Signed in as {name}, {role}",
+    "stats": {
+      "stories": "Stories today",
+      "hidden": "Hidden by editors",
+      "translations": "Cached translations",
+      "aiStories": "Pre-written AI stories"
+    },
+    "sources": "Data sources",
+    "mode": "Mode: {mode}",
+    "ok": "OK",
+    "down": "Down",
+    "storiesTitle": "Front-page stories",
+    "storiesLead": "Edit sets a match story: the AI version, the newsroom's edited version or hidden, who can read it and its cover image. Hidden stories disappear from the front page for every reader; Show puts them back.",
+    "hide": "Hide",
+    "show": "Show",
+    "hiddenBadge": "Hidden",
+    "liveBadge": "Live",
+    "open": "Open",
+    "missing": "Unavailable leagues: {list}",
+    "loadError": "The newsroom data could not be loaded ({reason}).",
+    "edit": "Edit",
+    "storyBadge": "Story: {mode}"
+  },
+  "editor": {
+    "pageTitle": "Edit match story – VOZ Newsroom",
+    "back": "Newsroom",
+    "title": "Match story",
+    "langName": {
+      "en": "English",
+      "fi": "Finnish"
+    },
+    "language": "You are editing the {lang} version.",
+    "lastSaved": "Last published by {name}, {time}.",
+    "automatic": "Readers with a subscription currently get the AI story.",
+    "audiences": {
+      "everyone": {
+        "label": "Everyone",
+        "text": "The whole match page is free: story, timeline, comparison and line-ups, for free and signed-out readers too."
+      },
+      "subscribers": {
+        "label": "Subscribers only",
+        "text": "Others see the story's opening lines and the subscription offer; timeline, comparison and line-ups stay for subscribers."
+      }
+    },
+    "publish": "Publish",
+    "revert": "Revert to automatic",
+    "view": "View match page",
+    "saved": "Published.",
+    "reverted": "Reverted: subscribers get the standard AI story and the match graphic again.",
+    "saveError": "Could not publish ({reason}).",
+    "loadError": "The story could not be loaded ({reason}).",
+    "partStory": "Match story",
+    "storyLead": "The story section on the match page. By default readers with a subscription get the AI story, checked against the match facts.",
+    "storyMode": "What readers get",
+    "modes": {
+      "ai": {
+        "label": "AI story",
+        "text": "Written by the agent and checked against the facts."
+      },
+      "edited": {
+        "label": "Edited version",
+        "text": "The newsroom's text replaces the AI story."
+      },
+      "hidden": {
+        "label": "Hidden",
+        "text": "No match story for readers."
+      }
+    },
+    "aiPreview": "AI story readers get",
+    "storyHeadline": "Story headline",
+    "startFromAi": "Start from the AI story",
+    "storyBody": "Story text",
+    "storyBodyHint": "Your edit cites no facts: the check next to the editor flags numbers and names that are not in them.",
+    "storyAudience": "Who can read this match page",
+    "factsTitle": "Match facts",
+    "factsSearch": "Search the facts",
+    "factsUsed": "Highlighted: {n} of {total} facts your text uses.",
+    "sections": {
+      "result": "Result",
+      "timeline": "Timeline",
+      "stats": "Stats",
+      "form": "Form",
+      "table": "Table",
+      "h2h": "Head to head",
+      "context": "Context"
+    },
+    "check": {
+      "ok": "Every number and name is in the facts.",
+      "issues": "{n} thing to check | {n} things to check",
+      "headline": "Headline",
+      "sentence": "Sentence {n}",
+      "number": "“{value}” is not in any fact.",
+      "name": "{value} is not in the facts.",
+      "quote": "contains a quotation; we have no quotes.",
+      "speech": "attributes speech to someone; we have no quotes.",
+      "injury": "mentions an injury; injuries are not in the facts."
+    },
+    "noStory": "This match has no match story: stories are written for finished matches with full match data.",
+    "cover": {
+      "title": "Cover image",
+      "hint": "The image at the top of the match page and on the front-page card. Use only photos VOZ owns or has the rights to.",
+      "formats": "JPEG, PNG or WebP, up to 2 MB.",
+      "uploading": "Uploading…",
+      "replace": "Replace image",
+      "alt": "Alt text",
+      "altHint": "Describe the image for readers who cannot see it.",
+      "credit": "Credit",
+      "creditPlaceholder": "Photographer / agency",
+      "tooLarge": "The image is larger than 2 MB.",
+      "uploadError": "The image could not be uploaded ({reason}).",
+      "graphic": "Now: the match graphic, drawn from match data.",
+      "custom": "Now: your cover image.",
+      "useGraphic": "Use the match graphic"
+    },
+    "format": {
+      "title": "Version readers get",
+      "titleEdited": "AI version to start from",
+      "length": "Length",
+      "tone": "Written for",
+      "lengths": {
+        "short": "Short",
+        "standard": "Standard",
+        "long": "Long read"
+      },
+      "tones": {
+        "neutral": "Neutral",
+        "fans": "{team} fans",
+        "analyst": "Analyst"
+      }
+    },
+    "preview": {
+      "open": "Preview",
+      "title": "Preview: what readers see",
+      "as": "Preview as",
+      "subscriber": "Subscriber",
+      "free": "Free reader",
+      "note": "Not published yet: the whole match page with your current settings, as this reader sees it.",
+      "close": "Close preview",
+      "back": "Keep editing",
+      "loading": "Preparing the preview…",
+      "error": "The preview could not be prepared ({reason}).",
+      "frameTitle": "Match page preview as {as}"
+    }
   },
   "matchStory": {
     "title": "Match story",

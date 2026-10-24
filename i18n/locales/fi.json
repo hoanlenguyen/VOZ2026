@@ -10,7 +10,12 @@
     "sports": "Urheilu",
     "myTeams": "Omat joukkueet",
     "status": "Datan tila",
-    "personalise": "Personoi"
+    "personalise": "Personoi",
+    "signIn": "Kirjaudu",
+    "account": "Oma tili",
+    "newsroom": "Toimitus",
+    "signOut": "Kirjaudu ulos",
+    "accountMenu": "Tilivalikko"
   },
   "sport": {
     "all": "Kaikki lajit",
@@ -73,7 +78,6 @@
     "halfTime": "Puoliaika {score}",
     "periods": "Erät {list}",
     "spectators": "{n} katsojaa",
-    "aiEvidence": "Otsikon taustalla olevat faktat",
     "timeline": "Ottelun tapahtumat",
     "compare": "Vertailu",
     "lineups": "Kokoonpanot",
@@ -91,7 +95,18 @@
       "penalty": "rangaistuslaukaus",
       "own-goal": "oma maali",
       "game-winner": "voittomaali"
-    }
+    },
+    "story": "Otteluraportti",
+    "storyHidden": "Toimitus on piilottanut tämän lukijoilta. Vain toimituksen tunnukset näkevät osion.",
+    "storyEdited": "Muokannut {name} · {time}",
+    "deskLabel": "Toimitus",
+    "deskState": "Otteluraportti: {story}",
+    "deskNone": "ei",
+    "deskEdit": "Muokkaa sisältöä",
+    "storyPlus": "Tilaajille",
+    "coverCredit": "Kuva: {credit}",
+    "previewBanner": "Esikatselu, ei julkaistu · lukijana: {as}",
+    "aiEvidence": "Otsikon taustalla olevat faktat"
   },
   "timeline": {
     "shown": "Näytettävät tapahtumat",
@@ -143,6 +158,213 @@
     "latest": "Viimeisimmät tulokset",
     "standings": "Sarjataulukko",
     "loadError": "Kohdetta {name} ei voitu ladata: {reason}"
+  },
+  "plan": {
+    "free": "Maksuton",
+    "subscriber": "VOZ Plus",
+    "newsroom": "Toimitus"
+  },
+  "login": {
+    "pageTitle": "Kirjaudu – VOZ",
+    "title": "Kirjaudu sisään",
+    "lead": "Kirjaudu lukeaksesi otteluiden koko sisällön.",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "submit": "Kirjaudu",
+    "busy": "Kirjaudutaan…",
+    "error": "Väärä sähköposti tai salasana.",
+    "failed": "Kirjautuminen epäonnistui. Yritä hetken päästä uudelleen.",
+    "demoTitle": "Demotilit",
+    "demoHint": "Kaikkien demotilien salasana on \"demo\". Valitse tili kirjautuaksesi.",
+    "demo": {
+      "subscriber": "Tilaajatili: kaikki sisältö, ei mainoksia",
+      "free": "Maksuton tili: tulokset, sarjataulukot ja jutut, lisäsisältö lukittu",
+      "newsroom": "Toimitus: kaikki sisältö ja toimituksen näkymä"
+    }
+  },
+  "paywall": {
+    "title": "Syystarjous, sinulle!",
+    "subBefore": "VOZ Plus kaksi ensimmäistä kuukautta",
+    "subPrice": "vain 9,90 €",
+    "benefits": {
+      "unlimited": "Otteluiden koko sisältö sovelluksessa ja verkossa",
+      "stories": "Tekoälyn otteluraportit, jokainen lause tarkistettu",
+      "stats": "Tilastovertailu, tapahtumat ja kokoonpanot",
+      "noAds": "Ei mainoksia",
+      "languages": "Kaikki suomeksi ja englanniksi"
+    },
+    "cta": "Tutustu tästä",
+    "manage": "Hallitset tilaustasi helposti omalla tililläsi.",
+    "already": "Oletko jo tilaaja?",
+    "logIn": "Kirjaudu.",
+    "teaserKicker": "Tekoälyn otteluraportti"
+  },
+  "account": {
+    "pageTitle": "Oma tili – VOZ",
+    "title": "Oma tili",
+    "plan": "Tilaus",
+    "subscriber": {
+      "since": "Tilaaja {date} alkaen",
+      "renews": "Uusiutuu {date}",
+      "price": "{price} € / kk",
+      "perks": "Otteluiden koko sisältö, tekoälyn otteluraportit eikä mainoksia."
+    },
+    "free": {
+      "perks": "Etusivu, tulokset, sarjataulukot ja automaattiset jutut. Ottelutilastot, tapahtumat, kokoonpanot ja tekoälyn raportit ovat VOZ Plus -tilaajille.",
+      "upgradeDemo": "Päivitys ei kuulu demoon: kirjaudu tilillä subscription{'@'}demo.com nähdäksesi VOZ Plussan."
+    },
+    "newsroom": {
+      "role": "{role} · {desk}",
+      "perks": "Koko sisältö ja toimituksen näkymä.",
+      "open": "Avaa toimituksen näkymä"
+    }
+  },
+  "newsroom": {
+    "pageTitle": "Toimitus – VOZ",
+    "title": "Toimitus",
+    "editor": "Kirjautuneena: {name}, {role}",
+    "stats": {
+      "stories": "Juttuja tänään",
+      "hidden": "Toimituksen piilottamat",
+      "translations": "Tallennetut käännökset",
+      "aiStories": "Valmiit tekoälyraportit"
+    },
+    "sources": "Datalähteet",
+    "mode": "Tila: {mode}",
+    "ok": "OK",
+    "down": "Poissa",
+    "storiesTitle": "Etusivun jutut",
+    "storiesLead": "Muokkaa-painikkeella valitset otteluraportin: tekoälyn version, toimituksen muokkaaman version tai piilotuksen, kuka sen voi lukea ja kansikuvan. Piilotettu juttu katoaa etusivulta kaikilta lukijoilta; Näytä palauttaa sen.",
+    "hide": "Piilota",
+    "show": "Näytä",
+    "hiddenBadge": "Piilotettu",
+    "liveBadge": "Näkyvissä",
+    "open": "Avaa",
+    "missing": "Ei saatavilla: {list}",
+    "loadError": "Toimituksen tietoja ei voitu ladata ({reason}).",
+    "edit": "Muokkaa",
+    "storyBadge": "Raportti: {mode}"
+  },
+  "editor": {
+    "pageTitle": "Muokkaa otteluraporttia – VOZ-toimitus",
+    "back": "Toimitus",
+    "title": "Otteluraportti",
+    "langName": {
+      "en": "englanninkielistä",
+      "fi": "suomenkielistä"
+    },
+    "language": "Muokkaat {lang} versiota.",
+    "lastSaved": "Viimeksi julkaissut {name}, {time}.",
+    "automatic": "Tilaajat näkevät nyt tekoälyn raportin.",
+    "audiences": {
+      "everyone": {
+        "label": "Kaikki",
+        "text": "Koko ottelusivu on maksuton: raportti, tapahtumat, vertailu ja kokoonpanot myös maksuttomille ja kirjautumattomille lukijoille."
+      },
+      "subscribers": {
+        "label": "Vain tilaajat",
+        "text": "Muut näkevät raportin alun ja tilaustarjouksen; tapahtumat, vertailu ja kokoonpanot vain tilaajille."
+      }
+    },
+    "publish": "Julkaise",
+    "revert": "Palauta automaattinen",
+    "view": "Näytä ottelusivu",
+    "saved": "Julkaistu.",
+    "reverted": "Palautettu: tilaajat näkevät taas normaalin tekoälyn raportin ja ottelugrafiikan.",
+    "saveError": "Julkaisu epäonnistui ({reason}).",
+    "loadError": "Juttua ei voitu ladata ({reason}).",
+    "partStory": "Otteluraportti",
+    "storyLead": "Ottelusivun raporttiosio. Oletuksena tilaajat näkevät tekoälyn raportin, joka on tarkistettu ottelun faktoja vasten.",
+    "storyMode": "Mitä lukijat näkevät",
+    "modes": {
+      "ai": {
+        "label": "Tekoälyn raportti",
+        "text": "Agentin kirjoittama ja faktoja vasten tarkistettu."
+      },
+      "edited": {
+        "label": "Muokattu versio",
+        "text": "Toimituksen teksti korvaa tekoälyn raportin."
+      },
+      "hidden": {
+        "label": "Piilotettu",
+        "text": "Ei otteluraporttia lukijoille."
+      }
+    },
+    "aiPreview": "Lukijoiden näkemä tekoälyn raportti",
+    "storyHeadline": "Raportin otsikko",
+    "startFromAi": "Aloita tekoälyn raportista",
+    "storyBody": "Raportin teksti",
+    "storyBodyHint": "Muokkauksesi ei viittaa faktoihin: editorin vieressä oleva tarkistus näyttää luvut ja nimet, joita faktoissa ei ole.",
+    "storyAudience": "Kuka voi lukea tämän ottelusivun",
+    "factsTitle": "Ottelun faktat",
+    "factsSearch": "Hae faktoista",
+    "factsUsed": "Korostettu: tekstisi käyttää {n}/{total} faktaa.",
+    "sections": {
+      "result": "Tulos",
+      "timeline": "Tapahtumat",
+      "stats": "Tilastot",
+      "form": "Vire",
+      "table": "Sarjataulukko",
+      "h2h": "Keskinäiset",
+      "context": "Tausta"
+    },
+    "check": {
+      "ok": "Jokainen luku ja nimi löytyy faktoista.",
+      "issues": "{n} tarkistettava kohta | {n} tarkistettavaa kohtaa",
+      "headline": "Otsikko",
+      "sentence": "Lause {n}",
+      "number": "”{value}” ei löydy faktoista.",
+      "name": "{value} ei löydy faktoista.",
+      "quote": "sisältää lainauksen; lainauksia ei ole.",
+      "speech": "esittää jonkun puhetta; lainauksia ei ole.",
+      "injury": "mainitsee loukkaantumisen; niitä ei ole faktoissa."
+    },
+    "noStory": "Tällä ottelulla ei ole otteluraporttia: raportit kirjoitetaan päättyneistä otteluista, joista on täysi otteludata.",
+    "cover": {
+      "title": "Kansikuva",
+      "hint": "Kuva ottelusivun yläosassa ja etusivun kortissa. Käytä vain kuvia, jotka VOZ omistaa tai joihin sillä on oikeudet.",
+      "formats": "JPEG, PNG tai WebP, enintään 2 Mt.",
+      "uploading": "Ladataan…",
+      "replace": "Vaihda kuva",
+      "alt": "Vaihtoehtoinen teksti",
+      "altHint": "Kuvaile kuva lukijoille, jotka eivät näe sitä.",
+      "credit": "Kuvaaja",
+      "creditPlaceholder": "Kuvaaja / toimisto",
+      "tooLarge": "Kuva on yli 2 Mt.",
+      "uploadError": "Kuvaa ei voitu ladata ({reason}).",
+      "graphic": "Nyt: otteludatasta piirretty ottelugrafiikka.",
+      "custom": "Nyt: oma kansikuvasi.",
+      "useGraphic": "Käytä ottelugrafiikkaa"
+    },
+    "format": {
+      "title": "Lukijoiden näkemä versio",
+      "titleEdited": "Tekoälyn versio pohjaksi",
+      "length": "Pituus",
+      "tone": "Kenelle",
+      "lengths": {
+        "short": "Lyhyt",
+        "standard": "Normaali",
+        "long": "Pitkä"
+      },
+      "tones": {
+        "neutral": "Neutraali",
+        "fans": "{team}-fanit",
+        "analyst": "Analyytikko"
+      }
+    },
+    "preview": {
+      "open": "Esikatsele",
+      "title": "Esikatselu: mitä lukijat näkevät",
+      "as": "Esikatsele",
+      "subscriber": "Tilaaja",
+      "free": "Maksuton lukija",
+      "note": "Ei vielä julkaistu: koko ottelusivu nykyisillä asetuksillasi, niin kuin tämä lukija sen näkee.",
+      "close": "Sulje esikatselu",
+      "back": "Jatka muokkausta",
+      "loading": "Valmistellaan esikatselua…",
+      "error": "Esikatselua ei voitu valmistella ({reason}).",
+      "frameTitle": "Ottelusivun esikatselu: {as}"
+    }
   },
   "matchStory": {
     "title": "Otteluraportti",

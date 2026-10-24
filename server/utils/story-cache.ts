@@ -38,29 +38,39 @@ export interface StoryRequest {
   fresh?: boolean
 }
 
+/** English variants keep their original names, so stories written before Finnish stay valid. */
+const variantOf = (req: Pick<StoryRequest, 'length' | 'tone' | 'lang'>) => `${req.length}-${req.tone}${req.lang === 'fi' ? '.fi' : ''}`
+const storyKey = (req: Omit<StoryRequest, 'generate' | 'fresh'>) =>
+  `story:${PROMPT_VERSION}:${req.competitionId}:${req.matchId}:${variantOf(req)}:${hash(JSON.stringify(req.facts) + llmConfig().model)}`
+
+/** A story from the cache layers only (memory, KV, bundled); never runs the agent (paywall teasers). */
+export async function peekStory(req: Omit<StoryRequest, 'generate' | 'fresh'>): Promise<{ story: MatchStory, cached: 'memory' | 'kv' | 'bundled' } | null> {
+  const key = storyKey(req)
+  const mem = memory.get(key)
+  if (mem) return { story: mem, cached: 'memory' }
+
+  const kv = await useStorage('kvcache').getItem<MatchStory>(key).catch(() => null)
+  if (kv) {
+    memory.set(key, kv)
+    return { story: kv, cached: 'kv' }
+  }
+
+  // Pre-written stories belong to the model that wrote them: after switching NUXT_OPENAI_MODEL the new
+  // model writes its own (without an API key, any checked pre-written story beats none).
+  const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${variantOf(req)}.json`).catch(() => null)
+  const sameModel = bundled?.model === llmConfig().model || !llmConfig().key
+  if (bundled?.origin === 'agent' && sameModel && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length, lang: req.lang }).passed) {
+    memory.set(key, bundled)
+    return { story: bundled, cached: 'bundled' }
+  }
+  return null
+}
+
 export async function cachedStory(req: StoryRequest): Promise<{ story: MatchStory, cached: 'memory' | 'kv' | 'bundled' | false }> {
-  // English keys and files keep their original names, so stories written before Finnish stay valid.
-  const variant = `${req.length}-${req.tone}${req.lang === 'fi' ? '.fi' : ''}`
-  const key = `story:${PROMPT_VERSION}:${req.competitionId}:${req.matchId}:${variant}:${hash(JSON.stringify(req.facts) + llmConfig().model)}`
-
+  const key = storyKey(req)
   if (!req.fresh) {
-    const mem = memory.get(key)
-    if (mem) return { story: mem, cached: 'memory' }
-
-    const kv = await useStorage('kvcache').getItem<MatchStory>(key).catch(() => null)
-    if (kv) {
-      memory.set(key, kv)
-      return { story: kv, cached: 'kv' }
-    }
-
-    // Pre-written stories belong to the model that wrote them: after switching NUXT_OPENAI_MODEL the new
-    // model writes its own (without an API key, any checked pre-written story beats none).
-    const bundled = await useStorage('assets:stories').getItem<MatchStory>(`${req.competitionId}:${req.matchId}:${variant}.json`).catch(() => null)
-    const sameModel = bundled?.model === llmConfig().model || !llmConfig().key
-    if (bundled?.origin === 'agent' && sameModel && checkStory(bundled, { facts: req.facts, names: req.names, length: req.length, lang: req.lang }).passed) {
-      memory.set(key, bundled)
-      return { story: bundled, cached: 'bundled' }
-    }
+    const hit = await peekStory(req)
+    if (hit) return hit
   }
 
   let run = inFlight.get(key)

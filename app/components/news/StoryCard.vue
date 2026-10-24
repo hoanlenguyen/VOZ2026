@@ -10,7 +10,9 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 <template>
   <article class="story" :class="`story--${variant}`">
     <NuxtLink :to="story.href" class="media" tabindex="-1" aria-hidden="true">
-      <NewsMatchVisual :story="story" :size="variant === 'lead' ? 'lg' : variant === 'row' ? 'sm' : 'md'" />
+      <!-- The newsroom's cover image when it set one, otherwise the data visual. -->
+      <img v-if="story.cover" :src="story.cover.src" :alt="story.cover.alt" class="cover" loading="lazy">
+      <NewsMatchVisual v-else :story="story" :size="variant === 'lead' ? 'lg' : variant === 'row' ? 'sm' : 'md'" />
     </NuxtLink>
     <div class="body">
       <p class="kicker">
@@ -38,6 +40,7 @@ const ai = computed(() => props.story.headlineOrigin === 'agent' && !!props.stor
 .story { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .media { display: block; border-radius: 4px; color: inherit; text-decoration: none; }
 .media:focus-visible { outline: none; }
+.cover { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; background: var(--surface); }
 .body { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .kicker {
   margin: 0; display: flex; gap: 6px; font-size: 11px; line-height: 16px; font-weight: 600; letter-spacing: 0.04em;
