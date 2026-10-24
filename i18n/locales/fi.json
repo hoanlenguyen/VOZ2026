@@ -450,7 +450,7 @@
     "unavailable": "(ei vielä saatavilla)",
     "searchPlayers": "Hae pelaajia",
     "filterTeam": "Näytä pelaajat",
-    "allTeams": "Kaikki",
+    "allTeams": "Kaikki joukkueet",
     "favouritePlayer": "Suosikki: {name}",
     "noPlayers": "Ei osuvia pelaajia.",
     "positions": {
@@ -612,5 +612,17 @@
     "lockedTitle": "Omat suosikit kuuluvat VOZ Plus -tilaukseen",
     "lockedText": "Tilaa ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista.",
     "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä ja saat yhdelle sivulle uutiset seuraamistasi joukkueista, sarjoista ja pelaajista."
+  },
+  "roundup": {
+    "breaking": "Tuoreet",
+    "label": "Tekoälyn lehdistökatsaus",
+    "writing": "Luetaan lehtien otsikoita… ensimmäinen kerta kestää noin 10 sekuntia.",
+    "meta": "{n} median otsikoista · {time} | {n} median otsikoista · {time} | {n} median otsikoista · {time}",
+    "sourceLink": "Lähde {n}: {outlet} (avaa median artikkelin)",
+    "sources": "Lähteet",
+    "disclaimer": "Tekoälyn kirjoittama muiden medioiden otsikoista ja VOZ:n otteludatasta. Tiedot loukkaantumisista ja kokoonpanoista ovat medioiden raportteja; lue niiden artikkelit linkeistä.",
+    "lockedTitle": "Lue koko katsaus VOZ Plus -tilauksella",
+    "lockedFree": "Tilaajat lukevat koko otteluennakon lehdistökatsauksen ja linkit jokaiseen lähteeseen.",
+    "lockedSignedOut": "Kirjaudu VOZ Plus -tilillä lukeaksesi koko lehdistökatsauksen."
   }
 }

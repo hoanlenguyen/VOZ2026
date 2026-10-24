@@ -121,6 +121,9 @@ useHead(() => ({
         :engagement="engagement" @engagement="liveEngagement = $event"
       />
 
+      <!-- Before the match: AI press roundup (breaking-news headline from the press, attributed). -->
+      <NewsPressRoundup v-if="!finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
+
       <!-- AI podcast of this match (subscribers listen; others see it locked); the newsroom makes it here. -->
       <NewsMatchPodcast v-if="finished && !preview" :competition-id="data.competition.id" :match-id="match.id" />
 

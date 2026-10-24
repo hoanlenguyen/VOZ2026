@@ -4,7 +4,9 @@ export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, 'id') ?? ''
   if (!/^\d+$/.test(id)) throw createError({ statusCode: 400, statusMessage: 'Invalid match id' })
   const { data: match } = await provider.match(def, id)
-  setResponseHeader(event, 'cache-control', 'public, max-age=900')
-  // ?lang= keeps the two languages apart in browser and CDN caches.
-  return pressForMatch(match, requestLang(event))
+  // ?lang= keeps the two languages apart in browser and CDN caches. Only real results are cached:
+  // "unavailable" (no key, quota) and "none" must not stick in the browser for 15 minutes.
+  const result = await pressForMatch(match, requestLang(event))
+  setResponseHeader(event, 'cache-control', result.status === 'ok' ? 'public, max-age=900' : 'no-store')
+  return result
 })

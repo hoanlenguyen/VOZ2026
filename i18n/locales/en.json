@@ -450,7 +450,7 @@
     "unavailable": "(not available yet)",
     "searchPlayers": "Search players",
     "filterTeam": "Show players of",
-    "allTeams": "All",
+    "allTeams": "All teams",
     "favouritePlayer": "Favourite: {name}",
     "noPlayers": "No players match.",
     "positions": {
@@ -612,5 +612,17 @@
     "lockedTitle": "My favourites is part of VOZ Plus",
     "lockedText": "Subscribe to get one page with the news of the teams, leagues and players you follow.",
     "lockedSignedOut": "Sign in with a VOZ Plus account to get the news of the teams, leagues and players you follow on one page."
+  },
+  "roundup": {
+    "breaking": "Breaking",
+    "label": "AI press roundup",
+    "writing": "Reading the press headlines… the first time takes about 10 seconds.",
+    "meta": "From the headlines of {n} outlets · {time} | From the headlines of {n} outlet · {time} | From the headlines of {n} outlets · {time}",
+    "sourceLink": "Source {n}: {outlet} (opens the outlet’s article)",
+    "sources": "Sources",
+    "disclaimer": "Written by AI from other outlets’ headlines and VOZ match data. Claims about injuries and team news are the outlets’ reports; follow the links for their articles.",
+    "lockedTitle": "Read the full roundup with VOZ Plus",
+    "lockedFree": "Subscribers get the full pre-match roundup of what the press reports, with links to every source.",
+    "lockedSignedOut": "Sign in with a VOZ Plus account to read the full pre-match roundup."
   }
 }
