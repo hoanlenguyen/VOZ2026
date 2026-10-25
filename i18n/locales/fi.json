@@ -17,7 +17,8 @@
     "news": "Uutiset",
     "favourites": "Omat suosikit",
     "lockedHint": "VOZ Plus -tilaajille",
-    "sports": "Urheilu"
+    "sports": "Urheilu",
+    "communities": "Yhteisöt"
   },
   "sport": {
     "all": "Kaikki lajit",
@@ -819,5 +820,23 @@
     },
     "invite": "Saat ilmoitukset omista joukkueistasi VOZ Plussalla.",
     "inviteCta": "Tilaa tai kirjaudu"
+  },
+  "communities": {
+    "pageTitle": "Yhteisöt – VOZ",
+    "title": "Yhteisöt",
+    "lead": "Fanien yhteisöt joukkueidesi ja sarjojesi ympärillä: otteluketjut, kyselyt ja keskustelu.",
+    "mockNote": "Demo: yhteisöt, jäsenet ja julkaisut ovat keksittyjä.",
+    "loadError": "Yhteisöjä ei voitu ladata.",
+    "feed": "Uusimmat julkaisut",
+    "filter": "Näytä julkaisut",
+    "all": "Kaikki yhteisöt",
+    "moderator": "Moderaattori",
+    "votes": "{n} ääntä",
+    "like": "Tykkää",
+    "replies": "vastausta",
+    "popular": "Suositut yhteisöt",
+    "members": "{n} jäsentä",
+    "join": "Liity",
+    "joined": "Liitytty"
   }
 }

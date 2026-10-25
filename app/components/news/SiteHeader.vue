@@ -8,6 +8,7 @@ const open = ref(false)
 const { can } = useAccount()
 const links = computed(() => [
   { to: '/', label: t('nav.news'), locked: false },
+  { to: '/communities', label: t('nav.communities'), locked: false },
   ...(can.value.newsroom
     ? []
     : [

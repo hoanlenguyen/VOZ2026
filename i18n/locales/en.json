@@ -17,7 +17,8 @@
     "news": "News",
     "favourites": "My favourites",
     "lockedHint": "For VOZ Plus subscribers",
-    "sports": "Sports"
+    "sports": "Sports",
+    "communities": "Communities"
   },
   "sport": {
     "all": "All sports",
@@ -819,5 +820,23 @@
     },
     "invite": "Get alerts for your teams with VOZ Plus.",
     "inviteCta": "Subscribe or sign in"
+  },
+  "communities": {
+    "pageTitle": "Communities – VOZ",
+    "title": "Communities",
+    "lead": "Fan communities around your teams and leagues: matchday threads, polls and talk.",
+    "mockNote": "Demo: communities, members and posts are invented.",
+    "loadError": "Communities could not be loaded.",
+    "feed": "Latest posts",
+    "filter": "Show posts from",
+    "all": "All communities",
+    "moderator": "Moderator",
+    "votes": "{n} votes",
+    "like": "Like",
+    "replies": "replies",
+    "popular": "Popular communities",
+    "members": "{n} members",
+    "join": "Join",
+    "joined": "Joined"
   }
 }
