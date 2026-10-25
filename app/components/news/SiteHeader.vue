@@ -2,7 +2,7 @@
 import { PhLockSimple } from '@phosphor-icons/vue'
 const { t, locale, locales, setLocale } = useI18n()
 const open = ref(false)
-// "My favourites" and "My teams" are for readers; newsroom accounts have the newsroom instead.
+// "My favourites" and "My teams" are for readers; newsroom accounts get a "Newsroom" tab instead.
 // "My favourites" is a VOZ Plus feature: free and signed-out readers see it locked and not
 // clickable (the page itself also shows the invitation if opened directly).
 const { can } = useAccount()
@@ -10,7 +10,7 @@ const links = computed(() => [
   { to: '/', label: t('nav.news'), locked: false },
   { to: '/communities', label: t('nav.communities'), locked: false },
   ...(can.value.newsroom
-    ? []
+    ? [{ to: '/newsroom', label: t('nav.newsroom'), locked: false }]
     : [
         { to: '/favourites', label: t('nav.favourites'), locked: !can.value.premium },
         { to: '/my-teams', label: t('nav.myTeams'), locked: false },

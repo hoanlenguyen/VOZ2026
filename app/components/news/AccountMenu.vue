@@ -1,7 +1,8 @@
 <script setup lang="ts">
 // Header account control: "Sign in" when signed out; otherwise a button with the reader's initials
-// that opens a small panel (plan, account, newsroom, sign out). Closes on Escape, outside click or navigation.
-import { PhCaretDown, PhNewspaper, PhSignOut, PhUser } from '@phosphor-icons/vue'
+// that opens a small panel (plan, account, sign out). Closes on Escape, outside click or navigation.
+// The newsroom has its own header tab (SiteHeader.vue).
+import { PhCaretDown, PhSignOut, PhUser } from '@phosphor-icons/vue'
 
 const { t } = useI18n()
 const { account, can, logout } = useAccount()
@@ -51,7 +52,6 @@ async function signOut() {
         <span>{{ account.email }}</span>
       </p>
       <NuxtLink to="/account" class="item"><PhUser :size="16" weight="bold" aria-hidden="true" />{{ t('nav.account') }}</NuxtLink>
-      <NuxtLink v-if="can.newsroom" to="/newsroom" class="item"><PhNewspaper :size="16" weight="bold" aria-hidden="true" />{{ t('nav.newsroom') }}</NuxtLink>
       <button type="button" class="item" @click="signOut"><PhSignOut :size="16" weight="bold" aria-hidden="true" />{{ t('nav.signOut') }}</button>
     </div>
   </div>
