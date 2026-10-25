@@ -94,6 +94,9 @@ const initials = (name: string) => name.split(/\s+/).map(w => w[0]).join('').sli
               </p>
               <h3 v-if="p.title" class="post-title">{{ p.title }}</h3>
               <p class="post-text">{{ p.text }}</p>
+              <figure v-if="p.image" class="post-image">
+                <NewsCommunityImage :kind="p.image.kind" :alt="p.image.alt" />
+              </figure>
 
               <fieldset v-if="p.poll" class="poll">
                 <legend class="poll-q">{{ p.poll.question }}</legend>
@@ -179,6 +182,7 @@ const initials = (name: string) => name.split(/\s+/).map(w => w[0]).join('').sli
 .community-link, .community-name { padding: 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--link-hover); cursor: pointer; text-align: left; }
 .community-link:hover, .community-name:hover { text-decoration: underline; }
 .post-title { margin: 12px 0 0; font-size: 18px; line-height: 1.35; font-weight: 700; color: var(--headline); }
+.post-image { margin: 12px 0 0; max-width: 560px; }
 .post-text { margin: 8px 0 0; font-size: 16px; line-height: 1.6; color: var(--text-2); overflow-wrap: anywhere; }
 
 .poll { margin: 12px 0 0; padding: 12px; border: 1px solid var(--line-strong); border-radius: 8px; display: flex; flex-direction: column; gap: 6px; }

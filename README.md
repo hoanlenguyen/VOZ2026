@@ -26,7 +26,14 @@ data before a reader sees it, and nothing is published that the data does not su
   link only, never their text).
 - **English and Finnish** on the same addresses, picked from the browser and switchable at any time.
   Finnish is written directly by the AI, not translated; other outlets' headlines are translated.
-- **Discussion:** comment totals and likes are public, with a preview of the newest comments.
+- **Discussion:** comment totals and likes are public, with a preview of the newest comments. Below
+  them, a few fan posts "from" Instagram, TikTok, Facebook, Threads and X, each with its platform
+  icon (mock: invented fans and handles, written from the match's own teams and score).
+- **Share:** a share menu for the discussion and for each post: X, Facebook, Threads and WhatsApp
+  open their share page; Instagram and TikTok copy the link; phones also get their own share sheet.
+- **Communities** (tab next to News, mock): fan communities for Ipswich, Forest, Premier League
+  tactics and Liiga, with matchday threads, polls, drawn pictures (stadium, away coach, tactics board,
+  shot map, rink), likes, Join and sharing. Communities, members and posts are invented for the demo.
 
 ### For VOZ Plus subscribers
 

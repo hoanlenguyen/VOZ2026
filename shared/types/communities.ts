@@ -15,6 +15,9 @@ export interface CommunityPoll {
   options: Array<{ label: string, votes: number }>
 }
 
+/** Drawn mock pictures (app/components/news/CommunityImage.vue); never photos from other sites. */
+export type CommunityImageKind = 'stadium' | 'coach' | 'tactics' | 'shotmap' | 'powerplay' | 'rink'
+
 export interface CommunityPost {
   id: string
   communityId: string
@@ -25,6 +28,8 @@ export interface CommunityPost {
   title: string | null
   text: string
   poll: CommunityPoll | null
+  /** A drawn picture with its alt text (in the post's language). */
+  image: { kind: CommunityImageKind, alt: string } | null
   likes: number
   replies: number
   tags: string[]
