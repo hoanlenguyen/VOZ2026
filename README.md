@@ -92,8 +92,8 @@ is enforced on the server, and the newsroom can open any match to everyone.
 
 - **Node.js** 22.22.3+, 24.15.0+ or 26+ (CI uses Node 24). The scripts rely on Node's built-in
   TypeScript support, so older versions will not work.
-- npm (comes with Node). No Cloudflare account is needed to run the app locally: KV, D1 and the
-  queue are simulated on your machine by wrangler.
+- npm (comes with Node). No Cloudflare account is needed to run the app locally: KV and D1 are
+  simulated on your machine by wrangler.
 
 ### 2. Install
 
