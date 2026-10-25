@@ -17,10 +17,6 @@
   "triggers": { "crons": ["* * * * *", "0 5 * * *", "*/5 * * * *"] },
   // Wrangler automatically provisions this D1 binding on the first deployment.
   "d1_databases": [{ "binding": "VOZ_NEWS_DB", "database_name": "voz-news" }],
-  "queues": {
-    "producers": [{ "binding": "VOZ_NEWS_QUEUE", "queue": "voz-news" }],
-    "consumers": [{ "queue": "voz-news", "max_batch_size": 1, "max_batch_timeout": 1, "max_retries": 3, "max_concurrency": 4, "dead_letter_queue": "voz-news-dead" }]
-  },
   // Upstream response cache shared by all Worker instances (football-data and GNews have tight
   // per-token quotas; per-instance memory caches would each spend them). Nitro storage "kvcache".
   "kv_namespaces": [
@@ -35,6 +31,8 @@
     "NUXT_NEWS_AI_PROVIDER": "openai",
     "NUXT_HF_MODEL": "openai/gpt-oss-120b",
     "NUXT_NEWS_MONITOR_ENABLED": "true",
-    "NUXT_NEWS_ASSESSMENT_DAILY_LIMIT": "100"
+    "NUXT_NEWS_ASSESSMENT_DAILY_LIMIT": "100",
+    // Background news jobs per day; the every-minute cron runs them itself (no Queues on the free plan).
+    "NUXT_NEWS_JOBS_DAILY_LIMIT": "3000"
   }
 }

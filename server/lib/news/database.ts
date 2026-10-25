@@ -22,6 +22,7 @@ CREATE INDEX IF NOT EXISTS news_jobs_due ON news_jobs(status, due_at);
 CREATE INDEX IF NOT EXISTS news_jobs_target ON news_jobs(kind, target, status);
 CREATE TABLE IF NOT EXISTS news_meta (key TEXT PRIMARY KEY, value TEXT NOT NULL);
 CREATE TABLE IF NOT EXISTS news_ai_budget (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
+CREATE TABLE IF NOT EXISTS news_job_budget (day TEXT PRIMARY KEY, used INTEGER NOT NULL);
 CREATE TABLE IF NOT EXISTS news_host_limits (origin TEXT PRIMARY KEY, next_at INTEGER NOT NULL);
 `
 
@@ -32,6 +33,18 @@ export async function claimNewsJob(db: NewsDatabase, id: string, now: number): P
   return db.prepare(`UPDATE news_jobs SET status='running', attempts=attempts+1, lease_until=?
     WHERE id=? AND status IN ('pending','running') AND due_at<=? AND lease_until<=? RETURNING *`)
     .bind(now + 180_000, id, now, now).first<NewsJob>()
+}
+
+/**
+ * One job of the daily background budget (UTC day), reserved atomically. The cron runs jobs only
+ * while this says yes, which keeps D1 writes and publisher requests within the free plan.
+ */
+export async function reserveNewsJob(db: NewsDatabase, now: number, limit: number): Promise<boolean> {
+  if (limit <= 0) return false
+  const result = await db.prepare(`INSERT INTO news_job_budget(day,used) VALUES (?,1)
+    ON CONFLICT(day) DO UPDATE SET used=used+1 WHERE used<? RETURNING used`)
+    .bind(new Date(now).toISOString().slice(0, 10), limit).first<{ used: number }>()
+  return !!result
 }
 
 export async function reserveNewsAiCall(db: NewsDatabase, now: number, limit: number): Promise<boolean> {

@@ -211,10 +211,16 @@ export function createNewsMonitor(dependencies: {
     try { await request } finally { pending.delete(id) }
   }
 
-  async function drain(limit = 8) {
+  /** Runs up to `limit` due jobs, most urgent first; `allow` (budget, time) is asked before each one. */
+  async function drain(limit = 8, allow?: () => Promise<boolean>) {
     const jobs = (await db.prepare("SELECT id FROM news_jobs WHERE status='pending' AND due_at<=? ORDER BY CASE WHEN kind='fixtures' THEN 0 WHEN kind='article' AND json_extract(payload,'$.isNew')=1 THEN 1 WHEN kind='feed' THEN 2 ELSE 3 END,due_at,id LIMIT ?").bind(now(), limit).all<{ id: string }>()).results
-    for (const job of jobs) { try { await process(job.id) } catch { /* Persisted backoff applies to the next tick. */ } }
-    return jobs.length
+    let ran = 0
+    for (const job of jobs) {
+      if (allow && !await allow()) break
+      ran++
+      try { await process(job.id) } catch { /* Persisted backoff applies to the next tick. */ }
+    }
+    return ran
   }
   return { tick, process, drain, active }
 }

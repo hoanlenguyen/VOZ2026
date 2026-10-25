@@ -80,8 +80,8 @@ is enforced on the server, and the newsroom can open any match to everyone.
 ## Tech stack in brief
 
 - **App:** Nuxt 4 (Vue), one full-stack TypeScript app; API keys stay on the server.
-- **Hosting:** Cloudflare Workers, with Workers KV (cache), D1 (news and posts), Queues and cron
-  triggers for the daily podcasts and the newsroom agent.
+- **Hosting:** Cloudflare Workers (free plan), with Workers KV (cache), D1 (news and posts) and cron
+  triggers for the news monitor, the daily podcasts and the newsroom agent.
 - **AI:** OpenAI GPT-6 Luna writes stories, headlines, podcast scripts and translations from a
   numbered fact list; a checker verifies every sentence; a text-to-speech model reads the podcasts.
 - **Data:** Liiga stats API, football-data.org, GNews and trusted publishers' feeds.

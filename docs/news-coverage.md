@@ -181,9 +181,13 @@ invalidate prior selections and combined summaries immediately.
 
 ## Background pre-match news monitoring
 
-`server/plugins/news-monitor.ts` runs a Cloudflare scheduled hook every minute and sends due jobs
-to `voz-news`. The queue consumer discovers fixtures, scans feeds, verifies publisher articles and
-classifies new developments. Monitoring runs without any reader opening the site. Nuxt development
+`server/plugins/news-monitor.ts` runs a Cloudflare scheduled hook every minute. It plans the due
+jobs (`tick`) and then runs a few of them itself (`drain`): at most 4 per minute, within 25 seconds,
+and only while the daily job budget lasts (`NUXT_NEWS_JOBS_DAILY_LIMIT`, default 3000 per UTC day,
+reserved atomically in D1 `news_job_budget`). Jobs left over wait for the next minute. The jobs
+discover fixtures, scan feeds, verify publisher articles and classify new developments. There is no
+Cloudflare Queue: the free plan's 10,000 queue operations a day ran out by about 07:00 UTC (the
+monitor needed about 30,000), which stopped monitoring for the rest of the day. Monitoring runs without any reader opening the site. Nuxt development
 uses the same scheduler and job handlers in a background loop while the dev server is running.
 Stopping the local server stops that local loop; deployed Cron Triggers provide unattended operation.
 
@@ -220,9 +224,9 @@ It is never returned by the public monitoring endpoint or republished in the UI.
 Atomic SQL job claims with three-minute leases prevent concurrent redelivery from processing the
 same job. Unfinished work is deduplicated by kind/target as well as job identity. Expired leases
 are recoverable; failed work gets persisted exponential backoff and a maximum of four attempts.
-`voz-news-dead` receives exhausted queue deliveries. New articles are scheduled ahead of routine
-body rechecks, and the dispatcher sends at most 100 jobs per tick. Queue/backoff/network delays can
-exceed the desired poll interval; monitor backlog age rather than assuming every check is instant.
+New articles are scheduled ahead of routine body rechecks. The per-minute and daily caps, backoff
+and network delays can exceed the desired poll interval; monitor backlog age rather than assuming
+every check is instant.
 
 AI runs **classification only** for a new or changed content hash, using the selected existing
 OpenAI/Hugging Face provider. Output requires an exact short source quotation and bounded values
@@ -251,19 +255,16 @@ count, pending-job age, daily AI usage, and each feed's last successful check, n
 failure count, discovered-link count and stale flag. It returns metadata only. This is also the
 first place to look when new stories are missing.
 
-Configuration: `NUXT_NEWS_MONITOR_ENABLED=true` and `NUXT_NEWS_ASSESSMENT_DAILY_LIMIT=100`.
+Configuration: `NUXT_NEWS_MONITOR_ENABLED=true`, `NUXT_NEWS_ASSESSMENT_DAILY_LIMIT=100` and
+`NUXT_NEWS_JOBS_DAILY_LIMIT=3000`.
 Disable the monitor explicitly with `NUXT_NEWS_MONITOR_ENABLED=false`; on-demand discovery remains.
 Source registration is still manual and server-owned; the current official club registry contains
 Ipswich and Forest. Monitoring cannot find articles on an unregistered or unreadable site.
 
-Production setup is included in `wrangler.jsonc`: minute Cron, D1 binding, processing queue and
-dead-letter queue. Before deploying, `npm run news:provision` creates missing queues using
-`CLOUDFLARE_ACCOUNT_ID` and `CLOUDFLARE_API_TOKEN`; it reuses existing queues. The token needs
-Workers deployment, D1 provisioning and Queue Edit permissions. `npm run news:provision -- --check`
-prints required resource names without contacting Cloudflare. Wrangler 4.152 provisions the D1
-binding automatically on deployment. CI provisions queues before deploying; `npm run deploy`
-does the same. These commands create resources/deploy only when explicitly run; local testing
-does not activate a production schedule.
+Production setup is included in `wrangler.jsonc`: the minute Cron and the D1 binding, which
+Wrangler 4.152 provisions automatically on deployment. The token needs Workers deployment and D1
+Edit permissions. Local testing does not activate a production schedule; to run the cron locally,
+`npx wrangler dev --test-scheduled` and open `/cdn-cgi/handler/scheduled?cron=*+*+*+*+*`.
 
 Cloudflare references: [Cron Triggers](https://developers.cloudflare.com/workers/configuration/cron-triggers/),
 [queue delivery guarantees](https://developers.cloudflare.com/queues/reference/delivery-guarantees/),

@@ -9,12 +9,11 @@
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "snapshot": "node --env-file-if-exists=.env scripts/snapshot.ts",
-    "deploy": "nuxt build && node scripts/provision-news.ts && wrangler deploy",
+    "deploy": "nuxt build && wrangler deploy",
     "test": "node --test \"tests/**/*.test.ts\"",
     "warm:stories": "node scripts/warm-stories.ts",
     "warm:podcasts": "node scripts/warm-podcasts.ts",
-    "match-news": "node scripts/match-news.ts",
-    "news:provision": "node scripts/provision-news.ts"
+    "match-news": "node scripts/match-news.ts"
   },
   "dependencies": {
     "@js-temporal/polyfill": "^0.5.1",

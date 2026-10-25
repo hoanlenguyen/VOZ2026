@@ -1,24 +1,24 @@
-import { newsMonitor } from '../utils/news-monitor'
+import { reserveNewsJob } from '../lib/news/database'
+import { newsDatabase, newsMonitor } from '../utils/news-monitor'
+
+// Background news monitoring, without Cloudflare Queues (the free plan's 10,000 queue operations a
+// day ran out by morning). Every minute the cron plans the due jobs (tick) and then runs a few of
+// them itself: at most NEWS_JOBS_PER_RUN, within NEWS_RUN_MS, and only while the daily job budget
+// (D1 news_job_budget, newsJobsDailyLimit) lasts. Jobs left over wait for the next minute.
+export const NEWS_JOBS_PER_RUN = 4
+const NEWS_RUN_MS = 25_000
 
 export default defineNitroPlugin((nitro) => {
-  nitro.hooks.hook('cloudflare:scheduled', async ({ controller, env }) => {
-    // Only the every-minute cron (wrangler.jsonc); the 05:00 cron belongs to the daily podcasts task.
+  nitro.hooks.hook('cloudflare:scheduled', async ({ controller }) => {
+    // Only the every-minute cron (wrangler.jsonc); the others belong to the podcasts and the newsroom agent.
     if (controller?.cron && controller.cron !== '* * * * *') return
-    if (!useRuntimeConfig().newsMonitorEnabled) return
-    const queue = (env as { VOZ_NEWS_QUEUE?: { send(value: object): Promise<void> } }).VOZ_NEWS_QUEUE
-    if (!queue) throw new Error('News monitoring queue is not configured')
-    await (await newsMonitor()).tick(id => queue.send({ id }))
-  })
-  nitro.hooks.hook('cloudflare:queue', async ({ batch }) => {
-    if (!useRuntimeConfig().newsMonitorEnabled) { batch.ackAll(); return }
-    if (batch.queue !== 'voz-news') return
-    const monitor = await newsMonitor()
-    for (const message of batch.messages) {
-      const id = (message.body as { id?: unknown } | null)?.id
-      if (typeof id !== 'string' || !/^[a-f0-9]{64}$/.test(id)) { message.ack(); continue }
-      try { await monitor.process(id); message.ack() }
-      catch { message.retry({ delaySeconds: Math.min(900, 60 * 2 ** Math.min(message.attempts, 4)) }) }
-    }
+    const config = useRuntimeConfig()
+    if (!config.newsMonitorEnabled) return
+    const started = Date.now()
+    const [monitor, db] = await Promise.all([newsMonitor(), newsDatabase()])
+    await monitor.tick()
+    const daily = Math.max(0, Number(config.newsJobsDailyLimit) || 0)
+    await monitor.drain(NEWS_JOBS_PER_RUN, async () => Date.now() - started < NEWS_RUN_MS && reserveNewsJob(db, Date.now(), daily))
   })
 
   // Nuxt dev has no Cron delivery. This loop uses the same persisted scheduler and job handlers.

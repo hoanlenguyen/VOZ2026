@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
-import { NEWS_SCHEMA, claimNewsJob, reserveNewsAiCall, type NewsDatabase } from '../server/lib/news/database.ts'
+import { NEWS_SCHEMA, claimNewsJob, reserveNewsAiCall, reserveNewsJob, type NewsDatabase } from '../server/lib/news/database.ts'
 import { openLocalNewsDatabase } from '../server/lib/news/local-database.ts'
 import { createNewsMonitor, decodeCollectedNews, type StoredNewsArticle } from '../server/lib/news/monitor.ts'
 import { preMatchScanSeconds, selectPreMatchNews, type CollectedNews } from '../server/lib/news/pre-match.ts'
@@ -168,4 +168,23 @@ test('a failed feed keeps its backoff when the scheduler runs again', async () =
   await monitor.tick()
   const row = await db.prepare('SELECT next_due FROM news_feeds WHERE url=?').bind(url).first<{ next_due: number }>()
   assert.equal(row?.next_due, time + 480_000)
+})
+
+test('the daily job budget is atomic and resets with the UTC day', async () => {
+  const db = await database()
+  const grants = await Promise.all(Array.from({ length: 20 }, () => reserveNewsJob(db, time, 5)))
+  assert.equal(grants.filter(Boolean).length, 5)
+  assert.equal(await reserveNewsJob(db, time, 0), false)
+  assert.equal(await reserveNewsJob(db, time + 86400_000, 5), true)
+})
+
+test('the cron drain stops when the budget says no and leaves the rest for the next run', async () => {
+  const db = await database()
+  for (const id of ['a', 'b', 'c']) await job(db, id, 'fixtures', 'premier-league')
+  const monitor = createNewsMonitor({ db, now: () => time, fixtures: async () => [] })
+  let allowed = 2
+  assert.equal(await monitor.drain(10, async () => allowed-- > 0), 2)
+  const left = await db.prepare("SELECT COUNT(*) n FROM news_jobs WHERE status='pending'").first<{ n: number }>()
+  assert.equal(left?.n, 1)
+  assert.equal(await monitor.drain(10), 1)
 })

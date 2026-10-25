@@ -64,6 +64,8 @@ export default defineNuxtConfig({
     hfModel: 'openai/gpt-oss-120b',
     newsMonitorEnabled: true,
     newsAssessmentDailyLimit: 100,
+    /** Background news jobs per UTC day (fixtures, feed scans, article checks), run by the every-minute cron. */
+    newsJobsDailyLimit: 3000,
     dataMode: 'auto',
     /** Signs the session cookie (NUXT_SESSION_SECRET); a demo secret is used when empty. */
     sessionSecret: '',

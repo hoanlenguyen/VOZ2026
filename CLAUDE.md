@@ -20,6 +20,7 @@ Nuxt 4 full stack; API keys live in `.env` (gitignored) and are only used server
 - API keys are Worker secrets uploaded by the workflow from GitHub secrets; new secrets must be added to the workflow's `secrets:` list and `env:` block.
 - Read env only inside request handlers (Workers provides it per request). Local Workers test: `npm run preview` with `.dev.vars`.
 - Keep `compatibility_date` within what the pinned wrangler's runtime supports (wrangler 4.152.0 ⇒ 2026-10-01 works).
+- The account is on the Workers **free plan**: no Cloudflare Queues (10,000 operations a day ran out by 07:00 UTC). The news monitor's every-minute cron (`server/plugins/news-monitor.ts`) plans jobs and runs at most 4 itself within 25 s, while the daily D1 budget lasts (`NUXT_NEWS_JOBS_DAILY_LIMIT`, default 3000, `news_job_budget`). Free-plan limits to keep in mind for new background work: 10 ms CPU per invocation, 50 outbound requests per invocation, D1 100,000 rows written a day.
 
 ## Environment (`.env`, see `.env.example`)
 - `NUXT_LIIGA_API_KEY` — Liiga stats API, sent as `x-api-key`

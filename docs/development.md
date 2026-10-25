@@ -61,7 +61,7 @@ One-time setup, in the GitHub repository under **Settings → Secrets and variab
 
 | Secret | Value |
 |---|---|
-| `CLOUDFLARE_API_TOKEN` | Cloudflare token with Workers deployment, D1 provisioning and Queue Edit permissions |
+| `CLOUDFLARE_API_TOKEN` | Cloudflare token with Workers deployment and D1 Edit permissions |
 | `CLOUDFLARE_ACCOUNT_ID` | Your Cloudflare account id (Workers & Pages overview page) |
 | `NUXT_LIIGA_API_KEY` | Liiga API key |
 | `NUXT_FOOTBALL_DATA_TOKEN` | football-data.org token |
