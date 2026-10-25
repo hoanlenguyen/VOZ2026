@@ -11,6 +11,8 @@ data before a reader sees it, and nothing is published that the data does not su
 **Live site:** https://voz.lenguyenhanhoan.workers.dev · demo accounts (password `demo`):
 `free@demo.com`, `subscription@demo.com`, `newsroom@demo.com`
 
+**Presentation:** [VOZ Presentation](https://claude.ai/artifact/PGQv8sBrdHnyL1bEtAripS)
+
 ## Features we built
 
 ### For every reader
