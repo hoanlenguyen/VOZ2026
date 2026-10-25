@@ -3,7 +3,7 @@
 // are mock data for the demo (Ipswich and Nott'm Forest, their line-up players, every competition
 // we cover). Signed out: asked to sign in. Free: may choose, and "Save" asks them to subscribe.
 // Subscribers: saved as they choose. Newsroom accounts: no favourites (not a reader account).
-import { PhCheck, PhLockSimple, PhMagnifyingGlass, PhStar, PhX } from '@phosphor-icons/vue'
+import { PhCaretDown, PhCheck, PhLockSimple, PhMagnifyingGlass, PhStar, PhX } from '@phosphor-icons/vue'
 import type { Preferences } from '#shared/types/preferences'
 
 definePageMeta({ layout: 'news' })
@@ -147,17 +147,14 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: route.ful
             <span class="sr-only">{{ t('prefs.searchPlayers') }}</span>
             <input v-model="query" type="search" :placeholder="t('prefs.searchPlayers')">
           </label>
-          <fieldset class="tabs">
-            <legend class="sr-only">{{ t('prefs.filterTeam') }}</legend>
-            <label class="tab">
-              <input v-model="teamFilter" type="radio" name="team-filter" value="all">
-              <span>{{ t('prefs.allTeams') }}</span>
-            </label>
-            <label v-for="team in options.teams" :key="team.key" class="tab">
-              <input v-model="teamFilter" type="radio" name="team-filter" :value="team.key">
-              <span>{{ team.shortName }}</span>
-            </label>
-          </fieldset>
+          <label class="team-filter">
+            <span class="sr-only">{{ t('prefs.filterTeam') }}</span>
+            <select v-model="teamFilter">
+              <option value="all">{{ t('prefs.allTeams') }}</option>
+              <option v-for="team in options.teams" :key="team.key" :value="team.key">{{ team.shortName }}</option>
+            </select>
+            <PhCaretDown :size="16" aria-hidden="true" />
+          </label>
         </div>
         <ul class="players">
           <li v-for="p in players" :key="p.key" class="player">
@@ -262,12 +259,14 @@ const loginLink = computed(() => ({ path: '/login', query: { redirect: route.ful
 }
 .search input { flex: 1 1 auto; min-width: 0; border: 0; background: none; font: inherit; color: var(--headline); outline: none; }
 .search:focus-within { outline: 2px solid var(--accent); outline-offset: 1px; }
-.tabs { margin: 0; padding: 3px; border: 1px solid var(--line-strong); border-radius: 999px; display: flex; gap: 2px; }
-.tab { position: relative; }
-.tab input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
-.tab span { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px; font-weight: 700; color: var(--summary); }
-.tab input:checked + span { background: var(--headline); color: var(--bg); }
-.tab input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.team-filter { position: relative; flex: 0 1 220px; min-width: 160px; display: flex; align-items: center; color: var(--meta); }
+.team-filter select {
+  width: 100%; min-height: 44px; padding: 0 36px 0 12px; appearance: none; cursor: pointer;
+  border: 1px solid var(--border-control); border-radius: 4px; background: var(--bg);
+  font: inherit; font-size: 15px; color: var(--headline);
+}
+.team-filter select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.team-filter svg { position: absolute; right: 12px; pointer-events: none; }
 
 .players { list-style: none; margin: 0; padding: 0; }
 .player { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); }

@@ -481,7 +481,7 @@
     "unavailable": "(not available yet)",
     "searchPlayers": "Search players",
     "filterTeam": "Show players of",
-    "allTeams": "All",
+    "allTeams": "All teams",
     "favouritePlayer": "Favourite: {name}",
     "noPlayers": "No players match.",
     "positions": {
@@ -797,7 +797,27 @@
   },
   "social": {
     "title": "On social media",
-    "mockNote": "Mock posts for the demo: invented fans and handles, not real accounts.",
     "via": "via {platform}"
+  },
+  "notify": {
+    "label": "Notifications",
+    "labelUnread": "Notifications, {n} unread",
+    "title": "Notifications",
+    "markAll": "Mark all as read",
+    "unread": "Unread",
+    "kinds": {
+      "result": "Result",
+      "story": "Match story",
+      "podcast": "Podcast",
+      "fixture": "Next game"
+    },
+    "items": {
+      "fixture-hull": "Ipswich Town play Hull City away on Saturday 31 October, kick-off 15:00.",
+      "podcast-ipswich": "New podcast for Ipswich: \"Ipswich hold Forest to a draw\".",
+      "story-ipswich": "Match story: Ipswich and Nottingham Forest share points after first-half goals.",
+      "result-ipswich": "Full time: Ipswich 1–1 Nott'm Forest."
+    },
+    "invite": "Get alerts for your teams with VOZ Plus.",
+    "inviteCta": "Subscribe or sign in"
   }
 }

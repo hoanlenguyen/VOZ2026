@@ -86,13 +86,92 @@ is enforced on the server, and the newsroom can open any match to everyone.
   numbered fact list; a checker verifies every sentence; a text-to-speech model reads the podcasts.
 - **Data:** Liiga stats API, football-data.org, GNews and trusted publishers' feeds.
 
-## Run it
+## Run it locally
+
+### 1. Requirements
+
+- **Node.js** 22.22.3+, 24.15.0+ or 26+ (CI uses Node 24). The scripts rely on Node's built-in
+  TypeScript support, so older versions will not work.
+- npm (comes with Node). No Cloudflare account is needed to run the app locally: KV, D1 and the
+  queue are simulated on your machine by wrangler.
+
+### 2. Install
 
 ```bash
+git clone <this repository> voz && cd voz
 npm install
-cp .env.example .env   # add the API keys
-npm run dev            # http://localhost:3000
 ```
+
+### 3. Configure
+
+```bash
+cp .env.example .env
+cp .dev.vars.example .dev.vars   # local Cloudflare bindings (KV, D1) read these too
+```
+
+Fill in what you have. **Every key is optional:** the committed snapshots in `data/snapshots/` and
+the pre-written demo stories, headlines and podcasts are enough to click through the whole demo.
+Keys are read only on the server and never reach the browser.
+
+#### Why each key is needed
+
+| Key | Why VOZ needs it | Without it |
+|---|---|---|
+| `NUXT_LIIGA_API_KEY` | Live Liiga data: fixtures, results, tables, goal events and per-game stats (shots, faceoffs, penalties) that the hockey stories and comparisons are built from. | Liiga comes from the committed snapshot |
+| `NUXT_FOOTBALL_DATA_TOKEN` ([free](https://www.football-data.org/client/register)) | Live football data from football-data.org: fixtures, results, tables and squads for the ten football competitions, and the real fixtures behind the SportWorld simulated matches. Free plan: 10 requests per minute. | Football comes from the committed snapshot |
+| `NUXT_GNEWS_API_KEY` ([free](https://gnews.io)) | Finds what other outlets published about a match for "What the press says" (headline, source and link only). Free plan: 100 requests per day. | That card stays empty |
+| `NUXT_OPENAI_API_KEY` | The AI itself: writes match stories, headlines and podcast scripts from the fact list, translates other outlets' headlines into Finnish, reads podcasts aloud (text to speech) and powers the newsroom agent. | Pre-written demo texts or labelled templates; no new podcasts or agent posts, press headlines stay untranslated |
+| `NUXT_SESSION_SECRET` | Signs the login cookie so nobody can fake a subscriber or newsroom session. Use a long random string anywhere other people can reach the site. | A built-in demo secret is used (fine locally) |
+
+Optional settings: `NUXT_OPENAI_MODEL` (default `gpt-6-luna`), `NUXT_OPENAI_TTS_MODEL` and
+`NUXT_PODCAST_VOICE` (podcast voice), and `NUXT_NEWS_AI_PROVIDER` / `NUXT_HF_TOKEN` to use Hugging
+Face instead of OpenAI for news summaries. See `.env.example` for all of them.
+
+`NUXT_DATA_MODE` decides where sports data comes from: `auto` (default: live APIs, snapshot when
+they fail), `live` (APIs only) or `snapshot` (fully offline, no keys needed).
+
+### 4. Start
+
+```bash
+npm run dev    # http://localhost:3000
+```
+
+Sign in at `/login` with one of the demo accounts (password `demo`) to see each role:
+
+| Account | What you see |
+|---|---|
+| `free@demo.com` | Teasers and the VOZ Plus offer |
+| `subscription@demo.com` | Full stories, stats, line-ups, podcasts, My teams |
+| `newsroom@demo.com` | Everything plus `/newsroom` (dashboard, story editor, agent desk, podcast desk) |
+
+Good places to start: a full-data demo match such as
+http://localhost:3000/match/premier-league/2645271, the newsroom at `/newsroom`, the SportWorld
+mock API at `/sportworld`, and the data-layer check at `/status`.
+
+### 5. Optional: background jobs, tests and the Workers runtime
+
+```bash
+# run the scheduled jobs by hand (dev server running)
+curl http://localhost:3000/_nitro/tasks/podcasts:daily     # daily podcasts
+curl http://localhost:3000/_nitro/tasks/newsroom:agent     # newsroom agent (AI match posts)
+
+npm test            # checker and parser tests
+npm run typecheck   # must pass before committing
+
+npm run snapshot -- --details   # refresh offline data (football takes ~3 min on the free plan)
+npm run preview                 # production build in the local Workers runtime (uses .dev.vars)
+```
+
+### Troubleshooting
+
+- **Every request returns 500 "Another Nuxt dev server is already running"**: an older dev server
+  of this folder is still running (maybe on another port). Stop it, then start again.
+- **"Failed to resolve component" in the logs** after adding a component: restart `npm run dev`.
+- **Port 3000 is taken:** `npm run dev -- --port 3001`.
+- **Football data is slow or missing:** the free football-data plan allows 10 requests per minute;
+  use `NUXT_DATA_MODE=auto` or `snapshot` so the snapshot fills the gaps.
+- **Local data looks stale or you want a clean start:** local KV and D1 live in `.wrangler/state/`;
+  stop the server and delete that folder to reset caches, comments, posts and podcasts.
 
 Every push to `main` deploys to Cloudflare Workers. Setup, deployment, scripts, architecture and the
 API: [docs/development.md](docs/development.md). News coverage pipeline (publisher links, source

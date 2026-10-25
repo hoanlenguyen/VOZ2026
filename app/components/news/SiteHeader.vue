@@ -49,13 +49,17 @@ watch(() => route.fullPath, () => (open.value = false))
         </template>
       </nav>
 
-      <div class="lang lang--bar" role="group" :aria-label="t('site.language')">
-        <button
-          v-for="l in locales" :key="l.code" type="button" class="lang-btn" :lang="l.code" :title="l.name"
-          :aria-pressed="locale === l.code" @click="setLocale(l.code)"
-        >
-          {{ l.code.toUpperCase() }}
-        </button>
+      <!-- Notifications (mock) next to the language switch; on phones the switch lives in the menu. -->
+      <div class="tools">
+        <NewsNotificationMenu />
+        <div class="lang lang--bar" role="group" :aria-label="t('site.language')">
+          <button
+            v-for="l in locales" :key="l.code" type="button" class="lang-btn" :lang="l.code" :title="l.name"
+            :aria-pressed="locale === l.code" @click="setLocale(l.code)"
+          >
+            {{ l.code.toUpperCase() }}
+          </button>
+        </div>
       </div>
 
       <div class="account-slot"><NewsAccountMenu /></div>
@@ -88,7 +92,7 @@ watch(() => route.fullPath, () => (open.value = false))
 }
 .bar {
   max-width: calc(var(--page-max) + 2 * 50px); margin: 0 auto; height: 52px; padding: 0 8px 0 4px;
-  display: grid; grid-template-columns: 48px 1fr auto; align-items: center; gap: 8px;
+  display: grid; grid-template-columns: 48px 1fr auto auto; align-items: center; gap: 4px;
 }
 .icon-btn {
   width: 44px; height: 44px; border: 0; border-radius: 8px; background: transparent; color: var(--text);
@@ -101,6 +105,7 @@ watch(() => route.fullPath, () => (open.value = false))
 .logo-text small { margin-top: 3px; font-size: 11px; font-weight: 500; letter-spacing: 0.04em; color: var(--muted); }
 .logo:hover .wordmark { color: var(--link-hover); }
 .desktop-nav { display: none; }
+.tools { display: flex; align-items: center; gap: 8px; justify-self: end; }
 .account-slot { justify-self: end; }
 .lang { display: flex; gap: 2px; padding: 2px; border: 1px solid var(--line-strong); border-radius: 999px; }
 .lang-btn {
@@ -120,7 +125,8 @@ watch(() => route.fullPath, () => (open.value = false))
 
 @media (min-width: 1024px) {
   .bar { grid-template-columns: auto auto 1fr auto auto; padding: 0 30px; }
-  .lang--bar { display: flex; justify-self: end; }
+  .lang--bar { display: flex; }
+  .bar { gap: 8px; }
   .icon-btn { display: none; }
   .logo { justify-self: start; }
   .desktop-nav { display: flex; gap: 4px; margin-left: 24px; }
